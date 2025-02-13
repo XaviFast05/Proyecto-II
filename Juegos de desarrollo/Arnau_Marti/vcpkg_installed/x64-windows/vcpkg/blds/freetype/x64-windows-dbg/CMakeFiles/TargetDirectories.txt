@@ -1,0 +1,8 @@
+C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/blds/freetype/x64-windows-dbg/CMakeFiles/freetype.dir
+C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/blds/freetype/x64-windows-dbg/CMakeFiles/package.dir
+C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/blds/freetype/x64-windows-dbg/CMakeFiles/package_source.dir
+C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/blds/freetype/x64-windows-dbg/CMakeFiles/edit_cache.dir
+C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/blds/freetype/x64-windows-dbg/CMakeFiles/rebuild_cache.dir
+C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/blds/freetype/x64-windows-dbg/CMakeFiles/list_install_components.dir
+C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/blds/freetype/x64-windows-dbg/CMakeFiles/install.dir
+C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/blds/freetype/x64-windows-dbg/CMakeFiles/install/local.dir

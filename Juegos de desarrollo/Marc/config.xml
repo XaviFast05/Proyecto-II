@@ -1,0 +1,538 @@
+<?xml version="1.0"?>
+<config>
+	<engine>
+		<title>My platformer game</title>
+		<maxFrameDuration value="16" />
+	</engine>
+	<render>
+		<vsync value="false" />
+	</render>
+	<window>
+		<resolution width="1280" height="640" scale="2" />
+		<fullscreen value="false" />
+		<borderless value="false" />
+		<resizable value="false" />
+		<fullscreen_window value="false" />
+	</window>
+	<intro path="Assets/Textures/Menus/Intro/intro-screen.png" />
+	<mainmenu>
+		<bg path="Assets/Textures/Menus/Title Screen/title screen pixel bg.png" />
+		<buttons defaultTex="Assets/Textures/Menus/Title Screen/title screen button sheet rescaled.png">
+			<newGameBt id="1" x="40" y="38" w="192" h="32" texture="Assets/Textures/Menus/Title Screen/New Game Button Sheet.png" />
+			<continueBt id="2" x="40" y="78" w="192" h="32" texture="Assets/Textures/Menus/Title Screen/Continue Button Sheet.png" />
+			<optionsBt id="3" x="40" y="118" w="192" h="32" texture="Assets/Textures/Menus/Title Screen/Options Button Sheet.png" />
+			<creditsBt id="4" x="-72" y="280" w="192" h="32" texture="Assets/Textures/Menus/Title Screen/Credits Button Sheet.png" />
+			<exitBt id="5" x="519" y="20" w="192" h="32" texture="Assets/Textures/Menus/Title Screen/Exit Button Sheet.png" />
+			<backBt id="6" x="-95" y="10" w="192" h="32" texture="Assets/Textures/Menus/Title Screen/Back Button Sheet.png" />
+		</buttons>
+		<credits path="Assets/Textures/Menus/Title Screen/credits screen.png" />
+	</mainmenu>
+	<settings>
+		<optPanel x="144" y="16" w="361" h="284" path="Assets/Textures/Menus/Options/settings-panel.png" />
+		<sliders barW="233" barH="12" barTexture="Assets/Textures/Menus/Options/slider.png" circleW="35" circleH="35" texture="Assets/Textures/Menus/Options/pumpkinBt.png">
+			<musicSlider id="7" barX="215" circleX="230" barY="128" circleY="117" />
+			<sfxSlider id="8" barX="215" circleX="230" barY="193" circleY="182" />
+		</sliders>
+		<fullScreenBox id="9" x="215" y="239" w="52" h="26" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
+		<backBt id="6" x="-105" y="277" w="233" h="39" texture="Assets/Textures/Menus/Options/back.png" />
+	</settings>
+	<scene>
+		<ui>
+			<heartContainers path="Assets/Textures/UI/Retro Inventory/Original/hearts.png" />
+			<candyCounter path="Assets/Textures/UI/candy icon.png" />
+			<sandClock path="Assets/Textures/UI/sandClockSheet-outlined.png">
+				<animations>
+					<sand loop="true" speed="0.05f">
+						<frame x="0" y="0" w="17" h="18" />
+						<frame x="17" y="0" w="17" h="18" />
+						<frame x="34" y="0" w="17" h="18" />
+						<frame x="51" y="0" w="17" h="18" />
+					</sand>
+				</animations>
+			</sandClock>
+		</ui>
+		<map>
+			<paths>
+				<lvl1 path="Assets/Maps/" name="Mapa.tmx" />
+				<lvl2 path="Assets/Maps/" name="Mapa2.tmx" />
+			</paths>
+			<parallax>
+				<layer name="mountain1" path="Assets/Textures/Parallax/Mountain1OFF.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="20" repeatNum="8" slowY="30" />
+				<layer name="mountain2" path="Assets/Textures/Parallax/Mountain2OFF.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="10" repeatNum="8" slowY="5" />
+				<layer name="cloud1" path="Assets/Textures/Parallax/Cloud1X2.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="5" repeatNum="6" slowY="1" />
+				<layer name="moon" path="Assets/Textures/Parallax/MoonX2.png" marginX="480" marginY="0" spacing="0" width="640" height="360" slowX="2" repeatNum="1" slowY="1" />
+				<layer name="cloud2" path="Assets/Textures/Parallax/Cloud2X2.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="4" repeatNum="6" slowY="1" />
+				<layer name="cloud3" path="Assets/Textures/Parallax/Cloud3X2.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="3" repeatNum="6" slowY="1" />
+				<layer name="sky" path="Assets/Textures/Parallax/SkyX2.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="1" repeatNum="6" slowY="1" />
+			</parallax>
+		</map>
+		<helpMenu x="140" y="9" w="379" h="295" path="Assets/Textures/Menus/Help/HelpMenu_ver2.png" lvl="1" />
+		<entities>
+			<player w="64" h="64" t_w="64" t_h="64" lives="3" texture="Assets/Textures/GhostCharacter/Ghost_Sheet_Resized.png" t_texture="Assets/Textures/Pumpkin Head/pumpkinhead_sheet2.png">
+				<startPositions>
+					<lvl1 x="25" y="350" />
+					<lvl2 x="25" y="420" />
+				</startPositions>
+				<propierties gJumpForce="0.6f" pJumpForce="0.5f" pushForce="0.5f" moveSpeed="0.2f" friction="2.0f" gravity="1.2f" attack1Time="0.8f" attack2Time="1.0f" hurtTime="1.0f" respawnTime=" 2.0f" playerState="0" direction="1" shootCooldown="5" />
+				<animations>
+					<idle loop="true" speed="0.2f">
+						<frame x="0" y="0" w="64" h="64" />
+						<frame x="64" y="0" w="64" h="64" />
+						<frame x="128" y="0" w="64" h="64" />
+						<frame x="192" y="0" w="64" h="64" />
+						<frame x="256" y="0" w="64" h="64" />
+						<frame x="320" y="0" w="64" h="64" />
+						<frame x="384" y="0" w="64" h="64" />
+						<frame x="448" y="0" w="64" h="64" />
+					</idle>
+					<walk loop="true" speed="0.1f">
+						<frame x="0" y="64" w="64" h="64" />
+						<frame x="64" y="64" w="64" h="64" />
+						<frame x="128" y="64" w="64" h="64" />
+						<frame x="192" y="64" w="64" h="64" />
+					</walk>
+					<jump loop="false" speed="0.2f">
+						<frame x="0" y="128" w="64" h="64" />
+						<frame x="64" y="128" w="64" h="64" />
+						<frame x="128" y="128" w="64" h="64" />
+					</jump>
+					<fall loop="false" speed=" 0.2f">
+						<frame x="0" y="192" w="64" h="64" />
+						<frame x="64" y="192" w="64" h="64" />
+						<frame x="128" y="192" w="64" h="64" />
+					</fall>
+					<hurt loop="false" speed="0.15f">
+						<frame x="0" y="256" w="64" h="64" />
+						<frame x="64" y="256" w="64" h="64" />
+						<frame x="128" y="256" w="64" h="64" />
+						<frame x="192" y="256" w="64" h="64" />
+					</hurt>
+					<death loop="false" speed="0.2f">
+						<frame x="0" y="320" w="64" h="64" />
+						<frame x="64" y="320" w="64" h="64" />
+						<frame x="128" y="320" w="64" h="64" />
+						<frame x="192" y="320" w="64" h="64" />
+						<frame x="256" y="320" w="64" h="64" />
+						<frame x="320" y="320" w="64" h="64" />
+					</death>
+					<t_idle loop="true" speed="0.1f">
+						<frame x="0" y="0" w="64" h="64" />
+					</t_idle>
+					<t_walk loop="true" speed="0.1f">
+						<frame x="0" y="0" w="64" h="64" />
+						<frame x="64" y="0" w="64" h="64" />
+						<frame x="128" y="0" w="64" h="64" />
+						<frame x="192" y="0" w="64" h="64" />
+					</t_walk>
+					<t_jump>
+						<frame x="0" y="0" w="64" h="64" />
+						<frame x="64" y="0" w="64" h="64" />
+					</t_jump>
+					<t_fall>
+						<frame x="192" y="0" w="64" h="64" />
+						<frame x="128" y="0" w="64" h="64" />
+					</t_fall>
+					<t_spell1 loop="false" speed="0.2f">
+						<frame x="0" y="64" w="64" h="64" />
+						<frame x="64" y="64" w="64" h="64" />
+						<frame x="128" y="64" w="64" h="64" />
+						<frame x="192" y="64" w="64" h="64" />
+						<frame x="256" y="64" w="64" h="64" />
+						<frame x="320" y="64" w="64" h="64" />
+						<frame x="384" y="64" w="64" h="64" />
+						<frame x="448" y="64" w="64" h="64" />
+					</t_spell1>
+					<t_hurt loop="false" speed="0.1f">
+						<frame x="0" y="128" w="64" h="64" />
+						<frame x="64" y="128" w="64" h="64" />
+						<frame x="128" y="128" w="64" h="64" />
+					</t_hurt>
+					<t_death loop=" false" speed="0.2f">
+						<frame x="0" y="192" w="64" h="64" />
+						<frame x="64" y="192" w="64" h="64" />
+						<frame x="128" y="192" w="64" h="64" />
+						<frame x="192" y="192" w="64" h="64" />
+						<frame x="256" y="192" w="64" h="64" />
+						<frame x="320" y="192" w="64" h="64" />
+						<frame x="384" y="192" w="64" h="64" />
+						<frame x="448" y="192" w="64" h="64" />
+					</t_death>
+					<t_spell2 loop="false" speed="0.2f">
+						<frame x="0" y="256" w="64" h="64" />
+						<frame x="64" y="256" w="64" h="64" />
+						<frame x="128" y="256" w="64" h="64" />
+						<frame x="192" y="256" w="64" h="64" />
+						<frame x="256" y="256" w="64" h="64" />
+						<frame x="320" y="256" w="64" h="64" />
+						<frame x="384" y="256" w="64" h="64" />
+						<frame x="448" y="256" w="64" h="64" />
+						<frame x="512" y="256" w="64" h="64" />
+						<frame x="576" y="256" w="64" h="64" />
+						<frame x="640" y="256" w="64" h="64" />
+					</t_spell2>
+				</animations>
+			</player>
+			<shot x="0" y="0" w="64" h="64" rad="5" texture="Assets/Textures/Pumpkin Head/fireball-sheet-test.png">
+				<animations>
+					<travel loop="true" speed="0.2f">
+						<frame x="0" y="0" w="64" h="64" />
+						<frame x="64" y="0" w="64" h="64" />
+						<frame x="128" y="0" w="64" h="64" />
+						<frame x="192" y="0" w="64" h="64" />
+					</travel>
+				</animations>
+			</shot>
+			<enemies>
+				<skeleton x="100" y="420" w="48" h="48" texture="Assets/Textures/Enemies/Undead/SwordsMan-reorganized_spritesheet.png">
+					<properties speed="1" chaseArea="100" attackArea="20" jumpForce="0.3f" attackTime="1.0f" deathTime="1.5f" lives="1" />
+					<animations>
+						<idle loop="true" speed="0.2f">
+							<frame x="0" y="0" w="48" h="48" />
+						</idle>
+						<walk loop="true" speed="0.2f">
+							<frame x="0" y="0" w="48" h="48" />
+							<frame x="48" y="0" w="48" h="48" />
+							<frame x="96" y="0" w="48" h="48" />
+							<frame x="144" y="0" w="48" h="48" />
+						</walk>
+						<attack loop="false" speed="0.1f">
+							<frame x="0" y="48" w="48" h="48" />
+							<frame x="48" y="48" w="48" h="48" />
+							<frame x="96" y="48" w="48" h="48" />
+							<frame x="144" y="48" w="48" h="48" />
+							<frame x="0" y="48" w="48" h="48" />
+						</attack>
+						<death loop="false" speed="0.2f">
+							<frame x="0" y="96" w="48" h="48" />
+							<frame x="48" y="96" w="48" h="48" />
+							<frame x="96" y="96" w="48" h="48" />
+						</death>
+					</animations>
+				</skeleton>
+				<bat x="250" y="350" w="32" h="32" texture="Assets/Textures/Enemies/Bat/Vampire/BatVampire_Sheet.png">
+					<properties speed="1" chaseArea="100" deathTime="1.0f" lives="1" />
+					<animations>
+						<idle loop="true" speed="0.2f">
+							<frame x="0" y="0" w="32" h="32" />
+							<frame x="32" y="0" w="32" h="32" />
+							<frame x="64" y="0" w="32" h="32" />
+							<frame x="96" y="0" w="32" h="32" />
+						</idle>
+						<attack loop="true" speed="0.2f">
+							<frame x="0" y="32" w="32" h="32" />
+							<frame x="32" y="32" w="32" h="32" />
+							<frame x="64" y="32" w="32" h="32" />
+							<frame x="96" y="32" w="32" h="32" />
+							<frame x="128" y="32" w="32" h="32" />
+							<frame x="160" y="32" w="32" h="32" />
+						</attack>
+						<hurt loop=" false" speed="0.2f">
+							<frame x="0" y="64" w="32" h="32" />
+							<frame x="32" y="64" w="32" h="32" />
+							<frame x="64" y="64" w="32" h="32" />
+							<frame x="96" y="64" w="32" h="32" />
+						</hurt>
+						<death loop=" false" speed="0.1f">
+							<frame x="0" y="96" w="32" h="32" />
+							<frame x="32" y="96" w="32" h="32" />
+							<frame x="64" y="96" w="32" h="32" />
+							<frame x="96" y="96" w="32" h="32" />
+							<frame x="128" y="96" w="32" h="32" />
+							<frame x="192" y="96" w="32" h="32" />
+							<frame x="224" y="96" w="32" h="32" />
+						</death>
+					</animations>
+				</bat>
+				<santa x="250" y="350" w="32" h="32" texture="Assets/Textures/Enemies/Santa_Boss/santa_sheet.png" lvl="1">
+					<properties speed="1" deathTime="1.0f" jumpRange="100" jumpCooldown="5" attackRange="30" attackTime="1" pushForce="0.5f" hurtTime="1.0f" lives="10" />
+					<animations>
+						<idle loop="true" speed="0.2f">
+							<frame x="0" y="0" w="32" h="32" />
+							<frame x="32" y="0" w="32" h="32" />
+							<frame x="64" y="0" w="32" h="32" />
+							<frame x="96" y="0" w="32" h="32" />
+							<frame x="128" y="0" w="32" h="32" />
+							<frame x="160" y="0" w="32" h="32" />
+						</idle>
+						<walk loop="true" speed="0.2f">&gt;
+							<frame x="0" y="32" w="32" h="32" />
+							<frame x="32" y="32" w="32" h="32" />
+							<frame x="64" y="32" w="32" h="32" />
+							<frame x="96" y="32" w="32" h="32" />
+							<frame x="128" y="32" w="32" h="32" />
+							<frame x="160" y="32" w="32" h="32" />
+						</walk>
+						<jump loop="false" speed="0.2f">&gt;
+							<frame x="0" y="64" w="32" h="32" />
+							<frame x="32" y="64" w="32" h="32" />
+							<frame x="64" y="64" w="32" h="32" />
+							<frame x="96" y="64" w="32" h="32" />
+							<frame x="128" y="64" w="32" h="32" />
+							<frame x="160" y="64" w="32" h="32" />
+						</jump>
+						<fall loop="false" speed="0.2f">&gt;
+							<frame x="192" y="64" w="32" h="32" />
+							<frame x="224" y="64" w="32" h="32" />
+						</fall>
+						<hurt loop="false" speed="0.2f">
+							<frame x="0" y="96" w="32" h="32" />
+							<frame x="32" y="96" w="32" h="32" />
+							<frame x="64" y="96" w="32" h="32" />
+						</hurt>
+						<attack loop="false" speed="0.2f">&gt;
+							<frame x="0" y="128" w="32" h="32" />
+							<frame x="32" y="128" w="32" h="32" />
+							<frame x="64" y="128" w="32" h="32" />
+							<frame x="96" y="128" w="32" h="32" />
+							<frame x="128" y="128" w="32" h="32" />
+							<frame x="160" y="128" w="32" h="32" />
+						</attack>
+						<death loop="false" speed="0.2f">&gt;
+							<frame x="0" y="224" w="32" h="32" />
+							<frame x="32" y="224" w="32" h="32" />
+							<frame x="64" y="224" w="32" h="32" />
+							<frame x="96" y="224" w="32" h="32" />
+							<frame x="128" y="224" w="32" h="32" />
+							<frame x="160" y="224" w="32" h="32" />
+							<frame x="192" y="224" w="32" h="32" />
+						</death>
+					</animations>
+				</santa>
+				<instances>
+					<lvl1>
+						<instance enemyType="skeleton" entityType="6">
+							<point x="100" y=" 420" />
+							<point x="275" y=" 390" />
+						</instance>
+						<instance enemyType="bat" entityType="5">
+							<point x="753" y="240" />
+							<point x="865" y="240" />
+						</instance>
+						<instance enemyType="skeleton" entityType="6">
+							<point x="2200" y="124" />
+							<point x="2000" y="130" />
+						</instance>
+						<instance enemyType="bat" entityType="5">
+							<point x="1618" y="176" />
+							<point x="1696" y="176" />
+						</instance>
+						<instance enemyType="skeleton" entityType="6">
+							<point x="1505" y="432" />
+							<point x="1713" y="432" />
+						</instance>
+					</lvl1>
+					<lvl2>
+						<instance enemyType="skeleton" entityType="6">
+							<point x="280" y=" 390" />
+							<point x="525" y=" 360" />
+						</instance>
+						<instance enemyType="bat" entityType="5">
+							<point x="860" y="200" />
+							<point x="1060" y="200" />
+						</instance>
+						<instance enemyType="bat" entityType="5">
+							<point x="1830" y="215" />
+							<point x="1900" y="215" />
+							<point x="1900" y="335" />
+							<point x="1830" y="335" />
+						</instance>
+						<instance enemyType="santa" entityType="7">
+							<point x="2660" y="400" />
+						</instance>
+					</lvl2>
+				</instances>
+			</enemies>
+			<items>
+				<candies>
+					<properties w="16" h="16" texture="Assets/Textures/Items/candySheet.png" />
+					<instances>
+						<lvl1>
+							<corn1 x="368" y="304" type="corn" entityType="3" />
+							<swirl1 x="608" y="320" type="swirl" entityType="3" />
+							<heart1 x="1000" y="416" type="heart" entityType="3" />
+							<choc1 x="960" y="352" type="choc" entityType="3" />
+							<ube1 x="1680" y="432" type="ube" entityType="3" />
+							<grape1 x="2192" y="112" type="grape" entityType="3" />
+							<mint1 x="2562" y="96" type="mint" entityType="3" />
+							<toffee1 x="2193" y="368" type="toffee" entityType="3" />
+							<lolly1 x="2592" y="336" type="lolly" entityType="3" />
+						</lvl1>
+						<lvl2>
+							<swirl1 x="608" y="310" type="swirl" entityType="3" />
+							<corn1 x="1233" y="310" type="corn" entityType="3" />
+							<swirl2 x="1855" y="236" type="swirl" entityType="3" />
+							<heart1 x="1888" y="360" type="heart" entityType="3" />
+							<ube1 x="465" y="305" type="ube" entityType="3" />
+							<mint1 x="1201" y="241" type="mint" entityType="3" />
+							<lolly1 x="2033" y="319" type="lolly" entityType="3" />
+							<toffee1 x="2712" y="400" type="toffee" entityType="3" />
+							<heart2 x="736" y="384" type="heart" entityType="3" />
+						</lvl2>
+					</instances>
+					<animations>
+						<floating loop="true" speed="0.1f">
+							<frame x="0" y="0" w="16" h="16" />
+							<frame x="16" y="0" w="16" h="16" />
+							<frame x="32" y="0" w="16" h="16" />
+							<frame x="48" y="0" w="16" h="16" />
+						</floating>
+					</animations>
+				</candies>
+				<pumpkins>
+					<properties w="16" h="16" texture="Assets/Textures/Items/pumpkin ui obj-resized.png" />
+					<instances>
+						<lvl1>
+							<instance x="300" y="416" entityType="2" />
+							<instance x="816" y="304" entityType="2" />
+							<instance x="720" y="385" entityType="2" />
+							<instance x="1169" y="321" entityType="2" />
+							<instance x="2239" y="257" entityType="2" />
+							<instance x="2018" y="370" entityType="2" />
+							<instance x="1472" y="432" entityType="2" />
+							<instance x="1568" y="257" entityType="2" />
+							<instance x="1808" y="192" entityType="2" />
+						</lvl1>
+						<lvl2>
+							<instance x="175" y="385" entityType="2" />
+							<instance x="1035" y="224" entityType="2" />
+							<instance x="1488" y="400" entityType="2" />
+							<instance x="1780" y="352" entityType="2" />
+							<instance x="2120" y="400" entityType="2" />
+						</lvl2>
+					</instances>
+					<animations>
+						<unlit>
+							<frame x="0" y="0" w="16" h="16" />
+						</unlit>
+						<lit>
+							<frame x="0" y="16" w="16" h="16" />
+						</lit>
+					</animations>
+				</pumpkins>
+			</items>
+		</entities>
+		<savedData saved="false" level="1" time="0" startBossFight="false" bossKilled="false">
+			<lvl1>
+				<player x="25" y="350" lives="3" transformable="false" transformed="false" candies="0" />
+				<enemy0 dead="false" x="104" y="423" />
+				<enemy1 dead="false" x="760" y="248" />
+				<enemy2 dead="false" x="2200" y="119" />
+				<enemy3 dead="false" x="1624" y="183" />
+				<enemy4 dead="false" x="1512" y="440" />
+				<pumpkin0 alight="true" x="308" y="423" />
+				<pumpkin1 alight="true" x="824" y="312" />
+				<pumpkin2 alight="true" x="728" y="392" />
+				<pumpkin3 alight="true" x="1177" y="329" />
+				<pumpkin4 alight="true" x="2247" y="265" />
+				<pumpkin5 alight="true" x="2026" y="378" />
+				<pumpkin6 alight="true" x="1479" y="440" />
+				<pumpkin7 alight="true" x="1575" y="265" />
+				<pumpkin8 alight="true" x="1816" y="200" />
+				<candy0 x="376" y="312" type="corn" picked="false" />
+				<candy1 x="616" y="328" type="swirl" picked="false" />
+				<candy2 x="1008" y="423" type="heart" picked="false" />
+				<candy3 x="967" y="360" type="choc" picked="false" />
+				<candy4 x="1687" y="440" type="ube" picked="false" />
+				<candy5 x="2200" y="119" type="grape" picked="false" />
+				<candy6 x="2570" y="104" type="mint" picked="false" />
+				<candy7 x="2201" y="376" type="toffee" picked="false" />
+				<candy8 x="2600" y="343" type="lolly" picked="false" />
+			</lvl1>
+			<lvl2>
+				<player x="1479" y="267" lives="4" transformable="false" transformed="false" candies="4" />
+				<enemy0 dead="false" x="495" y="359" />
+				<enemy1 dead="false" x="970" y="168" />
+				<enemy2 dead="false" x="1890" y="215" />
+				<enemy3 dead="false" x="2659" y="399" />
+				<pumpkin0 alight="true" x="183" y="392" />
+				<pumpkin1 alight="true" x="1042" y="232" />
+				<pumpkin2 alight="true" x="1496" y="408" />
+				<pumpkin3 alight="true" x="1787" y="360" />
+				<pumpkin4 alight="true" x="2128" y="408" />
+				<candy0 x="616" y="317" type="swirl" picked="true" />
+				<candy1 x="1241" y="317" type="corn" picked="true" />
+				<candy2 x="1862" y="244" type="swirl" picked="false" />
+				<candy3 x="1895" y="367" type="heart" picked="false" />
+				<candy4 x="473" y="313" type="ube" picked="true" />
+				<candy5 x="1209" y="249" type="mint" picked="true" />
+				<candy6 x="2041" y="327" type="lolly" picked="false" />
+				<candy7 x="2720" y="408" type="toffee" picked="false" />
+				<candy8 x="744" y="391" type="heart" picked="true" />
+			</lvl2>
+		</savedData>
+		<pauseMenu>
+			<pausePanel x="144" y="16" w="361" h="284" texture="Assets/Textures/Menus/Pause/pause-panel.png" />
+			<buttons>
+				<resumeBt id="10" x="213" y="92" w="233" h="39" texture="Assets/Textures/Menus/Pause/resume resized.png" />
+				<optionsBt id="3" x="213" y="140" w="233" h="39" texture="Assets/Textures/Menus/Pause/options resized.png" />
+				<backToTitleBt id="11" x="213" y="188" w="233" h="39" texture="Assets/Textures/Menus/Pause/back to title.png" />
+				<exitBt id="5" x="213" y="236" w="233" h="39" texture="Assets/Textures/Menus/Pause/exit centered.png" />
+			</buttons>
+		</pauseMenu>
+		<deathMenu>
+			<bg path="Assets/Textures/Menus/Win-Lose/lose screen no text.png" />
+			<icons>
+				<candy x="24" y="17" w="38" h="33" textX="70" textY="22" textW="19" textH="23" path="Assets/Textures/Menus/Win-Lose/candy icon.png" />
+			</icons>
+			<buttons>
+				<retryBt id="12" x="76" y="253" w="233" h="39" texture="Assets/Textures/Menus/Win-Lose/Retry Button Sheet resized.png" />
+				<backToTitleBt id="11" x="330" y="253" w="233" h="39" texture="Assets/Textures/Menus/Win-Lose/back to title.png" />
+				<exitBt id="5" x="505" y="19" w="233" h="39" texture="Assets/Textures/Menus/Win-Lose/Exit Button Sheet_Resized.png" />
+			</buttons>
+		</deathMenu>
+		<winMenu>
+			<bg path="Assets/Textures/Menus/Win-Lose/winScreen.png" />
+			<icons>
+				<candy x="24" y="17" w="38" h="33" textX="70" textY="22" textW="19" textH="23" path="Assets/Textures/Menus/Win-Lose/candy icon.png" />
+			</icons>
+			<buttons>
+				<replayBt id="12" x="379" y="125" w="233" h="39" texture="Assets/Textures/Menus/Win-Lose/Replay Button Sheet resized.png" />
+				<backToTitleBt id="11" x="379" y="180" w="233" h="39" texture="Assets/Textures/Menus/Win-Lose/back to title.png" />
+				<exitBt id="5" x="379" y="236" w="233" h="39" texture="Assets/Textures/Menus/Win-Lose/exit centered.png" />
+			</buttons>
+		</winMenu>
+	</scene>
+	<audio>
+		<music>
+			<menuMus path="Assets/Audio/Music/Nothing As It Seems.ogg" />
+			<lvl1Mus path="Assets/Audio/Music/Haunted Towers.ogg" />
+			<lvl2Mus path="Assets/Audio/Music/Crystal Conundrum (Remix).ogg" />
+			<winMus path="Assets/Audio/Music/Yo-kai Watch 2 Victory.ogg" />
+			<loseMus path="Assets/Audio/Music/Yo-kai Watch Defeat.ogg" />
+			<bossMus path="Assets/Audio/Music/BossSong.ogg" />
+		</music>
+		<fx>
+			<gJumpSFX path="Assets/Audio/Fx/ghostJump.ogg" />
+			<pJumpSFX path="Assets/Audio/Fx/pumpkinJump.ogg" />
+			<atk1SFX path="Assets/Audio/Fx/atk1_alt.ogg" />
+			<atk2SFX path="Assets/Audio/Fx/customATK2.ogg" />
+			<switchOnSFX path="Assets/Audio/Fx/SwitchON.ogg" />
+			<switchOffSFX path="Assets/Audio/Fx/SwitchOFF.ogg" />
+			<gHurtSFX path="Assets/Audio/Fx/SquidHit.ogg" />
+			<pHurtSFX path="Assets/Audio/Fx/BonkSFX.ogg" />
+			<gDeathSFX path="Assets/Audio/Fx/SinkOMO.ogg" />
+			<pDeathSFX path="Assets/Audio/Fx/PumpkinCrack.ogg" />
+			<pickCandy path="Assets/Audio/Fx/OMO_pickedItem.ogg" />
+			<pourCandy path="Assets/Audio/Fx/candyPour.ogg" />
+			<eatCandy path="Assets/Audio/Fx/candyEat.ogg" />
+			<saveGame path="Assets/Audio/Fx/SaveGame.ogg" />
+			<loadGame path="Assets/Audio/Fx/LoadGame.ogg" />
+			<godModeSFX path="Assets/Audio/Fx/i-am-a-god.ogg" />
+			<batWingsSFX path="Assets/Audio/Fx/BatWings.ogg" />
+			<farBatWings path="Assets/Audio/Fx/FarBatWings.ogg" />
+			<batDeathSFX path="Assets/Audio/Fx/BatDeath.ogg" />
+			<swordSFX path="Assets/Audio/Fx/SwordSlash.ogg" />
+			<skeletonDeathSFX path="Assets/Audio/Fx/SkeletonDeath.ogg" />
+			<noSound path="Assets/Audio/Fx/NoSound.ogg" />
+			<punchSound path="Assets/Audio/Fx/Punch.ogg" />
+			<santaHurtSound path="Assets/Audio/Fx/SantaHurt.ogg" />
+			<santaJumpSound path="Assets/Audio/Fx/SantaJump.ogg" />
+			<testSound path="Assets/Audio/Fx/Fushigi.ogg" />
+		</fx>
+	</audio>
+	<playerPrefs>
+		<fullscreen toggle="0" />
+		<musicVolume value="65" />
+		<sfxVolume value="65" />
+	</playerPrefs>
+</config>

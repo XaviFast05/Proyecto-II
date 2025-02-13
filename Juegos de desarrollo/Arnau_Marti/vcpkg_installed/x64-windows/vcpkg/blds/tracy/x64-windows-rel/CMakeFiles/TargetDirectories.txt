@@ -1,0 +1,6 @@
+C:/Users/arnau/Documents/GitHub/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/blds/tracy/x64-windows-rel/CMakeFiles/TracyClient.dir
+C:/Users/arnau/Documents/GitHub/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/blds/tracy/x64-windows-rel/CMakeFiles/edit_cache.dir
+C:/Users/arnau/Documents/GitHub/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/blds/tracy/x64-windows-rel/CMakeFiles/rebuild_cache.dir
+C:/Users/arnau/Documents/GitHub/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/blds/tracy/x64-windows-rel/CMakeFiles/list_install_components.dir
+C:/Users/arnau/Documents/GitHub/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/blds/tracy/x64-windows-rel/CMakeFiles/install.dir
+C:/Users/arnau/Documents/GitHub/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/blds/tracy/x64-windows-rel/CMakeFiles/install/local.dir

@@ -1,0 +1,12 @@
+C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/brotli_x64-windows/debug/tools/brotli/brotli.exe
+C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/brotli_x64-windows/debug/lib/brotlienc.lib
+C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/brotli_x64-windows/debug/bin/brotlienc.dll
+C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/brotli_x64-windows/debug/lib/brotlidec.lib
+C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/brotli_x64-windows/debug/bin/brotlidec.dll
+C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/brotli_x64-windows/debug/lib/brotlicommon.lib
+C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/brotli_x64-windows/debug/bin/brotlicommon.dll
+C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/brotli_x64-windows/debug/share/unofficial-brotli/unofficial-brotli-config.cmake
+C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/brotli_x64-windows/debug/share/unofficial-brotli/unofficial-brotli-config-debug.cmake
+C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/brotli_x64-windows/debug/lib/pkgconfig/libbrotlicommon.pc
+C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/brotli_x64-windows/debug/lib/pkgconfig/libbrotlidec.pc
+C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/brotli_x64-windows/debug/lib/pkgconfig/libbrotlienc.pc
