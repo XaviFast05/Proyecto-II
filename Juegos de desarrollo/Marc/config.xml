@@ -299,75 +299,14 @@
 					</animations>
 				</santa>
 				<instances>
-					<lvl1>
-						<instance enemyType="skeleton" entityType="6">
-							<point x="100" y=" 420" />
-							<point x="275" y=" 390" />
-						</instance>
-						<instance enemyType="bat" entityType="5">
-							<point x="753" y="240" />
-							<point x="865" y="240" />
-						</instance>
-						<instance enemyType="skeleton" entityType="6">
-							<point x="2200" y="124" />
-							<point x="2000" y="130" />
-						</instance>
-						<instance enemyType="bat" entityType="5">
-							<point x="1618" y="176" />
-							<point x="1696" y="176" />
-						</instance>
-						<instance enemyType="skeleton" entityType="6">
-							<point x="1505" y="432" />
-							<point x="1713" y="432" />
-						</instance>
-					</lvl1>
-					<lvl2>
-						<instance enemyType="skeleton" entityType="6">
-							<point x="280" y=" 390" />
-							<point x="525" y=" 360" />
-						</instance>
-						<instance enemyType="bat" entityType="5">
-							<point x="860" y="200" />
-							<point x="1060" y="200" />
-						</instance>
-						<instance enemyType="bat" entityType="5">
-							<point x="1830" y="215" />
-							<point x="1900" y="215" />
-							<point x="1900" y="335" />
-							<point x="1830" y="335" />
-						</instance>
-						<instance enemyType="santa" entityType="7">
-							<point x="2660" y="400" />
-						</instance>
-					</lvl2>
+					<lvl1 />
 				</instances>
 			</enemies>
 			<items>
 				<candies>
 					<properties w="16" h="16" texture="Assets/Textures/Items/candySheet.png" />
 					<instances>
-						<lvl1>
-							<corn1 x="368" y="304" type="corn" entityType="3" />
-							<swirl1 x="608" y="320" type="swirl" entityType="3" />
-							<heart1 x="1000" y="416" type="heart" entityType="3" />
-							<choc1 x="960" y="352" type="choc" entityType="3" />
-							<ube1 x="1680" y="432" type="ube" entityType="3" />
-							<grape1 x="2192" y="112" type="grape" entityType="3" />
-							<mint1 x="2562" y="96" type="mint" entityType="3" />
-							<toffee1 x="2193" y="368" type="toffee" entityType="3" />
-							<lolly1 x="2592" y="336" type="lolly" entityType="3" />
-						</lvl1>
-						<lvl2>
-							<swirl1 x="608" y="310" type="swirl" entityType="3" />
-							<corn1 x="1233" y="310" type="corn" entityType="3" />
-							<swirl2 x="1855" y="236" type="swirl" entityType="3" />
-							<heart1 x="1888" y="360" type="heart" entityType="3" />
-							<ube1 x="465" y="305" type="ube" entityType="3" />
-							<mint1 x="1201" y="241" type="mint" entityType="3" />
-							<lolly1 x="2033" y="319" type="lolly" entityType="3" />
-							<toffee1 x="2712" y="400" type="toffee" entityType="3" />
-							<heart2 x="736" y="384" type="heart" entityType="3" />
-						</lvl2>
+						<lvl1 />
 					</instances>
 					<animations>
 						<floating loop="true" speed="0.1f">
@@ -381,24 +320,7 @@
 				<pumpkins>
 					<properties w="16" h="16" texture="Assets/Textures/Items/pumpkin ui obj-resized.png" />
 					<instances>
-						<lvl1>
-							<instance x="300" y="416" entityType="2" />
-							<instance x="816" y="304" entityType="2" />
-							<instance x="720" y="385" entityType="2" />
-							<instance x="1169" y="321" entityType="2" />
-							<instance x="2239" y="257" entityType="2" />
-							<instance x="2018" y="370" entityType="2" />
-							<instance x="1472" y="432" entityType="2" />
-							<instance x="1568" y="257" entityType="2" />
-							<instance x="1808" y="192" entityType="2" />
-						</lvl1>
-						<lvl2>
-							<instance x="175" y="385" entityType="2" />
-							<instance x="1035" y="224" entityType="2" />
-							<instance x="1488" y="400" entityType="2" />
-							<instance x="1780" y="352" entityType="2" />
-							<instance x="2120" y="400" entityType="2" />
-						</lvl2>
+						<lvl1 />
 					</instances>
 					<animations>
 						<unlit>
@@ -411,54 +333,10 @@
 				</pumpkins>
 			</items>
 		</entities>
-		<savedData saved="false" level="1" time="0" startBossFight="false" bossKilled="false">
+		<savedData saved="true" level="1" time="0" startBossFight="false" bossKilled="false">
 			<lvl1>
 				<player x="25" y="350" lives="3" transformable="false" transformed="false" candies="0" />
-				<enemy0 dead="false" x="104" y="423" />
-				<enemy1 dead="false" x="760" y="248" />
-				<enemy2 dead="false" x="2200" y="119" />
-				<enemy3 dead="false" x="1624" y="183" />
-				<enemy4 dead="false" x="1512" y="440" />
-				<pumpkin0 alight="true" x="308" y="423" />
-				<pumpkin1 alight="true" x="824" y="312" />
-				<pumpkin2 alight="true" x="728" y="392" />
-				<pumpkin3 alight="true" x="1177" y="329" />
-				<pumpkin4 alight="true" x="2247" y="265" />
-				<pumpkin5 alight="true" x="2026" y="378" />
-				<pumpkin6 alight="true" x="1479" y="440" />
-				<pumpkin7 alight="true" x="1575" y="265" />
-				<pumpkin8 alight="true" x="1816" y="200" />
-				<candy0 x="376" y="312" type="corn" picked="false" />
-				<candy1 x="616" y="328" type="swirl" picked="false" />
-				<candy2 x="1008" y="423" type="heart" picked="false" />
-				<candy3 x="967" y="360" type="choc" picked="false" />
-				<candy4 x="1687" y="440" type="ube" picked="false" />
-				<candy5 x="2200" y="119" type="grape" picked="false" />
-				<candy6 x="2570" y="104" type="mint" picked="false" />
-				<candy7 x="2201" y="376" type="toffee" picked="false" />
-				<candy8 x="2600" y="343" type="lolly" picked="false" />
 			</lvl1>
-			<lvl2>
-				<player x="1479" y="267" lives="4" transformable="false" transformed="false" candies="4" />
-				<enemy0 dead="false" x="495" y="359" />
-				<enemy1 dead="false" x="970" y="168" />
-				<enemy2 dead="false" x="1890" y="215" />
-				<enemy3 dead="false" x="2659" y="399" />
-				<pumpkin0 alight="true" x="183" y="392" />
-				<pumpkin1 alight="true" x="1042" y="232" />
-				<pumpkin2 alight="true" x="1496" y="408" />
-				<pumpkin3 alight="true" x="1787" y="360" />
-				<pumpkin4 alight="true" x="2128" y="408" />
-				<candy0 x="616" y="317" type="swirl" picked="true" />
-				<candy1 x="1241" y="317" type="corn" picked="true" />
-				<candy2 x="1862" y="244" type="swirl" picked="false" />
-				<candy3 x="1895" y="367" type="heart" picked="false" />
-				<candy4 x="473" y="313" type="ube" picked="true" />
-				<candy5 x="1209" y="249" type="mint" picked="true" />
-				<candy6 x="2041" y="327" type="lolly" picked="false" />
-				<candy7 x="2720" y="408" type="toffee" picked="false" />
-				<candy8 x="744" y="391" type="heart" picked="true" />
-			</lvl2>
 		</savedData>
 		<pauseMenu>
 			<pausePanel x="144" y="16" w="361" h="284" texture="Assets/Textures/Menus/Pause/pause-panel.png" />
@@ -532,7 +410,7 @@
 	</audio>
 	<playerPrefs>
 		<fullscreen toggle="0" />
-		<musicVolume value="65" />
+		<musicVolume value="74" />
 		<sfxVolume value="65" />
 	</playerPrefs>
 </config>
