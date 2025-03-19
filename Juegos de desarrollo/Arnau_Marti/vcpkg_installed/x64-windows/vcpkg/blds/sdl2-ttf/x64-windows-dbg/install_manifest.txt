@@ -1,9 +1,0 @@
-C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/sdl2-ttf_x64-windows/debug/lib/SDL2_ttfd.lib
-C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/sdl2-ttf_x64-windows/debug/bin/SDL2_ttfd.dll
-C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/sdl2-ttf_x64-windows/debug/include/SDL2/SDL_ttf.h
-C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/sdl2-ttf_x64-windows/debug/cmake/SDL2_ttfConfig.cmake
-C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/sdl2-ttf_x64-windows/debug/cmake/SDL2_ttfConfigVersion.cmake
-C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/sdl2-ttf_x64-windows/debug/cmake/SDL2_ttf-shared-targets.cmake
-C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/sdl2-ttf_x64-windows/debug/cmake/SDL2_ttf-shared-targets-debug.cmake
-C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/sdl2-ttf_x64-windows/debug/lib/pkgconfig/SDL2_ttf.pc
-C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/sdl2-ttf_x64-windows/debug/share/licenses/SDL2_ttf/LICENSE.txt

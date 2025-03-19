@@ -1,6 +1,0 @@
-# ninja log v5
-8	93	7593550966254331	CMakeFiles/SDL2_ttf.dir/version.rc.res	2fe25cd0968532af
-3	123	7593550966549312	CMakeFiles/SDL2_ttf.dir/SDL_ttf.c.obj	87f0c140e88733ec
-124	398	7593550969137915	SDL2_ttfd.dll	d4e102b961d3b4e4
-124	398	7593550969137915	SDL2_ttfd.lib	d4e102b961d3b4e4
-398	531	0	CMakeFiles/install.util	eb00fd73f3cca277

@@ -1,2 +1,0 @@
-C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/bzip2_x64-windows/debug/lib/bz2d.lib
-C:/Users/marti/OneDrive/Documents/Hollow-Project/vcpkg_installed/x64-windows/vcpkg/pkgs/bzip2_x64-windows/debug/bin/bz2d.dll
