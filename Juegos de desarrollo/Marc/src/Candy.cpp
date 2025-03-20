@@ -79,12 +79,6 @@ bool Candy::Update(float dt)
 	}
 
 	if (picked && pbody->body->IsEnabled()) {
-		if (function == POINTS) {
-			player->PickCandies();
-		}
-		else if (function == HEALING) {
-			player->Heal();
-		}
 		pbody->body->SetEnabled(false);
 		picked = true;
 	}

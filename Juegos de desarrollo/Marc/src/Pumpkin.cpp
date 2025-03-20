@@ -61,14 +61,6 @@ bool Pumpkin::Update(float dt)
 	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texW / 2);
 	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
 
-	if (player->transformed) {
-		currentAnim = &lit;
-		alight = true;
-	}
-	else {
-		currentAnim = &unlit;
-		alight = false;
-	}
 	
 	Engine::GetInstance().render.get()->DrawTexture(pumpkinTex, (int)position.getX(), (int)position.getY(), &currentAnim->GetCurrentFrame());
 

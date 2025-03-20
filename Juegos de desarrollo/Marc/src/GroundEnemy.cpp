@@ -129,7 +129,6 @@ bool GroundEnemy::Update(float dt) {
 				{
 					if (dist <= attackArea && state != ATTACK) {
 						state = ATTACK;
-						player->DMGPlayer(player->pbody, pbody);
 						Engine::GetInstance().audio.get()->PlayFx(swordSlashSFX, 0, -1);
 						attackTimer.Start();
 						pbody->body->SetLinearVelocity({ 0,0 });
@@ -330,7 +329,6 @@ void GroundEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::PLAYER:
 
 		if (state != DEAD) {
-			player->DMGPlayer(physB, physA);
 
 		}
 

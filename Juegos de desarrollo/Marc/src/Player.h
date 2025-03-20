@@ -53,8 +53,6 @@ public:
 	void OnCollisionEnd(PhysBody* physA, PhysBody* physB);
 
 	void SetPosition(Vector2D pos);
-	void SetLives(int lives);
-	void SetCandies(int candies);
 
 	void SaveData(pugi::xml_node playerNode);
 
@@ -62,32 +60,11 @@ public:
 
 	void Restart();
 
-	void DMGPlayer(PhysBody* physA, PhysBody* physB);
-
 	void KillPlayer();
 
-	void PickCandies();
-
-	void Heal();
 
 public:
 
-	//MELEE
-	PhysBody* attackCollider;
-	Timer attack1Timer;
-	float attack1Time;
-
-	//SHOT
-	Particle* shoot;
-	int shootCooldown;
-	Timer shootCooldownTimer;
-	Timer attack2Timer;
-	float attack2Time;
-
-	int ATKcolliderW;
-	int ATKcolliderH;
-	Vector2D weaponOffset;
-	
 	SDL_Texture* texture;
 	SDL_Texture* t_texture;
 	int texW, texH;
@@ -102,18 +79,9 @@ public:
 	float friction;
 	float gravity;
 
-	bool destroyed;
 	bool godMode;
 	bool canClimb;
-	bool transformable;
-	bool transformed;
 	bool reachedCheckPoint;
-	bool hitEnemy;
-	bool shot;
-	bool hasCollider = false;
-	bool won;
-
-	int candyNum;
 
 	Timer hurtTimer;
 	float hurtTime;
@@ -127,9 +95,6 @@ public:
 
 	pugi::xml_node savedDataNode;
 
-	int lives;
-	int pickedCandies;
-
 	Animation* currentAnim = nullptr;
 
 	Animation idle;
@@ -139,41 +104,7 @@ public:
 	Animation hurt;
 	Animation death;
 
-	Animation t_idle;
-	Animation t_walk;
-	Animation t_jump;
-	Animation t_fall;
-	Animation t_spell1;
-	Animation t_spell2;
-	Animation t_hurt;
-	Animation t_death;
-
-
 	state playerState; 
 
 	Direction dir;
-
-	//audio
-	int saveGameSFX;
-	int loadGameSFX;
-	int godModeSFX;
-	int atk1SFX;
-	int atk2SFX;
-	int gJumpSFX;
-	int pJumpSFX;
-	int pDeathSFX;
-	int gDeathSFX;
-	int gHurtSFX;
-	int pHurtSFX;
-	int switchOnSFX;
-	int switchOffSFX;
-	int pickCandySFX;
-	int eatCandySFX;
-	int pourCandySFX;
-	int candySFX;
-	
-	
-	
-	//TEST
-	bool deleted = false;
 };

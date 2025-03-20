@@ -216,16 +216,16 @@ bool Scene::Update(float dt)
 
 	_dt = dt;
 
-	if (player->lives <= 0 && player->respawnTimer.ReadSec() > player->respawnTime-1) {
-		/*Engine::GetInstance().death.get()->Enable();*/
+	//if (player->lives <= 0 && player->respawnTimer.ReadSec() > player->respawnTime-1) {
+	//	/*Engine::GetInstance().death.get()->Enable();*/
 
-		Engine::GetInstance().death.get()->finalCandyNum = player->pickedCandies;
-		Engine::GetInstance().fade.get()->Fade((Module*)this, Engine::GetInstance().death.get());
-		
+	//	Engine::GetInstance().death.get()->finalCandyNum = player->pickedCandies;
+	//	Engine::GetInstance().fade.get()->Fade((Module*)this, Engine::GetInstance().death.get());
+	//	
 
-		
-		return true;
-	}
+	//	
+	//	return true;
+	//}
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 	{
@@ -262,15 +262,15 @@ bool Scene::Update(float dt)
 		return true;
 	}
 
-	if (player->won || level == LVL2 && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) {
+	//if (player->won || level == LVL2 && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) {
 
-		player->won = false;
-		Engine::GetInstance().win.get()->finalCandyNum = player->pickedCandies;
-		Engine::GetInstance().fade.get()->Fade(this, Engine::GetInstance().win.get());
-		
-		
-		return true;
-	}
+	//	player->won = false;
+	//	Engine::GetInstance().win.get()->finalCandyNum = player->pickedCandies;
+	//	Engine::GetInstance().fade.get()->Fade(this, Engine::GetInstance().win.get());
+	//	
+	//	
+	//	return true;
+	//}
 
 	if (loadScene)
 	{
@@ -318,8 +318,8 @@ bool Scene::Update(float dt)
 	
 
 
-	std::string candiesText = std::to_string(player->pickedCandies);
-	Engine::GetInstance().render.get()->DrawText(candiesText.c_str(), 1210, 29, 20, 20);
+	/*std::string candiesText = std::to_string(player->pickedCandies);
+	Engine::GetInstance().render.get()->DrawText(candiesText.c_str(), 1210, 29, 20, 20);*/
 	
 
 	return true;
@@ -334,13 +334,11 @@ bool Scene::PostUpdate()
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 	{
-		Engine::GetInstance().audio.get()->PlayFx(player->saveGameSFX);
 		SaveState();
 	}
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
 		
-		Engine::GetInstance().audio.get()->PlayFx(player->loadGameSFX);
 		LoadState();
 	}
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {
@@ -360,17 +358,17 @@ bool Scene::PostUpdate()
 
 
 		//life containers
-		int hearts = player->lives;
+		//int hearts = player->lives;
 
-		for (int i = 0; i < hearts; i++) {
-			SDL_Rect rect = { 0, player->transformed ? 16 : 32, 16, 16 };
-			Engine::GetInstance().render.get()->DrawTexture(
-				heartsTexture,
-				-render->camera.x / window->scale + i * 16 + 10,
-				-render->camera.y / window->scale + 10,
-				&rect
-			);
-		}
+		//for (int i = 0; i < hearts; i++) {
+		//	SDL_Rect rect = { 0, player->transformed ? 16 : 32, 16, 16 };
+		//	Engine::GetInstance().render.get()->DrawTexture(
+		//		heartsTexture,
+		//		-render->camera.x / window->scale + i * 16 + 10,
+		//		-render->camera.y / window->scale + 10,
+		//		&rect
+		//	);
+		//}
 	
 		
 		Engine::GetInstance().render.get()->DrawTexture(
@@ -607,8 +605,6 @@ void Scene::LoadTimeLivesCandies() {
 	pugi::xml_node savedDataNode = loadFile.child("config").child("scene").child("savedData");
 
 	currentTime = savedDataNode.attribute("time").as_float();
-	player->SetCandies(savedDataNode.child(previousLevelString.c_str()).child("player").attribute("candies").as_int());
-	player->SetLives(savedDataNode.child(previousLevelString.c_str()).child("player").attribute("lives").as_int());
 
 	loadFile.save_file("config.xml");
 }
@@ -638,11 +634,8 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 
 	case GuiControlId::BACKTOTITLE:
 		if (control->state == GuiControlState::PRESSED) {
-			finalCandyNum = player->candyNum;
 			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)Engine::GetInstance().mainMenu.get(), 30);
-			
 
-			
 		}
 		break;
 	case GuiControlId::QUIT:

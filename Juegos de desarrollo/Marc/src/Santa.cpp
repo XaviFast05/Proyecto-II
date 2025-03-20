@@ -115,7 +115,6 @@ bool Santa::Update(float dt) {
 					{
 						Engine::GetInstance().audio.get()->PlayFx(punchSFX);
 						state = ATTACK;
-						player->DMGPlayer(player->pbody, pbody);
 						pbody->body->SetLinearVelocity({ 0,0 });
 						attackTimer.Start();
 					}
@@ -301,7 +300,7 @@ void Santa::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::PLAYER:
 		LOG("Collision PLAYER");
 		if (state == JUMP || state == FALL) {
-			player->DMGPlayer(physB, physA);
+
 		}
 		break;
 

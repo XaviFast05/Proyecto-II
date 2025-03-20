@@ -289,7 +289,7 @@ void BatEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 	
 	case ColliderType::PLAYER:
 		if (state != DEAD) {
-			player->DMGPlayer(physB, physA);
+			
 			
 		}
 		break;
