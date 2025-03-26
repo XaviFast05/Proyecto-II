@@ -72,6 +72,19 @@ bool Player::Start() {
 	playerState = (state)parameters.child("propierties").attribute("playerState").as_int();
 	dir = (Direction)parameters.child("propierties").attribute("direction").as_int();
 
+	for (pugi::xml_node stateNode : parameters.child("statesFlow").children())
+	{
+		std::vector<bool> flow;
+		flow.clear();
+		for (pugi::xml_attribute stateAttribute : stateNode.attributes())
+		{
+			flow.push_back(stateAttribute.as_bool());
+		}
+		stateFlow.push_back(flow);
+
+		
+	}
+
 	godMode = false;
 	canClimb = false;
 	reachedCheckPoint = false;

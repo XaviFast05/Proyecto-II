@@ -74,6 +74,15 @@
 					<lvl2 x="25" y="420" />
 				</startPositions>
 				<propierties gJumpForce="0.6f" pJumpForce="0.5f" pushForce="0.5f" moveSpeed="0.2f" friction="2.0f" gravity="1.2f" attack1Time="0.8f" attack2Time="1.0f" hurtTime="1.0f" respawnTime=" 2.0f" playerState="0" direction="1" shootCooldown="5" />
+				<statesFlow>
+					<idle idle="false" run="true" jump="true" fall="true" punch="true" throw="true" mele="true" />
+					<run idle="true" run="false" jump="true" fall="true" punch="true" throw="true" mele="true" />
+					<jump idle="true" run="false" jump="false" fall="true" punch="true" throw="true" mele="true" />
+					<fall idle="true" run="false" jump="false" fall="false" punch="true" throw="true" mele="true" />
+					<punch idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" />
+					<throw idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" />
+					<melee idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" />
+				</statesFlow>
 				<animations>
 					<idle loop="true" speed="0.2f">
 						<frame x="0" y="0" w="64" h="64" />

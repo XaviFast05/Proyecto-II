@@ -108,6 +108,7 @@ public:
 	Animation death;
 
 	state playerState; 
+	std::vector<std::vector<bool>> stateFlow;
 
 	Direction dir;
 };
