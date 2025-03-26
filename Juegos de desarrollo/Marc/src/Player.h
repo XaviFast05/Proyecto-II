@@ -62,6 +62,7 @@ public:
 
 	void KillPlayer();
 
+	Vector2D GetDirection() const;
 
 public:
 
@@ -78,6 +79,8 @@ public:
 	float moveSpeed;
 	float friction;
 	float gravity;
+
+	bool flipSprite = false;
 
 	bool godMode;
 	bool canClimb;

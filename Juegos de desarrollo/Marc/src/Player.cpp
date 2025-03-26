@@ -14,7 +14,7 @@
 #include "MainMenu.h"
 #include "WinMenu.h"
 #include "FadeToBlack.h"
-
+#include "Bullet.h"
 
  
 
@@ -205,7 +205,17 @@ bool Player::Update(float dt)
 				playerState = FALL;
 			}
 
-
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
+				Vector2D bulletPosition = pbody->GetPhysBodyWorldPosition();
+				bulletPosition.setX(bulletPosition.getX() + (GetDirection().getX() * 20));
+				Bullet* bullet = new Bullet(BulletType::HORIZONTAL);
+				bullet->SetDirection(GetDirection());
+				bullet->SetParameters(Engine::GetInstance().scene.get()->configParameters);
+				bullet->texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/bala.png");
+				Engine::GetInstance().entityManager.get()->AddEntity(bullet);
+				bullet->Start();
+				bullet->SetPosition(bulletPosition);
+			}
 
 		}
 
@@ -379,6 +389,16 @@ void Player::SetPosition(Vector2D pos) {
 	b2Vec2 bodyPos = b2Vec2(PIXEL_TO_METERS(pos.getX()), PIXEL_TO_METERS(pos.getY()));
 	pbody->body->SetTransform(bodyPos, 0);	
 	
+}
+
+Vector2D Player::GetDirection() const {
+
+	if (dir == LEFT) {
+		return Vector2D(-1, 0);  // Izquierda
+	}
+	else {
+		return Vector2D(1, 0);   // Derecha
+	}
 }
 
 void Player::SaveData(pugi::xml_node playerNode)

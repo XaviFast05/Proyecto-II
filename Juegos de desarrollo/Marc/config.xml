@@ -333,9 +333,9 @@
 				</pumpkins>
 			</items>
 		</entities>
-		<savedData saved="true" level="1" time="0" startBossFight="false" bossKilled="false">
+		<savedData saved="true" level="1" time="69.7198715" startBossFight="false" bossKilled="false">
 			<lvl1>
-				<player x="25" y="350" lives="3" transformable="false" transformed="false" candies="0" />
+				<player x="1831" y="198" lives="3" transformable="false" transformed="false" candies="0" />
 			</lvl1>
 		</savedData>
 		<pauseMenu>

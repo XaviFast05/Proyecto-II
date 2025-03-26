@@ -10,6 +10,7 @@
 #include "GroundEnemy.h"
 #include "Particle.h"
 #include "Santa.h"
+#include "Bullet.h"
 
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
 {
@@ -100,7 +101,7 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		entity = new Santa();
 		break;
 	case EntityType::SHOT:
-		entity = new Particle();
+		entity = new Bullet();
 		break;
 	default:
 		break;

@@ -149,6 +149,7 @@
     <None Include="vcpkg.json" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Bullet.cpp" />
     <ClCompile Include="src\Candy.cpp" />
     <ClCompile Include="src\DeathMenu.cpp" />
     <ClCompile Include="src\GroundEnemy.cpp" />
@@ -186,6 +187,7 @@
     <ClCompile Include="src\WinMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Bullet.h" />
     <ClInclude Include="src\Candy.h" />
     <ClInclude Include="src\DeathMenu.h" />
     <ClInclude Include="src\GroundEnemy.h" />
