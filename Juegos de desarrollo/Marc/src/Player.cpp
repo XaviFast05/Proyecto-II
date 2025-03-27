@@ -141,14 +141,13 @@ bool Player::Update(float dt)
 
 		pbody->body->SetAwake(true);
 
-		currentFrame = currentAnim->GetCurrentFrame();
-
-		velocity = b2Vec2_zero;
+		velocity = b2Vec2_zero;		
+		grounded = VALUE_NEAR_TO_0(pbody->body->GetLinearVelocity().y);
 
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 		{
 			godMode = !godMode;
-			pbody->body->SetGravityScale(godMode == true || canClimb == true || playerState == DEAD ? 0 : gravity);
+			pbody->body->SetGravityScale(godMode == true || canClimb == true);
 			pbody->body->SetLinearVelocity(godMode == true ? b2Vec2_zero : pbody->body->GetLinearVelocity());
 			LOG("God mode = %d", (int)godMode);
 		}
@@ -160,79 +159,113 @@ bool Player::Update(float dt)
 			}
 		}
 
-		if (playerState != HURT && playerState != DEAD && playerState != ATTACK1 && playerState != ATTACK2)
+		
+
+		//CHANGERS
+		if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && stateFlow[playerState][RUN] && grounded) {
+			playerState = RUN;
+		}
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && stateFlow[playerState][JUMP] && grounded) {
+			playerState = JUMP;
+			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
+			grounded = false;
+		}
+		
+		//LOGIC
+		if (playerState==RUN)
 		{
-			playerState = IDLE;
-
-
-			// Move left
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
-				velocity.x = -moveSpeed * 16;
-				playerState = WALK;
-				dir = LEFT;
-			}
-
-			// Move right
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-				velocity.x = moveSpeed * 16;
-				playerState = WALK;
-				dir = RIGHT;
-			}
-
-			if (godMode || canClimb)
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) dir = RIGHT;
+			else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) dir = LEFT;
+			else playerState = IDLE;
+			velocity.x = (dir == RIGHT ? moveSpeed * 16 : -moveSpeed * 16);
+		}
+		if (playerState == JUMP)
+		{
+			if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT))
 			{
-				velocity.y = 0;
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-					velocity.y = -moveSpeed * 16;
-					playerState = WALK;
-				}
-
-				// Move right
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-					velocity.y = moveSpeed * 16;
-					playerState = WALK;
-				}
-
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) dir = RIGHT;
+				else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) dir = LEFT;
+				velocity.x = (dir == RIGHT ? moveSpeed * 16 : -moveSpeed * 16);
 			}
-			else {
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && VALUE_NEAR_TO_0(pbody->body->GetLinearVelocity().y)) {
-					// Apply an initial upward force
-					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
-				}
-
-
-
-
-				velocity = { velocity.x, pbody->body->GetLinearVelocity().y };
-			}
-
-			pbody->body->SetLinearVelocity(velocity);
-
-			if (pbody->body->GetLinearVelocity().y < -0.0001)
-			{
-				playerState = JUMP;
-			}
-
-			if (pbody->body->GetLinearVelocity().y > 0.0001)
-			{
-				playerState = FALL;
-			}
-
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
-				Vector2D bulletPosition = pbody->GetPhysBodyWorldPosition();
-				bulletPosition.setX(bulletPosition.getX() + (GetDirection().getX() * 20));
-				Bullet* bullet = new Bullet(BulletType::HORIZONTAL);
-				bullet->SetDirection(GetDirection());
-				bullet->SetParameters(Engine::GetInstance().scene.get()->configParameters);
-				bullet->texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/bala.png");
-				Engine::GetInstance().entityManager.get()->AddEntity(bullet);
-				bullet->Start();
-				bullet->SetPosition(bulletPosition);
-			}
-
+			else velocity.x = 0;
+			
+			if (grounded) playerState = IDLE;
 		}
 
-		else if (playerState == HURT) {
+		velocity = { velocity.x, pbody->body->GetLinearVelocity().y };
+		pbody->body->SetLinearVelocity(velocity);
+
+		//if (playerState != HURT && playerState != DEAD && playerState != ATTACK1 && playerState != ATTACK2)
+		//{
+		//	playerState = IDLE;
+
+
+		//	//// Move left
+		//	//if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && stateFlow[playerState][RUN] ) {
+		//	//	velocity.x = -moveSpeed * 16;
+		//	//	playerState = RUN;
+		//	//	dir = LEFT;
+		//	//}
+
+		//	//// Move right
+		//	//if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+		//	//	velocity.x = moveSpeed * 16;
+		//	//	playerState = RUN;
+		//	//	dir = RIGHT;
+		//	//}
+
+		//	if (godMode || canClimb)
+		//	{
+		//		velocity.y = 0;
+		//		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
+		//			velocity.y = -moveSpeed * 16;
+		//			playerState = WALK;
+		//		}
+
+		//		// Move right
+		//		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
+		//			velocity.y = moveSpeed * 16;
+		//			playerState = WALK;
+		//		}
+
+		//	}
+		//	else {
+		//		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && VALUE_NEAR_TO_0(pbody->body->GetLinearVelocity().y)) {
+		//			// Apply an initial upward force
+		//			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
+		//		}
+
+
+		//		velocity = { velocity.x, pbody->body->GetLinearVelocity().y };
+		//	}
+
+		//	pbody->body->SetLinearVelocity(velocity);
+
+		//	if (pbody->body->GetLinearVelocity().y < -0.0001)
+		//	{
+		//		playerState = JUMP;
+		//	}
+
+		//	if (pbody->body->GetLinearVelocity().y > 0.0001)
+		//	{
+		//		playerState = FALL;
+		//	}
+
+		//	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
+		//		Vector2D bulletPosition = pbody->GetPhysBodyWorldPosition();
+		//		bulletPosition.setX(bulletPosition.getX() + (GetDirection().getX() * 20));
+		//		Bullet* bullet = new Bullet(BulletType::HORIZONTAL);
+		//		bullet->SetDirection(GetDirection());
+		//		bullet->SetParameters(Engine::GetInstance().scene.get()->configParameters);
+		//		bullet->texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/bala.png");
+		//		Engine::GetInstance().entityManager.get()->AddEntity(bullet);
+		//		bullet->Start();
+		//		bullet->SetPosition(bulletPosition);
+		//	}
+
+		//}
+
+		/*else if (playerState == HURT) {
 
 			if (hurtTimer.ReadSec() >= hurtTime) {
 				playerState = IDLE;
@@ -247,17 +280,19 @@ bool Player::Update(float dt)
 		else if (playerState == DEAD) {
 
 			pbody->body->SetLinearVelocity(b2Vec2_zero);
-		}
+		}*/
 	}
 	
 
-	
+
+	//ANIMS
+	currentFrame = currentAnim->GetCurrentFrame();
 	
 	switch (playerState) {
 	case IDLE:
 		currentAnim = &idle;
 		break;
-	case WALK:
+	case RUN:
 		currentAnim = &walk;
 		break;
 	case JUMP:
@@ -266,10 +301,13 @@ bool Player::Update(float dt)
 	case FALL:
 		currentAnim = &fall;
 		break;
-	case HURT:
+	case PUNCH:
 		currentAnim = &hurt;
 		break;
-	case DEAD:
+	case MELEE:
+		currentAnim = &hurt;
+		break;
+	case THROW:
 		currentAnim = &death;
 		break;
 	}
@@ -334,7 +372,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::ABYSS:
 	{ 
 		if (!godMode) {
-			playerState = DEAD;
+			/*playerState = DEAD;*/
 
 			pbody->body->SetGravityScale(0);
 			pbody->body->SetGravityScale(0);
@@ -386,7 +424,7 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 	case ColliderType::LADDER:
 		LOG("End Collision LADDER");
 		canClimb = false;
-		pbody->body->SetGravityScale(godMode == true || canClimb == true || playerState == DEAD ? 0 : gravity);
+		pbody->body->SetGravityScale(godMode == true || canClimb == true /*|| playerState == DEAD ? 0 : gravity*/);
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("End Collision UNKNOWN");
@@ -432,7 +470,7 @@ void Player::LoadData(pugi::xml_node playerNode)
 
 void Player::KillPlayer() {
 
-	playerState = DEAD;
+	/*playerState = DEAD;*/
 
 	pbody->body->SetGravityScale(0);
 	respawnTimer.Start();

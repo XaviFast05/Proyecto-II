@@ -14,13 +14,12 @@ struct SDL_Texture;
 
 enum state {
 	IDLE = 0,
-	WALK,
+	RUN,
 	JUMP,
 	FALL,
-	HURT,
-	ATTACK1,
-	ATTACK2,
-	DEAD
+	PUNCH,
+	THROW,
+	MELEE
 };
 
 enum Direction {
@@ -82,6 +81,7 @@ public:
 
 	bool flipSprite = false;
 
+	bool grounded;
 	bool godMode;
 	bool canClimb;
 	bool reachedCheckPoint;
