@@ -64,15 +64,15 @@ bool Bullet::Update(float dt) {
     }
 
     b2Vec2 velocity = pbody->body->GetLinearVelocity();
-    velocity.x = direction.getX() * 1.5f;  // Velocidad constante en la dirección horizontal
+    velocity.x = direction.getX() * 3.5f;  // Velocidad constante en la dirección horizontal
     velocity.y = 0.0f;  // Sin movimiento vertical
     pbody->body->SetLinearVelocity(velocity);
     b2Transform pbodyPos = pbody->body->GetTransform();
-    position.setX(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.x)) - 12.0f);
+    position.setX(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.x)) - 8.0f);
     position.setY(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.y)) - 8.0f);
 
     if (direction.getX() < 0) {
-        Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()), nullptr, SDL_FLIP_HORIZONTAL);
+        Engine::GetInstance().render.get()->DrawTextureFlipped(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()));
     }
     else {
         Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()));
