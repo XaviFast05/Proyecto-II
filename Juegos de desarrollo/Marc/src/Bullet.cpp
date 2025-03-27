@@ -41,7 +41,7 @@ bool Bullet::Start() {
     texH = parameters.attribute("h").as_int();
 
 
-    pbody = Engine::GetInstance().physics.get()->CreateRectangle(static_cast<int>(position.getX()), static_cast<int>(position.getY()), 22, 10, bodyType::DYNAMIC);
+    pbody = Engine::GetInstance().physics.get()->CreateRectangle(static_cast<int>(position.getX()), static_cast<int>(position.getY()), 16, 12, bodyType::DYNAMIC);
     if (pbody == nullptr) {
         LOG("Error: PhysBody creation failed!");
         return false;
@@ -69,7 +69,7 @@ bool Bullet::Update(float dt) {
     pbody->body->SetLinearVelocity(velocity);
     b2Transform pbodyPos = pbody->body->GetTransform();
     position.setX(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.x)) - 12.0f);
-    position.setY(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.y)) - 6.0f);
+    position.setY(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.y)) - 8.0f);
 
     if (direction.getX() < 0) {
         Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()), nullptr, SDL_FLIP_HORIZONTAL);
