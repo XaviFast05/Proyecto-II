@@ -159,8 +159,6 @@ bool Player::Update(float dt)
 			}
 		}
 
-		
-
 		//CHANGERS
 		if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && stateFlow[playerState][RUN] && grounded) {
 			playerState = RUN;
@@ -170,26 +168,68 @@ bool Player::Update(float dt)
 			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 			grounded = false;
 		}
-		
-		//LOGIC
-		if (playerState==RUN)
+		else if (pbody->body->GetLinearVelocity().y > 0.001 && stateFlow[playerState][FALL])
 		{
+			playerState = FALL;
+			grounded = false;
+		}
+
+		//ATAQUES
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][MELEE] && pickaxeCount > 0)
+		{
+			pickaxeTimer.Start();
+			playerState = MELEE;
+			pickaxeCount--;
+		}
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][PUNCH] && pickaxeCount <= 0)
+		{
+			pickaxeTimer.Start();
+			playerState = PUNCH;
+		}
+		if (pickaxeCount < MAX_PICKAXES && not recollectingPickaxes)
+		{
+			pickaxeRecollectTimer.Start();
+			recollectingPickaxes = true;
+		}
+		if (pickaxeRecollectTimer.ReadSec() >= pickaxeRecollectCount && recollectingPickaxes)
+		{
+			pickaxeCount++;
+			recollectingPickaxes = false;
+		}
+
+		//LOGIC
+		switch (playerState)
+		{
+		case IDLE:
+			break;
+		case RUN:
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) dir = RIGHT;
 			else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) dir = LEFT;
 			else playerState = IDLE;
 			velocity.x = (dir == RIGHT ? moveSpeed * 16 : -moveSpeed * 16);
-		}
-		if (playerState == JUMP)
-		{
-			if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT))
-			{
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) dir = RIGHT;
-				else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) dir = LEFT;
-				velocity.x = (dir == RIGHT ? moveSpeed * 16 : -moveSpeed * 16);
-			}
-			else velocity.x = 0;
-			
+			break;
+		case JUMP:
+			CheckMove();
 			if (grounded) playerState = IDLE;
+			break;
+		case FALL:
+			CheckMove();
+			if (grounded) playerState = IDLE;
+			break;
+		case PUNCH:
+			CheckMove();
+			CheckJump();
+			if (pickaxeTimer.ReadSec() >= punchTimerAnimation) playerState = IDLE;
+			break;
+		case MELEE:
+			CheckMove();
+			CheckJump();
+			if (pickaxeTimer.ReadSec() >= pickaxeTimerAnimation) playerState = IDLE;
+			break;
+		case THROW:
+			break;
+		default:
+			break;
 		}
 
 		velocity = { velocity.x, pbody->body->GetLinearVelocity().y };
@@ -476,3 +516,18 @@ void Player::KillPlayer() {
 	respawnTimer.Start();
 }
 
+void Player::CheckMove() {
+	if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT))
+	{
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) dir = RIGHT;
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) dir = LEFT;
+		velocity.x = (dir == RIGHT ? moveSpeed * 16 : -moveSpeed * 16);
+	}
+	else velocity.x = 0;
+}
+
+void Player::CheckJump()
+{
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) && grounded)
+		pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
+}

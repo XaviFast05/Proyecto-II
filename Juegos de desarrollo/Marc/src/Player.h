@@ -9,6 +9,7 @@
 
 
 #define GHOST_W 9
+#define MAX_PICKAXES 3
 
 struct SDL_Texture;
 
@@ -60,6 +61,10 @@ public:
 	void Restart();
 
 	void KillPlayer();
+	
+	void CheckMove();
+
+	void CheckJump();
 
 	Vector2D GetDirection() const;
 
@@ -106,6 +111,15 @@ public:
 	Animation fall;
 	Animation hurt;
 	Animation death;
+
+	int pickaxeCount = 3;
+	Timer pickaxeTimer;
+	float pickaxeTimerAnimation = 0.5;
+	float punchTimerAnimation = 0.5;
+
+	Timer pickaxeRecollectTimer;
+	float pickaxeRecollectCount = 5;
+	bool recollectingPickaxes = false;
 
 	state playerState; 
 	std::vector<std::vector<bool>> stateFlow;
