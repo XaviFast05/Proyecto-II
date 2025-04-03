@@ -144,7 +144,6 @@ bool Player::Update(float dt)
 		velocity = b2Vec2_zero;		
 		grounded = VALUE_NEAR_TO_0(pbody->body->GetLinearVelocity().y);
 
-
 		//GODMODE
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 		{
@@ -165,7 +164,7 @@ bool Player::Update(float dt)
 		if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && stateFlow[playerState][RUN] && grounded) {
 			playerState = RUN;
 		}
-		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && stateFlow[playerState][JUMP] && grounded) {
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && ((stateFlow[playerState][JUMP] && grounded) /*MODIFICAR GODMODE*/ || godMode)) {
 			playerState = JUMP;
 			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 			grounded = false;
@@ -187,8 +186,18 @@ bool Player::Update(float dt)
 			pickaxeTimer.Start();
 			playerState = PUNCH;
 		}
-		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Q) && stateFlow[playerState][THROW] && pickaxeCount <= 0) {
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Q) && stateFlow[playerState][THROW] && pickaxeCount > 0) {
+			LOG("HOLA");
 			pickaxeTimer.Start();
+			Vector2D bulletPosition = pbody->GetPhysBodyWorldPosition();
+			bulletPosition.setX(bulletPosition.getX() + (GetDirection().getX() * 20));
+			Bullet* bullet = new Bullet(BulletType::HORIZONTAL);
+			bullet->SetDirection(GetDirection());
+			bullet->SetParameters(Engine::GetInstance().scene.get()->configParameters);
+			bullet->texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/bala.png");
+			Engine::GetInstance().entityManager.get()->AddEntity(bullet);
+			bullet->Start();
+			bullet->SetPosition(bulletPosition);
 			playerState = THROW;
 		}
 
@@ -229,14 +238,13 @@ bool Player::Update(float dt)
 			if (grounded) playerState = IDLE;
 			break;
 		case PUNCH:
-			CheckJump();
 			if (pickaxeTimer.ReadSec() >= punchTimerAnimation) playerState = IDLE;
 			break;
 		case MELEE:
-			CheckJump();
 			if (pickaxeTimer.ReadSec() >= pickaxeTimerAnimation) playerState = IDLE;
 			break;
 		case THROW:
+			if (pickaxeTimer.ReadSec() >= pickaxeTimerAnimation) playerState = IDLE;
 			break;
 		default:
 			break;
