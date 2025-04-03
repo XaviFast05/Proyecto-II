@@ -45,6 +45,11 @@ private:
 
     int dieFxId;
 
+    b2Vec2 bulletfixedpos;
+    
+    bool stuckOnWall = false;
+    bool variableMarc = false;
+
     bool flipSprite = false;
     const char* texturePath;
     pugi::xml_node parameters;
