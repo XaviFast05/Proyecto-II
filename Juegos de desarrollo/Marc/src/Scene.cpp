@@ -287,7 +287,7 @@ bool Scene::Update(float dt)
 		}
 		else if (player->position.getX() > POS_TO_STOP_MOVING_CAMX) Engine::GetInstance().render.get()->camera.x = (POS_TO_STOP_MOVING_CAMX + CAM_EXTRA_DISPLACEMENT_X) * -Engine::GetInstance().window.get()->scale;
 		else Engine::GetInstance().render.get()->camera.x = (player->position.getX() + CAM_EXTRA_DISPLACEMENT_X) * -Engine::GetInstance().window.get()->scale;*/
-		Engine::GetInstance().render.get()->camera.x = (player->position.getX() + CAM_EXTRA_DISPLACEMENT_X) * -Engine::GetInstance().window.get()->scale;
+		Engine::GetInstance().render.get()->camera.x = (player->position.getX() + CAM_EXTRA_DISPLACEMENT_X_LEFT) * -Engine::GetInstance().window.get()->scale;
 		//camera y
 		/*if (player->position.getY() > POS_TO_START_MOVING_CAMY) {
 			Engine::GetInstance().render.get()->camera.y = (POS_TO_START_MOVING_CAMY + CAM_EXTRA_DISPLACEMENT_Y) * -Engine::GetInstance().window.get()->scale;
@@ -295,6 +295,8 @@ bool Scene::Update(float dt)
 		else if (player->position.getY() < POS_TO_STOP_MOVING_CAMY) Engine::GetInstance().render.get()->camera.y = (POS_TO_STOP_MOVING_CAMY + CAM_EXTRA_DISPLACEMENT_X) * -Engine::GetInstance().window.get()->scale;
 		else Engine::GetInstance().render.get()->camera.y = (player->position.getY() + CAM_EXTRA_DISPLACEMENT_Y) * -Engine::GetInstance().window.get()->scale;*/
 		Engine::GetInstance().render.get()->camera.y = (player->position.getY() + CAM_EXTRA_DISPLACEMENT_Y) * -Engine::GetInstance().window.get()->scale;
+
+		ChangeDirectionCameraX();
 	}
 
 	if (!bossKilled && startBossFight)
@@ -706,5 +708,13 @@ void Scene::SetStartBossFight(bool b)
 void Scene::SetBossFightKilled(bool b)
 {
 	bossKilled = b;
+}
+void Scene::ChangeDirectionCameraX()
+{
+	if (player->dir == RIGHT)
+		Engine::GetInstance().render.get()->camera.x = (player->position.getX() + CAM_EXTRA_DISPLACEMENT_X_LEFT) * -Engine::GetInstance().window.get()->scale;
+
+	else if (player->dir == LEFT)
+		Engine::GetInstance().render.get()->camera.x = (player->position.getX() + CAM_EXTRA_DISPLACEMENT_X_RIGHT) * -Engine::GetInstance().window.get()->scale;
 }
 

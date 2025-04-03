@@ -11,7 +11,8 @@
 
 #define POS_TO_START_MOVING_CAMX 100
 #define POS_TO_STOP_MOVING_CAMX 2180
-#define CAM_EXTRA_DISPLACEMENT_X -100
+#define CAM_EXTRA_DISPLACEMENT_X_LEFT -100
+#define CAM_EXTRA_DISPLACEMENT_X_RIGHT -300
 
 #define POS_TO_START_MOVING_CAMY 248
 #define POS_TO_STOP_MOVING_CAMY -190
@@ -94,6 +95,8 @@ public:
 	
 	void SetStartBossFight(bool b);
 	void SetBossFightKilled(bool b);
+
+	void ChangeDirectionCameraX();
 	
 	void SetLevel(Levels level);
 
