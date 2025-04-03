@@ -9,18 +9,18 @@
 
 
 #define GHOST_W 9
+#define MAX_PICKAXES 3
 
 struct SDL_Texture;
 
 enum state {
 	IDLE = 0,
-	WALK,
+	RUN,
 	JUMP,
 	FALL,
-	HURT,
-	ATTACK1,
-	ATTACK2,
-	DEAD
+	PUNCH,
+	THROW,
+	MELEE
 };
 
 enum Direction {
@@ -61,6 +61,12 @@ public:
 	void Restart();
 
 	void KillPlayer();
+	
+	bool CheckMoveX();
+
+	void MoveX();
+
+	void CheckJump();
 
 	Vector2D GetDirection() const;
 
@@ -82,6 +88,7 @@ public:
 
 	bool flipSprite = false;
 
+	bool grounded;
 	bool godMode;
 	bool canClimb;
 	bool reachedCheckPoint;
@@ -106,6 +113,19 @@ public:
 	Animation fall;
 	Animation hurt;
 	Animation death;
+
+	int pickaxeCount = 3;
+	Timer pickaxeTimer;
+	float pickaxeTimerAnimation = 0.5;
+	float punchTimerAnimation = 0.5;
+
+	Timer pickaxeRecollectTimer;
+	float pickaxeRecollectCount = 5;
+	bool recollectingPickaxes = false;
+
+	Timer coyoteTimer;
+	bool coyoteTimerOn = false;
+	float coyoteTimerMax = 0.15;
 
 	state playerState; 
 	std::vector<std::vector<bool>> stateFlow;

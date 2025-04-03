@@ -7,7 +7,7 @@
 #include "PerfTimer.h"
 //#include "pugixml.hpp"
 
-#define VALUE_NEAR_TO_0(x) (fabs(x) < 0.01f)
+#define VALUE_NEAR_TO_0(x) (fabs(x) < 0.001f)
 
 // Modules
 class Window;
