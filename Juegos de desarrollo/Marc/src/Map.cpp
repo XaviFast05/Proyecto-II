@@ -258,6 +258,16 @@ bool Map::Load(std::string path, std::string fileName)
                     c->ctype = ColliderType::PLATFORM;
                 }
             }
+
+            if (objectGroup->name == "ClimbingWall")
+            {
+                for (Object* object : objectGroup->object)
+                {
+                    PhysBody* c = Engine::GetInstance().physics.get()->CreateRectangle(object->x + object->width / 2, object->y + object->height / 2, object->width, object->height, STATIC);
+                    c->ctype = ColliderType::CLIMBINGWALL;
+                }
+            }
+
             if (objectGroup->name == "Spikes")
             {
                 for (Object* object : objectGroup->object)

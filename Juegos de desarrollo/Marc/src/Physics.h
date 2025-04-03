@@ -39,6 +39,7 @@ enum class ColliderType {
 	CANDY,
 	LEVEL_CHANGER,
 	BOSS_STARTER,
+	CLIMBINGWALL,
 	UNKNOWN
 };
 

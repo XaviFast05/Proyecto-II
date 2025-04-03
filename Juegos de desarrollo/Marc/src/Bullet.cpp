@@ -63,13 +63,23 @@ bool Bullet::Update(float dt) {
         return false;
     }
 
-    b2Vec2 velocity = pbody->body->GetLinearVelocity();
-    velocity.x = direction.getX() * 3.5f;  // Velocidad constante en la dirección horizontal
-    velocity.y = 0.0f;  // Sin movimiento vertical
-    pbody->body->SetLinearVelocity(velocity);
-    b2Transform pbodyPos = pbody->body->GetTransform();
-    position.setX(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.x)) - 8.0f);
-    position.setY(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.y)) - 8.0f);
+    if (variableMarc) {
+        pbody->body->SetEnabled(false);
+        active = false;
+    }
+
+    if (!stuckOnWall) {
+        b2Vec2 velocity = pbody->body->GetLinearVelocity();
+        velocity.x = direction.getX() * 3.5f;  // Velocidad constante en la dirección horizontal
+        velocity.y = 0.0f;  // Sin movimiento vertical
+        pbody->body->SetLinearVelocity(velocity);
+        b2Transform pbodyPos = pbody->body->GetTransform();
+        position.setX(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.x)) - 8.0f);
+        position.setY(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.y)) - 8.0f);
+    }
+    else {
+        pbody->body->SetType(b2_staticBody);
+    }
 
     if (direction.getX() < 0) {
         Engine::GetInstance().render.get()->DrawTextureFlipped(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()));
@@ -109,10 +119,19 @@ Vector2D Bullet::GetPosition() {
 
 void Bullet::OnCollision(PhysBody* physA, PhysBody* physB) {
     switch (physB->ctype) {
+    case ColliderType::SHOT:
     case ColliderType::PLATFORM:
         LOG("Collided - DESTROY");
+        variableMarc = true;
+        break;
+    case ColliderType::CLIMBINGWALL:
+        LOG("Piqueta con don");
+        stuckOnWall = true;
+        bulletfixedpos = pbody->body->GetTransform().p;
         break;
     }
+    
+
 }
 
 //void Bullet::OnCollisionEnd(PhysBody* physA, PhysBody* physB) {

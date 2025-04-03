@@ -101,7 +101,7 @@ bool Player::Start() {
 	position.setX(parameters.child("startPositions").child(nodeChar.c_str()).attribute("x").as_float());
 	position.setY(parameters.child("startPositions").child(nodeChar.c_str()).attribute("y").as_float());
 
-	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), GHOST_W * 6, bodyType::DYNAMIC);
+	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), GHOST_W, bodyType::DYNAMIC);
 
 	pbody->listener = this;
 	pbody->ctype = ColliderType::PLAYER;
