@@ -62,7 +62,9 @@ public:
 
 	void KillPlayer();
 	
-	void CheckMove();
+	bool CheckMoveX();
+
+	void MoveX();
 
 	void CheckJump();
 

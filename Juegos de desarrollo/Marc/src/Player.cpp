@@ -144,6 +144,8 @@ bool Player::Update(float dt)
 		velocity = b2Vec2_zero;		
 		grounded = VALUE_NEAR_TO_0(pbody->body->GetLinearVelocity().y);
 
+
+		//GODMODE
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 		{
 			godMode = !godMode;
@@ -173,9 +175,7 @@ bool Player::Update(float dt)
 			playerState = FALL;
 			grounded = false;
 		}
-
-		//ATAQUES
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][MELEE] && pickaxeCount > 0)
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][MELEE] && pickaxeCount > 0)
 		{
 			pickaxeTimer.Start();
 			playerState = MELEE;
@@ -186,6 +186,7 @@ bool Player::Update(float dt)
 			pickaxeTimer.Start();
 			playerState = PUNCH;
 		}
+
 		if (pickaxeCount < MAX_PICKAXES && not recollectingPickaxes)
 		{
 			pickaxeRecollectTimer.Start();
@@ -203,26 +204,22 @@ bool Player::Update(float dt)
 		case IDLE:
 			break;
 		case RUN:
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) dir = RIGHT;
-			else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) dir = LEFT;
+			if (CheckMoveX()) MoveX();
 			else playerState = IDLE;
-			velocity.x = (dir == RIGHT ? moveSpeed * 16 : -moveSpeed * 16);
 			break;
 		case JUMP:
-			CheckMove();
+			if (CheckMoveX()) MoveX();
 			if (grounded) playerState = IDLE;
 			break;
 		case FALL:
-			CheckMove();
+			if (CheckMoveX()) MoveX();
 			if (grounded) playerState = IDLE;
 			break;
 		case PUNCH:
-			CheckMove();
 			CheckJump();
 			if (pickaxeTimer.ReadSec() >= punchTimerAnimation) playerState = IDLE;
 			break;
 		case MELEE:
-			CheckMove();
 			CheckJump();
 			if (pickaxeTimer.ReadSec() >= pickaxeTimerAnimation) playerState = IDLE;
 			break;
@@ -516,14 +513,19 @@ void Player::KillPlayer() {
 	respawnTimer.Start();
 }
 
-void Player::CheckMove() {
+bool Player::CheckMoveX() {
 	if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT))
 	{
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) dir = RIGHT;
 		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) dir = LEFT;
-		velocity.x = (dir == RIGHT ? moveSpeed * 16 : -moveSpeed * 16);
+		return true;
 	}
-	else velocity.x = 0;
+	else return false;
+}
+
+void Player::MoveX()
+{
+	velocity.x = (dir == RIGHT ? moveSpeed * 16 : -moveSpeed * 16);
 }
 
 void Player::CheckJump()
