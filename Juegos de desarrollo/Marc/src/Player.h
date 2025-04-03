@@ -123,6 +123,10 @@ public:
 	float pickaxeRecollectCount = 5;
 	bool recollectingPickaxes = false;
 
+	Timer coyoteTimer;
+	bool coyoteTimerOn = false;
+	float coyoteTimerMax = 0.15;
+
 	state playerState; 
 	std::vector<std::vector<bool>> stateFlow;
 

@@ -170,37 +170,50 @@ bool Player::Update(float dt)
 			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 			grounded = false;
 		}
-		else if (pbody->body->GetLinearVelocity().y > 0.001 && stateFlow[playerState][FALL])
-		{
+		else if (pbody->body->GetLinearVelocity().y > 0.001 && stateFlow[playerState][FALL]) {
+			if (playerState == RUN) {
+				coyoteTimer.Start();
+				coyoteTimerOn = true;
+			}
 			playerState = FALL;
 			grounded = false;
 		}
-		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][MELEE] && pickaxeCount > 0)
-		{
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][MELEE] && pickaxeCount > 0) {
 			pickaxeTimer.Start();
 			playerState = MELEE;
 			pickaxeCount--;
 		}
-		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][PUNCH] && pickaxeCount <= 0)
-		{
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][PUNCH] && pickaxeCount <= 0) {
 			pickaxeTimer.Start();
 			playerState = PUNCH;
 		}
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Q) && stateFlow[playerState][THROW] && pickaxeCount <= 0) {
+			pickaxeTimer.Start();
+			playerState = THROW;
+		}
 
-		if (pickaxeCount < MAX_PICKAXES && not recollectingPickaxes)
-		{
+		//PICKAXE LOGIC
+		if (pickaxeCount < MAX_PICKAXES && not recollectingPickaxes) {
 			pickaxeRecollectTimer.Start();
 			recollectingPickaxes = true;
 		}
-		if (pickaxeRecollectTimer.ReadSec() >= pickaxeRecollectCount && recollectingPickaxes)
-		{
+		if (pickaxeRecollectTimer.ReadSec() >= pickaxeRecollectCount && recollectingPickaxes) {
 			pickaxeCount++;
 			recollectingPickaxes = false;
 		}
 
+		//COYOTE TIME LOGIC
+		if (coyoteTimerOn) {
+			if (coyoteTimer.ReadSec() < coyoteTimerMax && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE)) {
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
+				playerState = JUMP;
+				coyoteTimerOn = false;
+			}
+			if (coyoteTimer.ReadSec() >= coyoteTimerMax) coyoteTimerOn = false;
+		}
+
 		//LOGIC
-		switch (playerState)
-		{
+		switch (playerState) {
 		case IDLE:
 			break;
 		case RUN:
@@ -345,7 +358,7 @@ bool Player::Update(float dt)
 		currentAnim = &hurt;
 		break;
 	case THROW:
-		currentAnim = &death;
+		currentAnim = &hurt;
 		break;
 	}
 
