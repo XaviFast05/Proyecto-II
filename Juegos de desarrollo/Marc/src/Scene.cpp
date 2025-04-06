@@ -132,6 +132,8 @@ bool Scene::Start()
 	stoppedTimer = false;
 	finalCandyNum = 0;
 	currentTime = 0;
+
+	transitionDisplace = 0;
 	
 
 	if (!loadScene)
@@ -287,7 +289,7 @@ bool Scene::Update(float dt)
 		}
 		else if (player->position.getX() > POS_TO_STOP_MOVING_CAMX) Engine::GetInstance().render.get()->camera.x = (POS_TO_STOP_MOVING_CAMX + CAM_EXTRA_DISPLACEMENT_X) * -Engine::GetInstance().window.get()->scale;
 		else Engine::GetInstance().render.get()->camera.x = (player->position.getX() + CAM_EXTRA_DISPLACEMENT_X) * -Engine::GetInstance().window.get()->scale;*/
-		Engine::GetInstance().render.get()->camera.x = (player->position.getX() + CAM_EXTRA_DISPLACEMENT_X_LEFT) * -Engine::GetInstance().window.get()->scale;
+		/*Engine::GetInstance().render.get()->camera.x = (player->position.getX() + CAM_EXTRA_DISPLACEMENT_X_LEFT) * -Engine::GetInstance().window.get()->scale;*/
 		//camera y
 		/*if (player->position.getY() > POS_TO_START_MOVING_CAMY) {
 			Engine::GetInstance().render.get()->camera.y = (POS_TO_START_MOVING_CAMY + CAM_EXTRA_DISPLACEMENT_Y) * -Engine::GetInstance().window.get()->scale;
@@ -391,7 +393,7 @@ bool Scene::PostUpdate()
 		if (paused && !Engine::GetInstance().settings.get()->settingsOpen) {
 			
 
-			Engine::GetInstance().render.get()->DrawRectangle({ -render->camera.x / window->scale , -render->camera.y / window->scale, window->width, window->height }, 0, 0, 0, 200, true, true);
+			Engine::GetInstance().render.get()->DrawRectangle({ -render->camera.x / window->scale , - render->camera.y / window->scale, window->width, window->height}, 0, 0, 0, 200, true, true);
 			Engine::GetInstance().render.get()->DrawTexture(pausePanel, -render->camera.x / window->scale + pausePos.getX(), -render->camera.y / window->scale + pausePos.getY());
 
 			for (const auto& bt : pauseButtons) {
@@ -711,10 +713,24 @@ void Scene::SetBossFightKilled(bool b)
 }
 void Scene::ChangeDirectionCameraX()
 {
-	if (player->dir == RIGHT)
-		Engine::GetInstance().render.get()->camera.x = (player->position.getX() + CAM_EXTRA_DISPLACEMENT_X_LEFT) * -Engine::GetInstance().window.get()->scale;
+	if (cameraDirectionChangeActivation) {
+		int currentDisplace = transitionDisplace;
 
-	else if (player->dir == LEFT)
-		Engine::GetInstance().render.get()->camera.x = (player->position.getX() + CAM_EXTRA_DISPLACEMENT_X_RIGHT) * -Engine::GetInstance().window.get()->scale;
+		Engine::GetInstance().render.get()->camera.x = (player->position.getX() - (Engine::GetInstance().window.get()->width / 2) + currentDisplace) * -Engine::GetInstance().window.get()->scale;
+
+		if (player->dir == RIGHT) {
+			if (transitionDisplace < CAM_EXTRA_DISPLACEMENT_X) transitionDisplace += 2; 
+			else cameraDirectionChangeActivation = false;
+		}
+		else if (player->dir == LEFT) {
+			if (transitionDisplace > 0) transitionDisplace -= 2;
+			else cameraDirectionChangeActivation = false;
+		}
+	}
+	else {
+		int finalDisplace = (player->dir == RIGHT) ? CAM_EXTRA_DISPLACEMENT_X : 0;
+		Engine::GetInstance().render.get()->camera.x = (player->position.getX() - (Engine::GetInstance().window.get()->width / 2) + finalDisplace) * -Engine::GetInstance().window.get()->scale;
+	}
+
 }
 

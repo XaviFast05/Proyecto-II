@@ -539,6 +539,8 @@ bool Player::CheckMoveX() {
 	{
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) dir = RIGHT;
 		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) dir = LEFT;
+
+		Engine::GetInstance().scene.get()->cameraDirectionChangeActivation = true;
 		return true;
 	}
 	else return false;

@@ -11,8 +11,7 @@
 
 #define POS_TO_START_MOVING_CAMX 100
 #define POS_TO_STOP_MOVING_CAMX 2180
-#define CAM_EXTRA_DISPLACEMENT_X_LEFT -100
-#define CAM_EXTRA_DISPLACEMENT_X_RIGHT -300
+#define CAM_EXTRA_DISPLACEMENT_X 60
 
 #define POS_TO_START_MOVING_CAMY 248
 #define POS_TO_STOP_MOVING_CAMY -190
@@ -135,6 +134,8 @@ public:
 	std::string timerText;
 	std::string secondText;
 
+	bool cameraDirectionChangeActivation;
+
 private:
 	
 	//L03: TODO 3b: Declare a Player attribute
@@ -153,6 +154,8 @@ private:
 	bool bossMusPlaying = false;
 	bool bossKilled = false;
 	bool quit = false;
+	
+	int transitionDisplace;
 	
 
 	Vector2D helpPos;
