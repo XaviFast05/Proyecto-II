@@ -146,6 +146,13 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control) {
 			Engine::GetInstance().scene.get()->SetLevel(LVL1);
 			
 		}
+
+	case GuiControlId::TEST_LEVEL:
+		if (control->state == GuiControlState::PRESSED) {
+			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)Engine::GetInstance().scene.get(), 30);
+			Engine::GetInstance().scene.get()->SetLoadState(false);
+			Engine::GetInstance().scene.get()->SetLevel(LVL2);
+		}
 		
 		break;
 	case GuiControlId::CONTINUE:

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <config>
 	<engine>
-		<title>My platformer game</title>
+		<title>Kim's Underworld</title>
 		<maxFrameDuration value="16" />
 	</engine>
 	<render>
@@ -18,9 +18,10 @@
 	<mainmenu>
 		<bg path="Assets/Textures/Menus/Title Screen/title screen pixel bg.png" />
 		<buttons defaultTex="Assets/Textures/Menus/Title Screen/title screen button sheet rescaled.png">
-			<newGameBt id="1" x="40" y="38" w="192" h="32" texture="Assets/Textures/Menus/Title Screen/New Game Button Sheet.png" />
-			<continueBt id="2" x="40" y="78" w="192" h="32" texture="Assets/Textures/Menus/Title Screen/Continue Button Sheet.png" />
-			<optionsBt id="3" x="40" y="118" w="192" h="32" texture="Assets/Textures/Menus/Title Screen/Options Button Sheet.png" />
+			<newGameBt id="1" x="448" y="38" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/New Game Button Sheet.png" />
+			<testLevelBt id="10" x="448" y="134" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Test Level Button Sheet.png" />
+			<continueBt id="2" x="40" y="78" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Continue Button Sheet.png" />
+			<optionsBt id="3" x="448" y="230" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Options Button Sheet.png" />
 			<creditsBt id="4" x="-72" y="280" w="192" h="32" texture="Assets/Textures/Menus/Title Screen/Credits Button Sheet.png" />
 			<exitBt id="5" x="519" y="20" w="192" h="32" texture="Assets/Textures/Menus/Title Screen/Exit Button Sheet.png" />
 			<backBt id="6" x="-95" y="10" w="192" h="32" texture="Assets/Textures/Menus/Title Screen/Back Button Sheet.png" />
@@ -419,7 +420,7 @@
 	</audio>
 	<playerPrefs>
 		<fullscreen toggle="0" />
-		<musicVolume value="74" />
-		<sfxVolume value="65" />
+		<musicVolume value="0" />
+		<sfxVolume value="0" />
 	</playerPrefs>
 </config>

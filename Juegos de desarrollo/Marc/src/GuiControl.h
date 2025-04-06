@@ -38,6 +38,7 @@ enum class GuiControlId
 	CREDITS,
 	QUIT,
 	BACK,
+	TEST_LEVEL,
 
 	MUSIC,
 	SFX,
