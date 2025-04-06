@@ -68,7 +68,7 @@
 		</map>
 		<helpMenu x="252" y="9" w="379" h="295" path="Assets/Textures/Menus/Help/HelpMenu_ver2.png" lvl="1" />
 		<entities>
-			<player w="64" h="64" t_w="64" t_h="64" lives="3" texture="Assets/Textures/GhostCharacter/Ghost_Sheet_Resized.png" t_texture="Assets/Textures/Pumpkin Head/pumpkinhead_sheet2.png">
+			<player w="64" h="64" t_w="64" t_h="64" lives="3" texture="Assets/Textures/Kim/Kim_idle.png" t_texture="Assets/Textures/Pumpkin Head/pumpkinhead_sheet2.png">
 				<startPositions>
 					<lvl1 x="150" y="3400" />
 					<lvl2 x="150" y="3400" />
@@ -86,13 +86,6 @@
 				<animations>
 					<idle loop="true" speed="0.2f">
 						<frame x="0" y="0" w="64" h="64" />
-						<frame x="64" y="0" w="64" h="64" />
-						<frame x="128" y="0" w="64" h="64" />
-						<frame x="192" y="0" w="64" h="64" />
-						<frame x="256" y="0" w="64" h="64" />
-						<frame x="320" y="0" w="64" h="64" />
-						<frame x="384" y="0" w="64" h="64" />
-						<frame x="448" y="0" w="64" h="64" />
 					</idle>
 					<walk loop="true" speed="0.1f">
 						<frame x="0" y="64" w="64" h="64" />

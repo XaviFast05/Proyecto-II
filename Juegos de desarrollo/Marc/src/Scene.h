@@ -134,7 +134,7 @@ public:
 	std::string timerText;
 	std::string secondText;
 
-	bool cameraDirectionChangeActivation;
+	bool cameraDirectionChangeActivation = false;
 
 private:
 	
