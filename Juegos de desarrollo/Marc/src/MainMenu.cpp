@@ -147,13 +147,6 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control) {
 			
 		}
 
-	case GuiControlId::TEST_LEVEL:
-		if (control->state == GuiControlState::PRESSED) {
-			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)Engine::GetInstance().scene.get(), 30);
-			Engine::GetInstance().scene.get()->SetLoadState(false);
-			Engine::GetInstance().scene.get()->SetLevel(LVL2);
-		}
-		
 		break;
 	case GuiControlId::CONTINUE:
 		if (control->state == GuiControlState::PRESSED) {
@@ -188,7 +181,16 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control) {
 		}
 		break;
 
+	case GuiControlId::TEST_LEVEL:
+		if (control->state == GuiControlState::PRESSED) {
+			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)Engine::GetInstance().scene.get(), 30);
+			Engine::GetInstance().scene.get()->SetLoadState(false);
+			Engine::GetInstance().scene.get()->SetLevel(LVL2);
+		}
+
+		break;
 	}
+
 	
 	return true;
 }

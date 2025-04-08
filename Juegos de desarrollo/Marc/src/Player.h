@@ -8,7 +8,7 @@
 #include "Particle.h"
 
 
-#define GHOST_W 9
+#define GHOST_W 32
 #define MAX_PICKAXES 3
 
 struct SDL_Texture;

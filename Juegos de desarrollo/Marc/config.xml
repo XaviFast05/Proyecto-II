@@ -19,7 +19,7 @@
 		<bg path="Assets/Textures/Menus/Title Screen/title screen pixel bg.png" />
 		<buttons defaultTex="Assets/Textures/Menus/Title Screen/title screen button sheet.png">
 			<newGameBt id="1" x="448" y="230" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/New Game Button Sheet.png" />
-			<testLevelBt id="12" x="448" y="326" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Test Level Button Sheet.png" />
+			<testLevelBt id="13" x="448" y="326" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Test Level Button Sheet.png" />
 			<continueBt id="2" x="4000" y="78" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Continue Button Sheet.png" />
 			<optionsBt id="3" x="448" y="422" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Options Button Sheet.png" />
 			<creditsBt id="4" x="448" y="518" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Credits Button Sheet.png" />
@@ -69,7 +69,7 @@
 		</map>
 		<helpMenu x="252" y="9" w="379" h="295" path="Assets/Textures/Menus/Help/HelpMenu_ver2.png" lvl="1" />
 		<entities>
-			<player w="64" h="64" t_w="64" t_h="64" lives="3" texture="Assets/Textures/GhostCharacter/Ghost_Sheet_Resized.png" t_texture="Assets/Textures/Pumpkin Head/pumpkinhead_sheet2.png">
+			<player w="64" h="64" t_w="64" t_h="64" lives="3" texture="Assets/Textures/Kim_idle.png" t_texture="Assets/Textures/Pumpkin Head/pumpkinhead_sheet2.png">
 				<startPositions>
 					<lvl1 x="150" y="3400" />
 					<lvl2 x="150" y="3400" />
@@ -85,45 +85,25 @@
 					<melee idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" />
 				</statesFlow>
 				<animations>
-					<idle loop="true" speed="0.2f">
+					<idle loop="true" speed="0.02f">
 						<frame x="0" y="0" w="64" h="64" />
 						<frame x="64" y="0" w="64" h="64" />
 						<frame x="128" y="0" w="64" h="64" />
-						<frame x="192" y="0" w="64" h="64" />
-						<frame x="256" y="0" w="64" h="64" />
-						<frame x="320" y="0" w="64" h="64" />
-						<frame x="384" y="0" w="64" h="64" />
-						<frame x="448" y="0" w="64" h="64" />
 					</idle>
 					<walk loop="true" speed="0.1f">
-						<frame x="0" y="64" w="64" h="64" />
-						<frame x="64" y="64" w="64" h="64" />
-						<frame x="128" y="64" w="64" h="64" />
-						<frame x="192" y="64" w="64" h="64" />
+						<frame x="0" y="0" w="64" h="64" />
 					</walk>
 					<jump loop="false" speed="0.2f">
-						<frame x="0" y="128" w="64" h="64" />
-						<frame x="64" y="128" w="64" h="64" />
-						<frame x="128" y="128" w="64" h="64" />
+						<frame x="0" y="0" w="64" h="64" />
 					</jump>
 					<fall loop="false" speed=" 0.2f">
-						<frame x="0" y="192" w="64" h="64" />
-						<frame x="64" y="192" w="64" h="64" />
-						<frame x="128" y="192" w="64" h="64" />
+						<frame x="0" y="0" w="64" h="64" />
 					</fall>
 					<hurt loop="false" speed="0.15f">
-						<frame x="0" y="256" w="64" h="64" />
-						<frame x="64" y="256" w="64" h="64" />
-						<frame x="128" y="256" w="64" h="64" />
-						<frame x="192" y="256" w="64" h="64" />
+						<frame x="0" y="0" w="64" h="64" />
 					</hurt>
 					<death loop="false" speed="0.2f">
-						<frame x="0" y="320" w="64" h="64" />
-						<frame x="64" y="320" w="64" h="64" />
-						<frame x="128" y="320" w="64" h="64" />
-						<frame x="192" y="320" w="64" h="64" />
-						<frame x="256" y="320" w="64" h="64" />
-						<frame x="320" y="320" w="64" h="64" />
+						<frame x="0" y="0" w="64" h="64" />
 					</death>
 					<t_idle loop="true" speed="0.1f">
 						<frame x="0" y="0" w="64" h="64" />
@@ -343,7 +323,7 @@
 				</pumpkins>
 			</items>
 		</entities>
-		<savedData saved="true" level="2" time="0" startBossFight="false" bossKilled="false">
+		<savedData saved="true" level="1" time="0" startBossFight="false" bossKilled="false">
 			<lvl1>
 				<player x="150" y="3400" lives="3" transformable="false" transformed="false" candies="0" />
 			</lvl1>
@@ -421,6 +401,6 @@
 	<playerPrefs>
 		<fullscreen toggle="0" />
 		<musicVolume value="0" />
-		<sfxVolume value="-2147483648" />
+		<sfxVolume value="0" />
 	</playerPrefs>
 </config>

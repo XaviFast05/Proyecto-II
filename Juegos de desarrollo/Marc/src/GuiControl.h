@@ -38,7 +38,6 @@ enum class GuiControlId
 	CREDITS,
 	QUIT,
 	BACK,
-	TEST_LEVEL,
 
 	MUSIC,
 	SFX,
@@ -46,8 +45,9 @@ enum class GuiControlId
 	
 	RESUME,
 	BACKTOTITLE,
-	RETRY
-	
+	RETRY,
+
+	TEST_LEVEL,
 };
 
 class GuiControl
