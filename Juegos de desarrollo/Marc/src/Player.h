@@ -119,7 +119,7 @@ public:
 	float punchTimerAnimation = 0.5;
 
 	Timer pickaxeRecollectTimer;
-	float pickaxeRecollectCount = 5;
+	float pickaxeRecollectCount = 2.5;
 	bool recollectingPickaxes = false;
 
 	Timer coyoteTimer;

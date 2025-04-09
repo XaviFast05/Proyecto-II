@@ -134,6 +134,9 @@ public:
 	std::string timerText;
 	std::string secondText;
 
+	std::string pickaxeText;
+	std::string timeTilPickaxeText;
+
 	bool cameraDirectionChangeActivation = false;
 
 private:

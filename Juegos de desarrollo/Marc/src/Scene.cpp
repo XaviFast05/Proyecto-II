@@ -46,15 +46,9 @@ Scene::~Scene()
 bool Scene::Awake()
 {
 	bool ret = true;
-	/*if (!active) {
-		return false;
-	}*/
 	LOG("Loading Scene");
 
 	level = LVL1;
-	
-	//L04: TODO 3b: Instantiate the player using the entity manager	
-
 	return ret;
 }
 
@@ -321,12 +315,16 @@ bool Scene::Update(float dt)
 	Engine::GetInstance().render.get()->DrawText(timerText.c_str(), 1050, 29, 20, 20);
 	Engine::GetInstance().render.get()->DrawText(secondText.c_str(), 1073, 30, 15, 18);
 	
+	pickaxeText = std::to_string((int)player->pickaxeCount) + " pickaxes";
+	Engine::GetInstance().render.get()->DrawText(pickaxeText.c_str(), 800, 50, 200, 18);
 
-
-	/*std::string candiesText = std::to_string(player->pickedCandies);
-	Engine::GetInstance().render.get()->DrawText(candiesText.c_str(), 1210, 29, 20, 20);*/
+	if (player->pickaxeCount < MAX_PICKAXES) {
+		std::string number = std::to_string(player->pickaxeRecollectCount - player->pickaxeRecollectTimer.ReadSec());
+		number.resize(3);
+		timeTilPickaxeText = "time until next pickage: " + number;
+		Engine::GetInstance().render.get()->DrawText(timeTilPickaxeText.c_str(), 800, 70, 400, 18);
+	}
 	
-
 	return true;
 }
 
