@@ -318,10 +318,10 @@ bool Scene::Update(float dt)
 	pickaxeText = std::to_string((int)player->pickaxeCount) + " pickaxes";
 	Engine::GetInstance().render.get()->DrawText(pickaxeText.c_str(), 800, 50, 200, 18);
 
-	if (player->pickaxeCount < MAX_PICKAXES) {
+	if (player->pickaxeCount < MAX_PICKAXES && !paused) {
 		std::string number = std::to_string(player->pickaxeRecollectCount - player->pickaxeRecollectTimer.ReadSec());
 		number.resize(3);
-		timeTilPickaxeText = "time until next pickage: " + number;
+		timeTilPickaxeText = "time until next pickage: " + number + "s";
 		Engine::GetInstance().render.get()->DrawText(timeTilPickaxeText.c_str(), 800, 70, 400, 18);
 	}
 	
