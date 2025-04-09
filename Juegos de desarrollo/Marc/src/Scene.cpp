@@ -318,7 +318,7 @@ bool Scene::Update(float dt)
 	pickaxeText = std::to_string((int)player->pickaxeCount) + " pickaxes";
 	Engine::GetInstance().render.get()->DrawText(pickaxeText.c_str(), 800, 50, 200, 18);
 
-	if (player->pickaxeCount < MAX_PICKAXES && !paused) {
+	if (player->pickaxeCount < MAX_PICKAXES) {
 		std::string number = std::to_string(player->pickaxeRecollectCount - player->pickaxeRecollectTimer.ReadSec());
 		number.resize(3);
 		timeTilPickaxeText = "time until next pickage: " + number + "s";
