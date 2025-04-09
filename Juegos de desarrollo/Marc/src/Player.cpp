@@ -107,6 +107,7 @@ bool Player::Start() {
 	pbody->ctype = ColliderType::PLAYER;
 	pbody->body->SetLinearDamping(friction);
 	pbody->body->SetGravityScale(gravity);
+	pbody->body->SetFixedRotation(true);
 
 	
 	hurtTimer = Timer();
