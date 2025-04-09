@@ -146,8 +146,7 @@ bool Player::Update(float dt)
 		grounded = VALUE_NEAR_TO_0(pbody->body->GetLinearVelocity().y);
 
 		//GODMODE
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
-		{
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 			godMode = !godMode;
 			pbody->body->SetGravityScale(godMode == true || canClimb == true);
 			pbody->body->SetLinearVelocity(godMode == true ? b2Vec2_zero : pbody->body->GetLinearVelocity());
@@ -188,8 +187,10 @@ bool Player::Update(float dt)
 			playerState = PUNCH;
 		}
 		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Q) && stateFlow[playerState][THROW] && pickaxeCount > 0) {
-			LOG("HOLA");
 			pickaxeTimer.Start();
+			pickaxeCount--;
+			playerState = THROW;
+
 			Vector2D bulletPosition = pbody->GetPhysBodyWorldPosition();
 			bulletPosition.setX(bulletPosition.getX() + (GetDirection().getX() * 20));
 			Bullet* bullet = new Bullet(BulletType::HORIZONTAL);
@@ -199,7 +200,6 @@ bool Player::Update(float dt)
 			Engine::GetInstance().entityManager.get()->AddEntity(bullet);
 			bullet->Start();
 			bullet->SetPosition(bulletPosition);
-			playerState = THROW;
 		}
 
 		//PICKAXE LOGIC
@@ -239,12 +239,15 @@ bool Player::Update(float dt)
 			if (grounded) playerState = IDLE;
 			break;
 		case PUNCH:
+			if (CheckMoveX()) MoveX();
 			if (pickaxeTimer.ReadSec() >= punchTimerAnimation) playerState = IDLE;
 			break;
 		case MELEE:
+			if (CheckMoveX()) MoveX();
 			if (pickaxeTimer.ReadSec() >= pickaxeTimerAnimation) playerState = IDLE;
 			break;
 		case THROW:
+			if (CheckMoveX()) MoveX();
 			if (pickaxeTimer.ReadSec() >= pickaxeTimerAnimation) playerState = IDLE;
 			break;
 		default:
@@ -341,8 +344,6 @@ bool Player::Update(float dt)
 			pbody->body->SetLinearVelocity(b2Vec2_zero);
 		}*/
 	}
-	
-
 
 	//ANIMS
 	currentFrame = currentAnim->GetCurrentFrame();
@@ -374,7 +375,6 @@ bool Player::Update(float dt)
 	b2Transform pbodyPos = pbody->body->GetTransform();
 
 	if (renderable) {
-
 		position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texW / 2);
 		position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
 
@@ -386,10 +386,8 @@ bool Player::Update(float dt)
 			Engine::GetInstance().render.get()->DrawTextureFlipped(texture, position.getX(), position.getY(), &currentFrame);
 		}
 	}
-	
 
 	currentAnim->Update();
-	
 	return true;
 }
 
