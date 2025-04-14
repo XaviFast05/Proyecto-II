@@ -126,6 +126,10 @@ public:
 	bool coyoteTimerOn = false;
 	float coyoteTimerMax = 0.15;
 
+	Timer plusJumpTimer;
+	bool plusJumpTimerOn = false;
+	float plusJumpTimerMax = 0.15; // 0.1 - 0.15 to adjust
+
 	state playerState; 
 	std::vector<std::vector<bool>> stateFlow;
 

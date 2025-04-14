@@ -168,6 +168,9 @@ bool Player::Update(float dt)
 			playerState = JUMP;
 			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 			grounded = false;
+			plusJumpTimer.Start();
+			plusJumpTimerOn = true;
+
 		}
 		else if (pbody->body->GetLinearVelocity().y > 0.001 && stateFlow[playerState][FALL]) {
 			if (playerState == RUN) {
@@ -218,9 +221,22 @@ bool Player::Update(float dt)
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 				playerState = JUMP;
 				coyoteTimerOn = false;
+
+				plusJumpTimer.Start();
+				plusJumpTimerOn = true;
 			}
 			if (coyoteTimer.ReadSec() >= coyoteTimerMax) coyoteTimerOn = false;
 		}
+
+		// PLUS JUMP LOGIC
+		if (plusJumpTimerOn) {
+			if (!grounded && playerState == JUMP && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && plusJumpTimer.ReadSec() < plusJumpTimerMax) {
+				float jumpPlusForce = 1;
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpPlusForce), true);
+			}
+			if (plusJumpTimer.ReadSec() >= plusJumpTimerMax) plusJumpTimerOn = false;
+		}
+
 
 		//LOGIC
 		switch (playerState) {
