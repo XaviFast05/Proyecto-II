@@ -142,7 +142,7 @@ bool Player::Update(float dt)
 
 		pbody->body->SetAwake(true);
 
-		velocity = b2Vec2_zero;		
+		velocity = b2Vec2_zero;
 		grounded = VALUE_NEAR_TO_0(pbody->body->GetLinearVelocity().y);
 
 		//GODMODE
@@ -156,7 +156,7 @@ bool Player::Update(float dt)
 		if (godMode) {
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Z) == KEY_DOWN) {
 
-					jumpForce = parameters.child("propierties").attribute("gJumpForce").as_float();
+				jumpForce = parameters.child("propierties").attribute("gJumpForce").as_float();
 			}
 		}
 
@@ -180,14 +180,20 @@ bool Player::Update(float dt)
 			playerState = FALL;
 			grounded = false;
 		}
-		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][MELEE] && pickaxeCount > 0) {
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][CHOP] && pickaxeCount > 0) {
 			pickaxeTimer.Start();
-			playerState = MELEE;
+			playerState = CHOP;
 			pickaxeCount--;
+
+			meleeTimer.Start();
+			meleeTimerOn = true;
 		}
 		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][PUNCH] && pickaxeCount <= 0) {
 			pickaxeTimer.Start();
 			playerState = PUNCH;
+
+			meleeTimer.Start();
+			meleeTimerOn = true;
 		}
 		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Q) && stateFlow[playerState][THROW] && pickaxeCount > 0) {
 			pickaxeTimer.Start();
@@ -228,7 +234,7 @@ bool Player::Update(float dt)
 			if (coyoteTimer.ReadSec() >= coyoteTimerMax) coyoteTimerOn = false;
 		}
 
-		// PLUS JUMP LOGIC
+		//PLUS JUMP LOGIC
 		if (plusJumpTimerOn) {
 			if (!grounded && playerState == JUMP && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && plusJumpTimer.ReadSec() < plusJumpTimerMax) {
 				float jumpPlusForce = 1;
@@ -237,6 +243,22 @@ bool Player::Update(float dt)
 			if (plusJumpTimer.ReadSec() >= plusJumpTimerMax) plusJumpTimerOn = false;
 		}
 
+		//MELEE ATTACKS LOGIC
+		if (meleeTimerOn) {
+			if (meleeTimer.ReadSec() == 0.0) {
+				meleeDisplace = (dir == RIGHT) ? (2 * texW / 3 + MELEE_AREA_WIDTH / 2) : (texW / 3 - MELEE_AREA_WIDTH / 2);
+				meleeArea = Engine::GetInstance().physics.get()->CreateRectangleSensor((position.getX() + meleeDisplace), position.getY() + texH / 2, MELEE_AREA_WIDTH, texH, STATIC);
+				meleeArea->ctype = ColliderType::MELEE_AREA;
+			}
+			if (meleeTimer.ReadSec() < meleeTimerMax) {
+				b2Vec2 meleeAreaMovePos = b2Vec2(pbody->body->GetPosition().x + PIXEL_TO_METERS(meleeDisplace) - PIXEL_TO_METERS(texW/2), pbody->body->GetPosition().y);
+				meleeArea->body->SetTransform(meleeAreaMovePos, 0);
+			}
+			if (meleeTimer.ReadSec() >= meleeTimerMax) {
+				meleeArea->body->SetEnabled(false);
+				meleeTimerOn = false;
+			}
+		}
 
 		//LOGIC
 		switch (playerState) {
@@ -258,7 +280,7 @@ bool Player::Update(float dt)
 			if (CheckMoveX()) MoveX();
 			if (pickaxeTimer.ReadSec() >= punchTimerAnimation) playerState = IDLE;
 			break;
-		case MELEE:
+		case CHOP:
 			if (CheckMoveX()) MoveX();
 			if (pickaxeTimer.ReadSec() >= pickaxeTimerAnimation) playerState = IDLE;
 			break;
@@ -380,7 +402,7 @@ bool Player::Update(float dt)
 	case PUNCH:
 		currentAnim = &hurt;
 		break;
-	case MELEE:
+	case CHOP:
 		currentAnim = &hurt;
 		break;
 	case THROW:

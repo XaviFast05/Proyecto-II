@@ -129,7 +129,12 @@ void Bullet::OnCollision(PhysBody* physA, PhysBody* physB) {
         stuckOnWall = true;
         bulletfixedpos = pbody->body->GetTransform().p;
         break;
+    //case ColliderType::MELEE_AREA:
+    //    LOG("Collided - DESTROY");
+    //    variableMarc = true;
+    //    break;
     }
+
     
 
 }

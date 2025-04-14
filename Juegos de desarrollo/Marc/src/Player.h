@@ -9,6 +9,8 @@
 
 
 #define MAX_PICKAXES 3
+#define MELEE_AREA_WIDTH 10
+
 
 struct SDL_Texture;
 
@@ -19,7 +21,7 @@ enum state {
 	FALL,
 	PUNCH,
 	THROW,
-	MELEE
+	CHOP
 };
 
 enum Direction {
@@ -129,6 +131,12 @@ public:
 	Timer plusJumpTimer;
 	bool plusJumpTimerOn = false;
 	float plusJumpTimerMax = 0.15; // 0.1 - 0.15 to adjust
+
+	PhysBody* meleeArea;
+	Timer meleeTimer;
+	bool meleeTimerOn = false;
+	float meleeTimerMax = 0.15;
+	float meleeDisplace = 0.0;
 
 	state playerState; 
 	std::vector<std::vector<bool>> stateFlow;
