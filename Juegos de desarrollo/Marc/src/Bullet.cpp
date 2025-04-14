@@ -41,7 +41,7 @@ bool Bullet::Start() {
     texH = parameters.attribute("h").as_int();
 
 
-    pbody = Engine::GetInstance().physics.get()->CreateRectangle(static_cast<int>(position.getX()), static_cast<int>(position.getY()), 36, 12, bodyType::DYNAMIC);
+    pbody = Engine::GetInstance().physics.get()->CreateRectangle(static_cast<int>(position.getX()), static_cast<int>(position.getY()), 48, 12, bodyType::DYNAMIC);
     if (pbody == nullptr) {
         LOG("Error: PhysBody creation failed!");
         return false;
@@ -70,7 +70,7 @@ bool Bullet::Update(float dt) {
 
     if (!stuckOnWall) {
         b2Vec2 velocity = pbody->body->GetLinearVelocity();
-        velocity.x = direction.getX() * 3.5f;  // Velocidad constante en la dirección horizontal
+        velocity.x = direction.getX() * 12.5f;  // Velocidad constante en la dirección horizontal
         velocity.y = 0.0f;  // Sin movimiento vertical
         pbody->body->SetLinearVelocity(velocity);
         b2Transform pbodyPos = pbody->body->GetTransform();

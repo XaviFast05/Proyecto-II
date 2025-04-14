@@ -412,7 +412,7 @@
 	</audio>
 	<playerPrefs>
 		<fullscreen toggle="0" />
-		<musicVolume value="74" />
-		<sfxVolume value="65" />
+		<musicVolume value="0" />
+		<sfxVolume value="0" />
 	</playerPrefs>
 </config>
