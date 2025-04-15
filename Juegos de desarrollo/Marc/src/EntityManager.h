@@ -3,6 +3,7 @@
 #include "Module.h"
 #include "Entity.h"
 #include <list>
+#include <map>
 
 class EntityManager : public Module
 {
@@ -28,6 +29,10 @@ public:
 	// Additional methods
 	Entity* CreateEntity(EntityType type);
 
+	std::list<Entity*> CreatePooledEntities(EntityType type);
+
+	Entity* GetPooledEntity(EntityType type);
+
 	void DestroyEntity(Entity* entity);
 
 	void AddEntity(Entity* entity);
@@ -35,5 +40,5 @@ public:
 public:
 
 	std::list<Entity*> entities;
-
+	std::map<EntityType, std::list<Entity*>> pooledEntities;
 };

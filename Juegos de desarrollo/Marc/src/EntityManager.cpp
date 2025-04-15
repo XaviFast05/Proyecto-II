@@ -69,6 +69,7 @@ bool EntityManager::CleanUp()
 	}
 
 	entities.clear();
+	pooledEntities.clear();
 
 	return ret;
 }
@@ -110,6 +111,58 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	entities.push_back(entity);
 
 	return entity;
+}
+
+std::list<Entity*> EntityManager::CreatePooledEntities(EntityType type)
+{
+	Entity* entity = nullptr; 
+
+	switch (type)
+	{
+	case EntityType::PLAYER:
+		entity = new Player();
+		break;
+	case EntityType::CANDY:
+		entity = new Candy();
+		break;
+	case EntityType::PUMPKIN:
+		entity = new Pumpkin();
+		break;
+	case EntityType::ENEMY:
+		entity = new Enemy();
+		break;
+	case EntityType::BAT_ENEMY:
+		entity = new BatEnemy();
+		break;
+	case EntityType::GROUND_ENEMY:
+		entity = new GroundEnemy();
+		break;
+	case EntityType::BOSS:
+		entity = new Santa();
+		break;
+	case EntityType::SHOT:
+		entity = new Bullet();
+		break;
+	default:
+		break;
+	}
+
+	entities.push_back(entity);
+	pooledEntities[type].push_back(entity);
+
+	return pooledEntities[type];
+}
+
+Entity* EntityManager::GetPooledEntity(EntityType type)
+{
+	for (Entity* entity : pooledEntities[type])
+	{
+		if (!entity->active)
+		{
+			return entity;
+		}
+	}
+	return nullptr;
 }
 
 void EntityManager::DestroyEntity(Entity* entity)
