@@ -15,6 +15,7 @@
 #include "WinMenu.h"
 #include "FadeToBlack.h"
 #include "Bullet.h"
+#include "PickaxeManager.h"
 
  
 
@@ -113,6 +114,8 @@ bool Player::Start() {
 	hurtTimer = Timer();
 	respawnTimer = Timer();
 
+	pickaxeManager = new PickaxeManager();
+	pickaxeManager->Start();
 
 	return true;
 }
@@ -200,15 +203,7 @@ bool Player::Update(float dt)
 			pickaxeCount--;
 			playerState = THROW;
 
-			Vector2D bulletPosition = pbody->GetPhysBodyWorldPosition();
-			bulletPosition.setX(bulletPosition.getX() + (GetDirection().getX() * 20));
-			Bullet* bullet = new Bullet(BulletType::HORIZONTAL);
-			bullet->SetDirection(GetDirection());
-			bullet->SetParameters(Engine::GetInstance().scene.get()->configParameters);
-			bullet->texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/bala.png");
-			Engine::GetInstance().entityManager.get()->AddEntity(bullet);
-			bullet->Start();
-			bullet->SetPosition(bulletPosition);
+			pickaxeManager->ThrowPickaxe(GetDirection(), pbody->GetPhysBodyWorldPosition());
 		}
 
 		//PICKAXE LOGIC
@@ -294,93 +289,6 @@ bool Player::Update(float dt)
 
 		velocity = { velocity.x, pbody->body->GetLinearVelocity().y };
 		pbody->body->SetLinearVelocity(velocity);
-
-		//if (playerState != HURT && playerState != DEAD && playerState != ATTACK1 && playerState != ATTACK2)
-		//{
-		//	playerState = IDLE;
-
-
-		//	//// Move left
-		//	//if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && stateFlow[playerState][RUN] ) {
-		//	//	velocity.x = -moveSpeed * 16;
-		//	//	playerState = RUN;
-		//	//	dir = LEFT;
-		//	//}
-
-		//	//// Move right
-		//	//if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
-		//	//	velocity.x = moveSpeed * 16;
-		//	//	playerState = RUN;
-		//	//	dir = RIGHT;
-		//	//}
-
-		//	if (godMode || canClimb)
-		//	{
-		//		velocity.y = 0;
-		//		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-		//			velocity.y = -moveSpeed * 16;
-		//			playerState = WALK;
-		//		}
-
-		//		// Move right
-		//		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-		//			velocity.y = moveSpeed * 16;
-		//			playerState = WALK;
-		//		}
-
-		//	}
-		//	else {
-		//		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && VALUE_NEAR_TO_0(pbody->body->GetLinearVelocity().y)) {
-		//			// Apply an initial upward force
-		//			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
-		//		}
-
-
-		//		velocity = { velocity.x, pbody->body->GetLinearVelocity().y };
-		//	}
-
-		//	pbody->body->SetLinearVelocity(velocity);
-
-		//	if (pbody->body->GetLinearVelocity().y < -0.0001)
-		//	{
-		//		playerState = JUMP;
-		//	}
-
-		//	if (pbody->body->GetLinearVelocity().y > 0.0001)
-		//	{
-		//		playerState = FALL;
-		//	}
-
-		//	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Q) == KEY_DOWN) {
-		//		Vector2D bulletPosition = pbody->GetPhysBodyWorldPosition();
-		//		bulletPosition.setX(bulletPosition.getX() + (GetDirection().getX() * 20));
-		//		Bullet* bullet = new Bullet(BulletType::HORIZONTAL);
-		//		bullet->SetDirection(GetDirection());
-		//		bullet->SetParameters(Engine::GetInstance().scene.get()->configParameters);
-		//		bullet->texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/bala.png");
-		//		Engine::GetInstance().entityManager.get()->AddEntity(bullet);
-		//		bullet->Start();
-		//		bullet->SetPosition(bulletPosition);
-		//	}
-
-		//}
-
-		/*else if (playerState == HURT) {
-
-			if (hurtTimer.ReadSec() >= hurtTime) {
-				playerState = IDLE;
-				hurt.Reset();
-			}
-			else
-			{
-				velocity = pbody->body->GetLinearVelocity();
-				pbody->body->SetLinearVelocity(velocity);
-			}
-		}
-		else if (playerState == DEAD) {
-
-			pbody->body->SetLinearVelocity(b2Vec2_zero);
-		}*/
 	}
 
 	//ANIMS

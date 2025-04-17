@@ -30,6 +30,7 @@ public:
     void SetPosition(Vector2D pos);
     Vector2D GetPosition();
     void SetDirection(const Vector2D& dir) { direction = dir; }
+    void ChangeType(BulletType type);
 
     void OnCollision(PhysBody* physA, PhysBody* physB);
 

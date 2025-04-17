@@ -33,7 +33,6 @@ public:
 
 	virtual bool Start()
 	{
-		
 		return true;
 	}
 

@@ -12,6 +12,8 @@
 #define MAX_PICKAXES 3
 #define MELEE_AREA_WIDTH 10
 
+//FORWARD DECLARATION
+class PickaxeManager;
 
 struct SDL_Texture;
 
@@ -116,6 +118,7 @@ public:
 	Animation hurt;
 	Animation death;
 
+	PickaxeManager* pickaxeManager;
 	int pickaxeCount = 3;
 	Timer pickaxeTimer;
 	float pickaxeTimerAnimation = 0.5;

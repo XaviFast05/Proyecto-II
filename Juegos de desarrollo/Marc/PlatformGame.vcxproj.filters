@@ -150,6 +150,12 @@
     <ClCompile Include="src\Bullet.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
+    <ClCompile Include="src\Intro.cpp">
+      <Filter>Source Files\Game\Menus</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PickaxeManager.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Audio.h">
@@ -269,6 +275,10 @@
     </ClInclude>
     <ClInclude Include="src\Intro.h" />
     <ClInclude Include="src\Bullet.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Intro.h" />
+    <ClInclude Include="src\PickaxeManager.h">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
   </ItemGroup>

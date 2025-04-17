@@ -29,7 +29,8 @@ public:
 	// Additional methods
 	Entity* CreateEntity(EntityType type);
 
-	std::list<Entity*> CreatePooledEntities(EntityType type);
+	std::list<Entity*> CreatePooledEntities(EntityType type, int num);
+	Entity* CreatePooledEntities(EntityType type);
 
 	Entity* GetPooledEntity(EntityType type);
 
