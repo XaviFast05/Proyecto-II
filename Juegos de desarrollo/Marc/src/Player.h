@@ -8,6 +8,7 @@
 #include "Particle.h"
 
 
+#define GHOST_W 32
 #define MAX_PICKAXES 3
 #define MELEE_AREA_WIDTH 10
 

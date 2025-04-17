@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <config>
 	<engine>
-		<title>My platformer game</title>
+		<title>Kim's Underworld</title>
 		<maxFrameDuration value="16" />
 	</engine>
 	<render>
@@ -17,24 +17,25 @@
 	<intro path="Assets/Textures/Menus/Intro/intro-screen.png" />
 	<mainmenu>
 		<bg path="Assets/Textures/Menus/Title Screen/title screen pixel bg.png" />
-		<buttons defaultTex="Assets/Textures/Menus/Title Screen/title screen button sheet rescaled.png">
-			<newGameBt id="1" x="40" y="38" w="192" h="32" texture="Assets/Textures/Menus/Title Screen/New Game Button Sheet.png" />
-			<continueBt id="2" x="40" y="78" w="192" h="32" texture="Assets/Textures/Menus/Title Screen/Continue Button Sheet.png" />
-			<optionsBt id="3" x="40" y="118" w="192" h="32" texture="Assets/Textures/Menus/Title Screen/Options Button Sheet.png" />
-			<creditsBt id="4" x="-72" y="280" w="192" h="32" texture="Assets/Textures/Menus/Title Screen/Credits Button Sheet.png" />
-			<exitBt id="5" x="519" y="20" w="192" h="32" texture="Assets/Textures/Menus/Title Screen/Exit Button Sheet.png" />
-			<backBt id="6" x="-95" y="10" w="192" h="32" texture="Assets/Textures/Menus/Title Screen/Back Button Sheet.png" />
+		<buttons defaultTex="Assets/Textures/Menus/Title Screen/title screen button sheet.png">
+			<newGameBt id="1" x="448" y="230" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/New Game Button Sheet.png" />
+			<testLevelBt id="13" x="448" y="326" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Test Level Button Sheet.png" />
+			<continueBt id="2" x="4000" y="78" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Continue Button Sheet.png" />
+			<optionsBt id="3" x="448" y="422" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Options Button Sheet.png" />
+			<creditsBt id="4" x="448" y="518" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Credits Button Sheet.png" />
+			<exitBt id="5" x="448" y="614" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Exit Button Sheet.png" />
+			<backBt id="6" x="448" y="614" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Back Button Sheet.png" />
 		</buttons>
 		<credits path="Assets/Textures/Menus/Title Screen/credits screen.png" />
 	</mainmenu>
 	<settings>
-		<optPanel x="144" y="16" w="361" h="284" path="Assets/Textures/Menus/Options/settings-panel.png" />
-		<sliders barW="233" barH="12" barTexture="Assets/Textures/Menus/Options/slider.png" circleW="35" circleH="35" texture="Assets/Textures/Menus/Options/pumpkinBt.png">
-			<musicSlider id="7" barX="215" circleX="230" barY="128" circleY="117" />
-			<sfxSlider id="8" barX="215" circleX="230" barY="193" circleY="182" />
+		<optPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/settings-panel.png" />
+		<sliders barW="384" barH="40" barTexture="Assets/Textures/Menus/Options/slider.png" circleW="70" circleH="70" texture="Assets/Textures/Menus/Options/pumpkinBt.png">
+			<musicSlider id="7" barX="448" circleX="450" barY="236" circleY="221" />
+			<sfxSlider id="8" barX="448" circleX="450" barY="364" circleY="349" />
 		</sliders>
-		<fullScreenBox id="9" x="215" y="239" w="52" h="26" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
-		<backBt id="6" x="-105" y="277" w="233" h="39" texture="Assets/Textures/Menus/Options/back.png" />
+		<fullScreenBox id="9" x="605" y="490" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
+		<backBt id="6" x="448" y="587" w="384" h="64" texture="Assets/Textures/Menus/Options/back.png" />
 	</settings>
 	<scene>
 		<ui>
@@ -68,7 +69,7 @@
 		</map>
 		<helpMenu x="252" y="9" w="379" h="295" path="Assets/Textures/Menus/Help/HelpMenu_ver2.png" lvl="1" />
 		<entities>
-			<player w="64" h="64" t_w="64" t_h="64" lives="3" texture="Assets/Textures/Kim/Kim_idle.png" t_texture="Assets/Textures/Pumpkin Head/pumpkinhead_sheet2.png">
+			<player w="64" h="64" t_w="64" t_h="64" lives="3" texture="Assets/Textures/Kim_idle.png" t_texture="Assets/Textures/Pumpkin Head/pumpkinhead_sheet2.png">
 				<startPositions>
 					<lvl1 x="150" y="3400" />
 					<lvl2 x="150" y="3400" />
@@ -84,38 +85,25 @@
 					<melee idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" />
 				</statesFlow>
 				<animations>
-					<idle loop="true" speed="0.2f">
+					<idle loop="true" speed="0.02f">
 						<frame x="0" y="0" w="64" h="64" />
+						<frame x="64" y="0" w="64" h="64" />
+						<frame x="128" y="0" w="64" h="64" />
 					</idle>
 					<walk loop="true" speed="0.1f">
-						<frame x="0" y="64" w="64" h="64" />
-						<frame x="64" y="64" w="64" h="64" />
-						<frame x="128" y="64" w="64" h="64" />
-						<frame x="192" y="64" w="64" h="64" />
+						<frame x="0" y="0" w="64" h="64" />
 					</walk>
 					<jump loop="false" speed="0.2f">
-						<frame x="0" y="128" w="64" h="64" />
-						<frame x="64" y="128" w="64" h="64" />
-						<frame x="128" y="128" w="64" h="64" />
+						<frame x="0" y="0" w="64" h="64" />
 					</jump>
 					<fall loop="false" speed=" 0.2f">
-						<frame x="0" y="192" w="64" h="64" />
-						<frame x="64" y="192" w="64" h="64" />
-						<frame x="128" y="192" w="64" h="64" />
+						<frame x="0" y="0" w="64" h="64" />
 					</fall>
 					<hurt loop="false" speed="0.15f">
-						<frame x="0" y="256" w="64" h="64" />
-						<frame x="64" y="256" w="64" h="64" />
-						<frame x="128" y="256" w="64" h="64" />
-						<frame x="192" y="256" w="64" h="64" />
+						<frame x="0" y="0" w="64" h="64" />
 					</hurt>
 					<death loop="false" speed="0.2f">
-						<frame x="0" y="320" w="64" h="64" />
-						<frame x="64" y="320" w="64" h="64" />
-						<frame x="128" y="320" w="64" h="64" />
-						<frame x="192" y="320" w="64" h="64" />
-						<frame x="256" y="320" w="64" h="64" />
-						<frame x="320" y="320" w="64" h="64" />
+						<frame x="0" y="0" w="64" h="64" />
 					</death>
 					<t_idle loop="true" speed="0.1f">
 						<frame x="0" y="0" w="64" h="64" />
@@ -341,12 +329,12 @@
 			</lvl1>
 		</savedData>
 		<pauseMenu>
-			<pausePanel x="144" y="16" w="361" h="284" texture="Assets/Textures/Menus/Pause/pause-panel.png" />
+			<pausePanel x="0" y="0" w="1280" h="720" texture="Assets/Textures/Menus/Pause/pause-panel.png" />
 			<buttons>
-				<resumeBt id="10" x="213" y="92" w="233" h="39" texture="Assets/Textures/Menus/Pause/resume resized.png" />
-				<optionsBt id="3" x="213" y="140" w="233" h="39" texture="Assets/Textures/Menus/Pause/options resized.png" />
-				<backToTitleBt id="11" x="213" y="188" w="233" h="39" texture="Assets/Textures/Menus/Pause/back to title.png" />
-				<exitBt id="5" x="213" y="236" w="233" h="39" texture="Assets/Textures/Menus/Pause/exit centered.png" />
+				<resumeBt id="10" x="448" y="223" w="384" h="64" texture="Assets/Textures/Menus/Pause/resume resized.png" />
+				<optionsBt id="3" x="448" y="319" w="384" h="64" texture="Assets/Textures/Menus/Pause/options resized.png" />
+				<backToTitleBt id="11" x="448" y="415" w="384" h="64" texture="Assets/Textures/Menus/Pause/back to title.png" />
+				<exitBt id="5" x="448" y="511" w="384" h="64" texture="Assets/Textures/Menus/Pause/exit centered.png" />
 			</buttons>
 		</pauseMenu>
 		<deathMenu>
