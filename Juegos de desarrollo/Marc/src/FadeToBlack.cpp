@@ -16,7 +16,7 @@ FadeToBlack::FadeToBlack(bool startEnabled) : Module(startEnabled)
 	//Engine::GetInstance().window.get()->GetWindowSize(windowW, windowH);
 	//int scale = Engine::GetInstance().window.get()->GetScale();
 	name = "fade to black";
-	screenRect = { 0, 0, 1280 , 640 };
+	screenRect = { 0, 0, 1280 , 720 };
 }
 
 FadeToBlack::~FadeToBlack()
