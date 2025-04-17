@@ -200,9 +200,17 @@ bool Player::Update(float dt)
 			pickaxeCount--;
 			playerState = THROW;
 
+			Bullet* bullet;
 			Vector2D bulletPosition = pbody->GetPhysBodyWorldPosition();
-			bulletPosition.setX(bulletPosition.getX() + (GetDirection().getX() * 20));
-			Bullet* bullet = new Bullet(BulletType::HORIZONTAL);
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W)) {
+				bulletPosition.setY(bulletPosition.getY() - 50);
+				bullet = new Bullet(BulletType::VERTICAL);
+			}
+			else {
+				bulletPosition.setX(bulletPosition.getX() + (GetDirection().getX() * 20));
+				bullet = new Bullet(BulletType::HORIZONTAL);
+			}
+
 			bullet->SetDirection(GetDirection());
 			bullet->SetParameters(Engine::GetInstance().scene.get()->configParameters);
 			bullet->texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/bala.png");

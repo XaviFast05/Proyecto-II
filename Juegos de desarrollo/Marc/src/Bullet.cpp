@@ -13,7 +13,6 @@
 
 Bullet::Bullet(BulletType type)
     : Entity(EntityType::SHOT),
-    direction(1, 0),
     pbody(nullptr),
     texW(0),
     texH(0),
@@ -23,8 +22,6 @@ Bullet::Bullet(BulletType type)
 {
     name = "bullet";
 }
-
-
 Bullet::~Bullet() {}
 
 bool Bullet::Awake() {
@@ -33,15 +30,21 @@ bool Bullet::Awake() {
 
 bool Bullet::Start() {
     // Inicializar texturas
-    if (BulletType::HORIZONTAL == type) {
+    if (type == BulletType::HORIZONTAL) {
         texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/bala.png");
+        pbody = Engine::GetInstance().physics.get()->CreateRectangle(static_cast<int>(position.getX()), static_cast<int>(position.getY()), 48, 12, bodyType::DYNAMIC);
     }
-   
+    else if (type == BulletType::VERTICAL) {
+        texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/balaRotated.png");
+        pbody = Engine::GetInstance().physics.get()->CreateRectangle(static_cast<int>(position.getX()), static_cast<int>(position.getY()), 12, 48, bodyType::DYNAMIC);
+    }
+
     texW = parameters.attribute("w").as_int();
     texH = parameters.attribute("h").as_int();
 
+    if (type == BulletType::HORIZONTAL) direction = Vector2D(1, 0);
+    else if (type == BulletType::VERTICAL) direction = Vector2D(0, -1);
 
-    pbody = Engine::GetInstance().physics.get()->CreateRectangle(static_cast<int>(position.getX()), static_cast<int>(position.getY()), 48, 12, bodyType::DYNAMIC);
     if (pbody == nullptr) {
         LOG("Error: PhysBody creation failed!");
         return false;
@@ -51,7 +54,6 @@ bool Bullet::Start() {
     pbody->body->SetFixedRotation(true);
     // Establecer tipo de colisión
     pbody->ctype = ColliderType::SHOT;
-    
     active = true;
 
     return true;
@@ -70,24 +72,42 @@ bool Bullet::Update(float dt) {
 
     if (!stuckOnWall) {
         b2Vec2 velocity = pbody->body->GetLinearVelocity();
-        velocity.x = direction.getX() * 12.5f;  // Velocidad constante en la dirección horizontal
-        velocity.y = 0.0f;  // Sin movimiento vertical
+        if (type == BulletType::HORIZONTAL) {
+            velocity.x = direction.getX() * 12.5f;  // Velocidad constante en la dirección horizontal
+            velocity.y = 0.0f;  // Sin movimiento vertical
+        }
+        else if (type == BulletType::VERTICAL) {
+            velocity.x = 0.0f;  // Sin movimiento horizontal
+            velocity.y = direction.getY() * 12.5f;  // Velocidad constante en la dirección vertical
+        }
+
         pbody->body->SetLinearVelocity(velocity);
         b2Transform pbodyPos = pbody->body->GetTransform();
-        position.setX(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.x)) - 32.0f);
-        position.setY(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.y)) - 16.0f);
+
+        if (type == BulletType::HORIZONTAL) {
+            position.setX(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.x)) - 32.0f);
+            position.setY(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.y)) - 16.0f);
+        }
+        else if (type == BulletType::VERTICAL) {
+            position.setX(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.x)) - 16.0f);
+            position.setY(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.y)) - 32.0f);
+        }
     }
     else {
         pbody->body->SetType(b2_staticBody);
     }
 
-    if (direction.getX() < 0) {
-        Engine::GetInstance().render.get()->DrawTextureFlipped(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()));
+    if (type == BulletType::HORIZONTAL) {
+        if (direction.getX() < 0) {
+            Engine::GetInstance().render.get()->DrawTextureFlipped(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()));
+        }
+        else {
+            Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()));
+        }
     }
-    else {
+    else if (type == BulletType::VERTICAL) {
         Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()));
     }
-
     return true;
 }
 
