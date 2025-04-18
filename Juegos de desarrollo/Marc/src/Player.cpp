@@ -155,13 +155,18 @@ bool Player::Update(float dt)
 
 		if (godMode) {
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Z) == KEY_DOWN) {
-
 				jumpForce = parameters.child("propierties").attribute("gJumpForce").as_float();
 			}
 		}
 
 		//CHANGERS
-		if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && stateFlow[playerState][RUN] && grounded) {
+		if (playerState == DEAD) {
+
+		}
+		else if (playerState == HURT) {
+			if (hurtTimer.ReadSec() >= hurtTime) playerState = IDLE;
+		}
+		else if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && stateFlow[playerState][RUN] && grounded) {
 			playerState = RUN;
 		}
 		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && ((stateFlow[playerState][JUMP] && grounded) /*MODIFICAR GODMODE*/ || godMode)) {
@@ -462,13 +467,23 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision PUMPKIN");
 		break;
 	case ColliderType::SPYKE:
-			
 		LOG("Collision SPYKE");
-			
 		break;
 
 	case ColliderType::ENEMY:
 		LOG("Collision ENEMY");
+		if (!godMode) {
+			//HURT LOGIC
+			if (hits >= 1 && playerState != HURT) DamagePlayer();
+			if (hits == 0) KillPlayer();
+			else {
+				//PUSHING THE PLAYER WHEN HURT
+				b2Vec2 pushVec(physA->body->GetPosition().x - physB->body->GetPosition().x, physA->body->GetPosition().y - physB->body->GetPosition().y);
+				pushVec.Normalize();
+				pbody->body->SetLinearVelocity(b2Vec2(0, 0));
+				pbody->body->ApplyLinearImpulseToCenter(pushVec, true);
+			}
+		}
 		break;
 	
 	case ColliderType::ABYSS:
@@ -536,7 +551,6 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 	}
 }
 
-
 void Player::SetPosition(Vector2D pos) {
 	
 	b2Vec2 bodyPos = b2Vec2(PIXEL_TO_METERS(pos.getX()), PIXEL_TO_METERS(pos.getY()));
@@ -554,8 +568,7 @@ Vector2D Player::GetDirection() const {
 	}
 }
 
-void Player::SaveData(pugi::xml_node playerNode)
-{
+void Player::SaveData(pugi::xml_node playerNode) {
 	if (active) {
 		playerNode.attribute("x").set_value(pbody->GetPhysBodyWorldPosition().getX());
 		playerNode.attribute("y").set_value(pbody->GetPhysBodyWorldPosition().getY());
@@ -571,9 +584,7 @@ void Player::LoadData(pugi::xml_node playerNode)
 }
 
 void Player::KillPlayer() {
-
-	/*playerState = DEAD;*/
-
+	playerState = DEAD;
 	pbody->body->SetGravityScale(0);
 	respawnTimer.Start();
 }
@@ -590,13 +601,17 @@ bool Player::CheckMoveX() {
 	else return false;
 }
 
-void Player::MoveX()
-{
+void Player::MoveX() {
 	velocity.x = (dir == RIGHT ? moveSpeed * 16 : -moveSpeed * 16);
 }
 
-void Player::CheckJump()
-{
+void Player::CheckJump() {
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) && grounded)
 		pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
+}
+
+void Player::DamagePlayer() {
+	hits--;
+	playerState = HURT;
+	hurtTimer.Start();
 }

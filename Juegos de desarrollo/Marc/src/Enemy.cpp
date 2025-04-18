@@ -177,7 +177,12 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 			DMGEnemy();
 		break;
 	case ColliderType::SHOT:
-
+		if (state != DEAD)
+			DMGEnemy();
+		break;	
+	case ColliderType::MELEE_AREA:
+		if (state != DEAD)
+			DMGEnemy();
 		break;
 	case ColliderType::PUMPKIN:
 		break;
@@ -217,11 +222,9 @@ void Enemy::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 
 void Enemy::DMGEnemy() {
 	lives--;
-	if (lives <= 0)
-	{
+	if (lives <= 0) {
 		deathTimer.Start();
 		death.Reset();
 		state = DEAD;
 	}
-	
 }
