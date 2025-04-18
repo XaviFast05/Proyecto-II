@@ -211,11 +211,10 @@ bool Player::Update(float dt)
 				bullet = new Bullet(BulletType::HORIZONTAL);
 			}
 
-			bullet->SetDirection(GetDirection());
 			bullet->SetParameters(Engine::GetInstance().scene.get()->configParameters);
-			bullet->texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/bala.png");
 			Engine::GetInstance().entityManager.get()->AddEntity(bullet);
 			bullet->Start();
+			if (bullet->type == BulletType::HORIZONTAL) bullet->SetDirection(GetDirection());
 			bullet->SetPosition(bulletPosition);
 		}
 

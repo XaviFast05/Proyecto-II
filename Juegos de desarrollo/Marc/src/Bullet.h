@@ -41,6 +41,7 @@ public:
 
 public:
     SDL_Texture* texture;
+    BulletType type;
 
 private:
 
@@ -59,6 +60,4 @@ private:
     Animation* currentAnimation = nullptr;
     Animation travel;
     PhysBody* pbody;
-    BulletType type;
-
 };
