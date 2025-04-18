@@ -13,7 +13,6 @@
 
 Bullet::Bullet(BulletType type)
     : Entity(EntityType::SHOT),
-    direction(1, 0),
     pbody(nullptr),
     texW(0),
     texH(0),
@@ -23,8 +22,6 @@ Bullet::Bullet(BulletType type)
 {
     name = "bullet";
 }
-
-
 Bullet::~Bullet() {}
 
 bool Bullet::Awake() {
@@ -33,13 +30,12 @@ bool Bullet::Awake() {
 
 bool Bullet::Start() {
     // Inicializar texturas
-    if (BulletType::HORIZONTAL == type) {
-        texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/bala.png");
-    }
-   
+
     texW = parameters.attribute("w").as_int();
     texH = parameters.attribute("h").as_int();
 
+    if (type == BulletType::HORIZONTAL) direction = Vector2D(1, 0);
+    else if (type == BulletType::VERTICAL) direction = Vector2D(0, -1);
 
     if (!pbody) pbody = Engine::GetInstance().physics.get()->CreateRectangle(static_cast<int>(position.getX()), static_cast<int>(position.getY()), 48, 12, bodyType::DYNAMIC);
     if (pbody == nullptr) {
@@ -49,9 +45,8 @@ bool Bullet::Start() {
     pbody->listener = this;
     pbody->body->SetGravityScale(0);
     pbody->body->SetFixedRotation(true);
-    // Establecer tipo de colisión
+    // Establecer tipo de colisiï¿½n
     pbody->ctype = ColliderType::SHOT;
-    
     active = true;
 
     return true;
@@ -63,31 +58,48 @@ bool Bullet::Update(float dt) {
         return false;
     }
 
-    if (variableMarc) {
+    if (toDisable) {
         pbody->body->SetEnabled(false);
         active = false;
     }
 
     if (!stuckOnWall) {
         b2Vec2 velocity = pbody->body->GetLinearVelocity();
-        velocity.x = direction.getX() * 12.5f;  // Velocidad constante en la dirección horizontal
-        velocity.y = 0.0f;  // Sin movimiento vertical
+        if (type == BulletType::HORIZONTAL) {
+            velocity.x = direction.getX() * 12.5f;  // Velocidad constante en la direcciï¿½n horizontal
+            velocity.y = 0.0f;  // Sin movimiento vertical
+        }
+        else if (type == BulletType::VERTICAL) {
+            velocity.x = 0.0f;  // Sin movimiento horizontal
+            velocity.y = direction.getY() * 12.5f;  // Velocidad constante en la direcciï¿½n vertical
+        }
+
         pbody->body->SetLinearVelocity(velocity);
         b2Transform pbodyPos = pbody->body->GetTransform();
-        position.setX(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.x)) - 32.0f);
-        position.setY(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.y)) - 16.0f);
+        if (type == BulletType::HORIZONTAL) {
+            position.setX(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.x)) - 32.0f);
+            position.setY(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.y)) - 16.0f);
+        }
+        else if (type == BulletType::VERTICAL) {
+            position.setX(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.x)) - 16.0f);
+            position.setY(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.y)) - 32.0f);
+        }
     }
     else {
         pbody->body->SetType(b2_staticBody);
     }
 
-    if (direction.getX() < 0) {
-        Engine::GetInstance().render.get()->DrawTextureFlipped(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()));
+    if (type == BulletType::HORIZONTAL) {
+        if (direction.getX() < 0) {
+            Engine::GetInstance().render.get()->DrawTextureFlipped(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()));
+        }
+        else {
+            Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()));
+        }
     }
-    else {
+    else if (type == BulletType::VERTICAL) {
         Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()));
     }
-
     return true;
 }
 
@@ -106,19 +118,24 @@ void Bullet::SetPosition(Vector2D pos) {
     }
 
     b2Vec2 bodyPos = b2Vec2(PIXEL_TO_METERS(pos.getX()), PIXEL_TO_METERS(pos.getY()));
-    pbody->body->SetTransform(bodyPos, 0);  // Establecer la nueva posición física
+    pbody->body->SetTransform(bodyPos, 0);  // Establecer la nueva posiciï¿½n fï¿½sica
 
-    position = pos;  // Actualizar la posición en pantalla
+    position = pos;  // Actualizar la posiciï¿½n en pantalla
 }
 
 Vector2D Bullet::GetPosition() {
     b2Vec2 bodyPos = pbody->body->GetTransform().p;
-    Vector2D pos = Vector2D(static_cast<float>(METERS_TO_PIXELS(bodyPos.x)), static_cast<float>(METERS_TO_PIXELS(bodyPos.y)));  // Conversión a float
+    Vector2D pos = Vector2D(static_cast<float>(METERS_TO_PIXELS(bodyPos.x)), static_cast<float>(METERS_TO_PIXELS(bodyPos.y)));  // Conversiï¿½n a float
     return pos;
 }
 
 void Bullet::ChangeType(BulletType t) {
     type = t;
+    pbody->body->SetFixedRotation(false);
+    if (type == BulletType::HORIZONTAL)
+        pbody->body->SetTransform(pbody->body->GetTransform().p, 0);
+    else
+        pbody->body->SetTransform(pbody->body->GetTransform().p, 90);
 }
 
 void Bullet::OnCollision(PhysBody* physA, PhysBody* physB) {
@@ -126,7 +143,7 @@ void Bullet::OnCollision(PhysBody* physA, PhysBody* physB) {
     case ColliderType::SHOT:
     case ColliderType::PLATFORM:
         LOG("Collided - DESTROY");
-        variableMarc = true;
+        toDisable = true;
         break;
     case ColliderType::CLIMBINGWALL:
         LOG("Piqueta con don");
