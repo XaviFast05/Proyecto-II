@@ -9,8 +9,7 @@
 struct SDL_Texture;
 
 enum class BulletType {
-    HORIZONTAL,
-    VERTICAL
+    HORIZONTAL
 };
 
 class Bullet : public Entity
