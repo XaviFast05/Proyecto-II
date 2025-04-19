@@ -202,7 +202,9 @@ bool Player::Update(float dt)
 		}
 		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Q) && stateFlow[playerState][THROW] && pickaxeManager->GetNumPickaxes() > 0) {
 			
-			pickaxeManager->ThrowPickaxe(GetDirection(), pbody->GetPhysBodyWorldPosition());
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W)) pickaxeManager->ThrowPickaxe({0,1}, pbody->GetPhysBodyWorldPosition());
+			else pickaxeManager->ThrowPickaxe(GetDirection(), pbody->GetPhysBodyWorldPosition());
+
 			stateTimer.Start();
 			playerState = THROW;
 		}

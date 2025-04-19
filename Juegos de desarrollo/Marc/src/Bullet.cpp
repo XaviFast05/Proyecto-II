@@ -34,9 +34,7 @@ bool Bullet::Awake() {
 
 bool Bullet::Start() {
     // Inicializar texturas
-    if (BulletType::HORIZONTAL == type) {
-        texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/bala.png");
-    }
+    texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/bala.png");
    
     SetParameters(Engine::GetInstance().scene.get()->configParameters);
     texW = parameters.attribute("w").as_int();
@@ -77,8 +75,8 @@ bool Bullet::Update(float dt) {
 
     if (!stuckOnWall) {
         b2Vec2 velocity = pbody->body->GetLinearVelocity();
-        velocity.x = direction.getX() * 12.5f;  // Velocidad constante en la dirección horizontal
-        velocity.y = 0.0f;  // Sin movimiento vertical
+        velocity.x = direction.getX() * (type == BulletType::HORIZONTAL ? 12.5f : 0); 
+        velocity.y = direction.getY() * (type == BulletType::VERTICAL ? -12.5f : 0);  
         pbody->body->SetLinearVelocity(velocity);
         b2Transform pbodyPos = pbody->body->GetTransform();
         position.setX(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.x)) - 32.0f);
@@ -88,12 +86,20 @@ bool Bullet::Update(float dt) {
         pbody->body->SetType(b2_staticBody);
     }
 
-    if (direction.getX() < 0) {
-        Engine::GetInstance().render.get()->DrawTextureFlipped(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()));
+    if (type == BulletType::HORIZONTAL)
+    {
+        if (direction.getX() < 0) {
+            Engine::GetInstance().render.get()->DrawTextureFlipped(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()));
+        }
+        else {
+            Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()));
+        }
     }
-    else {
-        Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()));
+    else
+    {
+        Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()),0,1.0f,270);
     }
+    
 
     return true;
 }
@@ -126,6 +132,9 @@ Vector2D Bullet::GetPosition() {
 
 void Bullet::ChangeType(BulletType t) {
     type = t;
+    pbody->body->SetFixedRotation(false);
+    pbody->body->SetTransform(pbody->body->GetTransform().p, type == BulletType::HORIZONTAL ? 0 : M_PI/2);
+    pbody->body->SetFixedRotation(true);
 }
 
 void Bullet::OnCollision(PhysBody* physA, PhysBody* physB) {

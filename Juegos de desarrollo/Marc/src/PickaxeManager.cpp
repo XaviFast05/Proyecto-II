@@ -48,15 +48,18 @@ void PickaxeManager::ThrowPickaxe(Vector2D Direction, Vector2D Position)
 	}
 	Vector2D bulletPosition = Position;
 	bulletPosition.setX(bulletPosition.getX() + (Direction.getX() * 20));
+	bulletPosition.setY(bulletPosition.getY() + (Direction.getY() * -50));
 	bullet->SetPosition(bulletPosition);
 	bullet->SetDirection(Direction);
+	if (Direction.getX() != 0) bullet->ChangeType(BulletType::HORIZONTAL);
+	else bullet->ChangeType(BulletType::VERTICAL);
 	bullet->Enable(); 
 }
 
 Entity* PickaxeManager::CreatePickaxe()
 {
 	Bullet* bullet = (Bullet*)Engine::GetInstance().entityManager->CreatePooledEntities(EntityType::SHOT);
-	bullet->ChangeType(BulletType::HORIZONTAL);
+	bullet->type = BulletType::HORIZONTAL;
 	bullet->SetParameters(Engine::GetInstance().scene.get()->configParameters);
 	bullet->texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/bala.png");
 	bullet->Start();

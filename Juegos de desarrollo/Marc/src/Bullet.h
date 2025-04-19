@@ -9,7 +9,8 @@
 struct SDL_Texture;
 
 enum class BulletType {
-    HORIZONTAL
+    HORIZONTAL,
+    VERTICAL
 };
 
 class Bullet : public Entity
@@ -36,6 +37,7 @@ public:
 
     bool isAlive = true;
     int distCounter = 0;
+    BulletType type;
 
     SDL_RendererFlip hflip = SDL_FLIP_NONE;
 
@@ -59,6 +61,6 @@ private:
     Animation* currentAnimation = nullptr;
     Animation travel;
     PhysBody* pbody;
-    BulletType type;
+
 
 };
