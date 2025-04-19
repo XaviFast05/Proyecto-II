@@ -148,6 +148,9 @@ bool Player::Update(float dt)
 		velocity = b2Vec2_zero;
 		grounded = VALUE_NEAR_TO_0(pbody->body->GetLinearVelocity().y);
 
+		//UPDATE SUBMODULES
+		pickaxeManager->Update(dt);
+
 		//GODMODE
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 			godMode = !godMode;
@@ -183,37 +186,25 @@ bool Player::Update(float dt)
 			playerState = FALL;
 			grounded = false;
 		}
-		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][CHOP] && pickaxeCount > 0) {
-			pickaxeTimer.Start();
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][CHOP] && pickaxeManager->GetNumPickaxes() > 0) {
+			stateTimer.Start();
 			playerState = CHOP;
-			pickaxeCount--;
 
 			meleeTimer.Start();
 			meleeTimerOn = true;
 		}
-		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][PUNCH] && pickaxeCount <= 0) {
-			pickaxeTimer.Start();
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][PUNCH] && pickaxeManager->GetNumPickaxes() <= 0) {
+			stateTimer.Start();
 			playerState = PUNCH;
 
 			meleeTimer.Start();
 			meleeTimerOn = true;
 		}
-		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Q) && stateFlow[playerState][THROW] && pickaxeCount > 0) {
-			pickaxeTimer.Start();
-			pickaxeCount--;
-			playerState = THROW;
-
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Q) && stateFlow[playerState][THROW] && pickaxeManager->GetNumPickaxes() > 0) {
+			
 			pickaxeManager->ThrowPickaxe(GetDirection(), pbody->GetPhysBodyWorldPosition());
-		}
-
-		//PICKAXE LOGIC
-		if (pickaxeCount < MAX_PICKAXES && not recollectingPickaxes) {
-			pickaxeRecollectTimer.Start();
-			recollectingPickaxes = true;
-		}
-		if (pickaxeRecollectTimer.ReadSec() >= pickaxeRecollectCount && recollectingPickaxes) {
-			pickaxeCount++;
-			recollectingPickaxes = false;
+			stateTimer.Start();
+			playerState = THROW;
 		}
 
 		//COYOTE TIME LOGIC
@@ -273,15 +264,15 @@ bool Player::Update(float dt)
 			break;
 		case PUNCH:
 			if (CheckMoveX()) MoveX();
-			if (pickaxeTimer.ReadSec() >= punchTimerAnimation) playerState = IDLE;
+			if (stateTimer.ReadSec() >= punchTimerAnimation) playerState = IDLE;
 			break;
 		case CHOP:
 			if (CheckMoveX()) MoveX();
-			if (pickaxeTimer.ReadSec() >= pickaxeTimerAnimation) playerState = IDLE;
+			if (stateTimer.ReadSec() >= pickaxeTimerAnimation) playerState = IDLE;
 			break;
 		case THROW:
 			if (CheckMoveX()) MoveX();
-			if (pickaxeTimer.ReadSec() >= pickaxeTimerAnimation) playerState = IDLE;
+			if (stateTimer.ReadSec() >= pickaxeTimerAnimation) playerState = IDLE;
 			break;
 		default:
 			break;

@@ -27,6 +27,7 @@
 #include "Santa.h"
 #include "DeathMenu.h"
 #include "WinMenu.h"
+#include "PickaxeManager.h"
 
 #include "Intro.h"
 
@@ -315,11 +316,11 @@ bool Scene::Update(float dt)
 	Engine::GetInstance().render.get()->DrawText(timerText.c_str(), 1050, 29, 20, 20);
 	Engine::GetInstance().render.get()->DrawText(secondText.c_str(), 1073, 30, 15, 18);
 	
-	pickaxeText = std::to_string((int)player->pickaxeCount) + " pickaxes";
+	pickaxeText = std::to_string((int)player->pickaxeManager->GetNumPickaxes()) + " pickaxes";
 	Engine::GetInstance().render.get()->DrawText(pickaxeText.c_str(), 800, 50, 200, 18);
 
-	if (player->pickaxeCount < MAX_PICKAXES) {
-		std::string number = std::to_string(player->pickaxeRecollectCount - player->pickaxeRecollectTimer.ReadSec());
+	if (player->pickaxeManager->GetNumPickaxes() < MAX_PICKAXES) {
+		std::string number = std::to_string(player->pickaxeManager->pickaxeRecollectCount - player->pickaxeManager->pickaxeRecollectTimer.ReadSec());
 		number.resize(3);
 		timeTilPickaxeText = "time until next pickage: " + number + "s";
 		Engine::GetInstance().render.get()->DrawText(timeTilPickaxeText.c_str(), 800, 70, 400, 18);

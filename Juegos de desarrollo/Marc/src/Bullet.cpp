@@ -10,6 +10,7 @@
 #include "Map.h"
 #include "EntityManager.h"
 #include "Player.h"
+#include "Scene.h"
 
 Bullet::Bullet(BulletType type)
     : Entity(EntityType::SHOT),
@@ -37,6 +38,7 @@ bool Bullet::Start() {
         texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/bala.png");
     }
    
+    SetParameters(Engine::GetInstance().scene.get()->configParameters);
     texW = parameters.attribute("w").as_int();
     texH = parameters.attribute("h").as_int();
 
@@ -51,8 +53,12 @@ bool Bullet::Start() {
     pbody->body->SetFixedRotation(true);
     // Establecer tipo de colisión
     pbody->ctype = ColliderType::SHOT;
+    pbody->body->SetType(b2_dynamicBody);
+    pbody->body->SetEnabled(true);
     
     active = true;
+    stuckOnWall = false;
+    variableMarc = false;
 
     return true;
 }
@@ -66,6 +72,7 @@ bool Bullet::Update(float dt) {
     if (variableMarc) {
         pbody->body->SetEnabled(false);
         active = false;
+        variableMarc = false;
     }
 
     if (!stuckOnWall) {

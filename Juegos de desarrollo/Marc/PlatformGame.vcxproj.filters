@@ -93,9 +93,6 @@
     <ClCompile Include="src\BatEnemy.cpp">
       <Filter>Source Files\Game\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="src\Enemy.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
     <ClCompile Include="src\GroundEnemy.cpp">
       <Filter>Source Files\Game\Enemies</Filter>
     </ClCompile>
@@ -155,6 +152,12 @@
     </ClCompile>
     <ClCompile Include="src\PickaxeManager.cpp">
       <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Intro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Enemy.cpp">
+      <Filter>Source Files\Game\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -218,9 +221,6 @@
     <ClInclude Include="src\Pathfinding.h">
       <Filter>Source Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\Enemy.h">
-      <Filter>Source Files\Game</Filter>
-    </ClInclude>
     <ClInclude Include="src\BatEnemy.h">
       <Filter>Source Files\Game\Enemies</Filter>
     </ClInclude>
@@ -280,6 +280,10 @@
     <ClInclude Include="src\Intro.h" />
     <ClInclude Include="src\PickaxeManager.h">
       <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Intro.h" />
+    <ClInclude Include="src\Enemy.h">
+      <Filter>Source Files\Game\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

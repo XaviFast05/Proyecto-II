@@ -6,6 +6,7 @@
 #include "Bullet.h"
 #include "Textures.h"
 #include "Scene.h"
+#include "Timer.h"
 
 class PickaxeManager
 {
@@ -22,7 +23,18 @@ public:
 
 	void ThrowPickaxe(Vector2D Direction, Vector2D Position);
 
+	Entity* CreatePickaxe();
+
+	int GetNumPickaxes();
+
+
 public:
 
-	int maxNumBullets;
+	int startNumPickaxe;
+
+	int pickaxeCount;
+
+	Timer pickaxeRecollectTimer;
+	float pickaxeRecollectCount = 2.5;
+	bool recollectingPickaxes = false;
 }; 

@@ -119,14 +119,6 @@ public:
 	Animation death;
 
 	PickaxeManager* pickaxeManager;
-	int pickaxeCount = 3;
-	Timer pickaxeTimer;
-	float pickaxeTimerAnimation = 0.5;
-	float punchTimerAnimation = 0.5;
-
-	Timer pickaxeRecollectTimer;
-	float pickaxeRecollectCount = 2.5;
-	bool recollectingPickaxes = false;
 
 	Timer coyoteTimer;
 	bool coyoteTimerOn = false;
@@ -142,8 +134,14 @@ public:
 	float meleeTimerMax = 0.15;
 	float meleeDisplace = 0.0;
 
+	//STATES FLOW
 	state playerState; 
 	std::vector<std::vector<bool>> stateFlow;
+	Timer stateTimer;
+	
+	float pickaxeTimerAnimation = 0.5;
+	float punchTimerAnimation = 0.5;
+
 
 	Direction dir;
 };
