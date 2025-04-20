@@ -117,6 +117,11 @@ public:
 	Animation fall;
 	Animation hurt;
 	Animation death;
+	Animation punch;
+	Animation chop;
+	Animation throwPix;
+
+	bool resetAnimation = false;
 
 	PickaxeManager* pickaxeManager;
 

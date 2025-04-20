@@ -61,7 +61,9 @@ bool Player::Start() {
 	fall.LoadAnimations(parameters.child("animations").child("fall"));
 	hurt.LoadAnimations(parameters.child("animations").child("hurt"));
 	death.LoadAnimations(parameters.child("animations").child("death"));
-
+	punch.LoadAnimations(parameters.child("animations").child("punch"));
+	chop.LoadAnimations(parameters.child("animations").child("chop"));
+	throwPix.LoadAnimations(parameters.child("animations").child("throwPix"));
 
 	jumpForce = parameters.child("propierties").attribute("gJumpForce").as_float();
 	pushForce = parameters.child("propierties").attribute("pushForce").as_float();
@@ -289,6 +291,10 @@ bool Player::Update(float dt)
 	
 	switch (playerState) {
 	case IDLE:
+		if (resetAnimation == false) {
+			currentAnim->Reset();
+			resetAnimation = true;
+		}
 		currentAnim = &idle;
 		break;
 	case RUN:
@@ -296,18 +302,38 @@ bool Player::Update(float dt)
 		break;
 	case JUMP:
 		currentAnim = &jump;
+		if (resetAnimation == true) {
+			currentAnim->Reset();
+			resetAnimation = false;
+		}
 		break;
 	case FALL:
 		currentAnim = &fall;
+		if (resetAnimation == true) {
+			currentAnim->Reset();
+			resetAnimation = false;
+		}
 		break;
 	case PUNCH:
-		currentAnim = &hurt;
+		currentAnim = &punch;
+		if (resetAnimation == true) {
+			currentAnim->Reset();
+			resetAnimation = false;
+		}
 		break;
 	case CHOP:
-		currentAnim = &hurt;
+		currentAnim = &chop;
+		if (resetAnimation == true) {
+			currentAnim->Reset();
+			resetAnimation = false;
+		}
 		break;
 	case THROW:
-		currentAnim = &hurt;
+		currentAnim = &throwPix;
+		if (resetAnimation == true) {
+			currentAnim->Reset();
+			resetAnimation = false;
+		}
 		break;
 	}
 

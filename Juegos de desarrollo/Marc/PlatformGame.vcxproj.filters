@@ -23,6 +23,9 @@
     <Filter Include="Source Files\Game\Menus">
       <UniqueIdentifier>{b400ba7f-b5cd-4af3-99cb-ad90dbb33bac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Engine\Gui">
+      <UniqueIdentifier>{6e718664-2e86-4e3b-8f74-57001b7d3940}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json">
@@ -99,22 +102,10 @@
     <ClCompile Include="src\Particle.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
-    <ClCompile Include="src\GuiManager.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GuiControlButton.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="src\Candy.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
     <ClCompile Include="src\FadeToBlack.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GuiControlSlider.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GuiControlCheckBox.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
     <ClCompile Include="src\Santa.cpp">
@@ -158,6 +149,21 @@
     </ClCompile>
     <ClCompile Include="src\Enemy.cpp">
       <Filter>Source Files\Game\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Intro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GuiControlButton.cpp">
+      <Filter>Source Files\Engine\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GuiControlCheckBox.cpp">
+      <Filter>Source Files\Engine\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GuiControlSlider.cpp">
+      <Filter>Source Files\Engine\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GuiManager.cpp">
+      <Filter>Source Files\Engine\Gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -230,25 +236,10 @@
     <ClInclude Include="src\Particle.h">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
-    <ClInclude Include="src\GuiControl.h">
-      <Filter>Source Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GuiManager.h">
-      <Filter>Source Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GuiControlButton.h">
-      <Filter>Source Files\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="src\Candy.h">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
     <ClInclude Include="src\FadeToBlack.h">
-      <Filter>Source Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GuiControlSlider.h">
-      <Filter>Source Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GuiControlCheckBox.h">
       <Filter>Source Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\Santa.h">
@@ -284,6 +275,22 @@
     <ClInclude Include="src\Intro.h" />
     <ClInclude Include="src\Enemy.h">
       <Filter>Source Files\Game\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Intro.h" />
+    <ClInclude Include="src\GuiControl.h">
+      <Filter>Source Files\Engine\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GuiControlButton.h">
+      <Filter>Source Files\Engine\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GuiControlCheckBox.h">
+      <Filter>Source Files\Engine\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GuiControlSlider.h">
+      <Filter>Source Files\Engine\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GuiManager.h">
+      <Filter>Source Files\Engine\Gui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
