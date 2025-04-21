@@ -75,6 +75,7 @@ public:
 	Vector2D GetDirection() const;
 
 public:
+	pugi::xml_node audioNode;
 
 	SDL_Texture* texture;
 	SDL_Texture* t_texture;
@@ -147,6 +148,14 @@ public:
 	float pickaxeTimerAnimation = 0.5;
 	float punchTimerAnimation = 0.5;
 
+	//SFX
+	int playerJumpSFX;
+	int playerLandSFX;
+	int playerAttack1SFX;
+	int playerAttack2SFX;
+	int playerThrowSFX;
+
+	bool playSound = true;
 
 	Direction dir;
 };

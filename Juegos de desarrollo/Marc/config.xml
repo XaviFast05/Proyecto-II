@@ -343,16 +343,13 @@
 			<bossMus path="Assets/Audio/Music/final_boss.wav" />
 		</music>
 		<fx>
-			<gJumpSFX path="Assets/Audio/Fx/ghostJump.ogg" />
-			<pJumpSFX path="Assets/Audio/Fx/pumpkinJump.ogg" />
-			<atk1SFX path="Assets/Audio/Fx/atk1_alt.ogg" />
-			<atk2SFX path="Assets/Audio/Fx/customATK2.ogg" />
-			<switchOnSFX path="Assets/Audio/Fx/SwitchON.ogg" />
-			<switchOffSFX path="Assets/Audio/Fx/SwitchOFF.ogg" />
-			<gHurtSFX path="Assets/Audio/Fx/SquidHit.ogg" />
-			<pHurtSFX path="Assets/Audio/Fx/BonkSFX.ogg" />
+			<playerJumpSFX path="Assets/Audio/Fx/King/Land/king_jump.wav" />
+			<playerLandSFX path="Assets/Audio/Fx/King/Land/king_land.wav" />
+			<atk1SFX path="Assets/Audio/Fx/King/Land/king_splat.wav" />
+			<atk2SFX path="Assets/Audio/Fx/King/Land/king_bump.wav" />
+			<throwSFX path="Assets/Audio/Fx/King/Ice/king_jump.wav" />
+			<hurtSFX path="Assets/Audio/Fx/SquidHit.ogg" />
 			<gDeathSFX path="Assets/Audio/Fx/SinkOMO.ogg" />
-			<pDeathSFX path="Assets/Audio/Fx/PumpkinCrack.ogg" />
 			<pickCandy path="Assets/Audio/Fx/OMO_pickedItem.ogg" />
 			<pourCandy path="Assets/Audio/Fx/candyPour.ogg" />
 			<eatCandy path="Assets/Audio/Fx/candyEat.ogg" />
@@ -373,7 +370,7 @@
 	</audio>
 	<playerPrefs>
 		<fullscreen toggle="0" />
-		<musicVolume value="128" />
-		<sfxVolume value="77" />
+		<musicVolume value="57" />
+		<sfxVolume value="117" />
 	</playerPrefs>
 </config>
