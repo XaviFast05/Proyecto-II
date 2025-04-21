@@ -335,12 +335,12 @@
 	</scene>
 	<audio>
 		<music>
-			<menuMus path="Assets/Audio/Music/Nothing As It Seems.ogg" />
-			<lvl1Mus path="Assets/Audio/Music/Haunted Towers.ogg" />
-			<lvl2Mus path="Assets/Audio/Music/Crystal Conundrum (Remix).ogg" />
-			<winMus path="Assets/Audio/Music/Yo-kai Watch 2 Victory.ogg" />
-			<loseMus path="Assets/Audio/Music/Yo-kai Watch Defeat.ogg" />
-			<bossMus path="Assets/Audio/Music/BossSong.ogg" />
+			<menuMus path="Assets/Audio/Music/menu_intro.wav" />
+			<lvl1Mus path="Assets/Audio/Music/lvl_1-5_music.wav" />
+			<lvl2Mus path="Assets/Audio/Music/lvl_6-11_music.wav" />
+			<winMus path="Assets/Audio/Music/ending.wav" />
+			<loseMus path="Assets/Audio/Music/died.wav" />
+			<bossMus path="Assets/Audio/Music/final_boss.wav" />
 		</music>
 		<fx>
 			<gJumpSFX path="Assets/Audio/Fx/ghostJump.ogg" />
@@ -373,7 +373,7 @@
 	</audio>
 	<playerPrefs>
 		<fullscreen toggle="0" />
-		<musicVolume value="78" />
+		<musicVolume value="128" />
 		<sfxVolume value="77" />
 	</playerPrefs>
 </config>
