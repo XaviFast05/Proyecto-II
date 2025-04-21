@@ -37,7 +37,6 @@ public:
 
     bool isAlive = true;
     int distCounter = 0;
-    BulletType type;
 
     SDL_RendererFlip hflip = SDL_FLIP_NONE;
 

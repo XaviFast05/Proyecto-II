@@ -226,7 +226,7 @@ void Enemy::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 }
 
 void Enemy::DMGEnemy() {
-	lives++;
+	lives--;
 	if (lives <= 0) {
 		deathTimer.Start();
 		death.Reset();
