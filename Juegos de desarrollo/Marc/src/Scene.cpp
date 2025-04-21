@@ -326,6 +326,9 @@ bool Scene::Update(float dt)
 		Engine::GetInstance().render.get()->DrawText(timeTilPickaxeText.c_str(), 800, 70, 400, 18);
 	}
 	
+	livesText = "hits left: " + std::to_string((int)player->hits);
+	Engine::GetInstance().render.get()->DrawText(livesText.c_str(), 800, 90, 200, 18);
+
 	return true;
 }
 

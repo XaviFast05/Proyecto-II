@@ -10,7 +10,7 @@
 
 #define GHOST_W 32
 #define MAX_PICKAXES 3
-#define MELEE_AREA_WIDTH 10
+#define MELEE_AREA_WIDTH 30
 
 //FORWARD DECLARATION
 class PickaxeManager;
@@ -24,7 +24,9 @@ enum state {
 	FALL,
 	PUNCH,
 	THROW,
-	CHOP
+	CHOP,
+	HURT,
+	DEAD
 };
 
 enum Direction {
@@ -72,9 +74,14 @@ public:
 
 	void CheckJump();
 
+	void DamagePlayer();
+
 	Vector2D GetDirection() const;
 
 public:
+	int hits = 3;
+	Timer hurtTimer;
+	float hurtTime = 0.5;
 
 	SDL_Texture* texture;
 	SDL_Texture* t_texture;
@@ -96,9 +103,6 @@ public:
 	bool godMode;
 	bool canClimb;
 	bool reachedCheckPoint;
-
-	Timer hurtTimer;
-	float hurtTime;
 	
 	Timer respawnTimer;
 	float respawnTime;
@@ -131,7 +135,7 @@ public:
 
 	Timer plusJumpTimer;
 	bool plusJumpTimerOn = false;
-	float plusJumpTimerMax = 0.15; // 0.1 - 0.15 to adjust
+	float plusJumpTimerMax = 0.2; // 0.15 - 0.2 to adjust
 
 	PhysBody* meleeArea;
 	Timer meleeTimer;

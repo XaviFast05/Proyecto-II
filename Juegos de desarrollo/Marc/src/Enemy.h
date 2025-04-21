@@ -112,4 +112,8 @@ public:
 	float deathTime;
 	bool dead;
 	bool playingSound;
+
+	float pushForce = 1; //rango óptimo alrededor de 1
+	float pushFriction = 5; //rango óptimo alrededor de 5
+	bool canPush = true;
 };

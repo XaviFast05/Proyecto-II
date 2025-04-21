@@ -253,55 +253,42 @@ bool BatEnemy::Update(float dt) {
 }
 
 void BatEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
+	bool push = false;
 
-
-	switch (physB->ctype)
-	{
+	switch (physB->ctype) {
 	case ColliderType::WEAPON:
-		if (state != DEAD) {
-			DMGEnemy();
-			Engine::GetInstance().audio.get()->PlayFx(batDeathSFX, 0, 3);
-		}
 		break;
-
 	case ColliderType::SHOT:
+		if (state != DEAD) 	DMGEnemy();
+		break;
+	case ColliderType::MELEE_AREA:
 		if (state != DEAD) {
+			if (canPush) push = true;
 			DMGEnemy();
-			Engine::GetInstance().audio.get()->PlayFx(batDeathSFX, 0, 3);
 		}
 		break;
-
 	case ColliderType::PUMPKIN:
 		break;
-
 	case ColliderType::SPYKE:
 		break;
-
 	case ColliderType::ENEMY:
 		break;
-
 	case ColliderType::ABYSS:
-		if (state != DEAD) {
-			DMGEnemy();
-			Engine::GetInstance().audio.get()->PlayFx(batDeathSFX, 0, 3);
-		}
 		break;
-	
-	case ColliderType::PLAYER:
-		if (state != DEAD) {
-			
-			
-		}
-		break;
-	
 	case ColliderType::UNKNOWN:
 		break;
-	
 	default:
 		break;
 	}
+	if (push) {
+		//PUSHING THE ENEMY WHEN HURT
+		b2Vec2 pushVec((physA->body->GetPosition().x - player->pbody->body->GetPosition().x),
+			(physA->body->GetPosition().y - player->pbody->body->GetPosition().y));
+		pushVec.Normalize();
+		pushVec *= pushForce;
+
+		pbody->body->SetLinearVelocity(b2Vec2_zero);
+		pbody->body->ApplyLinearImpulseToCenter(pushVec, true);
+		pbody->body->SetLinearDamping(pushFriction);
+	}
 }
-
-
-
-

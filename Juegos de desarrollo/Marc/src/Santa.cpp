@@ -349,8 +349,7 @@ void Santa::DMGEnemy(PhysBody* physA, PhysBody* physB)
 }
 
 
-void Santa::KillEnemy()
-{
+void Santa::KillEnemy() {
 	deathTimer.Start();
 	death.Reset();
 	state = DEAD;

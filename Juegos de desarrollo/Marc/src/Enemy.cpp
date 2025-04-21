@@ -168,33 +168,43 @@ void Enemy::Restart()
 }
 
 void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
+	bool push = false;
 
-	
-	switch (physB->ctype)
-	{
+	switch (physB->ctype) {
 	case ColliderType::WEAPON:
-		if(state != DEAD)
-			DMGEnemy();
 		break;
 	case ColliderType::SHOT:
-
+		if (state != DEAD) 	DMGEnemy();
+		break;
+	case ColliderType::MELEE_AREA:
+		if (state != DEAD) {
+			if (canPush) push = true;
+			DMGEnemy();
+		}
 		break;
 	case ColliderType::PUMPKIN:
 		break;
 	case ColliderType::SPYKE:
 		break;
-
 	case ColliderType::ENEMY:
 		break;
 	case ColliderType::ABYSS:
-	{
 		break;
-	}
 	case ColliderType::UNKNOWN:
 		break;
-
 	default:
 		break;
+	}
+	if (push) {
+		//PUSHING THE ENEMY WHEN HURT
+		b2Vec2 pushVec((physA->body->GetPosition().x - player->pbody->body->GetPosition().x),
+			(physA->body->GetPosition().y - player->pbody->body->GetPosition().y));
+		pushVec.Normalize();
+		pushVec *= pushForce;
+
+		pbody->body->SetLinearVelocity(b2Vec2_zero);
+		pbody->body->ApplyLinearImpulseToCenter(pushVec, true);
+		pbody->body->SetLinearDamping(pushFriction);
 	}
 }
 
@@ -216,12 +226,10 @@ void Enemy::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 }
 
 void Enemy::DMGEnemy() {
-	lives--;
-	if (lives <= 0)
-	{
+	lives++;
+	if (lives <= 0) {
 		deathTimer.Start();
 		death.Reset();
 		state = DEAD;
 	}
-	
 }

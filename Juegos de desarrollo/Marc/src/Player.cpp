@@ -163,13 +163,18 @@ bool Player::Update(float dt)
 
 		if (godMode) {
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Z) == KEY_DOWN) {
-
 				jumpForce = parameters.child("propierties").attribute("gJumpForce").as_float();
 			}
 		}
 
 		//CHANGERS
-		if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && stateFlow[playerState][RUN] && grounded) {
+		if (playerState == DEAD) {
+
+		}
+		else if (playerState == HURT) {
+			if (hurtTimer.ReadSec() >= hurtTime) playerState = IDLE;
+		}
+		else if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && stateFlow[playerState][RUN] && grounded) {
 			playerState = RUN;
 		}
 		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && ((stateFlow[playerState][JUMP] && grounded) /*MODIFICAR GODMODE*/ || godMode)) {
@@ -237,7 +242,7 @@ bool Player::Update(float dt)
 		if (meleeTimerOn) {
 			if (meleeTimer.ReadSec() == 0.0) {
 				meleeDisplace = (dir == RIGHT) ? (2 * texW / 3 + MELEE_AREA_WIDTH / 2) : (texW / 3 - MELEE_AREA_WIDTH / 2);
-				meleeArea = Engine::GetInstance().physics.get()->CreateRectangleSensor((position.getX() + meleeDisplace), position.getY() + texH / 2, MELEE_AREA_WIDTH, texH, STATIC);
+				meleeArea = Engine::GetInstance().physics.get()->CreateRectangleSensor((position.getX() + meleeDisplace), position.getY() + texH / 2, MELEE_AREA_WIDTH, texH, DYNAMIC);
 				meleeArea->ctype = ColliderType::MELEE_AREA;
 			}
 			if (meleeTimer.ReadSec() < meleeTimerMax) {
@@ -343,13 +348,8 @@ bool Player::Update(float dt)
 		position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texW / 2);
 		position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
 
-		if (dir == RIGHT) {
-			Engine::GetInstance().render.get()->DrawTexture(texture, position.getX(), position.getY(), &currentFrame);
-
-		}
-		else if (dir == LEFT) {
-			Engine::GetInstance().render.get()->DrawTextureFlipped(texture, position.getX(), position.getY(), &currentFrame);
-		}
+		if (dir == RIGHT) Engine::GetInstance().render.get()->DrawTexture(texture, position.getX(), position.getY(), &currentFrame);
+		else if (dir == LEFT) Engine::GetInstance().render.get()->DrawTextureFlipped(texture, position.getX(), position.getY(), &currentFrame);
 	}
 
 	currentAnim->Update();
@@ -382,15 +382,26 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision PUMPKIN");
 		break;
 	case ColliderType::SPYKE:
-			
 		LOG("Collision SPYKE");
-			
 		break;
 
 	case ColliderType::ENEMY:
 		LOG("Collision ENEMY");
+		if (!godMode) {
+			//HURT LOGIC
+			if (hits >= 1 && playerState != HURT) DamagePlayer();
+			if (hits == 0) KillPlayer();
+			//PUSHING THE PLAYER WHEN HURT
+			b2Vec2 pushVec((physA->body->GetPosition().x - physB->body->GetPosition().x),
+				(physA->body->GetPosition().y - physB->body->GetPosition().y));
+			pushVec.Normalize();
+			pushVec *= pushForce;
+			pushVec.x *= 6;
+
+			pbody->body->SetLinearVelocity(b2Vec2(0, 0));
+			pbody->body->ApplyLinearImpulseToCenter(pushVec, true);
+		}
 		break;
-	
 	case ColliderType::ABYSS:
 	{ 
 		if (!godMode) {
@@ -456,16 +467,13 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 	}
 }
 
-
 void Player::SetPosition(Vector2D pos) {
-	
 	b2Vec2 bodyPos = b2Vec2(PIXEL_TO_METERS(pos.getX()), PIXEL_TO_METERS(pos.getY()));
 	pbody->body->SetTransform(bodyPos, 0);	
 	
 }
 
 Vector2D Player::GetDirection() const {
-
 	if (dir == LEFT) {
 		return Vector2D(-1, 0);  // Izquierda
 	}
@@ -474,14 +482,12 @@ Vector2D Player::GetDirection() const {
 	}
 }
 
-void Player::SaveData(pugi::xml_node playerNode)
-{
+void Player::SaveData(pugi::xml_node playerNode) {
 	if (active) {
 		playerNode.attribute("x").set_value(pbody->GetPhysBodyWorldPosition().getX());
 		playerNode.attribute("y").set_value(pbody->GetPhysBodyWorldPosition().getY());
 	}
 }
-
 
 void Player::LoadData(pugi::xml_node playerNode)
 {
@@ -491,16 +497,13 @@ void Player::LoadData(pugi::xml_node playerNode)
 }
 
 void Player::KillPlayer() {
-
-	/*playerState = DEAD;*/
-
-	pbody->body->SetGravityScale(0);
+	playerState = DEAD;
+	//pbody->body->SetGravityScale(0);
 	respawnTimer.Start();
 }
 
 bool Player::CheckMoveX() {
-	if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT))
-	{
+	if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)) {
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) dir = RIGHT;
 		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) dir = LEFT;
 
@@ -510,13 +513,17 @@ bool Player::CheckMoveX() {
 	else return false;
 }
 
-void Player::MoveX()
-{
+void Player::MoveX() {
 	velocity.x = (dir == RIGHT ? moveSpeed * 16 : -moveSpeed * 16);
 }
 
-void Player::CheckJump()
-{
+void Player::CheckJump() {
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) && grounded)
 		pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
+}
+
+void Player::DamagePlayer() {
+	hits--;
+	playerState = HURT;
+	hurtTimer.Start();
 }
