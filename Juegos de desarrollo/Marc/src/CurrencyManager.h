@@ -18,9 +18,11 @@ public:
 
 	void SumCurrency(int currency);
 
-	Entity* CreateOrb();
+	Entity* CreateOrb(int size);
 
-	void EnableOrb(float x, float y);
+	void EnableOrb(float x, float y, int size);
+
+	void CreateEnemyOrb(float x, float y, int size);
 
 private:
 

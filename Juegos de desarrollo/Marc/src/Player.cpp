@@ -430,7 +430,7 @@ bool Player::Update(float dt)
 	currentAnim->Update();
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {
-		currencyManager->EnableOrb(pbody->body->GetPosition().x + 10, pbody->body->GetPosition().y );
+		currencyManager->EnableOrb(pbody->body->GetPosition().x + 10, pbody->body->GetPosition().y, 2);
 	}
 	return true;
 }

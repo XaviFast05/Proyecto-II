@@ -17,7 +17,7 @@ bool CurrencyManager::Start()
 
 	for (int i = 0; i < orbNum; i++)
 	{
-		CurrencyOrb* orb = (CurrencyOrb*)CreateOrb();
+		CurrencyOrb* orb = (CurrencyOrb*)CreateOrb(1);
 	}
 
 	return true;
@@ -38,19 +38,28 @@ void CurrencyManager::SumCurrency(int currency)
 	currencyNum += currency;
 }
 
-Entity* CurrencyManager::CreateOrb()
+Entity* CurrencyManager::CreateOrb(int size)
 {
 	CurrencyOrb* orb = (CurrencyOrb*)Engine::GetInstance().entityManager->CreatePooledEntities(EntityType::CURRENCY_ORB);
 	orb->SetParameters(Engine::GetInstance().scene.get()->configParameters);
+	orb->SetSize(size);
 	orb->Start();
 	orb->Disable();
 
 	return orb;
 }
 
-void CurrencyManager::EnableOrb(float x, float y)
+void CurrencyManager::EnableOrb(float x, float y, int size)
 {
 	CurrencyOrb* orb = (CurrencyOrb*)Engine::GetInstance().entityManager->GetPooledEntity(EntityType::CURRENCY_ORB);
 	orb->SetPosition({x,y});
+	orb->SetSize(size);
 	orb->Enable();
+}
+
+void CurrencyManager::CreateEnemyOrb(float x, float y, int size) {
+	CurrencyOrb* orb = (CurrencyOrb*)Engine::GetInstance().entityManager->CreatePooledEntities(EntityType::CURRENCY_ORB);
+	orb->SetParameters(Engine::GetInstance().scene.get()->configParameters);
+	orb->SetSize(size);
+	orb->Start();
 }

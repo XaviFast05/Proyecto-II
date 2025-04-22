@@ -20,6 +20,8 @@ public:
     }
 
     void SetPosition(Vector2D pos);
+    void SetSize(int size_);
+    void CreateBody();
 
     void OnCollision(PhysBody* physA, PhysBody* physB);
 
@@ -30,6 +32,7 @@ public:
 
 public:
     SDL_Texture* texture;
+    int soulAmount;
 
 private:
 
@@ -37,6 +40,7 @@ private:
     const char* texturePath;
     pugi::xml_node parameters;
     int texW, texH;
+    int orbSize;
 
     //PROPERTIES
     Vector2D direction;
@@ -45,6 +49,7 @@ private:
     float smoothingFactor;
     float distToStartMoving;
     bool disable;
+    bool bodyCreated = false;
 
     //MODULES
     Animation* currentAnimation = nullptr;

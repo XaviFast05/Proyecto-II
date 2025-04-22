@@ -8,6 +8,7 @@
 #include "Timer.h"
 
 class Player;
+class CurrencyManager;
 
 struct SDL_Texture;
 
@@ -70,10 +71,11 @@ public:
 
 	virtual void DMGEnemy();
 
+	void DropLoot();
+
 public:
 
 //protected:
-
 	SDL_Texture* texture;
 	const char* texturePath;
 	int texW, texH;
@@ -115,5 +117,8 @@ public:
 
 	float pushForce = 1; //rango óptimo alrededor de 1
 	float pushFriction = 5; //rango óptimo alrededor de 5
+	int lootAmount = 1; //entre 0 y 5
+
+	CurrencyManager* currencyManager;
 	bool canPush = true;
 };
