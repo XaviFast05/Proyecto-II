@@ -312,7 +312,7 @@ bool Player::Update(float dt)
 				Engine::GetInstance().audio.get()->PlayFx(playerAttack2SFX);
 				playSound = false;
 			}
-			if (CheckMoveX()) MoveX();
+			if (CheckMoveX() && !grounded) MoveX();
 			if (stateTimer.ReadSec() >= punchTimerAnimation)
 			{
 				playerState = IDLE;
@@ -326,7 +326,7 @@ bool Player::Update(float dt)
 				Engine::GetInstance().audio.get()->PlayFx(playerAttack1SFX);
 				playSound = false;
 			}
-			if (CheckMoveX()) MoveX();
+			if (CheckMoveX() && !grounded) MoveX();
 			if (stateTimer.ReadSec() >= pickaxeTimerAnimation)
 			{
 				playerState = IDLE;
@@ -340,7 +340,7 @@ bool Player::Update(float dt)
 				Engine::GetInstance().audio.get()->PlayFx(playerThrowSFX);
 				playSound = false;
 			}
-			if (CheckMoveX()) MoveX();
+			if (CheckMoveX() && !grounded) MoveX();
 			if (stateTimer.ReadSec() >= pickaxeTimerAnimation)
 			{
 				playerState = IDLE;
