@@ -151,10 +151,8 @@ bool Scene::Start()
 	
 	//UI
 	heartsTexture = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("heartContainers").attribute("path").as_string());
-	caramelsTexture = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("candyCounter").attribute("path").as_string());
-	sandclockTexture = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("sandClock").attribute("path").as_string());
-
-	sand.LoadAnimations(configParameters.child("ui").child("sandClock").child("animations").child("sand"));
+	piquetaNormal = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("piquetaNormal").attribute("path").as_string());
+	piquetaGastada = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("piquetaGastada").attribute("path").as_string());
 
 
 	return true;
@@ -297,21 +295,21 @@ bool Scene::Update(float dt)
 	
 	timerText = std::to_string((int)currentTime);
 	secondText = "s";
-	Engine::GetInstance().render.get()->DrawText(timerText.c_str(), 1050, 29, 20, 20);
-	Engine::GetInstance().render.get()->DrawText(secondText.c_str(), 1073, 30, 15, 18);
+	//Engine::GetInstance().render.get()->DrawText(timerText.c_str(), 1050, 29, 20, 20);
+	//Engine::GetInstance().render.get()->DrawText(secondText.c_str(), 1073, 30, 15, 18);
 	
-	pickaxeText = std::to_string((int)player->pickaxeManager->GetNumPickaxes()) + " pickaxes";
-	Engine::GetInstance().render.get()->DrawText(pickaxeText.c_str(), 800, 50, 200, 18);
+	//pickaxeText = std::to_string((int)player->pickaxeManager->GetNumPickaxes()) + " pickaxes";
+	//Engine::GetInstance().render.get()->DrawText(pickaxeText.c_str(), 800, 50, 200, 18);
 
 	if (player->pickaxeManager->GetNumPickaxes() < MAX_PICKAXES) {
 		std::string number = std::to_string(player->pickaxeManager->pickaxeRecollectCount - player->pickaxeManager->pickaxeRecollectTimer.ReadSec());
 		number.resize(3);
-		timeTilPickaxeText = "time until next pickage: " + number + "s";
-		Engine::GetInstance().render.get()->DrawText(timeTilPickaxeText.c_str(), 800, 70, 400, 18);
+		//timeTilPickaxeText = "time until next pickage: " + number + "s";
+		//Engine::GetInstance().render.get()->DrawText(timeTilPickaxeText.c_str(), 800, 70, 400, 18);
 	}
-	
-	livesText = "hits left: " + std::to_string((int)player->hits);
-	Engine::GetInstance().render.get()->DrawText(livesText.c_str(), 800, 90, 200, 18);
+
+	//livesText = "hits left: " + std::to_string((int)player->hits);
+	//Engine::GetInstance().render.get()->DrawText(livesText.c_str(), 800, 90, 200, 18);
 
 	currencyText = "currency: " + std::to_string((int)player->currencyManager->GetCurrency());
 	Engine::GetInstance().render.get()->DrawText(currencyText.c_str(), 800, 110, 200, 18);
@@ -350,34 +348,9 @@ bool Scene::PostUpdate()
 	//UI
 	if (!Engine::GetInstance().settings.get()->settingsOpen) {
 
+		DrawPlayerHitsUI();
 
-		//life containers
-		//int hearts = player->lives;
-
-		//for (int i = 0; i < hearts; i++) {
-		//	SDL_Rect rect = { 0, player->transformed ? 16 : 32, 16, 16 };
-		//	Engine::GetInstance().render.get()->DrawTexture(
-		//		heartsTexture,
-		//		-render->camera.x / window->scale + i * 16 + 10,
-		//		-render->camera.y / window->scale + 10,
-		//		&rect
-		//	);
-		//}
-	
-		
-		Engine::GetInstance().render.get()->DrawTexture(
-			caramelsTexture, 
-			-render->camera.x / window->scale + 580, 
-			-render->camera.y / window->scale + 10);
-
-		
-		//timer
-		sand.Update();
-		Engine::GetInstance().render.get()->DrawTexture(
-			sandclockTexture,
-			-render->camera.x / window->scale + 505,
-			-render->camera.y / window->scale + 9, 
-			&sand.GetCurrentFrame());
+		DrawPickaxesUI();
 
 		if (paused && !Engine::GetInstance().settings.get()->settingsOpen) {
 			
@@ -424,8 +397,8 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	Engine::GetInstance().textures.get()->UnLoad(heartsTexture);
-	Engine::GetInstance().textures.get()->UnLoad(sandclockTexture);
-	Engine::GetInstance().textures.get()->UnLoad(caramelsTexture);
+	Engine::GetInstance().textures.get()->UnLoad(piquetaNormal);
+	Engine::GetInstance().textures.get()->UnLoad(piquetaNormal);
 	Engine::GetInstance().map.get()->CleanUp();
 	Engine::GetInstance().physics.get()->DeleteAllPhysBody();
 	Engine::GetInstance().entityManager.get()->Disable();
@@ -691,3 +664,54 @@ void Scene::ChangeDirectionCameraX()
 
 }
 
+void Scene::DrawPlayerHitsUI()
+{
+	// Tamaño de cada sección de la textura (224x224)
+	const int sectionWidth = 224;
+	const int sectionHeight = 224;
+
+	// Calcular la sección de la textura a dibujar según los hits restantes
+	SDL_Rect section;
+	section.x = (3 - player->hits) * sectionWidth; // Mover a la siguiente sección por cada golpe
+	section.y = 0;
+	section.w = sectionWidth;
+	section.h = sectionHeight;
+
+	// Dibujar la textura en la posición deseada
+	Engine::GetInstance().render.get()->DrawTexture(
+		heartsTexture, // Textura de los corazones
+		-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 10, // Posición X
+		-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale - 50,    // Posición Y
+		&section // Sección de la textura a dibujar
+	);
+}
+
+void Scene::DrawPickaxesUI()
+{
+	int numPickaxes = player->pickaxeManager->GetNumPickaxes(); // Piquetas disponibles
+	int scale = Engine::GetInstance().window.get()->GetScale(); // Escala de la ventana
+
+	// Posición inicial para dibujar las piquetas
+	int startX = 100; // Coordenada X inicial
+	int startY = 100;  // Coordenada Y inicial
+	int spacing = 50; // Espaciado entre las piquetas
+
+	for (int i = 0; i < MAX_PICKAXES; ++i) {
+		// Si el índice es menor que el número de piquetas disponibles, dibuja una piqueta normal
+		if (i < numPickaxes) {
+			Engine::GetInstance().render.get()->DrawTexture(
+				piquetaNormal,
+				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 120 + (i * spacing), // Posición X
+				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 70    // Posición Y
+			);
+		}
+		// Si no, dibuja una piqueta gastada
+		else {
+			Engine::GetInstance().render.get()->DrawTexture(
+				piquetaGastada,
+				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 120 + (i * spacing), // Posición X
+				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 70    // Posición Y
+			);
+		}
+	}
+}

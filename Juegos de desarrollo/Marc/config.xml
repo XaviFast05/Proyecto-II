@@ -39,18 +39,9 @@
 	</settings>
 	<scene>
 		<ui>
-			<heartContainers path="Assets/Textures/UI/Retro Inventory/Original/hearts.png" />
-			<candyCounter path="Assets/Textures/UI/candy icon.png" />
-			<sandClock path="Assets/Textures/UI/sandClockSheet-outlined.png">
-				<animations>
-					<sand loop="true" speed="0.05f">
-						<frame x="0" y="0" w="17" h="18" />
-						<frame x="17" y="0" w="17" h="18" />
-						<frame x="34" y="0" w="17" h="18" />
-						<frame x="51" y="0" w="17" h="18" />
-					</sand>
-				</animations>
-			</sandClock>
+			<heartContainers path="Assets/Textures/UI/lifeSimp.png" />
+			<piquetaNormal path="Assets/Textures/UI/piqueta_normal.png" />
+			<piquetaGastada path="Assets/Textures/UI/piqueta_gastada.png" />
 		</ui>
 		<map>
 			<paths>
@@ -111,8 +102,36 @@
 					<hurt loop="false" speed="0.15f">
 						<frame x="0" y="0" w="64" h="64" />
 					</hurt>
-					<death loop="false" speed="0.2f">
-						<frame x="0" y="0" w="64" h="64" />
+					<death loop="false" speed="0.1f">
+						<frame x="0" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="64" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="128" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="192" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="256" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="320" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="384" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="448" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="512" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="576" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="640" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="704" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="768" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="832" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="896" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="960" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="1024" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="1088" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="1152" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="1216" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="1280" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="1344" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="1408" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="1472" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="1536" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="1600" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="1664" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="1728" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="1792" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
 					</death>
 					<chop loop="false" speed="0.2f">
 						<frame x="64" y="336" w="64" h="80" offsetX="0" offsetY="-16" />
@@ -128,17 +147,18 @@
 						<frame x="320" y="128" w="64" h="64" />
 						<frame x="384" y="128" w="64" h="64" />
 					</punch>
-					<throwPix loop="false" speed="0.2f">
+					<throwPix loop="false" speed="0.4f">
 						<frame x="64" y="256" w="64" h="80" offsetX="0" offsetY="-16" />
 						<frame x="128" y="256" w="64" h="80" offsetX="0" offsetY="-16" />
 						<frame x="192" y="256" w="64" h="80" offsetX="0" offsetY="-16" />
+						<frame x="256" y="256" w="64" h="80" offsetX="0" offsetY="-16" />
 					</throwPix>
-					<throwPixUp loop="false" speed="0.3f">
-						<frame x="64" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
-						<frame x="128" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
-						<frame x="192" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
-						<frame x="256" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
-						<frame x="320" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
+					<throwPixUp loop="false" speed="0.5f">
+						<frame x="448" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
+						<frame x="512" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
+						<frame x="576" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
+						<frame x="640" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
+						<frame x="704" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
 					</throwPixUp>
 				</animations>
 			</player>
@@ -379,4 +399,9 @@
 			<testSound path="Assets/Audio/Fx/Fushigi.ogg" />
 		</fx>
 	</audio>
+	<playerPrefs>
+		<fullscreen toggle="0" />
+		<musicVolume value="128" />
+		<sfxVolume value="52" />
+	</playerPrefs>
 </config>

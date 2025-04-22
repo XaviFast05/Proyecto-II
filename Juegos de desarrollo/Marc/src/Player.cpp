@@ -50,11 +50,6 @@ bool Player::Start() {
 	texW = parameters.attribute("w").as_int();
 	texH = parameters.attribute("h").as_int();
 
-	t_texture = Engine::GetInstance().textures.get()->Load(parameters.attribute("t_texture").as_string());
-	t_texW = parameters.attribute("t_w").as_int();
-	t_texH = parameters.attribute("t_h").as_int();
-	
-
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
 	walk.LoadAnimations(parameters.child("animations").child("walk"));
 	jump.LoadAnimations(parameters.child("animations").child("jump"));
@@ -200,7 +195,6 @@ bool Player::Update(float dt)
 
 		//CHANGERS
 		if (playerState == DEAD) {
-
 		}
 		else if (playerState == HURT) {
 			if (hurtTimer.ReadSec() >= hurtTime) playerState = IDLE;
@@ -369,6 +363,14 @@ bool Player::Update(float dt)
 				}
 			}
 			break;
+		case DEAD:
+		{
+			pbody->body->SetLinearVelocity(b2Vec2(0, 0));
+			if (respawnTimer.ReadSec() >= respawnTime) {
+				Engine::GetInstance().scene.get()->SetStartBossFight(false);
+				Engine::GetInstance().fade.get()->Fade(Engine::GetInstance().scene.get(), Engine::GetInstance().scene.get());
+			}
+		}
 		default:
 			break;
 		}
@@ -445,10 +447,10 @@ bool Player::Update(float dt)
 		}
 		break;
 	case THROW:
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W)){
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W)) {
 			currentAnim = &throwPixUp;
 		}
-		else{
+		else {
 			currentAnim = &throwPix;
 		}
 		if (resetAnimation == true) {
@@ -456,7 +458,16 @@ bool Player::Update(float dt)
 			resetAnimation = false;
 		}
 		break;
+
+	case DEAD:
+		currentAnim = &death;
+		if (resetAnimation == true) {
+			currentAnim->Reset();
+			resetAnimation = false;
+		}
+		break;
 	}
+
 
 	b2Transform pbodyPos = pbody->body->GetTransform();
 
