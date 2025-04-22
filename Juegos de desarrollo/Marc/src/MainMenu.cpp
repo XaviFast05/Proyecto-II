@@ -81,7 +81,7 @@ bool MainMenu::Start()
 
 	saved = loadFile.child("savedData").attribute("saved").as_bool();
 
-	loadFile.save_file("dataSaved.xml");
+	loadFile.save_file("savedData.xml");
 
 	if (!saved)
 		buttons["continueBt"]->state = GuiControlState::DISABLED();

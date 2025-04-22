@@ -550,7 +550,7 @@ void Scene::LoadState() {
 		}
 	}
 
-	loadFile.save_file("dataSaved.xml");
+	loadFile.save_file("savedData.xml");
 }
 
 void Scene::LoadTimeLivesCandies() {
