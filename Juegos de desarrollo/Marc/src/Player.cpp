@@ -436,6 +436,13 @@ bool Player::Update(float dt)
 			resetAnimation = false;
 		}
 		break;
+	case DEAD:
+		currentAnim = &death;
+		if (resetAnimation == true) {
+			currentAnim->Reset();
+			resetAnimation = false;
+		}
+		break;
 	}
 
 	b2Transform pbodyPos = pbody->body->GetTransform();
