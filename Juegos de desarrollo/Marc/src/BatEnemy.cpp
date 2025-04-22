@@ -71,7 +71,7 @@ bool BatEnemy::Start() {
 	//INIT VARIABLES
 	speed = parameters.child("properties").attribute("speed").as_float();
 	chaseArea = parameters.child("properties").attribute("chaseArea").as_float();
-	deathTime = parameters.child("properties").attribute("deathTime").as_float();
+	deathTime = 0;
 	state = PATROL;
 
 	playingSound = false;
@@ -221,6 +221,10 @@ bool BatEnemy::Update(float dt) {
 			break;
 		}
 
+		if (state == DEAD && !droppedLoot) {
+			DropLoot();
+			droppedLoot = true;
+		}
 
 		//DRAW
 

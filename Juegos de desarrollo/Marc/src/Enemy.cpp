@@ -10,6 +10,8 @@
 #include "Map.h"
 #include "Player.h"
 #include "Audio.h"
+#include "CurrencyManager.h"
+#include "CurrencyOrb.h"
 
 Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
@@ -49,13 +51,14 @@ bool Enemy::Start() {
 
 	dead = false;
 
+	currencyManager = new CurrencyManager();
+	currencyManager->Start();
+
 	// Initialize pathfinding
 	pathfinding = new Pathfinding();
 	ResetPath();
 
 	//SFX Node Load
-
-
 	return true;
 }
 
@@ -229,5 +232,44 @@ void Enemy::DMGEnemy() {
 		deathTimer.Start();
 		death.Reset();
 		state = DEAD;
+	}
+}
+
+void Enemy::DropLoot() {
+	int amount = 1;
+	std::vector <int> sizes;
+
+	switch (lootAmount) {
+	case 0:
+		amount = 0;
+		break;
+	case 1: 
+		amount = rand() % 2 + 1;
+		sizes = { 2,1,1,1,1,1,1,1,1,1 };
+		break;
+	case 2:
+		amount = rand() % 2 + 2;
+		sizes = { 2,2,2,1,1,1,1,1,1,1 };
+		break;
+	case 3:
+		amount = rand() % 3 + 3;
+		sizes = { 3,2,2,2,2,2,1,1,1,1 };
+		break;
+	case 4:
+		amount = rand() % 3 + 5;
+		sizes = { 3,3,2,2,2,2,2,1,1,1 };
+		break;
+	case 5:
+		amount = rand() % 3 + 7;
+		sizes = { 3,3,3,2,2,2,2,2,2,1 };
+		break;
+	default:
+		break;
+	}
+	if (amount > 0) {
+		for (int i = 0; i < amount; i++) {
+			int num = rand() % 9;
+			currencyManager->EnableOrb(pbody->body->GetPosition().x, pbody->body->GetPosition().y, sizes[num]);
+		}
 	}
 }

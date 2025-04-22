@@ -27,6 +27,7 @@
 #include "DeathMenu.h"
 #include "WinMenu.h"
 #include "PickaxeManager.h"
+#include "CurrencyManager.h"
 
 #include "Intro.h"
 
@@ -311,6 +312,9 @@ bool Scene::Update(float dt)
 	
 	livesText = "hits left: " + std::to_string((int)player->hits);
 	Engine::GetInstance().render.get()->DrawText(livesText.c_str(), 800, 90, 200, 18);
+
+	currencyText = "currency: " + std::to_string((int)player->currencyManager->GetCurrency());
+	Engine::GetInstance().render.get()->DrawText(currencyText.c_str(), 800, 110, 200, 18);
 
 	return true;
 }

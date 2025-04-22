@@ -13,6 +13,7 @@ public:
     void setX(float x);
     float getY() const;
     void setY(float y);
+    Vector2D lerp(const Vector2D& target, float t) const;
 
     // Vector operations
     float magnitude() const;

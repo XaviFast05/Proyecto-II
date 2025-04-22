@@ -133,6 +133,7 @@ public:
 	std::string timeTilPickaxeText;
 
 	std::string livesText;
+	std::string currencyText;
 
 	bool cameraDirectionChangeActivation = false;
 

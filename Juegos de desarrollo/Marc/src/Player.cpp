@@ -15,6 +15,7 @@
 #include "FadeToBlack.h"
 #include "Bullet.h"
 #include "PickaxeManager.h"
+#include "CurrencyManager.h"
 
  
 
@@ -76,7 +77,6 @@ bool Player::Start() {
 	dir = (Direction)parameters.child("propierties").attribute("direction").as_int();
 
 
-
 	for (pugi::xml_node stateNode : parameters.child("statesFlow").children())
 	{
 		std::vector<bool> flow;
@@ -128,6 +128,8 @@ bool Player::Start() {
 
 	pickaxeManager = new PickaxeManager();
 	pickaxeManager->Start();
+	currencyManager = new CurrencyManager();
+	currencyManager->Start();
 
 	return true;
 }
@@ -467,6 +469,10 @@ bool Player::Update(float dt)
 	}
 
 	currentAnim->Update();
+
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {
+		currencyManager->EnableOrb(pbody->body->GetPosition().x + 10, pbody->body->GetPosition().y, 2);
+	}
 	return true;
 }
 
@@ -487,6 +493,7 @@ bool Player::CleanUp()
 
 // L08 TODO 6: Define OnCollision function for the player. 
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
+	int soulAmount = 1;
 	switch (physB->ctype)
 	{
 	case ColliderType::PLATFORM:
@@ -545,6 +552,14 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		if (!Engine::GetInstance().scene.get()->GetStartBossFight())Engine::GetInstance().scene.get()->SetStartBossFight(true);
 		break;
 	
+	case ColliderType::ORB:
+		if (physB->width == 4) soulAmount = rand() % 4 + 1;
+		else if (physB->width == 7) soulAmount = rand() % 4 + 5;
+		else if (physB->width == 10) soulAmount = rand() % 5 + 10;
+
+		currencyManager->SumCurrency(soulAmount);
+		break;
+
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;

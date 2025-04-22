@@ -17,6 +17,13 @@ float Vector2D::getY() const {
     return y;
 }
 
+Vector2D Vector2D::lerp(const Vector2D& target, float t) const {
+    return Vector2D(
+        this->x + (target.x - this->x) * t,
+        this->y + (target.y - this->y) * t
+    );
+}
+
 void Vector2D::setY(float y) {
     this->y = y;
 }

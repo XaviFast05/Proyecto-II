@@ -14,6 +14,7 @@
 
 //FORWARD DECLARATION
 class PickaxeManager;
+class CurrencyManager;
 
 struct SDL_Texture;
 
@@ -131,7 +132,9 @@ public:
 
 	bool resetAnimation = false;
 
+	//MANAGERS
 	PickaxeManager* pickaxeManager;
+	CurrencyManager* currencyManager;
 
 	Timer coyoteTimer;
 	bool coyoteTimerOn = false;
