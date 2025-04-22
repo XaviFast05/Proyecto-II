@@ -58,13 +58,9 @@
 				<lvl2 path="Assets/Maps/" name="Tutorial.tmx" />
 			</paths>
 			<parallax>
-				<layer name="mountain1" path="Assets/Textures/Parallax/Mountain1OFF.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="20" repeatNum="8" slowY="30" />
-				<layer name="mountain2" path="Assets/Textures/Parallax/Mountain2OFF.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="10" repeatNum="8" slowY="5" />
-				<layer name="cloud1" path="Assets/Textures/Parallax/Cloud1X2.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="5" repeatNum="6" slowY="1" />
-				<layer name="moon" path="Assets/Textures/Parallax/MoonX2.png" marginX="480" marginY="0" spacing="0" width="640" height="360" slowX="2" repeatNum="1" slowY="1" />
-				<layer name="cloud2" path="Assets/Textures/Parallax/Cloud2X2.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="4" repeatNum="6" slowY="1" />
-				<layer name="cloud3" path="Assets/Textures/Parallax/Cloud3X2.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="3" repeatNum="6" slowY="1" />
-				<layer name="sky" path="Assets/Textures/Parallax/SkyX2.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="1" repeatNum="6" slowY="1" />
+				<layer name="sky" path="Assets/Textures/Parallax/Fondo_Front.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="5" repeatNum="15" slowY="1" />
+				<layer name="sky2" path="Assets/Textures/Parallax/Fondo_mid.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="3" repeatNum="15" slowY="1" />
+				<layer name="sky3" path="Assets/Textures/Parallax/Fondo_back.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="2" repeatNum="15" slowY="1" />
 			</parallax>
 		</map>
 		<helpMenu x="252" y="9" w="379" h="295" path="Assets/Textures/Menus/Help/HelpMenu_ver2.png" lvl="1" />
