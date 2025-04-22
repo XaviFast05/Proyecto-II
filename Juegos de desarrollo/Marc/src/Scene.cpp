@@ -262,22 +262,21 @@ bool Scene::Update(float dt)
 	
 	if (!paused) {
 		currentTime += dt / 1000.0f;
+		
+		//CAMERA X
+		ChangeDirectionCameraX();
 
-		/*if (player->position.getX() < POS_TO_START_MOVING_CAMX) {
-			Engine::GetInstance().render.get()->camera.x = (POS_TO_START_MOVING_CAMX + CAM_EXTRA_DISPLACEMENT_X) * -Engine::GetInstance().window.get()->scale;
-		}
-		else if (player->position.getX() > POS_TO_STOP_MOVING_CAMX) Engine::GetInstance().render.get()->camera.x = (POS_TO_STOP_MOVING_CAMX + CAM_EXTRA_DISPLACEMENT_X) * -Engine::GetInstance().window.get()->scale;
-		else Engine::GetInstance().render.get()->camera.x = (player->position.getX() + CAM_EXTRA_DISPLACEMENT_X) * -Engine::GetInstance().window.get()->scale;*/
-		/*Engine::GetInstance().render.get()->camera.x = (player->position.getX() + CAM_EXTRA_DISPLACEMENT_X_LEFT) * -Engine::GetInstance().window.get()->scale;*/
-		//camera y
-		/*if (player->position.getY() > POS_TO_START_MOVING_CAMY) {
-			Engine::GetInstance().render.get()->camera.y = (POS_TO_START_MOVING_CAMY + CAM_EXTRA_DISPLACEMENT_Y) * -Engine::GetInstance().window.get()->scale;
-		}
-		else if (player->position.getY() < POS_TO_STOP_MOVING_CAMY) Engine::GetInstance().render.get()->camera.y = (POS_TO_STOP_MOVING_CAMY + CAM_EXTRA_DISPLACEMENT_X) * -Engine::GetInstance().window.get()->scale;
-		else Engine::GetInstance().render.get()->camera.y = (player->position.getY() + CAM_EXTRA_DISPLACEMENT_Y) * -Engine::GetInstance().window.get()->scale;*/
+		//CAMERA Y
 		Engine::GetInstance().render.get()->camera.y = (METERS_TO_PIXELS(player->pbody->body->GetPosition().y) + CAM_EXTRA_DISPLACEMENT_Y) * -Engine::GetInstance().window.get()->scale;
 
-		ChangeDirectionCameraX();
+		//CAMERA LIMITS X
+		if (Engine::GetInstance().render.get()->camera.x < -9980) Engine::GetInstance().render.get()->camera.x = -9980;
+		else if (Engine::GetInstance().render.get()->camera.x > -35) Engine::GetInstance().render.get()->camera.x = -35;
+
+		//CAMERA LIMITS Y
+		if (Engine::GetInstance().render.get()->camera.y < -4088) Engine::GetInstance().render.get()->camera.y = -4088;
+		else if (Engine::GetInstance().render.get()->camera.y > 0) Engine::GetInstance().render.get()->camera.y = 0;
+
 	}
 
 	if (!bossKilled && startBossFight)
@@ -666,6 +665,7 @@ void Scene::SetBossFightKilled(bool b)
 }
 void Scene::ChangeDirectionCameraX()
 {
+	//if (Engine::GetInstance().render.get()->camera.x)
 	if (cameraDirectionChangeActivation) {
 		int currentDisplace = transitionDisplace;
 
