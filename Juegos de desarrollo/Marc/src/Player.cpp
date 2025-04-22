@@ -353,6 +353,29 @@ bool Player::Update(float dt)
 			break;
 		}
 
+		//AQUI ES DONDE SE HACE LO DE NO ENGANCHARSE A LA PARED
+		b2ContactEdge* contactEdge = pbody->body->GetContactList();
+		while (contactEdge) {
+			b2WorldManifold worldManifold;
+			contactEdge->contact->GetWorldManifold(&worldManifold);
+
+			b2Vec2 normal = worldManifold.normal;
+
+			// Si está tocando una pared (normal.x cerca de -1 o 1)
+			if (abs(normal.x) > 0.95f && abs(normal.y) < 0.2f) {
+				// Normal apunta a la izquierda -> pared a la derecha
+				if (normal.x < -0.95f && velocity.x > 0) {
+					velocity.x = 0;
+				}
+				// Normal apunta a la derecha -> pared a la izquierda
+				else if (normal.x > 0.95f && velocity.x < 0) {
+					velocity.x = 0;
+				}
+			}
+
+			contactEdge = contactEdge->next;
+		}
+
 		velocity = { velocity.x, pbody->body->GetLinearVelocity().y };
 		pbody->body->SetLinearVelocity(velocity);
 	}
