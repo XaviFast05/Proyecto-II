@@ -316,19 +316,6 @@
 				</checkPoints>
 			</items>
 		</entities>
-<<<<<<< Updated upstream
-		<savedData saved="true" level="1" time="0" startBossFight="false" bossKilled="false">
-			<lvl1>
-				<player x="150" y="3400" lives="3" transformable="false" transformed="false" candies="0" />
-				<enemy0 dead="false" x="2016" y="3423" />
-				<enemy1 dead="false" x="2272" y="3296" />
-				<enemy2 dead="false" x="2208" y="96" />
-				<enemy3 dead="false" x="1632" y="159" />
-				<enemy4 dead="false" x="1504" y="416" />
-			</lvl1>
-		</savedData>
-=======
->>>>>>> Stashed changes
 		<pauseMenu>
 			<pausePanel x="0" y="0" w="1280" h="720" texture="Assets/Textures/Menus/Pause/pause-panel.png" />
 			<buttons>
@@ -396,12 +383,4 @@
 			<testSound path="Assets/Audio/Fx/Fushigi.ogg" />
 		</fx>
 	</audio>
-<<<<<<< Updated upstream
-	<playerPrefs>
-		<fullscreen toggle="0" />
-		<musicVolume value="47" />
-		<sfxVolume value="128" />
-	</playerPrefs>
-=======
->>>>>>> Stashed changes
 </config>
