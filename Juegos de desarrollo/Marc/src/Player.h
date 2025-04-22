@@ -82,6 +82,8 @@ public:
 	int texW, texH;
 	int t_texW, t_texH;
 	SDL_Rect currentFrame;
+	int drawOffsetX;
+	int drawOffsetY;
 
 	// L08 TODO 5: Add physics to the player - declare a Physics body
 	PhysBody* pbody;
@@ -121,6 +123,7 @@ public:
 	Animation punch;
 	Animation chop;
 	Animation throwPix;
+	Animation throwPixUp;
 
 	bool resetAnimation = false;
 

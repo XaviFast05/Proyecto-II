@@ -64,6 +64,7 @@ bool Player::Start() {
 	punch.LoadAnimations(parameters.child("animations").child("punch"));
 	chop.LoadAnimations(parameters.child("animations").child("chop"));
 	throwPix.LoadAnimations(parameters.child("animations").child("throwPix"));
+	throwPixUp.LoadAnimations(parameters.child("animations").child("throwPixUp"));
 
 	jumpForce = parameters.child("propierties").attribute("gJumpForce").as_float();
 	pushForce = parameters.child("propierties").attribute("pushForce").as_float();
@@ -353,6 +354,8 @@ bool Player::Update(float dt)
 
 	//ANIMS
 	currentFrame = currentAnim->GetCurrentFrame();
+	drawOffsetX = currentAnim->GetCurrentOffsetX();
+	drawOffsetY = currentAnim->GetCurrentOffsetY();
 	
 	switch (playerState) {
 	case IDLE:
@@ -394,7 +397,12 @@ bool Player::Update(float dt)
 		}
 		break;
 	case THROW:
-		currentAnim = &throwPix;
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W)){
+			currentAnim = &throwPixUp;
+		}
+		else{
+			currentAnim = &throwPix;
+		}
 		if (resetAnimation == true) {
 			currentAnim->Reset();
 			resetAnimation = false;
@@ -405,8 +413,8 @@ bool Player::Update(float dt)
 	b2Transform pbodyPos = pbody->body->GetTransform();
 
 	if (renderable) {
-		position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texW / 2);
-		position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
+		position.setX(METERS_TO_PIXELS((pbodyPos.p.x) - texW / 2 ) + drawOffsetX);
+		position.setY(METERS_TO_PIXELS((pbodyPos.p.y) - texH / 2) + drawOffsetY);
 
 		if (dir == RIGHT) {
 			Engine::GetInstance().render.get()->DrawTexture(texture, position.getX(), position.getY(), &currentFrame);

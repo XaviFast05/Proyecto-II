@@ -4,7 +4,6 @@
 #include "Log.h"
 #include "tracy/Tracy.hpp"
 
-
 #define VSYNC true
 
 Render::Render(bool startEnabled) : Module(startEnabled)

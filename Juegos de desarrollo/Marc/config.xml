@@ -90,11 +90,15 @@
 						<frame x="64" y="0" w="64" h="64" />
 						<frame x="128" y="0" w="64" h="64" />
 					</idle>
-					<walk loop="true" speed="0.2f">
+					<walk loop="true" speed="0.5f">
 						<frame x="0" y="192" w="64" h="64" />
 						<frame x="64" y="192" w="64" h="64" />
 						<frame x="128" y="192" w="64" h="64" />
-						<frame x="64" y="192" w="64" h="64" />
+						<frame x="192" y="192" w="64" h="64" />
+						<frame x="256" y="192" w="64" h="64" />
+						<frame x="320" y="192" w="64" h="64" />
+						<frame x="384" y="192" w="64" h="64" />
+						<frame x="448 " y="192" w="64" h="64" />
 					</walk>
 					<jump loop="false" speed="0.2f">
 						<frame x="64" y="64" w="64" h="64" />
@@ -115,10 +119,10 @@
 						<frame x="0" y="0" w="64" h="64" />
 					</death>
 					<chop loop="false" speed="0.2f">
-						<frame x="64" y="336" w="64" h="80" />
-						<frame x="128" y="336" w="64" h="80" />
-						<frame x="192" y="336" w="64" h="80" />
-						<frame x="256" y="336" w="64" h="80" />
+						<frame x="64" y="336" w="64" h="80" offsetX="0" offsetY="-16" />
+						<frame x="128" y="336" w="64" h="80" offsetX="0" offsetY="-16" />
+						<frame x="192" y="336" w="64" h="80" offsetX="0" offsetY="-16" />
+						<frame x="256" y="336" w="64" h="80" offsetX="0" offsetY="-16" />
 					</chop>
 					<punch loop="false" speed="0.2f">
 						<frame x="64" y="128" w="64" h="64" />
@@ -129,10 +133,17 @@
 						<frame x="384" y="128" w="64" h="64" />
 					</punch>
 					<throwPix loop="false" speed="0.2f">
-						<frame x="64" y="256" w="64" h="80" />
-						<frame x="128" y="256" w="64" h="80" />
-						<frame x="192" y="256" w="64" h="80" />
+						<frame x="64" y="256" w="64" h="80" offsetX="0" offsetY="-16" />
+						<frame x="128" y="256" w="64" h="80" offsetX="0" offsetY="-16" />
+						<frame x="192" y="256" w="64" h="80" offsetX="0" offsetY="-16" />
 					</throwPix>
+					<throwPixUp loop="false" speed="0.3f">
+						<frame x="64" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
+						<frame x="128" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
+						<frame x="192" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
+						<frame x="256" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
+						<frame x="320" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
+					</throwPixUp>
 				</animations>
 			</player>
 			<shot x="0" y="0" w="64" h="64" rad="5" texture="Assets/Textures/Pumpkin Head/fireball-sheet-test.png">
@@ -370,7 +381,7 @@
 	</audio>
 	<playerPrefs>
 		<fullscreen toggle="0" />
-		<musicVolume value="57" />
+		<musicVolume value="63" />
 		<sfxVolume value="117" />
 	</playerPrefs>
 </config>
