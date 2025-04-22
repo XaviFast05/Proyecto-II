@@ -182,8 +182,6 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 			DMGEnemy();
 		}
 		break;
-	case ColliderType::PUMPKIN:
-		break;
 	case ColliderType::SPYKE:
 		break;
 	case ColliderType::ENEMY:
@@ -214,7 +212,7 @@ void Enemy::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 	{
 	case ColliderType::PLATFORM:
 		break;
-	case ColliderType::PUMPKIN:
+	case ColliderType::CHECKPOINT:
 		break;
 	case ColliderType::LADDER:
 		break;

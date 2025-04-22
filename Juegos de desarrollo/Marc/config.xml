@@ -58,13 +58,9 @@
 				<lvl2 path="Assets/Maps/" name="Tutorial.tmx" />
 			</paths>
 			<parallax>
-				<layer name="mountain1" path="Assets/Textures/Parallax/Mountain1OFF.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="20" repeatNum="8" slowY="30" />
-				<layer name="mountain2" path="Assets/Textures/Parallax/Mountain2OFF.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="10" repeatNum="8" slowY="5" />
-				<layer name="cloud1" path="Assets/Textures/Parallax/Cloud1X2.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="5" repeatNum="6" slowY="1" />
-				<layer name="moon" path="Assets/Textures/Parallax/MoonX2.png" marginX="480" marginY="0" spacing="0" width="640" height="360" slowX="2" repeatNum="1" slowY="1" />
-				<layer name="cloud2" path="Assets/Textures/Parallax/Cloud2X2.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="4" repeatNum="6" slowY="1" />
-				<layer name="cloud3" path="Assets/Textures/Parallax/Cloud3X2.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="3" repeatNum="6" slowY="1" />
-				<layer name="sky" path="Assets/Textures/Parallax/SkyX2.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="1" repeatNum="6" slowY="1" />
+				<layer name="sky" path="Assets/Textures/Parallax/Fondo_Front.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="5" repeatNum="15" slowY="1" />
+				<layer name="sky2" path="Assets/Textures/Parallax/Fondo_mid.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="3" repeatNum="15" slowY="1" />
+				<layer name="sky3" path="Assets/Textures/Parallax/Fondo_back.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="2" repeatNum="15" slowY="1" />
 			</parallax>
 		</map>
 		<helpMenu x="252" y="9" w="379" h="295" path="Assets/Textures/Menus/Help/HelpMenu_ver2.png" lvl="1" />
@@ -303,23 +299,23 @@
 				</santa>
 				<instances>
 					<lvl1>
-						<instance enemyType="skeleton" entityType="6">
+						<instance enemyType="skeleton" entityType="5">
 							<point x="2020" y=" 3432" />
 							<point x="2020" y=" 3432" />
 						</instance>
-						<instance enemyType="bat" entityType="5">
+						<instance enemyType="bat" entityType="4">
 							<point x="2268" y=" 3300" />
 							<point x="2268" y=" 3300" />
 						</instance>
-						<instance enemyType="skeleton" entityType="6">
+						<instance enemyType="skeleton" entityType="5">
 							<point x="2200" y="124" />
 							<point x="2000" y="130" />
 						</instance>
-						<instance enemyType="bat" entityType="5">
+						<instance enemyType="bat" entityType="4">
 							<point x="1618" y="176" />
 							<point x="1696" y="176" />
 						</instance>
-						<instance enemyType="skeleton" entityType="6">
+						<instance enemyType="skeleton" entityType="5">
 							<point x="1505" y="432" />
 							<point x="1713" y="432" />
 						</instance>
@@ -327,46 +323,24 @@
 				</instances>
 			</enemies>
 			<items>
-				<candies>
-					<properties w="16" h="16" texture="Assets/Textures/Items/candySheet.png" />
+				<checkPoints>
+					<properties w="128" h="128" texture="Assets/Textures/Objects/checkpoint.png" />
 					<instances>
-						<lvl1 />
-					</instances>
-					<animations>
-						<floating loop="true" speed="0.1f">
-							<frame x="0" y="0" w="16" h="16" />
-							<frame x="16" y="0" w="16" h="16" />
-							<frame x="32" y="0" w="16" h="16" />
-							<frame x="48" y="0" w="16" h="16" />
-						</floating>
-					</animations>
-				</candies>
-				<pumpkins>
-					<properties w="16" h="16" texture="Assets/Textures/Items/pumpkin ui obj-resized.png" />
-					<instances>
-						<lvl1 />
+						<lvl1>
+							<instance entityType="2" x="3568" y="2432" />
+						</lvl1>
 					</instances>
 					<animations>
 						<unlit>
-							<frame x="0" y="0" w="16" h="16" />
+							<frame x="128" y="0" w="128" h="128" />
 						</unlit>
 						<lit>
-							<frame x="0" y="16" w="16" h="16" />
+							<frame x="0" y="0" w="128" h="128" />
 						</lit>
 					</animations>
-				</pumpkins>
+				</checkPoints>
 			</items>
 		</entities>
-		<savedData saved="true" level="1" time="0" startBossFight="false" bossKilled="false">
-			<lvl1>
-				<player x="150" y="3400" lives="3" transformable="false" transformed="false" candies="0" />
-				<enemy0 dead="false" x="2016" y="3423" />
-				<enemy1 dead="false" x="2272" y="3296" />
-				<enemy2 dead="false" x="2208" y="96" />
-				<enemy3 dead="false" x="1632" y="159" />
-				<enemy4 dead="false" x="1504" y="416" />
-			</lvl1>
-		</savedData>
 		<pauseMenu>
 			<pausePanel x="0" y="0" w="1280" h="720" texture="Assets/Textures/Menus/Pause/pause-panel.png" />
 			<buttons>

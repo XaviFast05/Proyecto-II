@@ -277,9 +277,6 @@ void Santa::OnCollision(PhysBody* physA, PhysBody* physB) {
 			DMGEnemy(physA, physB);
 		}
 		break;
-	case ColliderType::PUMPKIN:
-		LOG("Collision ITEM");
-		break;
 	case ColliderType::SPYKE:
 
 		LOG("Collision SPYKE");

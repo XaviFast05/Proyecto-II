@@ -151,7 +151,6 @@
   <ItemGroup>
     <ClCompile Include="src\PickaxeManager.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
-    <ClCompile Include="src\Candy.cpp" />
     <ClCompile Include="src\DeathMenu.cpp" />
     <ClCompile Include="src\GroundEnemy.cpp" />
     <ClCompile Include="src\BatEnemy.cpp" />
@@ -169,7 +168,7 @@
     <ClCompile Include="src\FadeToBlack.cpp" />
     <ClCompile Include="src\Santa.cpp" />
     <ClCompile Include="src\Settings.cpp" />
-    <ClCompile Include="src\Pumpkin.cpp" />
+    <ClCompile Include="src\CheckPoint.cpp" />
     <ClCompile Include="src\Log.cpp" />
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\Particle.cpp" />
@@ -190,7 +189,6 @@
   <ItemGroup>
     <ClInclude Include="src\PickaxeManager.h" />
     <ClInclude Include="src\Bullet.h" />
-    <ClInclude Include="src\Candy.h" />
     <ClInclude Include="src\DeathMenu.h" />
     <ClInclude Include="src\GroundEnemy.h" />
     <ClInclude Include="src\BatEnemy.h" />
@@ -209,7 +207,7 @@
     <ClInclude Include="src\Intro.h" />
     <ClInclude Include="src\MainMenu.h" />
     <ClInclude Include="src\FadeToBlack.h" />
-    <ClInclude Include="src\Pumpkin.h" />
+    <ClInclude Include="src\CheckPoint.h" />
     <ClInclude Include="src\Log.h" />
     <ClInclude Include="src\Map.h" />
     <ClInclude Include="src\Module.h" />
@@ -231,6 +229,7 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="config.xml" />
+    <Xml Include="savedData.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -10,7 +10,6 @@
 #include "Physics.h"
 #include "Particle.h"
 #include "EntityManager.h"
-#include "Candy.h"
 #include "MainMenu.h"
 #include "WinMenu.h"
 #include "FadeToBlack.h"
@@ -167,15 +166,34 @@ bool Player::Update(float dt)
 		//GODMODE
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
 			godMode = !godMode;
-			pbody->body->SetGravityScale(godMode == true || canClimb == true);
-			pbody->body->SetLinearVelocity(godMode == true ? b2Vec2_zero : pbody->body->GetLinearVelocity());
+			pbody->body->SetGravityScale(godMode ? 0.0f : gravity);
+			pbody->body->SetLinearVelocity(b2Vec2_zero);
 			LOG("God mode = %d", (int)godMode);
 		}
 
 		if (godMode) {
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Z) == KEY_DOWN) {
-				jumpForce = parameters.child("propierties").attribute("gJumpForce").as_float();
+			velocity = b2Vec2_zero;
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) velocity.x = -moveSpeed * 25;
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) velocity.x = moveSpeed * 25;
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) velocity.y = -moveSpeed * 25;
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) velocity.y = moveSpeed * 25;
+
+			pbody->body->SetLinearVelocity(velocity);
+
+			b2Transform pbodyPos = pbody->body->GetTransform();
+
+			if (renderable) {
+				position.setX(METERS_TO_PIXELS((pbodyPos.p.x) - texW / 2) + drawOffsetX);
+				position.setY(METERS_TO_PIXELS((pbodyPos.p.y) - texH / 2) + drawOffsetY);
+
+				if (dir == RIGHT) Engine::GetInstance().render.get()->DrawTexture(texture, position.getX(), position.getY(), &currentFrame);
+				else if (dir == LEFT) Engine::GetInstance().render.get()->DrawTextureFlipped(texture, position.getX(), position.getY(), &currentFrame);
 			}
+			
+
+			currentAnim->Update();
+
+			return true;
 		}
 
 		//CHANGERS
@@ -312,7 +330,7 @@ bool Player::Update(float dt)
 				Engine::GetInstance().audio.get()->PlayFx(playerAttack2SFX);
 				playSound = false;
 			}
-			if (CheckMoveX()) MoveX();
+			if (CheckMoveX() && !grounded) MoveX();
 			if (stateTimer.ReadSec() >= punchTimerAnimation)
 			{
 				playerState = IDLE;
@@ -326,7 +344,7 @@ bool Player::Update(float dt)
 				Engine::GetInstance().audio.get()->PlayFx(playerAttack1SFX);
 				playSound = false;
 			}
-			if (CheckMoveX()) MoveX();
+			if (CheckMoveX() && !grounded) MoveX();
 			if (stateTimer.ReadSec() >= pickaxeTimerAnimation)
 			{
 				playerState = IDLE;
@@ -340,7 +358,7 @@ bool Player::Update(float dt)
 				Engine::GetInstance().audio.get()->PlayFx(playerThrowSFX);
 				playSound = false;
 			}
-			if (CheckMoveX()) MoveX();
+			if (CheckMoveX() && !grounded) MoveX();
 			if (stateTimer.ReadSec() >= pickaxeTimerAnimation)
 			{
 				playerState = IDLE;
@@ -481,13 +499,9 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::PLATFORM:
 		LOG("Collision PLATFORM");
 		break;
-	case ColliderType::PUMPKIN:
-		LOG("Collision PUMPKIN");
-		break;
 	case ColliderType::SPYKE:
 		LOG("Collision SPYKE");
 		break;
-
 	case ColliderType::ENEMY:
 		LOG("Collision ENEMY");
 		if (!godMode) {
@@ -554,8 +568,8 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 	case ColliderType::PLATFORM:
 		LOG("End Collision PLATFORM");
 		break;
-	case ColliderType::PUMPKIN:
-		LOG("End Collision PUMPKIN");
+	case ColliderType::CHECKPOINT:
+		LOG("End Collision Checkpoint");
 		break;
 	case ColliderType::LADDER:
 		LOG("End Collision LADDER");

@@ -36,7 +36,11 @@ bool MainMenu::Start()
 	bool ret = true;
 	configFile.load_file("config.xml");
 	
-	pugi::xml_parse_result result = configFile.load_file("config.xml");
+	pugi::xml_parse_result configResult = configFile.load_file("config.xml");
+	if (configResult == NULL) {
+		LOG("Error loading config.xml");
+		return false;
+	}
 	rootNode = configFile.child("config");	
 	pugi::xml_node musicNode = rootNode.child("audio").child("music");
 
@@ -65,9 +69,19 @@ bool MainMenu::Start()
 	Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("menuMus").attribute("path").as_string(), 0.5f);
 
 	bgTex = Engine::GetInstance().textures.get()->Load(configParameters.child("bg").attribute("path").as_string());	
-	rootNode = configFile.child("config");
 
-	saved = rootNode.child("scene").child("savedData").attribute("saved").as_bool();
+
+	pugi::xml_document loadFile;
+	pugi::xml_parse_result savedDataResult = loadFile.load_file("savedData.xml");
+
+	if (savedDataResult == NULL) {
+		LOG("Error loading saveData.xml");
+		return false;
+	}
+
+	saved = loadFile.child("savedData").attribute("saved").as_bool();
+
+	loadFile.save_file("savedData.xml");
 
 	if (!saved)
 		buttons["continueBt"]->state = GuiControlState::DISABLED();

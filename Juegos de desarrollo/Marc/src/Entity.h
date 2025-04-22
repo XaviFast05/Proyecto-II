@@ -8,8 +8,7 @@ enum class EntityType
 {
 	PLAYER,
 	SHOT,
-	PUMPKIN,
-	CANDY,
+	CHECKPOINT,
 	ENEMY,
 	BAT_ENEMY,
 	GROUND_ENEMY,
