@@ -22,8 +22,6 @@ public:
 
 	void EnableOrb(float x, float y, int size);
 
-	void CreateEnemyOrb(float x, float y, int size);
-
 private:
 
 	int currencyNum;

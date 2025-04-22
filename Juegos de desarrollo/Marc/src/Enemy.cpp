@@ -234,7 +234,6 @@ void Enemy::DMGEnemy() {
 		deathTimer.Start();
 		death.Reset();
 		state = DEAD;
-		DropLoot();
 	}
 }
 
@@ -272,7 +271,7 @@ void Enemy::DropLoot() {
 	if (amount > 0) {
 		for (int i = 0; i < amount; i++) {
 			int num = rand() % 10 + 1;
-			currencyManager->EnableOrb(pbody->body->GetPosition().x + 10, pbody->body->GetPosition().y, sizes[num]);
+			currencyManager->EnableOrb(pbody->body->GetPosition().x, pbody->body->GetPosition().y, sizes[num]);
 		}
 	}
 }

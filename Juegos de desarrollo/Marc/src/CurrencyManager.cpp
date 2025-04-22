@@ -56,10 +56,3 @@ void CurrencyManager::EnableOrb(float x, float y, int size)
 	orb->SetSize(size);
 	orb->Enable();
 }
-
-void CurrencyManager::CreateEnemyOrb(float x, float y, int size) {
-	CurrencyOrb* orb = (CurrencyOrb*)Engine::GetInstance().entityManager->CreatePooledEntities(EntityType::CURRENCY_ORB);
-	orb->SetParameters(Engine::GetInstance().scene.get()->configParameters);
-	orb->SetSize(size);
-	orb->Start();
-}

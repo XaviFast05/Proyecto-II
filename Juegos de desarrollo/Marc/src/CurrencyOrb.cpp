@@ -48,6 +48,11 @@ bool CurrencyOrb::Start()
     pbody->body->SetGravityScale(1);
     pbody->body->SetFixedRotation(true);
 
+    float velX = rand() % 1 + (-0.5);
+    float velY = rand() % 1;
+    b2Vec2 direction = b2Vec2(velX, -velY);
+    pbody->body->ApplyLinearImpulseToCenter(direction, true);
+
     // Establecer tipo de colisión
     pbody->ctype = ColliderType::ORB;
     pbody->body->SetEnabled(true);

@@ -121,4 +121,5 @@ public:
 
 	CurrencyManager* currencyManager;
 	bool canPush = true;
+	bool droppedLoot = false;
 };

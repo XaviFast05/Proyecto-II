@@ -257,6 +257,11 @@ bool GroundEnemy::Update(float dt) {
 			dir = LEFT;
 		}
 
+		if (state == DEAD && !droppedLoot) {
+			DropLoot();
+			droppedLoot = true;
+		}
+
 		//DRAW
 
 		if (pbody->body->IsEnabled()) {
