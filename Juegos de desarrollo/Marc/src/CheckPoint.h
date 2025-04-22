@@ -6,21 +6,17 @@
 #include "Player.h"
 #include <string.h>
 
-enum CandyFunction {
-	POINTS = 0,
-	HEALING = 1,
-	TIME = 2
-};
 
 
 struct SDL_Texture;
 
-class Candy : public Entity
+
+class CheckPoint : public Entity
 {
 public:
 
-	Candy();
-	virtual ~Candy();
+	CheckPoint();
+	virtual ~CheckPoint();
 
 	bool Awake();
 
@@ -38,15 +34,15 @@ public:
 
 	void SaveData(pugi::xml_node itemNode);
 	void LoadData(pugi::xml_node itemNode);
+
 	void OnCollision(PhysBody* physA, PhysBody* physB);
+
+	void OnCollisionEnd(PhysBody* physA, PhysBody* physB);
 
 public:
 
-	std::string name;
-	bool picked;
-	std::string type;
-	CandyFunction function;
 	
+	std::string name;
 
 private:
 	//L08 TODO 4: Add a physics to an item
@@ -54,22 +50,17 @@ private:
 
 	Player* player;
 
-	const char* texturePath;
+	SDL_Texture* texture;
+
+	bool alight;
+
 	int texW, texH;
-	int yAnim;
-
-	//SDL_Texture* swirlTex;
-	//SDL_Texture* lollyTex;
-	//SDL_Texture* cornTex;
-	//SDL_Texture* clockTex;
-	//SDL_Texture* heartTex;
-	SDL_Texture* candyTex;
-
-	//Animations
-	Animation floating;
+	Animation lit;
+	Animation unlit;
 	Animation* currentAnim;
 
-	//SFX
-	int gotCandy;
+	pugi::xml_node parameters;
 };
+
+
 

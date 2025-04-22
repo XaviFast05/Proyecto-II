@@ -165,6 +165,9 @@
     <ClCompile Include="src\GuiManager.cpp">
       <Filter>Source Files\Engine\Gui</Filter>
     </ClCompile>
+    <ClCompile Include="src\Intro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Audio.h">
@@ -292,9 +295,13 @@
     <ClInclude Include="src\GuiManager.h">
       <Filter>Source Files\Engine\Gui</Filter>
     </ClInclude>
+    <ClInclude Include="src\Intro.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="config.xml">
+      <Filter>Configuration FIles</Filter>
+    </Xml>
+    <Xml Include="savedData.xml">
       <Filter>Configuration FIles</Filter>
     </Xml>
   </ItemGroup>

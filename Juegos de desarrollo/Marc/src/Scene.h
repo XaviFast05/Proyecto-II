@@ -22,8 +22,7 @@ struct SDL_Texture;
 class BatEnemy;
 class GroundEnemy;
 class Enemy;
-class Pumpkin;
-class Candy;
+class CheckPoint;
 class EntityManager;
 class GuiControlButton;
 class GuiControlSlider;
@@ -70,9 +69,7 @@ public:
 	void LoadEnemy(Enemy* enemy, pugi::xml_node instanceNode);
 
 
-	void LoadItem(Pumpkin* pumpkins, pugi::xml_node instanceNode);
-
-	void LoadItem(Candy* candy, pugi::xml_node instanceNode);
+	void LoadItem(CheckPoint* checkPoint, pugi::xml_node instanceNode);
 
 	void LoadState();
 
@@ -98,8 +95,6 @@ public:
 	void ChangeDirectionCameraX();
 	
 	void SetLevel(Levels level);
-
-	bool ReloadParameters(pugi::xml_node parameters) override;
 	
 	std::string GetCurrentLevelString();
 	
@@ -147,8 +142,7 @@ private:
 	float _dt;
 
 	std::vector<Enemy*> enemies;
-	std::vector<Pumpkin*> pumpkins;
-	std::vector<Candy*> candies;
+	std::vector<CheckPoint*> checkPoints;
 	pugi::xml_node musicNode;
 
 	std::map<std::string, GuiControlButton*> pauseButtons;

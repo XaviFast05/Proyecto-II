@@ -61,8 +61,6 @@ public:
 	// Load config file
 	bool LoadConfig();
 	
-	bool ReloadConfig();
-	
 	pugi::xml_node GetConfig();
 
 private:

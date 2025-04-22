@@ -10,7 +10,7 @@
 #include "EntityManager.h"
 #include "Player.h"
 #include "Map.h"
-#include "Pumpkin.h"
+#include "CheckPoint.h"
 #include "Physics.h"
 #include "BatEnemy.h"
 #include "GroundEnemy.h"
@@ -20,7 +20,6 @@
 #include "GuiControl.h"
 #include "GuiManager.h"
 #include "GuiControlButton.h"
-#include "Candy.h"
 #include "MainMenu.h"
 #include "FadeToBlack.h"
 #include "Settings.h"
@@ -73,7 +72,6 @@ bool Scene::Start()
 	//Load Map
 	Engine::GetInstance().map->Load(path, name);
 
-
 	//Load Parallax
 	Engine::GetInstance().map->LoadParalax(configParameters.child("map").child("parallax"));
 
@@ -88,16 +86,10 @@ bool Scene::Start()
 		LoadEnemy(enemy, enemyNode);
 	}
 
-	for (pugi::xml_node pumpkingNode : configParameters.child("entities").child("items").child("pumpkins").child("instances").child(GetCurrentLevelString().c_str()).children())
+	for (pugi::xml_node checkPointNode : configParameters.child("entities").child("items").child("checkPoints").child("instances").child(GetCurrentLevelString().c_str()).children())
 	{
-		Pumpkin* pumpkin = (Pumpkin*)Engine::GetInstance().entityManager->CreateEntity((EntityType)pumpkingNode.attribute("entityType").as_int());;
-		LoadItem(pumpkin, pumpkingNode);
-	}
-
-	for (pugi::xml_node candyNode : configParameters.child("entities").child("items").child("candies").child("instances").child(GetCurrentLevelString().c_str()).children())
-	{
-		Candy* candy = (Candy*)Engine::GetInstance().entityManager->CreateEntity((EntityType)candyNode.attribute("entityType").as_int());;
-		LoadItem(candy, candyNode);
+		CheckPoint* checkPoint = (CheckPoint*)Engine::GetInstance().entityManager->CreateEntity((EntityType)checkPointNode.attribute("entityType").as_int());;
+		LoadItem(checkPoint, checkPointNode);
 	}
 
 	std::list<Entity*> entities = Engine::GetInstance().entityManager.get()->entities;
@@ -176,21 +168,14 @@ void Scene::LoadEnemy(Enemy* enemy, pugi::xml_node instanceNode)
 	enemies.push_back(enemy);
 }
 
-void Scene::LoadItem(Pumpkin* pumpkin, pugi::xml_node instanceNode) {
+void Scene::LoadItem(CheckPoint* checkPoint, pugi::xml_node instanceNode) {
 
-	pumpkin->SetPlayer(player);
-	pumpkin->SetParameters(configParameters.child("entities").child("items").child("pumpkins"));
-	pumpkin->SetInstanceParameters(instanceNode);
-	pumpkins.push_back(pumpkin);
+	checkPoint->SetPlayer(player);
+	checkPoint->SetParameters(configParameters.child("entities").child("items").child("checkPoints"));
+	checkPoint->SetInstanceParameters(instanceNode);
+	checkPoints.push_back(checkPoint);
 }
 
-void Scene::LoadItem(Candy* candy, pugi::xml_node instanceNode) {
-
-	candy->SetPlayer(player);
-	candy->SetParameters(configParameters.child("entities").child("items").child("candies"));
-	candy->SetInstanceParameters(instanceNode);
-	candies.push_back(candy);
-}
 
 
 int Scene::GetLevel()
@@ -444,8 +429,7 @@ bool Scene::CleanUp()
 	
 
 	enemies.clear();
-	pumpkins.clear();
-	candies.clear();
+	checkPoints.clear();
 
 	
 	
@@ -463,13 +447,21 @@ void Scene::SaveState()
 {
 	
 	pugi::xml_document saveFile;
-	pugi::xml_parse_result result = saveFile.load_file("config.xml");
+	pugi::xml_parse_result result = saveFile.load_file("savedData.xml");
 
-	saveFile.child("config").child("scene").child("savedData").attribute("saved").set_value(true);
-	saveFile.child("config").child("scene").child("savedData").attribute("level").set_value((int)level);
-	saveFile.child("config").child("scene").child("savedData").attribute("time").set_value(currentTime);
-	saveFile.child("config").child("scene").child("savedData").attribute("startBossFight").set_value(startBossFight);
-	saveFile.child("config").child("scene").child("savedData").attribute("bossKilled").set_value(bossKilled);
+	if (result == NULL) {
+		LOG("Error loading saveData.xml");
+		return;
+	}
+
+
+	pugi::xml_node savedDataNode = saveFile.child("savedData").child(GetCurrentLevelString().c_str());
+
+	savedDataNode.attribute("saved").set_value(true);
+	savedDataNode.attribute("level").set_value((int)level);
+	savedDataNode.attribute("time").set_value(currentTime);
+	savedDataNode.attribute("startBossFight").set_value(startBossFight);
+	savedDataNode.attribute("bossKilled").set_value(bossKilled);
 
 	if (result == NULL)
 	{
@@ -477,7 +469,7 @@ void Scene::SaveState()
 		return;
 	}
 
-	pugi::xml_node savedDataNode = saveFile.child("config").child("scene").child("savedData").child(GetCurrentLevelString().c_str());
+	
 
 	//Save info to XML 
 	//Player 
@@ -499,10 +491,10 @@ void Scene::SaveState()
 		enemies[i]->SaveData(parent);
 	}
 
-	//Pumpkins
-	for (int i = 0; i < pumpkins.size(); i++)
+	//CheckPoints
+	for (int i = 0; i < checkPoints.size(); i++)
 	{
-		std::string nodeChar = "pumpkin" + std::to_string(i);
+		std::string nodeChar = "checkPoint" + std::to_string(i);
 		pugi::xml_node parent = savedDataNode.child(nodeChar.c_str());
 
 		if (!parent) {
@@ -512,50 +504,30 @@ void Scene::SaveState()
 			parent.append_attribute("y");
 		}
 
-		pumpkins[i]->SaveData(parent);
-	}
-
-
-	//Candies
-	for (int i = 0; i < candies.size(); i++)
-	{
-		std::string nodeChar = "candy" + std::to_string(i);
-		pugi::xml_node parent = savedDataNode.child(nodeChar.c_str());
-
-		if (!parent) {
-			parent = savedDataNode.append_child(nodeChar.c_str());
-			parent.append_attribute("x");
-			parent.append_attribute("y");
-			parent.append_attribute("type");
-			parent.append_attribute("picked");
-		}
-
-		candies[i]->SaveData(parent);
+		checkPoints[i]->SaveData(parent);
 	}
 
 	//Saves the modifications to the XML 
-	saveFile.save_file("config.xml");
-	Engine::GetInstance().ReloadConfig();
+	saveFile.save_file("savedData.xml");
 }
 
 void Scene::LoadState() {
 
 	pugi::xml_document loadFile;
-	pugi::xml_parse_result result = loadFile.load_file("config.xml");
+	pugi::xml_parse_result result = loadFile.load_file("savedData.xml");
 
 	if (result == NULL) {
-		LOG("Error loading config.xml");
+		LOG("Error loading saveData.xml");
 		return;
 	}
 
-	currentTime = loadFile.child("config").child("scene").child("savedData").attribute("time").as_float();
-	startBossFight = loadFile.child("config").child("scene").child("savedData").attribute("startBossFight").as_bool();
-	bossKilled = loadFile.child("config").child("scene").child("savedData").attribute("bossKilled").as_bool();
+	pugi::xml_node savedDataNode = loadFile.child("savedData").child(GetCurrentLevelString().c_str());
 
-	pugi::xml_node savedDataNode = loadFile.child("config").child("scene").child("savedData").child(GetCurrentLevelString().c_str());
+	currentTime = savedDataNode.attribute("time").as_float();
+	startBossFight = savedDataNode.attribute("startBossFight").as_bool();
+	bossKilled = savedDataNode.attribute("bossKilled").as_bool();
 
 	player->LoadData(savedDataNode.child("player"));
-
 
 	//TODO: add an attribute to tell enemies from first and second level apart
 	for (int i = 0; i < enemies.size(); i++)
@@ -568,27 +540,17 @@ void Scene::LoadState() {
 		}
 	}
 
-	for (int i = 0; i < candies.size(); i++)
+	for (int i = 0; i < checkPoints.size(); i++)
 	{
-		std::string nodeChar = "candy" + std::to_string(i);
+		std::string nodeChar = "checkPoint" + std::to_string(i);
 		pugi::xml_node parent = savedDataNode.child(nodeChar.c_str());
 		if (parent)
 		{
-			candies[i]->LoadData(parent);
+			checkPoints[i]->LoadData(parent);
 		}
 	}
 
-	for (int i = 0; i < pumpkins.size(); i++)
-	{
-		std::string nodeChar = "pumpkin" + std::to_string(i);
-		pugi::xml_node parent = savedDataNode.child(nodeChar.c_str());
-		if (parent)
-		{
-			pumpkins[i]->LoadData(parent);
-		}
-	}
-
-	loadFile.save_file("config.xml");
+	loadFile.save_file("dataSaved.xml");
 }
 
 void Scene::LoadTimeLivesCandies() {
@@ -687,16 +649,6 @@ std::string Scene::GetLevelString(Levels lvl)
 void Scene::SetLevel(Levels lvl)
 {
 	level = lvl;
-}
-
-bool Scene::ReloadParameters(pugi::xml_node parameters)
-{
-	LoadParameters(parameters);
-	if (player)
-	{
-		player->SetParameters(configParameters.child("entities").child("player"));
-	}
-	return true;
 }
 
 bool Scene::GetStartBossFight()

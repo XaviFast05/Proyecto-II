@@ -274,23 +274,23 @@
 				</santa>
 				<instances>
 					<lvl1>
-						<instance enemyType="skeleton" entityType="6">
+						<instance enemyType="skeleton" entityType="5">
 							<point x="2020" y=" 3432" />
 							<point x="2020" y=" 3432" />
 						</instance>
-						<instance enemyType="bat" entityType="5">
+						<instance enemyType="bat" entityType="4">
 							<point x="2268" y=" 3300" />
 							<point x="2268" y=" 3300" />
 						</instance>
-						<instance enemyType="skeleton" entityType="6">
+						<instance enemyType="skeleton" entityType="5">
 							<point x="2200" y="124" />
 							<point x="2000" y="130" />
 						</instance>
-						<instance enemyType="bat" entityType="5">
+						<instance enemyType="bat" entityType="4">
 							<point x="1618" y="176" />
 							<point x="1696" y="176" />
 						</instance>
-						<instance enemyType="skeleton" entityType="6">
+						<instance enemyType="skeleton" entityType="5">
 							<point x="1505" y="432" />
 							<point x="1713" y="432" />
 						</instance>
@@ -298,36 +298,25 @@
 				</instances>
 			</enemies>
 			<items>
-				<candies>
-					<properties w="16" h="16" texture="Assets/Textures/Items/candySheet.png" />
+				<checkPoints>
+					<properties w="128" h="128" texture="Assets/Textures/Objects/checkpoint.png" />
 					<instances>
-						<lvl1 />
-					</instances>
-					<animations>
-						<floating loop="true" speed="0.1f">
-							<frame x="0" y="0" w="16" h="16" />
-							<frame x="16" y="0" w="16" h="16" />
-							<frame x="32" y="0" w="16" h="16" />
-							<frame x="48" y="0" w="16" h="16" />
-						</floating>
-					</animations>
-				</candies>
-				<pumpkins>
-					<properties w="16" h="16" texture="Assets/Textures/Items/pumpkin ui obj-resized.png" />
-					<instances>
-						<lvl1 />
+						<lvl1>
+							<instance entityType="2" x="3568" y="2432" />
+						</lvl1>
 					</instances>
 					<animations>
 						<unlit>
-							<frame x="0" y="0" w="16" h="16" />
+							<frame x="128" y="0" w="128" h="128" />
 						</unlit>
 						<lit>
-							<frame x="0" y="16" w="16" h="16" />
+							<frame x="0" y="0" w="128" h="128" />
 						</lit>
 					</animations>
-				</pumpkins>
+				</checkPoints>
 			</items>
 		</entities>
+<<<<<<< Updated upstream
 		<savedData saved="true" level="1" time="0" startBossFight="false" bossKilled="false">
 			<lvl1>
 				<player x="150" y="3400" lives="3" transformable="false" transformed="false" candies="0" />
@@ -338,6 +327,8 @@
 				<enemy4 dead="false" x="1504" y="416" />
 			</lvl1>
 		</savedData>
+=======
+>>>>>>> Stashed changes
 		<pauseMenu>
 			<pausePanel x="0" y="0" w="1280" h="720" texture="Assets/Textures/Menus/Pause/pause-panel.png" />
 			<buttons>
@@ -405,9 +396,12 @@
 			<testSound path="Assets/Audio/Fx/Fushigi.ogg" />
 		</fx>
 	</audio>
+<<<<<<< Updated upstream
 	<playerPrefs>
 		<fullscreen toggle="0" />
 		<musicVolume value="47" />
 		<sfxVolume value="128" />
 	</playerPrefs>
+=======
+>>>>>>> Stashed changes
 </config>

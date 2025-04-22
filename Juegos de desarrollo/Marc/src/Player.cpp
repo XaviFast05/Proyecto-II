@@ -10,7 +10,6 @@
 #include "Physics.h"
 #include "Particle.h"
 #include "EntityManager.h"
-#include "Candy.h"
 #include "MainMenu.h"
 #include "WinMenu.h"
 #include "FadeToBlack.h"
@@ -493,13 +492,9 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::PLATFORM:
 		LOG("Collision PLATFORM");
 		break;
-	case ColliderType::PUMPKIN:
-		LOG("Collision PUMPKIN");
-		break;
 	case ColliderType::SPYKE:
 		LOG("Collision SPYKE");
 		break;
-
 	case ColliderType::ENEMY:
 		LOG("Collision ENEMY");
 		if (!godMode) {
@@ -566,8 +561,8 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 	case ColliderType::PLATFORM:
 		LOG("End Collision PLATFORM");
 		break;
-	case ColliderType::PUMPKIN:
-		LOG("End Collision PUMPKIN");
+	case ColliderType::CHECKPOINT:
+		LOG("End Collision Checkpoint");
 		break;
 	case ColliderType::LADDER:
 		LOG("End Collision LADDER");

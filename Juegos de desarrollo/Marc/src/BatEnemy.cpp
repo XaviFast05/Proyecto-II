@@ -267,8 +267,6 @@ void BatEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 			DMGEnemy();
 		}
 		break;
-	case ColliderType::PUMPKIN:
-		break;
 	case ColliderType::SPYKE:
 		break;
 	case ColliderType::ENEMY:

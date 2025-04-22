@@ -226,25 +226,33 @@ int Settings::SetVolume(GuiControlSlider* slider) {
 void Settings::SavePrefs()
 {
 	pugi::xml_document saveFile;
-	pugi::xml_parse_result result = saveFile.load_file("config.xml");
+	pugi::xml_parse_result result = saveFile.load_file("savedData.xml");
 
-	saveFile.child("config").child("playerPrefs").child("fullscreen").attribute("toggle").set_value((int)fullScreenBox->isChecked);
-	saveFile.child("config").child("playerPrefs").child("musicVolume").attribute("value").set_value(musicVolume);
-	saveFile.child("config").child("playerPrefs").child("sfxVolume").attribute("value").set_value(sfxVolume);
+	if (result == NULL) {
+		LOG("Error loading saveData.xml");
+		return;
+	}
+
+	pugi::xml_node playerPrefsNode = saveFile.child("savedData").child("playerPrefs");
+
+	playerPrefsNode.child("playerPrefs").child("fullscreen").attribute("toggle").set_value((int)fullScreenBox->isChecked);
+	playerPrefsNode.child("playerPrefs").child("musicVolume").attribute("value").set_value(musicVolume);
+	playerPrefsNode.child("playerPrefs").child("sfxVolume").attribute("value").set_value(sfxVolume);
 
 	//Saves the modifications to the XML 
-	saveFile.save_file("config.xml");
-	Engine::GetInstance().ReloadConfig();
+	saveFile.save_file("savedData.xml");
 }
 
 void Settings::LoadPrefs()
 {
 	pugi::xml_document saveFile;
-	pugi::xml_parse_result result = saveFile.load_file("config.xml");
+	pugi::xml_parse_result result = saveFile.load_file("savedData.xml");
 
-	fullScreen = saveFile.child("config").child("playerPrefs").child("fullscreen").attribute("toggle").as_bool();
-	musicVolume = saveFile.child("config").child("playerPrefs").child("musicVolume").attribute("value").as_int();
-	sfxVolume = saveFile.child("config").child("playerPrefs").child("sfxVolume").attribute("value").as_int();
+	pugi::xml_node playerPrefsNode = saveFile.child("savedData").child("playerPrefs");
+
+	fullScreen = playerPrefsNode.child("fullscreen").attribute("toggle").as_bool();
+	musicVolume = playerPrefsNode.child("musicVolume").attribute("value").as_int();
+	sfxVolume = playerPrefsNode.child("sfxVolume").attribute("value").as_int();
 
 	fullScreenBox->SetChecked(fullScreen);
 	if (fullScreenBox->isChecked) {

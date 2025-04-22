@@ -1,4 +1,4 @@
-#include "Pumpkin.h"
+#include "CheckPoint.h"
 #include "Engine.h"
 #include "Textures.h"
 #include "Audio.h"
@@ -8,22 +8,23 @@
 #include "Log.h"
 #include "Physics.h"
 
-Pumpkin::Pumpkin() : Entity(EntityType::PUMPKIN)
+CheckPoint::CheckPoint() : Entity(EntityType::CHECKPOINT)
 {
 	name = "item";
 }
 
-Pumpkin::~Pumpkin() {}
+CheckPoint::~CheckPoint() {}
 
-bool Pumpkin::Awake() {
+bool CheckPoint::Awake() {
 	return true;
 }
 
 
-bool Pumpkin::Start() {
+bool CheckPoint::Start() {
 
+	
 	//initilize textures
-	pumpkinTex = Engine::GetInstance().textures.get()->Load(parameters.child("properties").attribute("texture").as_string());
+	texture = Engine::GetInstance().textures.get()->Load(parameters.child("properties").attribute("texture").as_string());
 	
 	/* L08 TODO 4: Add a physics to an item - initialize the physics body*/
 
@@ -39,18 +40,18 @@ bool Pumpkin::Start() {
 
 
 	pbody = Engine::GetInstance().physics.get()->CreateRectangleSensor((int)position.getX() + texW / 2, (int)position.getY() + texH / 2, texW, texH, bodyType::STATIC);
-	
-	currentAnim = &lit;
+	pbody->listener = this;
+	currentAnim = &unlit;
 
 	alight = false;
 
 	// L08 TODO 7: Assign collider type
-	pbody->ctype =ColliderType::PUMPKIN;
+	pbody->ctype =ColliderType::CHECKPOINT;
 
 	return true;
 }
 
-bool Pumpkin::Update(float dt)
+bool CheckPoint::Update(float dt)
 {
 	if (!Engine::GetInstance().render.get()->InCameraView(pbody->GetPosition().getX() - texW, pbody->GetPosition().getY() - texH, texW, texH))
 	{
@@ -61,33 +62,60 @@ bool Pumpkin::Update(float dt)
 	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texW / 2);
 	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
 
-	
-	Engine::GetInstance().render.get()->DrawTexture(pumpkinTex, (int)position.getX(), (int)position.getY(), &currentAnim->GetCurrentFrame());
+	Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnim->GetCurrentFrame());
 
 	return true;
 }
 
-bool Pumpkin::CleanUp()
+bool CheckPoint::CleanUp()
 {
 	return true;
 }
 
-void Pumpkin::SetPlayer(Player* _player) {
+void CheckPoint::SetPlayer(Player* _player) {
 	player = _player;
 }
 
-void Pumpkin::SaveData(pugi::xml_node itemNode)
+void CheckPoint::SaveData(pugi::xml_node itemNode)
 {
 	itemNode.attribute("alight").set_value(true);
-	itemNode.attribute("x").set_value(pbody->GetPhysBodyWorldPosition().getX());
-	itemNode.attribute("y").set_value(pbody->GetPhysBodyWorldPosition().getY());
 }
 
 
-void Pumpkin::LoadData(pugi::xml_node itemNode)
+void CheckPoint::LoadData(pugi::xml_node itemNode)
 {
-	pbody->SetPhysPositionWithWorld(itemNode.attribute("x").as_float(), itemNode.attribute("y").as_float());
 	alight = itemNode.attribute("alight").as_bool();
+}
+
+void CheckPoint::OnCollision(PhysBody* physA, PhysBody* physB) {
+	
+	switch (physB->ctype)
+	{
+	case ColliderType::PLAYER:
+		currentAnim = &lit;
+		break;
+	case ColliderType::UNKNOWN:
+		
+		break;
+
+	default:
+		break;
+	}
+}
+
+void CheckPoint::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
+{
+	switch (physB->ctype)
+	{
+	case ColliderType::PLAYER:
+		
+		break;
+	case ColliderType::UNKNOWN:
+		
+		break;
+	default:
+		break;
+	}
 }
 
 

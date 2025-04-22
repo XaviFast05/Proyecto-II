@@ -63,13 +63,6 @@ public:
 		return true;
 	}
 
-	virtual bool ReloadParameters(pugi::xml_node parameters)
-	{
-
-		LoadParameters(parameters);
-		return true;
-	}
-
 
 	virtual bool OnGuiMouseClickEvent(GuiControl* control)
 	{

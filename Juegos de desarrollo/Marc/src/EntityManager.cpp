@@ -4,8 +4,7 @@
 #include "Textures.h"
 #include "Scene.h"
 #include "Log.h"
-#include "Pumpkin.h"
-#include "Candy.h"
+#include "CheckPoint.h"
 #include "BatEnemy.h"
 #include "GroundEnemy.h"
 #include "Particle.h"
@@ -83,11 +82,8 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::PLAYER:
 		entity = new Player();
 		break;
-	case EntityType::CANDY:
-		entity = new Candy();
-		break;
-	case EntityType::PUMPKIN:
-		entity = new Pumpkin();
+	case EntityType::CHECKPOINT:
+		entity = new CheckPoint();
 		break;
 	case EntityType::ENEMY:
 		entity = new Enemy();
@@ -124,11 +120,8 @@ std::list<Entity*> EntityManager::CreatePooledEntities(EntityType type, int num)
 		case EntityType::PLAYER:
 			entity = new Player();
 			break;
-		case EntityType::CANDY:
-			entity = new Candy();
-			break;
-		case EntityType::PUMPKIN:
-			entity = new Pumpkin();
+		case EntityType::CHECKPOINT:
+			entity = new CheckPoint();
 			break;
 		case EntityType::ENEMY:
 			entity = new Enemy();
@@ -167,11 +160,8 @@ Entity* EntityManager::CreatePooledEntities(EntityType type)
 	case EntityType::PLAYER:
 		entity = new Player();
 		break;
-	case EntityType::CANDY:
-		entity = new Candy();
-		break;
-	case EntityType::PUMPKIN:
-		entity = new Pumpkin();
+	case EntityType::CHECKPOINT:
+		entity = new CheckPoint();
 		break;
 	case EntityType::ENEMY:
 		entity = new Enemy();
