@@ -90,11 +90,15 @@
 						<frame x="64" y="0" w="64" h="64" />
 						<frame x="128" y="0" w="64" h="64" />
 					</idle>
-					<walk loop="true" speed="0.2f">
+					<walk loop="true" speed="0.5f">
 						<frame x="0" y="192" w="64" h="64" />
 						<frame x="64" y="192" w="64" h="64" />
 						<frame x="128" y="192" w="64" h="64" />
-						<frame x="64" y="192" w="64" h="64" />
+						<frame x="192" y="192" w="64" h="64" />
+						<frame x="256" y="192" w="64" h="64" />
+						<frame x="320" y="192" w="64" h="64" />
+						<frame x="384" y="192" w="64" h="64" />
+						<frame x="448 " y="192" w="64" h="64" />
 					</walk>
 					<jump loop="false" speed="0.2f">
 						<frame x="64" y="64" w="64" h="64" />
@@ -115,10 +119,10 @@
 						<frame x="0" y="0" w="64" h="64" />
 					</death>
 					<chop loop="false" speed="0.2f">
-						<frame x="64" y="336" w="64" h="80" />
-						<frame x="128" y="336" w="64" h="80" />
-						<frame x="192" y="336" w="64" h="80" />
-						<frame x="256" y="336" w="64" h="80" />
+						<frame x="64" y="336" w="64" h="80" offsetX="0" offsetY="-16" />
+						<frame x="128" y="336" w="64" h="80" offsetX="0" offsetY="-16" />
+						<frame x="192" y="336" w="64" h="80" offsetX="0" offsetY="-16" />
+						<frame x="256" y="336" w="64" h="80" offsetX="0" offsetY="-16" />
 					</chop>
 					<punch loop="false" speed="0.2f">
 						<frame x="64" y="128" w="64" h="64" />
@@ -129,10 +133,17 @@
 						<frame x="384" y="128" w="64" h="64" />
 					</punch>
 					<throwPix loop="false" speed="0.2f">
-						<frame x="64" y="256" w="64" h="80" />
-						<frame x="128" y="256" w="64" h="80" />
-						<frame x="192" y="256" w="64" h="80" />
+						<frame x="64" y="256" w="64" h="80" offsetX="0" offsetY="-16" />
+						<frame x="128" y="256" w="64" h="80" offsetX="0" offsetY="-16" />
+						<frame x="192" y="256" w="64" h="80" offsetX="0" offsetY="-16" />
 					</throwPix>
+					<throwPixUp loop="false" speed="0.3f">
+						<frame x="64" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
+						<frame x="128" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
+						<frame x="192" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
+						<frame x="256" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
+						<frame x="320" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
+					</throwPixUp>
 				</animations>
 			</player>
 			<shot x="0" y="0" w="64" h="64" rad="5" texture="Assets/Textures/Pumpkin Head/fireball-sheet-test.png">
@@ -361,24 +372,21 @@
 	</scene>
 	<audio>
 		<music>
-			<menuMus path="Assets/Audio/Music/Nothing As It Seems.ogg" />
-			<lvl1Mus path="Assets/Audio/Music/Haunted Towers.ogg" />
-			<lvl2Mus path="Assets/Audio/Music/Crystal Conundrum (Remix).ogg" />
-			<winMus path="Assets/Audio/Music/Yo-kai Watch 2 Victory.ogg" />
-			<loseMus path="Assets/Audio/Music/Yo-kai Watch Defeat.ogg" />
-			<bossMus path="Assets/Audio/Music/BossSong.ogg" />
+			<menuMus path="Assets/Audio/Music/menu_intro.wav" />
+			<lvl1Mus path="Assets/Audio/Music/lvl_1-5_music.wav" />
+			<lvl2Mus path="Assets/Audio/Music/lvl_6-11_music.wav" />
+			<winMus path="Assets/Audio/Music/ending.wav" />
+			<loseMus path="Assets/Audio/Music/died.wav" />
+			<bossMus path="Assets/Audio/Music/final_boss.wav" />
 		</music>
 		<fx>
-			<gJumpSFX path="Assets/Audio/Fx/ghostJump.ogg" />
-			<pJumpSFX path="Assets/Audio/Fx/pumpkinJump.ogg" />
-			<atk1SFX path="Assets/Audio/Fx/atk1_alt.ogg" />
-			<atk2SFX path="Assets/Audio/Fx/customATK2.ogg" />
-			<switchOnSFX path="Assets/Audio/Fx/SwitchON.ogg" />
-			<switchOffSFX path="Assets/Audio/Fx/SwitchOFF.ogg" />
-			<gHurtSFX path="Assets/Audio/Fx/SquidHit.ogg" />
-			<pHurtSFX path="Assets/Audio/Fx/BonkSFX.ogg" />
+			<playerJumpSFX path="Assets/Audio/Fx/King/Land/king_jump.wav" />
+			<playerLandSFX path="Assets/Audio/Fx/King/Land/king_land.wav" />
+			<atk1SFX path="Assets/Audio/Fx/King/Land/king_splat.wav" />
+			<atk2SFX path="Assets/Audio/Fx/King/Land/king_bump.wav" />
+			<throwSFX path="Assets/Audio/Fx/King/Ice/king_jump.wav" />
+			<hurtSFX path="Assets/Audio/Fx/SquidHit.ogg" />
 			<gDeathSFX path="Assets/Audio/Fx/SinkOMO.ogg" />
-			<pDeathSFX path="Assets/Audio/Fx/PumpkinCrack.ogg" />
 			<pickCandy path="Assets/Audio/Fx/OMO_pickedItem.ogg" />
 			<pourCandy path="Assets/Audio/Fx/candyPour.ogg" />
 			<eatCandy path="Assets/Audio/Fx/candyEat.ogg" />
@@ -399,7 +407,7 @@
 	</audio>
 	<playerPrefs>
 		<fullscreen toggle="0" />
-		<musicVolume value="78" />
-		<sfxVolume value="77" />
+		<musicVolume value="63" />
+		<sfxVolume value="117" />
 	</playerPrefs>
 </config>

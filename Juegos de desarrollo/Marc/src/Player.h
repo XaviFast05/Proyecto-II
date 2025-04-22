@@ -82,12 +82,15 @@ public:
 	int hits = 3;
 	Timer hurtTimer;
 	float hurtTime = 0.5;
+	pugi::xml_node audioNode;
 
 	SDL_Texture* texture;
 	SDL_Texture* t_texture;
 	int texW, texH;
 	int t_texW, t_texH;
 	SDL_Rect currentFrame;
+	int drawOffsetX;
+	int drawOffsetY;
 
 	// L08 TODO 5: Add physics to the player - declare a Physics body
 	PhysBody* pbody;
@@ -124,6 +127,7 @@ public:
 	Animation punch;
 	Animation chop;
 	Animation throwPix;
+	Animation throwPixUp;
 
 	bool resetAnimation = false;
 
@@ -151,6 +155,14 @@ public:
 	float pickaxeTimerAnimation = 0.5;
 	float punchTimerAnimation = 0.5;
 
+	//SFX
+	int playerJumpSFX;
+	int playerLandSFX;
+	int playerAttack1SFX;
+	int playerAttack2SFX;
+	int playerThrowSFX;
+
+	bool playSound = true;
 
 	Direction dir;
 };

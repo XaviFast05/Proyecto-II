@@ -64,6 +64,7 @@ bool Player::Start() {
 	punch.LoadAnimations(parameters.child("animations").child("punch"));
 	chop.LoadAnimations(parameters.child("animations").child("chop"));
 	throwPix.LoadAnimations(parameters.child("animations").child("throwPix"));
+	throwPixUp.LoadAnimations(parameters.child("animations").child("throwPixUp"));
 
 	jumpForce = parameters.child("propierties").attribute("gJumpForce").as_float();
 	pushForce = parameters.child("propierties").attribute("pushForce").as_float();
@@ -74,6 +75,8 @@ bool Player::Start() {
 	respawnTime = parameters.child("propierties").attribute("respawnTime").as_float();
 	playerState = (state)parameters.child("propierties").attribute("playerState").as_int();
 	dir = (Direction)parameters.child("propierties").attribute("direction").as_int();
+
+
 
 	for (pugi::xml_node stateNode : parameters.child("statesFlow").children())
 	{
@@ -95,7 +98,15 @@ bool Player::Start() {
 	pugi::xml_document baseFile;
 	pugi::xml_parse_result result = baseFile.load_file("config.xml");
 
-	
+	audioNode = baseFile.child("config").child("audio").child("fx");
+
+	//SFX LOAD
+	playerJumpSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("playerJumpSFX").attribute("path").as_string());
+	playerLandSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("playerLandSFX").attribute("path").as_string());
+	playerAttack1SFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("atk1SFX").attribute("path").as_string());
+	playerAttack2SFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("atk2SFX").attribute("path").as_string());
+	playerThrowSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("throwSFX").attribute("path").as_string());
+
 	currentAnim = &idle;
 
 	int level = Engine::GetInstance().scene.get()->GetLevel();
@@ -255,33 +266,88 @@ bool Player::Update(float dt)
 			}
 		}
 
-		//LOGIC
+		//LOGIC & SFX
 		switch (playerState) {
 		case IDLE:
+			if (playSound == false) {
+				playSound = true;
+			}
 			break;
 		case RUN:
 			if (CheckMoveX()) MoveX();
-			else playerState = IDLE;
+			else 
+			{
+				playerState = IDLE;
+				if (playSound == false) {
+					playSound = true;
+				}
+			}
 			break;
 		case JUMP:
+			if (playSound == true) {
+				Engine::GetInstance().audio.get()->PlayFx(playerJumpSFX);
+				playSound = false;
+			}
 			if (CheckMoveX()) MoveX();
-			if (grounded) playerState = IDLE;
+			if (grounded) 
+			{
+				playerState = IDLE;
+				if (playSound == false) {
+					playSound = true;
+				}
+			}
 			break;
 		case FALL:
+			if (playSound == false) {
+				playSound = true;
+			}
 			if (CheckMoveX()) MoveX();
-			if (grounded) playerState = IDLE;
+			if (grounded) {
+				Engine::GetInstance().audio.get()->PlayFx(playerLandSFX);
+				playerState = IDLE;
+			}
 			break;
 		case PUNCH:
+			if (playSound == true) {
+				Engine::GetInstance().audio.get()->PlayFx(playerAttack2SFX);
+				playSound = false;
+			}
 			if (CheckMoveX()) MoveX();
-			if (stateTimer.ReadSec() >= punchTimerAnimation) playerState = IDLE;
+			if (stateTimer.ReadSec() >= punchTimerAnimation)
+			{
+				playerState = IDLE;
+				if (playSound == false) {
+					playSound = true;
+				}
+			}
 			break;
 		case CHOP:
+			if (playSound == true) {
+				Engine::GetInstance().audio.get()->PlayFx(playerAttack1SFX);
+				playSound = false;
+			}
 			if (CheckMoveX()) MoveX();
-			if (stateTimer.ReadSec() >= pickaxeTimerAnimation) playerState = IDLE;
+			if (stateTimer.ReadSec() >= pickaxeTimerAnimation)
+			{
+				playerState = IDLE;
+				if (playSound == false) {
+					playSound = true;
+				}
+			}
 			break;
 		case THROW:
+			if (playSound == true) {
+				Engine::GetInstance().audio.get()->PlayFx(playerThrowSFX);
+				playSound = false;
+			}
 			if (CheckMoveX()) MoveX();
-			if (stateTimer.ReadSec() >= pickaxeTimerAnimation) playerState = IDLE;
+			if (stateTimer.ReadSec() >= pickaxeTimerAnimation)
+			{
+				playerState = IDLE;
+				if (playSound == false) {
+					playSound = true;
+				}
+			}
 			break;
 		default:
 			break;
@@ -293,6 +359,8 @@ bool Player::Update(float dt)
 
 	//ANIMS
 	currentFrame = currentAnim->GetCurrentFrame();
+	drawOffsetX = currentAnim->GetCurrentOffsetX();
+	drawOffsetY = currentAnim->GetCurrentOffsetY();
 	
 	switch (playerState) {
 	case IDLE:
@@ -334,7 +402,12 @@ bool Player::Update(float dt)
 		}
 		break;
 	case THROW:
-		currentAnim = &throwPix;
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W)){
+			currentAnim = &throwPixUp;
+		}
+		else{
+			currentAnim = &throwPix;
+		}
 		if (resetAnimation == true) {
 			currentAnim->Reset();
 			resetAnimation = false;
@@ -345,8 +418,8 @@ bool Player::Update(float dt)
 	b2Transform pbodyPos = pbody->body->GetTransform();
 
 	if (renderable) {
-		position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texW / 2);
-		position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
+		position.setX(METERS_TO_PIXELS((pbodyPos.p.x) - texW / 2 ) + drawOffsetX);
+		position.setY(METERS_TO_PIXELS((pbodyPos.p.y) - texH / 2) + drawOffsetY);
 
 		if (dir == RIGHT) Engine::GetInstance().render.get()->DrawTexture(texture, position.getX(), position.getY(), &currentFrame);
 		else if (dir == LEFT) Engine::GetInstance().render.get()->DrawTextureFlipped(texture, position.getX(), position.getY(), &currentFrame);
