@@ -10,10 +10,9 @@ public:
     CurrencyOrb();  // Modificar el constructor para aceptar BulletType
     virtual ~CurrencyOrb() {};
 
-    bool Start();
+    bool Start(bool create);
     bool Update(float dt);
     bool CleanUp();
-
 
     void SetParameters(pugi::xml_node parameters) {
         this->parameters = parameters;
@@ -32,7 +31,6 @@ public:
 
 public:
     SDL_Texture* texture;
-    int soulAmount;
 
 private:
 

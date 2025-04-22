@@ -246,7 +246,7 @@ void Enemy::DropLoot() {
 		amount = 0;
 		break;
 	case 1: 
-		amount = rand() % 1 + 1;
+		amount = rand() % 2 + 1;
 		sizes = { 2,1,1,1,1,1,1,1,1,1 };
 		break;
 	case 2:
@@ -270,7 +270,7 @@ void Enemy::DropLoot() {
 	}
 	if (amount > 0) {
 		for (int i = 0; i < amount; i++) {
-			int num = rand() % 10 + 1;
+			int num = rand() % 9;
 			currencyManager->EnableOrb(pbody->body->GetPosition().x, pbody->body->GetPosition().y, sizes[num]);
 		}
 	}

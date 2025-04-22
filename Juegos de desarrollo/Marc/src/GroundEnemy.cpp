@@ -81,7 +81,7 @@ bool GroundEnemy::Start() {
 	attackArea = parameters.child("properties").attribute("attackArea").as_float();
 	jumpForce = parameters.child("properties").attribute("jumpForce").as_float();
 	attackTime = parameters.child("properties").attribute("attackTime").as_float();
-	deathTime = parameters.child("properties").attribute("deathTime").as_float();
+	deathTime = 0;
 	dir = LEFT;
 
 
@@ -177,7 +177,6 @@ bool GroundEnemy::Update(float dt) {
 				}
 			}
 			else if (state == ATTACK) {
-
 
 				if (attackTimer.ReadSec() > attackTime) {
 

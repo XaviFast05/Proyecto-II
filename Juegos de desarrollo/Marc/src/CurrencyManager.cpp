@@ -13,11 +13,11 @@ CurrencyManager::CurrencyManager()
 bool CurrencyManager::Start()
 {
 	currencyNum = 0;
-	orbNum = 20;
+	orbNum = 100;
 
 	for (int i = 0; i < orbNum; i++)
 	{
-		CurrencyOrb* orb = (CurrencyOrb*)CreateOrb(1);
+		CurrencyOrb* orb = (CurrencyOrb*)CreateOrb();
 	}
 
 	return true;
@@ -38,12 +38,11 @@ void CurrencyManager::SumCurrency(int currency)
 	currencyNum += currency;
 }
 
-Entity* CurrencyManager::CreateOrb(int size)
+Entity* CurrencyManager::CreateOrb()
 {
 	CurrencyOrb* orb = (CurrencyOrb*)Engine::GetInstance().entityManager->CreatePooledEntities(EntityType::CURRENCY_ORB);
 	orb->SetParameters(Engine::GetInstance().scene.get()->configParameters);
-	orb->SetSize(size);
-	orb->Start();
+	orb->Start(false);
 	orb->Disable();
 
 	return orb;
@@ -52,7 +51,7 @@ Entity* CurrencyManager::CreateOrb(int size)
 void CurrencyManager::EnableOrb(float x, float y, int size)
 {
 	CurrencyOrb* orb = (CurrencyOrb*)Engine::GetInstance().entityManager->GetPooledEntity(EntityType::CURRENCY_ORB);
-	orb->SetPosition({x,y});
 	orb->SetSize(size);
-	orb->Enable();
+	orb->Start(true);
+	orb->SetPosition({x,y});
 }

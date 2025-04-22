@@ -452,6 +452,7 @@ bool Player::CleanUp()
 
 // L08 TODO 6: Define OnCollision function for the player. 
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
+	int soulAmount = 1;
 	switch (physB->ctype)
 	{
 	case ColliderType::PLATFORM:
@@ -515,14 +516,16 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	
 	case ColliderType::ORB:
-		currencyManager->SumCurrency(1);
+		if (physB->width == 4) soulAmount = rand() % 4 + 1;
+		else if (physB->width == 7) soulAmount = rand() % 4 + 5;
+		else if (physB->width == 10) soulAmount = rand() % 5 + 10;
+
+		currencyManager->SumCurrency(soulAmount);
 		break;
 
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;
-
-
 	
 	default:
 		break;
