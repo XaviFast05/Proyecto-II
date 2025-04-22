@@ -11,6 +11,7 @@
 #include "Particle.h"
 #include "Santa.h"
 #include "Bullet.h"
+#include "CurrencyOrb.h"
 
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
 {
@@ -104,6 +105,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::SHOT:
 		entity = new Bullet();
 		break;
+	case EntityType::CURRENCY_ORB:
+		entity = new CurrencyOrb();
+		break;
 	default:
 		break;
 	}
@@ -144,6 +148,9 @@ std::list<Entity*> EntityManager::CreatePooledEntities(EntityType type, int num)
 			break;
 		case EntityType::SHOT:
 			entity = new Bullet();
+			break;
+		case EntityType::CURRENCY_ORB:
+			entity = new CurrencyOrb();
 			break;
 		default:
 			break;
@@ -187,6 +194,9 @@ Entity* EntityManager::CreatePooledEntities(EntityType type)
 		break;
 	case EntityType::SHOT:
 		entity = new Bullet();
+		break;
+	case EntityType::CURRENCY_ORB:
+		entity = new CurrencyOrb();
 		break;
 	default:
 		break;

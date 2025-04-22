@@ -28,6 +28,7 @@
 #include "DeathMenu.h"
 #include "WinMenu.h"
 #include "PickaxeManager.h"
+#include "CurrencyManager.h"
 
 #include "Intro.h"
 
@@ -291,7 +292,7 @@ bool Scene::Update(float dt)
 		}
 		else if (player->position.getY() < POS_TO_STOP_MOVING_CAMY) Engine::GetInstance().render.get()->camera.y = (POS_TO_STOP_MOVING_CAMY + CAM_EXTRA_DISPLACEMENT_X) * -Engine::GetInstance().window.get()->scale;
 		else Engine::GetInstance().render.get()->camera.y = (player->position.getY() + CAM_EXTRA_DISPLACEMENT_Y) * -Engine::GetInstance().window.get()->scale;*/
-		Engine::GetInstance().render.get()->camera.y = (player->position.getY() + CAM_EXTRA_DISPLACEMENT_Y) * -Engine::GetInstance().window.get()->scale;
+		Engine::GetInstance().render.get()->camera.y = (player->pbody->GetPhysBodyWorldPosition().getY() +CAM_EXTRA_DISPLACEMENT_Y) * -Engine::GetInstance().window.get()->scale;
 
 		ChangeDirectionCameraX();
 	}
@@ -328,6 +329,9 @@ bool Scene::Update(float dt)
 	
 	livesText = "hits left: " + std::to_string((int)player->hits);
 	Engine::GetInstance().render.get()->DrawText(livesText.c_str(), 800, 90, 200, 18);
+
+	currencyText = "currency: " + std::to_string((int)player->currencyManager->GetCurrency());
+	Engine::GetInstance().render.get()->DrawText(currencyText.c_str(), 800, 110, 200, 18);
 
 	return true;
 }
@@ -718,7 +722,7 @@ void Scene::ChangeDirectionCameraX()
 	if (cameraDirectionChangeActivation) {
 		int currentDisplace = transitionDisplace;
 
-		Engine::GetInstance().render.get()->camera.x = (player->position.getX() - (Engine::GetInstance().window.get()->width / 2) + currentDisplace) * -Engine::GetInstance().window.get()->scale;
+		Engine::GetInstance().render.get()->camera.x = (player->pbody->GetPhysBodyWorldPosition().getX() - (Engine::GetInstance().window.get()->width / 2) + currentDisplace) * -Engine::GetInstance().window.get()->scale;
 
 		if (player->dir == RIGHT) {
 			if (transitionDisplace < CAM_EXTRA_DISPLACEMENT_X) transitionDisplace += 2; 
@@ -731,7 +735,7 @@ void Scene::ChangeDirectionCameraX()
 	}
 	else {
 		int finalDisplace = (player->dir == RIGHT) ? CAM_EXTRA_DISPLACEMENT_X : 0;
-		Engine::GetInstance().render.get()->camera.x = (player->position.getX() - (Engine::GetInstance().window.get()->width / 2) + finalDisplace) * -Engine::GetInstance().window.get()->scale;
+		Engine::GetInstance().render.get()->camera.x = (player->pbody->GetPhysBodyWorldPosition().getX() - (Engine::GetInstance().window.get()->width / 2) + finalDisplace) * -Engine::GetInstance().window.get()->scale;
 	}
 
 }

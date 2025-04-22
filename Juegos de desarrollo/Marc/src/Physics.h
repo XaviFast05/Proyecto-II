@@ -41,6 +41,7 @@ enum class ColliderType {
 	LEVEL_CHANGER,
 	BOSS_STARTER,
 	CLIMBINGWALL,
+	ORB,
 	UNKNOWN
 };
 
@@ -60,6 +61,9 @@ public:
 	int RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& normal_y) const;
 	Vector2D GetPhysBodyWorldPosition();
 	void SetPhysPositionWithWorld(int x, int y);
+	void SetPhysPosition(Vector2D position) {
+		body->SetTransform({ position.getX(), position.getY() }, body->GetAngle());
+	};
 
 public:
 	int width = 0;

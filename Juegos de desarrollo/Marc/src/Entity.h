@@ -14,6 +14,7 @@ enum class EntityType
 	BAT_ENEMY,
 	GROUND_ENEMY,
 	BOSS,
+	CURRENCY_ORB,
 	UNKNOWN
 };
 

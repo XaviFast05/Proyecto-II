@@ -407,7 +407,7 @@
 	</audio>
 	<playerPrefs>
 		<fullscreen toggle="0" />
-		<musicVolume value="63" />
+		<musicVolume value="69" />
 		<sfxVolume value="117" />
 	</playerPrefs>
 </config>

@@ -16,6 +16,7 @@
 #include "FadeToBlack.h"
 #include "Bullet.h"
 #include "PickaxeManager.h"
+#include "CurrencyManager.h"
 
  
 
@@ -77,7 +78,6 @@ bool Player::Start() {
 	dir = (Direction)parameters.child("propierties").attribute("direction").as_int();
 
 
-
 	for (pugi::xml_node stateNode : parameters.child("statesFlow").children())
 	{
 		std::vector<bool> flow;
@@ -129,6 +129,8 @@ bool Player::Start() {
 
 	pickaxeManager = new PickaxeManager();
 	pickaxeManager->Start();
+	currencyManager = new CurrencyManager();
+	currencyManager->Start();
 
 	return true;
 }
@@ -426,6 +428,10 @@ bool Player::Update(float dt)
 	}
 
 	currentAnim->Update();
+
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {
+		currencyManager->EnableOrb(pbody->body->GetPosition().x + 10, pbody->body->GetPosition().y );
+	}
 	return true;
 }
 
@@ -508,9 +514,15 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		if (!Engine::GetInstance().scene.get()->GetStartBossFight())Engine::GetInstance().scene.get()->SetStartBossFight(true);
 		break;
 	
+	case ColliderType::ORB:
+		currencyManager->SumCurrency(1);
+		break;
+
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
 		break;
+
+
 	
 	default:
 		break;
