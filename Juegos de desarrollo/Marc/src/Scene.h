@@ -95,6 +95,10 @@ public:
 	void ChangeDirectionCameraX();
 	
 	void SetLevel(Levels level);
+
+	void DrawPlayerHitsUI();
+
+	void DrawPickaxesUI();
 	
 	std::string GetCurrentLevelString();
 	
@@ -119,8 +123,7 @@ public:
 	GuiControlCheckBox* fullScreenCheckBox;
 	SDL_Texture* pausePanel;
 	
-	SDL_Texture* heartsTexture, * caramelsTexture, * sandclockTexture;
-	Animation sand;
+	SDL_Texture* heartsTexture, * piquetaNormal, * piquetaGastada;
 	
 	Vector2D pausePos;
 
