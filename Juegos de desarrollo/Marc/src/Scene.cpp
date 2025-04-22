@@ -253,9 +253,8 @@ bool Scene::Update(float dt)
 	if (changeLevel || level == LVL1 && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 	{
 		changeLevel = false;
-		SaveState();
-		level = LVL2;
-		Engine::GetInstance().fade.get()->Fade(this, this);
+		level = LVL1;
+		Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)Engine::GetInstance().mainMenu.get(), 30);
 		return true;
 	}
 
@@ -291,7 +290,7 @@ bool Scene::Update(float dt)
 		}
 		else if (player->position.getY() < POS_TO_STOP_MOVING_CAMY) Engine::GetInstance().render.get()->camera.y = (POS_TO_STOP_MOVING_CAMY + CAM_EXTRA_DISPLACEMENT_X) * -Engine::GetInstance().window.get()->scale;
 		else Engine::GetInstance().render.get()->camera.y = (player->position.getY() + CAM_EXTRA_DISPLACEMENT_Y) * -Engine::GetInstance().window.get()->scale;*/
-		Engine::GetInstance().render.get()->camera.y = (player->position.getY() + CAM_EXTRA_DISPLACEMENT_Y) * -Engine::GetInstance().window.get()->scale;
+		Engine::GetInstance().render.get()->camera.y = (METERS_TO_PIXELS(player->pbody->body->GetPosition().y) + CAM_EXTRA_DISPLACEMENT_Y) * -Engine::GetInstance().window.get()->scale;
 
 		ChangeDirectionCameraX();
 	}
@@ -718,7 +717,7 @@ void Scene::ChangeDirectionCameraX()
 	if (cameraDirectionChangeActivation) {
 		int currentDisplace = transitionDisplace;
 
-		Engine::GetInstance().render.get()->camera.x = (player->position.getX() - (Engine::GetInstance().window.get()->width / 2) + currentDisplace) * -Engine::GetInstance().window.get()->scale;
+		Engine::GetInstance().render.get()->camera.x = (METERS_TO_PIXELS(player->pbody->body->GetPosition().x) - (Engine::GetInstance().window.get()->width / 2) + currentDisplace) * -Engine::GetInstance().window.get()->scale;
 
 		if (player->dir == RIGHT) {
 			if (transitionDisplace < CAM_EXTRA_DISPLACEMENT_X) transitionDisplace += 2; 
@@ -731,7 +730,7 @@ void Scene::ChangeDirectionCameraX()
 	}
 	else {
 		int finalDisplace = (player->dir == RIGHT) ? CAM_EXTRA_DISPLACEMENT_X : 0;
-		Engine::GetInstance().render.get()->camera.x = (player->position.getX() - (Engine::GetInstance().window.get()->width / 2) + finalDisplace) * -Engine::GetInstance().window.get()->scale;
+		Engine::GetInstance().render.get()->camera.x = (METERS_TO_PIXELS(player->pbody->body->GetPosition().x) - (Engine::GetInstance().window.get()->width / 2) + finalDisplace) * -Engine::GetInstance().window.get()->scale;
 	}
 
 }
