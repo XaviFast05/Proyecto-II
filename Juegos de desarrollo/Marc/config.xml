@@ -328,7 +328,7 @@
 				</pumpkins>
 			</items>
 		</entities>
-		<savedData saved="true" level="2" time="0" startBossFight="false" bossKilled="false">
+		<savedData saved="true" level="1" time="0" startBossFight="false" bossKilled="false">
 			<lvl1>
 				<player x="150" y="3400" lives="3" transformable="false" transformed="false" candies="0" />
 				<enemy0 dead="false" x="2016" y="3423" />
@@ -406,8 +406,8 @@
 		</fx>
 	</audio>
 	<playerPrefs>
-		<fullscreen toggle="1" />
-		<musicVolume value="43" />
+		<fullscreen toggle="0" />
+		<musicVolume value="47" />
 		<sfxVolume value="128" />
 	</playerPrefs>
 </config>
