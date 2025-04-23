@@ -93,7 +93,6 @@ public:
 	int drawOffsetX;
 	int drawOffsetY;
 
-	// L08 TODO 5: Add physics to the player - declare a Physics body
 	PhysBody* pbody;
 	float jumpForce; // The force to apply when jumping
 	float pushForce; // The force to apply when getting pushed;
