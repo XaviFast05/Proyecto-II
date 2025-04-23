@@ -14,6 +14,7 @@
 #include "Physics.h"
 #include "BatEnemy.h"
 #include "GroundEnemy.h"
+#include "SoulRock.h"
 #include <string>
 #include "Particle.h"
 #include "tracy/Tracy.hpp"
@@ -93,6 +94,12 @@ bool Scene::Start()
 		LoadItem(checkPoint, checkPointNode);
 	}
 
+	for (pugi::xml_node soulRockNode : configParameters.child("entities").child("items").child("soulRock").child("instances").child(GetCurrentLevelString().c_str()).children())
+	{
+		SoulRock* soulRock = (SoulRock*)Engine::GetInstance().entityManager->CreateEntity((EntityType)soulRockNode.attribute("entityType").as_int());;
+		LoadSoulRock(soulRock, soulRockNode);
+	}
+
 	std::list<Entity*> entities = Engine::GetInstance().entityManager.get()->entities;
 	for (const auto& entity : entities) {
 		entity->Enable();
@@ -167,6 +174,14 @@ void Scene::LoadEnemy(Enemy* enemy, pugi::xml_node instanceNode)
 	enemies.push_back(enemy);
 }
 
+void Scene::LoadSoulRock(SoulRock* soulRock, pugi::xml_node instanceNode) {
+
+	soulRock->SetParameters(configParameters.child("entities").child("items").child("soulRock"));
+	soulRock->SetInstanceParameters(instanceNode);
+	soulRocks.push_back(soulRock);
+
+}
+
 void Scene::LoadItem(CheckPoint* checkPoint, pugi::xml_node instanceNode) {
 
 	checkPoint->SetPlayer(player);
@@ -174,7 +189,6 @@ void Scene::LoadItem(CheckPoint* checkPoint, pugi::xml_node instanceNode) {
 	checkPoint->SetInstanceParameters(instanceNode);
 	checkPoints.push_back(checkPoint);
 }
-
 
 
 int Scene::GetLevel()
@@ -408,6 +422,7 @@ bool Scene::CleanUp()
 
 	enemies.clear();
 	checkPoints.clear();
+	soulRocks.clear();
 
 	
 	
@@ -485,6 +500,22 @@ void Scene::SaveState()
 		checkPoints[i]->SaveData(parent);
 	}
 
+	////SoulRocks
+	//for (int i = 0; i < checkPoints.size(); i++)
+	//{
+	//	std::string nodeChar = "soulRock" + std::to_string(i);
+	//	pugi::xml_node parent = savedDataNode.child(nodeChar.c_str());
+
+	//	if (!parent) {
+	//		parent = savedDataNode.append_child(nodeChar.c_str());
+	//		parent.append_attribute("alight");
+	//		parent.append_attribute("x");
+	//		parent.append_attribute("y");
+	//	}
+
+	//	checkPoints[i]->SaveData(parent);
+	//}
+
 	//Saves the modifications to the XML 
 	saveFile.save_file("savedData.xml");
 }
@@ -527,6 +558,16 @@ void Scene::LoadState() {
 			checkPoints[i]->LoadData(parent);
 		}
 	}
+
+	//for (int i = 0; i < soulRocks.size(); i++)
+	//{
+	//	std::string nodeChar = "soulRock" + std::to_string(i);
+	//	pugi::xml_node parent = savedDataNode.child(nodeChar.c_str());
+	//	if (parent)
+	//	{
+	//		soulRocks[i]->LoadData(parent);
+	//	}
+	//}
 
 	loadFile.save_file("savedData.xml");
 }
