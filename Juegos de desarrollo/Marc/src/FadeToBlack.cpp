@@ -35,6 +35,19 @@ bool FadeToBlack::Start()
 
 bool FadeToBlack::PreUpdate()
 {
+	
+	return true;
+}
+
+bool FadeToBlack::Update(float dt)
+{
+	
+
+	return true;
+}
+
+bool FadeToBlack::PostUpdate()
+{
 	if (currentStep == Fade_Step::NONE) return true;
 
 	if (currentStep == Fade_Step::TO_BLACK)
@@ -47,11 +60,7 @@ bool FadeToBlack::PreUpdate()
 		--frameCount;
 		frameCount = frameCount < 0 ? 0 : frameCount;
 	}
-	return true;
-}
 
-bool FadeToBlack::Update(float dt)
-{
 	// Exit this function if we are not performing a fade
 	if (currentStep == Fade_Step::NONE) return true;
 
@@ -60,11 +69,6 @@ bool FadeToBlack::Update(float dt)
 	SDL_SetRenderDrawColor(Engine::GetInstance().render.get()->renderer, 0, 0, 0, (Uint8)(fadeRatio * 255.0f));
 	SDL_RenderFillRect(Engine::GetInstance().render.get()->renderer, &screenRect);
 
-	return true;
-}
-
-bool FadeToBlack::PostUpdate()
-{
 	if (currentStep == Fade_Step::TO_BLACK)
 	{
 		if (frameCount == maxFadeFrames)
