@@ -76,13 +76,15 @@
 				</startPositions>
 				<propierties gJumpForce="10.0f" pJumpForce="18.0f" pushForce="7.0f" moveSpeed="0.7f" friction="2.0f" gravity="9.0f" attack1Time="0.8f" attack2Time="1.0f" hurtTime="1.0f" respawnTime=" 2.0f" playerState="0" direction="1" shootCooldown="5" />
 				<statesFlow>
-					<idle idle="false" run="true" jump="true" fall="true" punch="true" throw="true" mele="true" />
-					<run idle="true" run="false" jump="true" fall="true" punch="true" throw="true" mele="true" />
-					<jump idle="true" run="false" jump="false" fall="true" punch="true" throw="true" mele="true" />
-					<fall idle="true" run="false" jump="false" fall="false" punch="true" throw="true" mele="true" />
-					<punch idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" />
-					<throw idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" />
-					<melee idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" />
+					<idle idle="false" run="true" jump="true" fall="true" punch="true" throw="true" mele="true" hurt="true" dead="true" />
+					<run idle="true" run="false" jump="true" fall="true" punch="true" throw="true" mele="true" hurt="true" dead="true" />
+					<jump idle="true" run="false" jump="false" fall="true" punch="true" throw="true" mele="true" hurt="true" dead="true" />
+					<fall idle="true" run="false" jump="false" fall="false" punch="true" throw="true" mele="true" hurt="true" dead="true" />
+					<punch idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" hurt="true" dead="true" />
+					<throw idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" hurt="true" dead="true" />
+					<melee idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" hurt="true" dead="true" />
+					<hurt idle="false" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" hurt="false" dead="false" />
+					<dead idle="false" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" hurt="false" dead="false" />
 				</statesFlow>
 				<animations>
 					<idle loop="true" speed="0.05f">
@@ -158,7 +160,7 @@
 			</shot>
 			<enemies>
 				<skeleton x="100" y="420" w="48" h="48" texture="Assets/Textures/Enemies/Undead/SwordsMan-reorganized_spritesheet.png">
-					<properties speed="1" chaseArea="100" attackArea="20" jumpForce="0.3f" attackTime="1.0f" deathTime="1.5f" lives="3" pushForce="1" pushFriction="5" lootAmount="1" canPush="true" />
+					<properties speed="1" chaseArea="100" attackArea="20" jumpForce="0.3f" attackTime="1.0f" deathTime="1.5f" lives="3" pushForce="1" pushFriction="5" lootAmount="5" canPush="true" />
 					<animations>
 						<idle loop="true" speed="0.2f">
 							<frame x="0" y="0" w="48" h="48" />
@@ -184,7 +186,7 @@
 					</animations>
 				</skeleton>
 				<bat x="250" y="350" w="32" h="32" texture="Assets/Textures/Enemies/Bat/Vampire/BatVampire_Sheet.png">
-					<properties speed="1" chaseArea="100" deathTime="1.0f" lives="3" pushForce="1" pushFriction="5" lootAmount="1" canPush="true" />
+					<properties speed="1" chaseArea="100" deathTime="1.0f" lives="3" pushForce="1" pushFriction="5" lootAmount="5" canPush="true" />
 					<animations>
 						<idle loop="true" speed="0.2f">
 							<frame x="0" y="0" w="32" h="32" />
