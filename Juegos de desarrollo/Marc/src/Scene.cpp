@@ -311,8 +311,8 @@ bool Scene::Update(float dt)
 	//livesText = "hits left: " + std::to_string((int)player->hits);
 	//Engine::GetInstance().render.get()->DrawText(livesText.c_str(), 800, 90, 200, 18);
 
-	currencyText = "currency: " + std::to_string((int)player->currencyManager->GetCurrency());
-	Engine::GetInstance().render.get()->DrawText(currencyText.c_str(), 800, 110, 200, 18);
+	//currencyText = "currency: " + std::to_string((int)player->currencyManager->GetCurrency());
+	//Engine::GetInstance().render.get()->DrawText(currencyText.c_str(), 800, 110, 200, 18);
 
 	return true;
 }
@@ -351,6 +351,8 @@ bool Scene::PostUpdate()
 		DrawPlayerHitsUI();
 
 		DrawPickaxesUI();
+
+		DrawCurrencyUI();
 
 		if (paused && !Engine::GetInstance().settings.get()->settingsOpen) {
 			
@@ -714,4 +716,33 @@ void Scene::DrawPickaxesUI()
 			);
 		}
 	}
+}
+
+void Scene::DrawCurrencyUI()
+{
+	int scale = Engine::GetInstance().window.get()->GetScale(); // Escala de la ventana
+
+	// Tamaño de la sección de la textura del soul orb
+	SDL_Rect section;
+	section.x = 0;  // Posición X dentro de la textura
+	section.y = 128; // Posición Y dentro de la textura
+	section.w = 64; // Ancho de la sección
+	section.h = 96; // Alto de la sección
+
+	// Dibujar la textura del soul orb
+	Engine::GetInstance().render.get()->DrawTexture(
+		Engine::GetInstance().textures.get()->Load("Assets/Textures/Items/soulOrb.png"),
+		-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 1120, // Posición X
+		-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale - 20,    // Posición Y
+		&section
+	);
+
+	
+
+	// Texto que muestra el número de monedas
+	std::string currencyText = std::to_string(player->currencyManager->GetCurrency());
+
+	// Dibujar el texto del número de monedas
+	Engine::GetInstance().render.get()->DrawText(
+		currencyText.c_str(), 1200, 32, 48, 32);
 }

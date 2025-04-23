@@ -99,6 +99,8 @@ public:
 	void DrawPlayerHitsUI();
 
 	void DrawPickaxesUI();
+
+	void DrawCurrencyUI();
 	
 	std::string GetCurrentLevelString();
 	

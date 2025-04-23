@@ -31,6 +31,7 @@ public:
 
 public:
     SDL_Texture* texture;
+    SDL_Rect currentFrame;
 
 private:
 
@@ -39,6 +40,11 @@ private:
     pugi::xml_node parameters;
     int texW, texH;
     int orbSize;
+
+	//ANIMATIONS
+    Animation orbSmall;
+    Animation orbMedium;
+    Animation orbBig;
 
     //PROPERTIES
     Vector2D direction;

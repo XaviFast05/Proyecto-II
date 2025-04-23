@@ -46,7 +46,7 @@
 		<map>
 			<paths>
 				<lvl1 path="Assets/Maps/" name="Tutorial.tmx" />
-				<lvl2 path="Assets/Maps/" name="Tutorial.tmx" />
+				<lvl2 path="Assets/Maps/" name="Playground.tmx" />
 			</paths>
 			<parallax>
 				<layer name="sky" path="Assets/Textures/Parallax/Fondo_Front.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="5" repeatNum="15" slowY="1" />
@@ -73,34 +73,34 @@
 				</statesFlow>
 				<animations>
 					<idle loop="true" speed="0.05f">
-						<frame x="0" y="0" w="64" h="64" />
-						<frame x="64" y="0" w="64" h="64" />
-						<frame x="128" y="0" w="64" h="64" />
+						<frame x="0" y="0" w="64" h="64" offsetX="0" offsetY="1"/>
+						<frame x="64" y="0" w="64" h="64" offsetX="0" offsetY="1"/>
+						<frame x="128" y="0" w="64" h="64" offsetX="0" offsetY="1"/>
 					</idle>
 					<walk loop="true" speed="0.5f">
-						<frame x="0" y="192" w="64" h="64" />
-						<frame x="64" y="192" w="64" h="64" />
-						<frame x="128" y="192" w="64" h="64" />
-						<frame x="192" y="192" w="64" h="64" />
-						<frame x="256" y="192" w="64" h="64" />
-						<frame x="320" y="192" w="64" h="64" />
-						<frame x="384" y="192" w="64" h="64" />
-						<frame x="448 " y="192" w="64" h="64" />
+						<frame x="0" y="192" w="64" h="64" offsetX="0" offsetY="1"/>
+						<frame x="64" y="192" w="64" h="64" offsetX="0" offsetY="1"/>
+						<frame x="128" y="192" w="64" h="64" offsetX="0" offsetY="1"/>
+						<frame x="192" y="192" w="64" h="64" offsetX="0" offsetY="1"/>
+						<frame x="256" y="192" w="64" h="64" offsetX="0" offsetY="1"/>
+						<frame x="320" y="192" w="64" h="64" offsetX="0" offsetY="1"/>
+						<frame x="384" y="192" w="64" h="64" offsetX="0" offsetY="1"/>
+						<frame x="448 " y="192" w="64" h="64" offsetX="0" offsetY="1"/>
 					</walk>
 					<jump loop="false" speed="0.2f">
-						<frame x="64" y="64" w="64" h="64" />
-						<frame x="128" y="64" w="64" h="64" />
-						<frame x="192" y="64" w="64" h="64" />
-						<frame x="256" y="64" w="64" h="64" />
-						<frame x="320" y="64" w="64" h="64" />
+						<frame x="64" y="64" w="64" h="64" offsetX="0" offsetY="1"/>
+						<frame x="128" y="64" w="64" h="64" offsetX="0" offsetY="1"/>
+						<frame x="192" y="64" w="64" h="64" offsetX="0" offsetY="1"/>
+						<frame x="256" y="64" w="64" h="64" offsetX="0" offsetY="1"/>
+						<frame x="320" y="64" w="64" h="64" offsetX="0" offsetY="1"/>
 					</jump>
 					<fall loop="false" speed=" 0.2f">
-						<frame x="320" y="64" w="64" h="64" />
-						<frame x="384" y="64" w="64" h="64" />
-						<frame x="448" y="64" w="64" h="64" />
+						<frame x="320" y="64" w="64" h="64" offsetX="0" offsetY="1"/>
+						<frame x="384" y="64" w="64" h="64" offsetX="0" offsetY="1"/>
+						<frame x="448" y="64" w="64" h="64" offsetX="0" offsetY="1"/>
 					</fall>
 					<hurt loop="false" speed="0.15f">
-						<frame x="0" y="0" w="64" h="64" />
+						<frame x="0" y="0" w="64" h="64" offsetX="0" offsetY="1"/>
 					</hurt>
 					<death loop="false" speed="0.1f">
 						<frame x="0" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
@@ -134,31 +134,31 @@
 						<frame x="1792" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
 					</death>
 					<chop loop="false" speed="0.2f">
-						<frame x="64" y="336" w="64" h="80" offsetX="0" offsetY="-16" />
-						<frame x="128" y="336" w="64" h="80" offsetX="0" offsetY="-16" />
-						<frame x="192" y="336" w="64" h="80" offsetX="0" offsetY="-16" />
-						<frame x="256" y="336" w="64" h="80" offsetX="0" offsetY="-16" />
+						<frame x="64" y="336" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="128" y="336" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="192" y="336" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="256" y="336" w="64" h="80" offsetX="0" offsetY="-15" />
 					</chop>
 					<punch loop="false" speed="0.2f">
-						<frame x="64" y="128" w="64" h="64" />
-						<frame x="128" y="128" w="64" h="64" />
-						<frame x="192" y="128" w="64" h="64" />
-						<frame x="256" y="128" w="64" h="64" />
-						<frame x="320" y="128" w="64" h="64" />
-						<frame x="384" y="128" w="64" h="64" />
+						<frame x="64" y="128" w="64" h="64" offsetX="0" offsetY="1"/>
+						<frame x="128" y="128" w="64" h="64" offsetX="0" offsetY="1"/>
+						<frame x="192" y="128" w="64" h="64" offsetX="0" offsetY="1"/>
+						<frame x="256" y="128" w="64" h="64" offsetX="0" offsetY="1"/>
+						<frame x="320" y="128" w="64" h="64" offsetX="0" offsetY="1"/>
+						<frame x="384" y="128" w="64" h="64" offsetX="0" offsetY="1"/>
 					</punch>
 					<throwPix loop="false" speed="0.4f">
-						<frame x="64" y="256" w="64" h="80" offsetX="0" offsetY="-16" />
-						<frame x="128" y="256" w="64" h="80" offsetX="0" offsetY="-16" />
-						<frame x="192" y="256" w="64" h="80" offsetX="0" offsetY="-16" />
-						<frame x="256" y="256" w="64" h="80" offsetX="0" offsetY="-16" />
+						<frame x="64" y="256" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="128" y="256" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="192" y="256" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="256" y="256" w="64" h="80" offsetX="0" offsetY="-15" />
 					</throwPix>
 					<throwPixUp loop="false" speed="0.5f">
-						<frame x="448" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
-						<frame x="512" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
-						<frame x="576" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
-						<frame x="640" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
-						<frame x="704" y="416" w="64" h="96" offsetX="0" offsetY="-32" />
+						<frame x="448" y="416" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="512" y="416" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="576" y="416" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="640" y="416" w="64" h="96" offsetX="0" offsetY="-31" />
+						<frame x="704" y="416" w="64" h="96" offsetX="0" offsetY="-31" />
 					</throwPixUp>
 				</animations>
 			</player>
@@ -323,14 +323,85 @@
 					</instances>
 					<animations>
 						<unlit>
-							<frame x="128" y="0" w="128" h="128" />
-						</unlit>
-						<lit>
 							<frame x="0" y="0" w="128" h="128" />
+						</unlit>
+						<lit loop="true" speed="0.3f">
+							<frame x="128" y="0" w="128" h="128" />
+							<frame x="256" y="0" w="128" h="128" />
 						</lit>
 					</animations>
 				</checkPoints>
 			</items>
+			<currencyOrb x="0" y="0" w="64" h="64" texture="Assets/Textures/Items/soulOrb.png">
+				<animations>
+					<orbSmall loop="true" speed="0.2f">
+						<frame x="0" y="0" w="64" h="64" />
+						<frame x="64" y="0" w="64" h="64" />
+						<frame x="128" y="0" w="64" h="64" />
+						<frame x="192" y="0" w="64" h="64" />
+						<frame x="256" y="0" w="64" h="64" />
+						<frame x="320" y="0" w="64" h="64" />
+						<frame x="384" y="0" w="64" h="64" />
+						<frame x="448" y="0" w="64" h="64" />
+						<frame x="512" y="0" w="64" h="64" />
+						<frame x="576" y="0" w="64" h="64" />
+						<frame x="640" y="0" w="64" h="64" />
+						<frame x="704" y="0" w="64" h="64" />
+						<frame x="768" y="0" w="64" h="64" />
+						<frame x="832" y="0" w="64" h="64" />
+						<frame x="896" y="0" w="64" h="64" />
+						<frame x="960" y="0" w="64" h="64" />
+						<frame x="1024" y="0" w="64" h="64" />
+						<frame x="1088" y="0" w="64" h="64" />
+						<frame x="1152" y="0" w="64" h="64" />
+						<frame x="1216" y="0" w="64" h="64" />
+					</orbSmall>
+					<orbMedium loop="true" speed="0.2f">
+						<frame x="0" y="64" w="64" h="64" />
+						<frame x="64" y="64" w="64" h="64" />
+						<frame x="128" y="64" w="64" h="64" />
+						<frame x="192" y="64" w="64" h="64" />
+						<frame x="256" y="64" w="64" h="64" />
+						<frame x="320" y="64" w="64" h="64" />
+						<frame x="384" y="64" w="64" h="64" />
+						<frame x="448" y="64" w="64" h="64" />
+						<frame x="512" y="64" w="64" h="64" />
+						<frame x="576" y="64" w="64" h="64" />
+						<frame x="640" y="64" w="64" h="64" />
+						<frame x="704" y="64" w="64" h="64" />
+						<frame x="768" y="64" w="64" h="64" />
+						<frame x="832" y="64" w="64" h="64" />
+						<frame x="896" y="64" w="64" h="64" />
+						<frame x="960" y="64" w="64" h="64" />
+						<frame x="1024" y="64" w="64" h="64" />
+						<frame x="1088" y="64" w="64" h="64" />
+						<frame x="1152" y="64" w="64" h="64" />
+						<frame x="1216" y="64" w="64" h="64" />
+					</orbMedium>
+					<orbBig loop="true" speed="0.2f">
+						<frame x="0" y="128" w="64" h="96" />
+						<frame x="64" y="128" w="64" h="96" />
+						<frame x="128" y="128" w="64" h="96" />
+						<frame x="192" y="128" w="64" h="96" />
+						<frame x="256" y="128" w="64" h="96" />
+						<frame x="320" y="128" w="64" h="96" />
+						<frame x="384" y="128" w="64" h="96" />
+						<frame x="448" y="128" w="64" h="96" />
+						<frame x="512" y="128" w="64" h="96" />
+						<frame x="576" y="128" w="64" h="96" />
+						<frame x="640" y="128" w="64" h="96" />
+						<frame x="704" y="128" w="64" h="96" />
+						<frame x="768" y="128" w="64" h="96" />
+						<frame x="832" y="128" w="64" h="96" />
+						<frame x="896" y="128" w="64" h="96" />
+						<frame x="960" y="128" w="64" h="96" />
+						<frame x="1024" y="128" w="64" h="96" />
+						<frame x="1088" y="128" w="64" h="96" />
+						<frame x="1152" y="128" w="64" h="96" />
+						<frame x="1216" y="128" w="64" h="96" />
+					</orbBig>
+				</animations>
+			</currencyOrb>
 		</entities>
 		<pauseMenu>
 			<pausePanel x="0" y="0" w="1280" h="720" texture="Assets/Textures/Menus/Pause/pause-panel.png" />
