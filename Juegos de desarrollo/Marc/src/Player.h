@@ -95,6 +95,12 @@ public:
 
 	// L08 TODO 5: Add physics to the player - declare a Physics body
 	PhysBody* pbody;
+
+	PhysBody* leftSensor;
+	PhysBody* rightSensor;
+	bool leftBlocked = false;
+	bool rightBlocked = false;
+
 	float jumpForce; // The force to apply when jumping
 	float pushForce; // The force to apply when getting pushed;
 	float moveSpeed;
