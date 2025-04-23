@@ -20,6 +20,8 @@ public:
 
 	Entity* CreateOrb();
 
+	void CreateOrbs(int amount);
+
 	void EnableOrb(float x, float y, int size);
 
 private:

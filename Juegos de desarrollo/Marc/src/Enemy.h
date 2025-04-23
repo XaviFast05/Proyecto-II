@@ -115,11 +115,11 @@ public:
 	bool dead;
 	bool playingSound;
 
-	float pushForce = 1; //rango óptimo alrededor de 1
-	float pushFriction = 5; //rango óptimo alrededor de 5
-	int lootAmount = 5; //entre 0 y 5
+	float pushForce; //rango óptimo alrededor de 1
+	float pushFriction; //rango óptimo alrededor de 5
+	int lootAmount; //entre 0 y 5
 
 	CurrencyManager* currencyManager;
-	bool canPush = true;
+	bool canPush;
 	bool droppedLoot = false;
 };
