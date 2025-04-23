@@ -210,8 +210,8 @@ bool Player::Update(float dt)
 			return true;
 		}
 
-		printf("POSITION X: %f\n", position.getX());
-		printf("POSITION Y: %f\n", position.getY());
+		//printf("POSITION X: %f\n", position.getX());
+		//printf("POSITION Y: %f\n", position.getY());
 		// POSITION X: 4235.000000
 		// POSITION Y : 832.000000
 		// 
