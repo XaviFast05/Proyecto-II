@@ -35,6 +35,7 @@ enum class ColliderType {
 	MAPLIMITS,
 	LADDER,
 	ENEMY,
+	DEADENEMY,
 	CHECKPOINT,
 	LEVELEND,
 	CANDY,

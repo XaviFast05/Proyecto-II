@@ -81,9 +81,13 @@ bool GroundEnemy::Start() {
 	attackArea = parameters.child("properties").attribute("attackArea").as_float();
 	jumpForce = parameters.child("properties").attribute("jumpForce").as_float();
 	attackTime = parameters.child("properties").attribute("attackTime").as_float();
-	deathTime = 0;
-	dir = LEFT;
+	deathTime = parameters.child("properties").attribute("deathTime").as_float();
 
+	pushForce = parameters.child("properties").attribute("pushForce").as_float();
+	pushFriction = parameters.child("properties").attribute("pushFriction").as_float();
+	lootAmount = parameters.child("properties").attribute("lootAmount").as_float();
+	droppedLoot = parameters.child("properties").attribute("droppedLoot").as_bool();
+	dir = LEFT;
 
 	//LOAD SFX
 	pugi::xml_document audioFile;
@@ -258,6 +262,7 @@ bool GroundEnemy::Update(float dt) {
 
 		if (state == DEAD && !droppedLoot) {
 			DropLoot();
+			pbody->ctype = ColliderType::DEADENEMY;
 			droppedLoot = true;
 		}
 

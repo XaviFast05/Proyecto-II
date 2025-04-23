@@ -158,7 +158,7 @@
 			</shot>
 			<enemies>
 				<skeleton x="100" y="420" w="48" h="48" texture="Assets/Textures/Enemies/Undead/SwordsMan-reorganized_spritesheet.png">
-					<properties speed="1" chaseArea="100" attackArea="20" jumpForce="0.3f" attackTime="1.0f" deathTime="1.5f" lives="3" />
+					<properties speed="1" chaseArea="100" attackArea="20" jumpForce="0.3f" attackTime="1.0f" deathTime="1.5f" lives="3" pushForce="1" pushFriction="5" lootAmount="1" canPush="true" />
 					<animations>
 						<idle loop="true" speed="0.2f">
 							<frame x="0" y="0" w="48" h="48" />
@@ -184,7 +184,7 @@
 					</animations>
 				</skeleton>
 				<bat x="250" y="350" w="32" h="32" texture="Assets/Textures/Enemies/Bat/Vampire/BatVampire_Sheet.png">
-					<properties speed="1" chaseArea="100" deathTime="1.0f" lives="3" />
+					<properties speed="1" chaseArea="100" deathTime="1.0f" lives="3" pushForce="1" pushFriction="5" lootAmount="1" canPush="true" />
 					<animations>
 						<idle loop="true" speed="0.2f">
 							<frame x="0" y="0" w="32" h="32" />

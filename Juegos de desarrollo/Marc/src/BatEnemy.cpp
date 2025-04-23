@@ -71,11 +71,15 @@ bool BatEnemy::Start() {
 	//INIT VARIABLES
 	speed = parameters.child("properties").attribute("speed").as_float();
 	chaseArea = parameters.child("properties").attribute("chaseArea").as_float();
-	deathTime = 0;
+	deathTime = parameters.child("properties").attribute("deathTime").as_float();
+
+	pushForce = parameters.child("properties").attribute("pushForce").as_float();
+	pushFriction = parameters.child("properties").attribute("pushFriction").as_float();
+	lootAmount = parameters.child("properties").attribute("lootAmount").as_float();
+	droppedLoot = parameters.child("properties").attribute("droppedLoot").as_bool();
 	state = PATROL;
 
 	playingSound = false;
-
 	return true;
 }
 
@@ -223,6 +227,7 @@ bool BatEnemy::Update(float dt) {
 
 		if (state == DEAD && !droppedLoot) {
 			DropLoot();
+			pbody->ctype = ColliderType::DEADENEMY;
 			droppedLoot = true;
 		}
 

@@ -13,13 +13,12 @@ CurrencyManager::CurrencyManager()
 bool CurrencyManager::Start()
 {
 	currencyNum = 0;
-	orbNum = 100;
+	orbNum = 20;
 
 	for (int i = 0; i < orbNum; i++)
 	{
 		CurrencyOrb* orb = (CurrencyOrb*)CreateOrb();
 	}
-
 	return true;
 }
 
@@ -54,4 +53,12 @@ void CurrencyManager::EnableOrb(float x, float y, int size)
 	orb->SetSize(size);
 	orb->Start(true);
 	orb->SetPosition({x,y});
+}
+
+void CurrencyManager::CreateOrbs(int amount)
+{
+	for (int i = 0; i < amount; i++)
+	{
+		CurrencyOrb* orb = (CurrencyOrb*)CreateOrb();
+	}
 }

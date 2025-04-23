@@ -238,9 +238,8 @@ void Enemy::DMGEnemy() {
 }
 
 void Enemy::DropLoot() {
-	int amount = 1;
 	std::vector <int> sizes;
-
+	int amount = 1;
 	switch (lootAmount) {
 	case 0:
 		amount = 0;
@@ -269,6 +268,7 @@ void Enemy::DropLoot() {
 		break;
 	}
 	if (amount > 0) {
+		currencyManager->CreateOrbs(amount);
 		for (int i = 0; i < amount; i++) {
 			int num = rand() % 9;
 			currencyManager->EnableOrb(pbody->body->GetPosition().x, pbody->body->GetPosition().y, sizes[num]);
