@@ -9,6 +9,7 @@
 #include "GroundEnemy.h"
 #include "Particle.h"
 #include "Santa.h"
+#include "SoulRock.h"
 #include "Bullet.h"
 #include "CurrencyOrb.h"
 
@@ -104,6 +105,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::CURRENCY_ORB:
 		entity = new CurrencyOrb();
 		break;
+	case EntityType::SOUL_ROCK:
+		entity = new SoulRock();
+		break;
 	default:
 		break;
 	}
@@ -144,6 +148,9 @@ std::list<Entity*> EntityManager::CreatePooledEntities(EntityType type, int num)
 			break;
 		case EntityType::CURRENCY_ORB:
 			entity = new CurrencyOrb();
+			break;
+		case EntityType::SOUL_ROCK:
+			entity = new SoulRock();
 			break;
 		default:
 			break;
@@ -187,6 +194,9 @@ Entity* EntityManager::CreatePooledEntities(EntityType type)
 		break;
 	case EntityType::CURRENCY_ORB:
 		entity = new CurrencyOrb();
+		break;
+	case EntityType::SOUL_ROCK:
+		entity = new SoulRock();
 		break;
 	default:
 		break;

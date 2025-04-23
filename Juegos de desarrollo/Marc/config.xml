@@ -333,6 +333,26 @@
 						</lit>
 					</animations>
 				</checkPoints>
+				<soulRock>
+					<properties w="64" h="64" texture="Assets/Textures/Objects/SoulRock.png" />
+					<instances>
+						<lvl1>
+							<instance entityType="8" x="4235" y="876" flipped ="true"/>
+							<instance entityType="8" x="8931" y="4524" flipped ="false"/>
+						</lvl1>
+					</instances>
+					<animations>
+						<idle loop="true" speed="0.1f">
+							<frame x="0" y="0" w="64" h="64" />
+						</idle>
+						<fractured loop="true" speed="0.1f">
+							<frame x="64" y="0" w="64" h="64" />
+						</fractured>
+						<broken loop="true" speed="0.1f">
+							<frame x="128" y="0" w="64" h="64" />
+						</broken>
+					</animations>
+				</soulRock>
 			</items>
 			<currencyOrb x="0" y="0" w="64" h="64" texture="Assets/Textures/Items/soulOrb.png">
 				<animations>
