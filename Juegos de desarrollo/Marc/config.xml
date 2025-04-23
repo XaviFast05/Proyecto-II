@@ -325,6 +325,7 @@
 					<instances>
 						<lvl1>
 							<instance entityType="2" x="3568" y="2432" />
+							<instance entityType="2" x="9792" y="3392" />
 						</lvl1>
 					</instances>
 					<animations>
