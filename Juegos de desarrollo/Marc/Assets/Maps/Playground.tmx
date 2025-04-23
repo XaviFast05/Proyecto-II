@@ -9698,7 +9698,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="266"/>
+   <tile gid="261"/>
    <tile gid="262"/>
    <tile gid="262"/>
    <tile gid="262"/>
@@ -9808,7 +9808,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="274"/>
+   <tile gid="269"/>
    <tile gid="270"/>
    <tile gid="281"/>
    <tile gid="280"/>
@@ -9918,7 +9918,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="274"/>
+   <tile gid="269"/>
    <tile gid="270"/>
    <tile gid="281"/>
    <tile gid="270"/>
@@ -10615,7 +10615,7 @@
   <object id="58" x="0" y="64" width="64" height="640"/>
   <object id="59" x="256" y="256" width="64" height="256"/>
  </objectgroup>
- <objectgroup id="2" name="Collisions" visible="0">
+ <objectgroup id="2" name="Collisions">
   <object id="20" x="64" y="1152" width="2368" height="64"/>
   <object id="21" x="320" y="1024" width="128" height="128"/>
   <object id="22" x="576" y="960" width="128" height="192"/>
