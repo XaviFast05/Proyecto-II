@@ -44,6 +44,7 @@
 			<piquetaGastada path="Assets/Textures/UI/piqueta_gastada.png" />
 			<barraPiqueta path="Assets/Textures/UI/barra.png" />
 			<barraRoja path="Assets/Textures/UI/barra_roja.png" />
+			<orbSoul path="Assets/Textures/UI/orbSoul.png" />
 		</ui>
 		<map>
 			<paths>
@@ -81,7 +82,7 @@
 						<frame x="64" y="0" w="64" h="64" offsetX="0" offsetY="1" />
 						<frame x="128" y="0" w="64" h="64" offsetX="0" offsetY="1" />
 					</idle>
-					<walk loop="true" speed="0.5f">
+					<walk loop="true" speed="0.3f">
 						<frame x="0" y="192" w="64" h="64" offsetX="0" offsetY="1" />
 						<frame x="64" y="192" w="64" h="64" offsetX="0" offsetY="1" />
 						<frame x="128" y="192" w="64" h="64" offsetX="0" offsetY="1" />
@@ -103,10 +104,11 @@
 						<frame x="384" y="64" w="64" h="64" offsetX="0" offsetY="1" />
 						<frame x="448" y="64" w="64" h="64" offsetX="0" offsetY="1" />
 					</fall>
-					<hurt loop="false" speed="0.15f">
-						<frame x="0" y="0" w="64" h="64" offsetX="0" offsetY="1" />
+					<hurt loop="true" speed="0.2f">
+						<frame x="0" y="608" w="64" h="64" offsetX="0" offsetY="1" />
+						<frame x="64" y="608" w="64" h="64" offsetX="0" offsetY="1" />
 					</hurt>
-					<death loop="false" speed="0.1f">
+					<death loop="false" speed="0.2f">
 						<frame x="0" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
 						<frame x="64" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
 						<frame x="128" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
@@ -356,7 +358,7 @@
 					</animations>
 				</soulRock>
 			</items>
-			<currencyOrb x="0" y="0" w="64" h="64" texture="Assets/Textures/Items/soulOrb.png">
+			<currencyOrb x="0" y="0" w="64" h="64" texture="Assets/Textures/Objects/soulOrb.png">
 				<animations>
 					<orbSmall loop="true" speed="0.2f">
 						<frame x="0" y="0" w="64" h="64" />
