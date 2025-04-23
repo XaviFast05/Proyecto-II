@@ -540,6 +540,7 @@ int PhysBody::RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& no
 	return ret;
 }
 
+
 Vector2D PhysBody::GetPhysBodyWorldPosition()
 {
 	return { (float)METERS_TO_PIXELS(body->GetPosition().x), (float)METERS_TO_PIXELS(body->GetPosition().y) };
