@@ -23,7 +23,7 @@ bool Particle::Start() {
 	anim.LoadAnimations(sceneNode.child("entities").child("shot").child("animations").child("travel"));
 	pbody = Engine::GetInstance().physics.get()->CreateCircleSensor((int)position.getX(), (int)position.getY(), shotRad, bodyType::DYNAMIC);
 	pbody->body->SetGravityScale(0);
-	pbody->ctype = ColliderType::SHOT;
+	pbody->ctype = ColliderType::PICKAXE;
 	pbody->body->SetLinearVelocity({ 0,0 });
 	pbody->body->SetEnabled(false);
 

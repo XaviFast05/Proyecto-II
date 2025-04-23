@@ -50,7 +50,7 @@ bool Bullet::Start() {
     pbody->body->SetGravityScale(0);
     pbody->body->SetFixedRotation(true);
     // Establecer tipo de colisión
-    pbody->ctype = ColliderType::SHOT;
+    pbody->ctype = ColliderType::PICKAXE;
     pbody->body->SetType(b2_dynamicBody);
     pbody->body->SetEnabled(true);
     
@@ -79,7 +79,7 @@ bool Bullet::Update(float dt) {
         velocity.y = direction.getY() * (type == BulletType::VERTICAL ? -12.5f : 0);  
         pbody->body->SetLinearVelocity(velocity);
         b2Transform pbodyPos = pbody->body->GetTransform();
-        position.setX(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.x)) - 28.0f);
+        position.setX(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.x)) - 32.0f);
         position.setY(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.y)) - 32.0f);
     }
     else {
@@ -139,7 +139,7 @@ void Bullet::ChangeType(BulletType t) {
 
 void Bullet::OnCollision(PhysBody* physA, PhysBody* physB) {
     switch (physB->ctype) {
-    case ColliderType::SHOT:
+    case ColliderType::PICKAXE:
     case ColliderType::PLATFORM:
         LOG("Collided - DESTROY");
         destroyPickaxe = true;

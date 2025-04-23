@@ -271,7 +271,7 @@ void Santa::OnCollision(PhysBody* physA, PhysBody* physB) {
 		inFloor = true;
 
 		break;
-	case ColliderType::SHOT:
+	case ColliderType::PICKAXE:
 		LOG("Enemy was hit by SHOT");
 		if (state != DEAD) {
 			DMGEnemy(physA, physB);
