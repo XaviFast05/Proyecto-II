@@ -7,7 +7,7 @@
 
 
 
-Particle::Particle() : Entity(EntityType::SHOT)
+Particle::Particle() : Entity(EntityType::PICKAXE)
 {
 
 }

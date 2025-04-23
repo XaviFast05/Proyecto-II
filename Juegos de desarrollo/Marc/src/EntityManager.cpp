@@ -99,7 +99,7 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::BOSS:
 		entity = new Santa();
 		break;
-	case EntityType::SHOT:
+	case EntityType::PICKAXE:
 		entity = new Bullet();
 		break;
 	case EntityType::CURRENCY_ORB:
@@ -143,7 +143,7 @@ std::list<Entity*> EntityManager::CreatePooledEntities(EntityType type, int num)
 		case EntityType::BOSS:
 			entity = new Santa();
 			break;
-		case EntityType::SHOT:
+		case EntityType::PICKAXE:
 			entity = new Bullet();
 			break;
 		case EntityType::CURRENCY_ORB:
@@ -189,7 +189,7 @@ Entity* EntityManager::CreatePooledEntities(EntityType type)
 	case EntityType::BOSS:
 		entity = new Santa();
 		break;
-	case EntityType::SHOT:
+	case EntityType::PICKAXE:
 		entity = new Bullet();
 		break;
 	case EntityType::CURRENCY_ORB:

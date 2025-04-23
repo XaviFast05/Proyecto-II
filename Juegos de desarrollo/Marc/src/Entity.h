@@ -7,7 +7,7 @@
 enum class EntityType
 {
 	PLAYER,
-	SHOT,
+	PICKAXE,
 	CHECKPOINT,
 	ENEMY,
 	BAT_ENEMY,

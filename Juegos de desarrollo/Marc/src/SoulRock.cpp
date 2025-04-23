@@ -145,7 +145,7 @@ void SoulRock::OnCollision(PhysBody* physA, PhysBody* physB) {
 	switch (physB->ctype) {
 	case ColliderType::WEAPON:
 		break;
-	case ColliderType::SHOT:
+	case ColliderType::PICKAXE:
 		hit = true;
 		break;
 	case ColliderType::MELEE_AREA:
