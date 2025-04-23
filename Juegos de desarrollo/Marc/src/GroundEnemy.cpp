@@ -299,7 +299,7 @@ void GroundEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 	switch (physB->ctype) {
 	case ColliderType::WEAPON:
 		break;
-	case ColliderType::SHOT:
+	case ColliderType::PICKAXE:
 		if (state != DEAD) 	DMGEnemy();
 		break;
 	case ColliderType::MELEE_AREA:

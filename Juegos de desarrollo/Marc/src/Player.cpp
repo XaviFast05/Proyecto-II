@@ -116,8 +116,16 @@ bool Player::Start() {
 	pbody->body->SetLinearDamping(friction);
 	pbody->body->SetGravityScale(gravity);
 	pbody->body->SetFixedRotation(true);
-
 	
+
+	leftSensor = Engine::GetInstance().physics.get()->CreateRectangleSensor(position.getX(), position.getY() + 4 / 2, texH / 6, texH - 2, DYNAMIC);
+	leftSensor->ctype = ColliderType::PLAYER_SENSOR;
+	leftSensor->listener = this;
+
+	rightSensor = Engine::GetInstance().physics.get()->CreateRectangleSensor(position.getX(), position.getY() + 4 / 2, texH / 6, texH - 2, DYNAMIC);
+	rightSensor->ctype = ColliderType::PLAYER_SENSOR;
+	rightSensor->listener = this;
+
 	hurtTimer = Timer();
 	respawnTimer = Timer();
 
@@ -153,6 +161,15 @@ bool Player::Update(float dt)
 	if (!Engine::GetInstance().scene.get()->paused) {
 
 		pbody->body->SetAwake(true);
+
+		b2Vec2 mainPos = pbody->body->GetPosition();
+
+		leftSensor->body->SetTransform(
+			b2Vec2(mainPos.x - 0.25, mainPos.y), 0);
+
+		rightSensor->body->SetTransform(
+			b2Vec2(mainPos.x + 0.25, mainPos.y), 0);
+
 
 		velocity = b2Vec2_zero;
 		grounded = VALUE_NEAR_TO_0(pbody->body->GetLinearVelocity().y);
@@ -375,29 +392,6 @@ bool Player::Update(float dt)
 			break;
 		}
 
-		//AQUI ES DONDE SE HACE LO DE NO ENGANCHARSE A LA PARED
-		b2ContactEdge* contactEdge = pbody->body->GetContactList();
-		while (contactEdge) {
-			b2WorldManifold worldManifold;
-			contactEdge->contact->GetWorldManifold(&worldManifold);
-
-			b2Vec2 normal = worldManifold.normal;
-
-			// Si está tocando una pared (normal.x cerca de -1 o 1)
-			if (abs(normal.x) > 0.95f && abs(normal.y) < 0.2f) {
-				// Normal apunta a la izquierda -> pared a la derecha
-				if (normal.x < -0.95f && velocity.x > 0) {
-					velocity.x = 0;
-				}
-				// Normal apunta a la derecha -> pared a la izquierda
-				else if (normal.x > 0.95f && velocity.x < 0) {
-					velocity.x = 0;
-				}
-			}
-
-			contactEdge = contactEdge->next;
-		}
-
 		velocity = { velocity.x, pbody->body->GetLinearVelocity().y };
 		pbody->body->SetLinearVelocity(velocity);
 	}
@@ -505,10 +499,23 @@ bool Player::CleanUp()
 // L08 TODO 6: Define OnCollision function for the player. 
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	int soulAmount = 1;
+	if (physA == leftSensor && physB->ctype == ColliderType::PLATFORM || physA == leftSensor && physB->ctype == ColliderType::CLIMBINGWALL)
+	{
+		leftBlocked = true;
+	}
+
+	if (physA == rightSensor && physB->ctype == ColliderType::PLATFORM || physA == rightSensor && physB->ctype == ColliderType::CLIMBINGWALL)
+	{
+		rightBlocked = true;
+	}
+
 	switch (physB->ctype)
 	{
 	case ColliderType::PLATFORM:
 		LOG("Collision PLATFORM");
+		break;
+	case ColliderType::PICKAXE:
+		LOG("Collision PICKAXE");
 		break;
 	case ColliderType::SPYKE:
 		LOG("Collision SPYKE");
@@ -582,6 +589,16 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 {
+	if (physA == leftSensor && physB->ctype == ColliderType::PLATFORM || physA == leftSensor && physB->ctype == ColliderType::CLIMBINGWALL)
+	{
+		leftBlocked = false;
+	}
+
+	if (physA == rightSensor && physB->ctype == ColliderType::PLATFORM || physA == rightSensor && physB->ctype == ColliderType::CLIMBINGWALL)
+	{
+		rightBlocked = false;
+	}
+	
 	switch (physB->ctype)
 	{
 	case ColliderType::PLATFORM:
@@ -638,25 +655,41 @@ void Player::KillPlayer() {
 	respawnTimer.Start();
 }
 
-bool Player::CheckMoveX() {
-	if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)) {
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) dir = RIGHT;
-		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) dir = LEFT;
+bool Player::CheckMoveX()
+{
+	Input* input = Engine::GetInstance().input.get();
 
+	bool moveRight = input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT;
+	bool moveLeft = input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT;
+
+	if (moveRight && !rightBlocked)
+	{
+		dir = RIGHT;
 		Engine::GetInstance().scene.get()->cameraDirectionChangeActivation = true;
 		return true;
 	}
-	else return false;
+	else if (moveLeft && !leftBlocked)
+	{
+		dir = LEFT;
+		Engine::GetInstance().scene.get()->cameraDirectionChangeActivation = true;
+		return true;
+	}
+
+	return false;
 }
+
 
 void Player::MoveX() {
 	velocity.x = (dir == RIGHT ? moveSpeed * 16 : -moveSpeed * 16);
 }
 
 void Player::CheckJump() {
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) && grounded)
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && grounded) {
 		pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
+		grounded = false; // ya no está en el suelo hasta que colisione de nuevo
+	}
 }
+
 
 void Player::DamagePlayer() {
 	hits--;
