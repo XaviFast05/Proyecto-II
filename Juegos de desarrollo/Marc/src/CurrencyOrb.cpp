@@ -11,13 +11,36 @@ CurrencyOrb::CurrencyOrb() : Entity(EntityType::CURRENCY_ORB)
 bool CurrencyOrb::Start(bool createBody)
 {
     SetParameters(Engine::GetInstance().scene.get()->configParameters);
-    texture = Engine::GetInstance().textures.get()->Load(parameters.child("properties").attribute("texture").as_string());
+    
+    std::string texPath;
+    switch (orbSize) {
+    case 1:
+        texPath = parameters.child("orbSmall").attribute("texture").as_string();
+        break;
+    case 2:
+        texPath = parameters.child("orbMedium").attribute("texture").as_string();
+        break;
+    case 3:
+        texPath = parameters.child("orbBig").attribute("texture").as_string();
+        break;
+    default:
+        break;
+    }
+
+    LOG("texPath: %s", texPath.c_str());
+
+    LOG("Param node: %s", parameters.name());
+
+    texture = Engine::GetInstance().textures.get()->Load(texPath.c_str());
+
     texW = parameters.child("properties").attribute("w").as_float();
     texH = parameters.child("properties").attribute("h").as_float();
 
-	orbSmall.LoadAnimations(parameters.child("animations").child("orbSmall"));
-	orbMedium.LoadAnimations(parameters.child("animations").child("orbMedium"));
-	orbBig.LoadAnimations(parameters.child("animations").child("orbBig"));
+    orbSmall.LoadAnimations(parameters.child("orbSmall").child("animations").child("orbSmall"));
+    orbMedium.LoadAnimations(parameters.child("orbMedium").child("animations").child("orbMedium"));
+    orbBig.LoadAnimations(parameters.child("orbBig").child("animations").child("orbBig"));
+    
+
 
     int radius = 1;
     if (createBody) {
@@ -39,6 +62,7 @@ bool CurrencyOrb::Start(bool createBody)
             texW = 64;
             texH = 64;
             radius = 20;
+
             currentAnimation = &orbBig;
             break;
         default:
@@ -102,7 +126,7 @@ bool CurrencyOrb::Update(float dt)
         
     position.setX(pbody->GetPhysBodyWorldPosition().getX() - texW/2);
     position.setY(pbody->GetPhysBodyWorldPosition().getY() - texH/2);
-    Engine::GetInstance().render.get()->DrawTexture(texture, position.getX(), position.getY(), &currentFrame);
+    Engine::GetInstance().render.get()->DrawTexture(texture, position.getX(), position.getY(), nullptr);
 
     if (disable)
     {
