@@ -106,7 +106,7 @@
 					<hurt loop="false" speed="0.15f">
 						<frame x="0" y="0" w="64" h="64" offsetX="0" offsetY="1" />
 					</hurt>
-					<death loop="false" speed="0.2f">
+					<death loop="false" speed="0.1f">
 						<frame x="0" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
 						<frame x="64" y="512" w="64" h="96" offsetX="0" offsetY="-31" />
 						<frame x="128" y="512" w="64" h="96" offsetX="0" offsetY="-31" />

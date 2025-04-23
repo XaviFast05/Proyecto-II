@@ -353,7 +353,6 @@ bool Scene::PostUpdate()
 	}
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
 		paused = !paused;
-		returning = false;
 	}
 
 	Render* render = Engine::GetInstance().render.get();
@@ -372,31 +371,28 @@ bool Scene::PostUpdate()
 
 		if (paused && !Engine::GetInstance().settings.get()->settingsOpen) {
 			
-			if (!returning)
-			{
-				Engine::GetInstance().render.get()->DrawRectangle({ -render->camera.x / window->scale , -render->camera.y / window->scale, window->width, window->height }, 0, 0, 0, 200, true, true);
-				Engine::GetInstance().render.get()->DrawTexture(pausePanel, -render->camera.x / window->scale + pausePos.getX(), -render->camera.y / window->scale + pausePos.getY());
 
-				for (const auto& bt : pauseButtons) {
-					if (bt.second->active == false) {
-						bt.second->active = true;
-					}
-					else {
-						bt.second->Update(_dt);
-						OnGuiMouseClickEvent(bt.second);
+			Engine::GetInstance().render.get()->DrawRectangle({ -render->camera.x / window->scale , - render->camera.y / window->scale, window->width, window->height}, 0, 0, 0, 200, true, true);
+			Engine::GetInstance().render.get()->DrawTexture(pausePanel, -render->camera.x / window->scale + pausePos.getX(), -render->camera.y / window->scale + pausePos.getY());
 
-					}
+			for (const auto& bt : pauseButtons) {
+				if (bt.second->active == false) {
+					bt.second->active = true;
+				}
+				else {
+					bt.second->Update(_dt);
+					OnGuiMouseClickEvent(bt.second);
 
 				}
 
-				if (Engine::GetInstance().settings.get()->settingsOpen)
-					for (const auto& bt : pauseButtons)
-						bt.second->state = GuiControlState::DISABLED;
-				else
-					for (const auto& bt : pauseButtons)
-						bt.second->state = GuiControlState::NORMAL;
 			}
-			
+
+			if (Engine::GetInstance().settings.get()->settingsOpen)
+				for (const auto& bt : pauseButtons)
+					bt.second->state = GuiControlState::DISABLED;
+			else
+				for (const auto& bt : pauseButtons)
+					bt.second->state = GuiControlState::NORMAL;
 		}
 		else {
 			for (const auto& bt : pauseButtons)
@@ -627,7 +623,6 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 	case GuiControlId::BACKTOTITLE:
 		if (control->state == GuiControlState::PRESSED) {
 			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)Engine::GetInstance().mainMenu.get(), 30);
-			returning = true;
 
 		}
 		break;

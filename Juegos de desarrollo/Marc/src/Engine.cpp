@@ -48,11 +48,12 @@ Engine::Engine() {
     entityManager = std::make_shared<EntityManager>(false);
     map = std::make_shared<Map>(true);
     guiManager = std::make_shared<GuiManager>(true);
+    fade = std::make_shared<FadeToBlack>(true);
     intro = std::make_shared<Intro>(false);
     settings = std::make_shared<Settings>(true);
     death = std::make_shared<DeathMenu>(false);
     win = std::make_shared<WinMenu>(false);
-    fade = std::make_shared<FadeToBlack>(true);
+
 
     // Ordered for awake / Start / Update
     // Reverse order of CleanUp
