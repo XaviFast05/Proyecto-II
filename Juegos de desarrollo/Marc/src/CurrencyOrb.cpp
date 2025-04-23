@@ -5,15 +5,15 @@
 
 CurrencyOrb::CurrencyOrb() : Entity(EntityType::CURRENCY_ORB)
 {
-	name = "currencyOrb";
+
 }
 
 bool CurrencyOrb::Start(bool createBody)
 {
     SetParameters(Engine::GetInstance().scene.get()->configParameters);
-    texture = Engine::GetInstance().textures.get()->Load(parameters.child("properties").attribute("texture").as_string());
-    texW = parameters.child("properties").attribute("w").as_float();
-    texH = parameters.child("properties").attribute("h").as_float();
+    texture = Engine::GetInstance().textures.get()->Load(parameters.attribute("texture").as_string());
+    texW = parameters.attribute("w").as_int();
+    texH = parameters.attribute("h").as_int();
 
 	orbSmall.LoadAnimations(parameters.child("animations").child("orbSmall"));
 	orbMedium.LoadAnimations(parameters.child("animations").child("orbMedium"));
@@ -79,7 +79,6 @@ bool CurrencyOrb::Start(bool createBody)
 
 bool CurrencyOrb::Update(float dt)
 {
-	currentFrame = currentAnimation->GetCurrentFrame();
     direction = { player->pbody->body->GetPosition().x - pbody->body->GetPosition().x, player->pbody->body->GetPosition().y - pbody->body->GetPosition().y };
     float distance = direction.magnitude();
     if (distance < distToStartMoving)

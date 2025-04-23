@@ -86,6 +86,7 @@ public:
 	pugi::xml_node audioNode;
 
 	SDL_Texture* texture;
+	SDL_Texture* t_texture;
 	int texW, texH;
 	int t_texW, t_texH;
 	SDL_Rect currentFrame;
