@@ -27,6 +27,7 @@ enum class ColliderType {
 	PLAYER,
 	WEAPON,
 	MELEE_AREA,
+	PICKAXE,
 	SHOT,
 	PLATFORM,
 	SPYKE,
