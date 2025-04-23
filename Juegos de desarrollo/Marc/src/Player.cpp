@@ -367,7 +367,6 @@ bool Player::Update(float dt)
 		{
 			pbody->body->SetLinearVelocity(b2Vec2(0, 0));
 			if (respawnTimer.ReadSec() >= respawnTime) {
-				Engine::GetInstance().scene.get()->SetStartBossFight(false);
 				Engine::GetInstance().fade.get()->Fade(Engine::GetInstance().scene.get(), Engine::GetInstance().scene.get());
 			}
 		}

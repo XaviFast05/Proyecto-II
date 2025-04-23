@@ -51,7 +51,7 @@ private:
     b2Vec2 bulletfixedpos;
     
     bool stuckOnWall = false;
-    bool variableMarc = false;
+    bool destroyPickaxe = false;
 
     bool flipSprite = false;
     const char* texturePath;

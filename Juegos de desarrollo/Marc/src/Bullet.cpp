@@ -56,7 +56,7 @@ bool Bullet::Start() {
     
     active = true;
     stuckOnWall = false;
-    variableMarc = false;
+    destroyPickaxe = false;
 
     return true;
 }
@@ -67,10 +67,10 @@ bool Bullet::Update(float dt) {
         return false;
     }
 
-    if (variableMarc) {
+    if (destroyPickaxe) {
         pbody->body->SetEnabled(false);
         active = false;
-        variableMarc = false;
+        destroyPickaxe = false;
     }
 
     if (!stuckOnWall) {
@@ -79,8 +79,8 @@ bool Bullet::Update(float dt) {
         velocity.y = direction.getY() * (type == BulletType::VERTICAL ? -12.5f : 0);  
         pbody->body->SetLinearVelocity(velocity);
         b2Transform pbodyPos = pbody->body->GetTransform();
-        position.setX(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.x)) - 32.0f);
-        position.setY(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.y)) - 16.0f);
+        position.setX(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.x)) - 28.0f);
+        position.setY(static_cast<float>(METERS_TO_PIXELS(pbodyPos.p.y)) - 32.0f);
     }
     else {
         pbody->body->SetType(b2_staticBody);
@@ -118,7 +118,7 @@ void Bullet::SetPosition(Vector2D pos) {
         return; // Salir si el pbody es NULL
     }
 
-    b2Vec2 bodyPos = b2Vec2(PIXEL_TO_METERS(pos.getX()), PIXEL_TO_METERS(pos.getY()));
+    b2Vec2 bodyPos = b2Vec2(PIXEL_TO_METERS(pos.getX()), PIXEL_TO_METERS(pos.getY() - 0.5f));
     pbody->body->SetTransform(bodyPos, 0);  // Establecer la nueva posición física
 
     position = pos;  // Actualizar la posición en pantalla
@@ -142,7 +142,7 @@ void Bullet::OnCollision(PhysBody* physA, PhysBody* physB) {
     case ColliderType::SHOT:
     case ColliderType::PLATFORM:
         LOG("Collided - DESTROY");
-        variableMarc = true;
+        destroyPickaxe = true;
         break;
     case ColliderType::CLIMBINGWALL:
         LOG("Piqueta con don");
