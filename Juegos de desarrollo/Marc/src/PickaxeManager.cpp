@@ -41,7 +41,8 @@ bool PickaxeManager::CleanUp()
 void PickaxeManager::ThrowPickaxe(Vector2D Direction, Vector2D Position)
 {
 	pickaxeCount--;
-	Bullet* bullet = (Bullet*)Engine::GetInstance().entityManager->GetPooledEntity(EntityType::PICKAXE);
+	pickaxeRecollectTimer.Start();
+	Bullet* bullet = (Bullet*)Engine::GetInstance().entityManager->GetPooledEntity(EntityType::SHOT);
 	if (!bullet)
 	{
 		bullet = (Bullet*)CreatePickaxe();
@@ -58,7 +59,7 @@ void PickaxeManager::ThrowPickaxe(Vector2D Direction, Vector2D Position)
 
 Entity* PickaxeManager::CreatePickaxe()
 {
-	Bullet* bullet = (Bullet*)Engine::GetInstance().entityManager->CreatePooledEntities(EntityType::PICKAXE);
+	Bullet* bullet = (Bullet*)Engine::GetInstance().entityManager->CreatePooledEntities(EntityType::SHOT);
 	bullet->type = BulletType::HORIZONTAL;
 	bullet->SetParameters(Engine::GetInstance().scene.get()->configParameters);
 	bullet->texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/bala.png");
@@ -72,4 +73,8 @@ int PickaxeManager::GetNumPickaxes()
 	return pickaxeCount;
 }
 
-
+int PickaxeManager::GetNumRed() {
+	float timeFactor = pickaxeRecollectTimer.ReadSec() / (pickaxeRecollectCount - 0.2f);
+	int num = timeFactor * 8;
+	return num;
+}

@@ -69,7 +69,6 @@ public:
 
 	void LoadEnemy(Enemy* enemy, pugi::xml_node instanceNode);
 
-
 	void LoadItem(CheckPoint* checkPoint, pugi::xml_node instanceNode);
 
 	void LoadSoulRock(SoulRock* soulRocks, pugi::xml_node instanceNode);
@@ -108,8 +107,6 @@ public:
 	std::string GetCurrentLevelString();
 	
 	std::string GetLevelString(Levels level);
-
-
 
 public:
 	Levels level;

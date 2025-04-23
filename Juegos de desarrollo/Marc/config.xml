@@ -341,8 +341,8 @@
 					<properties w="64" h="64" texture="Assets/Textures/Objects/SoulRock.png" />
 					<instances>
 						<lvl1>
-							<instance entityType="8" x="4235" y="876" flipped ="true"/>
-							<instance entityType="8" x="8931" y="4524" flipped ="false"/>
+							<instance entityType="8" x="4235" y="876" flipped="true" />
+							<instance entityType="8" x="8931" y="4524" flipped="false" />
 						</lvl1>
 					</instances>
 					<animations>
