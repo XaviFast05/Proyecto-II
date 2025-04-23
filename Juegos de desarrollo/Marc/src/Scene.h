@@ -160,6 +160,7 @@ private:
 	bool bossMusPlaying = false;
 	bool bossKilled = false;
 	bool quit = false;
+	bool returning = false;
 	
 	int transitionDisplace;
 	
