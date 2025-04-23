@@ -51,13 +51,14 @@ private:
 	Player* player;
 
 	SDL_Texture* texture;
+	SDL_Rect currentFrame;
 
 	bool alight;
 
 	int texW, texH;
 	Animation lit;
 	Animation unlit;
-	Animation* currentAnim;
+	Animation* currentAnim = nullptr;
 
 	pugi::xml_node parameters;
 };

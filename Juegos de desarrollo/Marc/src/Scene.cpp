@@ -160,7 +160,9 @@ bool Scene::Start()
 	heartsTexture = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("heartContainers").attribute("path").as_string());
 	piquetaNormal = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("piquetaNormal").attribute("path").as_string());
 	piquetaGastada = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("piquetaGastada").attribute("path").as_string());
-
+	barraPiqueta = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("barraPiqueta").attribute("path").as_string());
+	barraRoja = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("barraRoja").attribute("path").as_string());
+	orbSoul = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("orbSoul").attribute("path").as_string());
 
 	return true;
 }
@@ -709,23 +711,23 @@ void Scene::ChangeDirectionCameraX()
 
 void Scene::DrawPlayerHitsUI()
 {
-	// Tamaño de cada sección de la textura (224x224)
+	// Tamaï¿½o de cada secciï¿½n de la textura (224x224)
 	const int sectionWidth = 224;
 	const int sectionHeight = 224;
 
-	// Calcular la sección de la textura a dibujar según los hits restantes
+	// Calcular la secciï¿½n de la textura a dibujar segï¿½n los hits restantes
 	SDL_Rect section;
-	section.x = (3 - player->hits) * sectionWidth; // Mover a la siguiente sección por cada golpe
+	section.x = (3 - player->hits) * sectionWidth; // Mover a la siguiente secciï¿½n por cada golpe
 	section.y = 0;
 	section.w = sectionWidth;
 	section.h = sectionHeight;
 
-	// Dibujar la textura en la posición deseada
+	// Dibujar la textura en la posiciï¿½n deseada
 	Engine::GetInstance().render.get()->DrawTexture(
 		heartsTexture, // Textura de los corazones
-		-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 10, // Posición X
-		-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale - 50,    // Posición Y
-		&section // Sección de la textura a dibujar
+		-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 10, // Posiciï¿½n X
+		-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale - 50,    // Posiciï¿½n Y
+		&section // Secciï¿½n de la textura a dibujar
 	);
 }
 
@@ -734,27 +736,42 @@ void Scene::DrawPickaxesUI()
 	int numPickaxes = player->pickaxeManager->GetNumPickaxes(); // Piquetas disponibles
 	int scale = Engine::GetInstance().window.get()->GetScale(); // Escala de la ventana
 
-	// Posición inicial para dibujar las piquetas
+	// Posiciï¿½n inicial para dibujar las piquetas
 	int startX = 100; // Coordenada X inicial
 	int startY = 100;  // Coordenada Y inicial
 	int spacing = 50; // Espaciado entre las piquetas
 
 	for (int i = 0; i < MAX_PICKAXES; ++i) {
-		// Si el índice es menor que el número de piquetas disponibles, dibuja una piqueta normal
+		// Si el ï¿½ndice es menor que el nï¿½mero de piquetas disponibles, dibuja una piqueta normal
 		if (i < numPickaxes) {
 			Engine::GetInstance().render.get()->DrawTexture(
 				piquetaNormal,
-				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 120 + (i * spacing), // Posición X
-				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 70    // Posición Y
+				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (i * spacing), // Posiciï¿½n X
+				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 10    // Posiciï¿½n Y
 			);
 		}
 		// Si no, dibuja una piqueta gastada
 		else {
 			Engine::GetInstance().render.get()->DrawTexture(
 				piquetaGastada,
-				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 120 + (i * spacing), // Posición X
-				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 70    // Posición Y
+				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (i * spacing), // Posiciï¿½n X
+				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 10    // Posiciï¿½n Y
 			);
+			Engine::GetInstance().render.get()->DrawTexture(
+				barraPiqueta,
+				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (numPickaxes * spacing), // Posiciï¿½n X
+				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 80    // Posiciï¿½n Y
+			);
+			int redBars = player->pickaxeManager->GetNumRed();
+			int drawRedSpacing = 0;
+			for (int i = 0; i < redBars; i++) {
+				Engine::GetInstance().render.get()->DrawTexture(
+					barraRoja,
+					-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (numPickaxes * spacing) + drawRedSpacing, // Posiciï¿½n X
+					-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 80    // Posiciï¿½n Y
+				);
+				drawRedSpacing += spacingRed;
+			}
 		}
 	}
 }
@@ -763,27 +780,20 @@ void Scene::DrawCurrencyUI()
 {
 	int scale = Engine::GetInstance().window.get()->GetScale(); // Escala de la ventana
 
-	// Tamaño de la sección de la textura del soul orb
-	SDL_Rect section;
-	section.x = 0;  // Posición X dentro de la textura
-	section.y = 128; // Posición Y dentro de la textura
-	section.w = 64; // Ancho de la sección
-	section.h = 96; // Alto de la sección
-
 	// Dibujar la textura del soul orb
 	Engine::GetInstance().render.get()->DrawTexture(
-		Engine::GetInstance().textures.get()->Load("Assets/Textures/Items/soulOrb.png"),
-		-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 1120, // Posición X
-		-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale - 20,    // Posición Y
-		&section
+		orbSoul,
+		-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 1120, // Posiciï¿½n X
+		-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 10  // Posiciï¿½n Y
 	);
+	
 
 	
 
-	// Texto que muestra el número de monedas
+	// Texto que muestra el nï¿½mero de monedas
 	std::string currencyText = std::to_string(player->currencyManager->GetCurrency());
 
-	// Dibujar el texto del número de monedas
+	// Dibujar el texto del nï¿½mero de monedas
 	Engine::GetInstance().render.get()->DrawText(
 		currencyText.c_str(), 1200, 32, 48, 32);
 }

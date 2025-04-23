@@ -128,7 +128,7 @@ public:
 	GuiControlCheckBox* fullScreenCheckBox;
 	SDL_Texture* pausePanel;
 	
-	SDL_Texture* heartsTexture, * piquetaNormal, * piquetaGastada;
+	SDL_Texture* heartsTexture, * piquetaNormal, * piquetaGastada, * barraPiqueta, * barraRoja, * orbSoul;
 	
 	Vector2D pausePos;
 

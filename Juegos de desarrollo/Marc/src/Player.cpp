@@ -466,6 +466,14 @@ bool Player::Update(float dt)
 		}
 		break;
 
+
+	case HURT:
+		currentAnim = &hurt;
+		if (resetAnimation == true) {
+			currentAnim->Reset();
+			resetAnimation = false;
+		}
+		break;
 	case DEAD:
 		currentAnim = &death;
 		if (resetAnimation == true) {

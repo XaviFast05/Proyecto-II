@@ -53,6 +53,8 @@ bool CheckPoint::Start() {
 
 bool CheckPoint::Update(float dt)
 {
+	currentFrame = currentAnim->GetCurrentFrame();
+
 	if (!Engine::GetInstance().render.get()->InCameraView(pbody->GetPosition().getX() - texW, pbody->GetPosition().getY() - texH, texW, texH))
 	{
 		return true;
@@ -62,7 +64,7 @@ bool CheckPoint::Update(float dt)
 	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texW / 2);
 	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
 
-	Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnim->GetCurrentFrame());
+	Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentFrame);
 
 	return true;
 }
