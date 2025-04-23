@@ -161,9 +161,9 @@ bool Player::Update(float dt)
 	if (!Engine::GetInstance().scene.get()->paused) {
 
 		pbody->body->SetAwake(true);
-
 		b2Vec2 mainPos = pbody->body->GetPosition();
 
+		//Colocar sensores
 		leftSensor->body->SetTransform(
 			b2Vec2(mainPos.x - 0.25, mainPos.y), 0);
 
@@ -305,12 +305,26 @@ bool Player::Update(float dt)
 			}
 			break;
 		case RUN:
-			if (CheckMoveX()) MoveX();
-			else 
+			// SALTO: Evaluar siempre primero
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN
+				&& (grounded || godMode))
 			{
-				playerState = IDLE;
-				if (playSound == false) {
-					playSound = true;
+				playerState = JUMP;
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
+				grounded = false;
+				plusJumpTimer.Start();
+				plusJumpTimerOn = true;
+				break;
+			}
+
+			// MOVIMIENTO HORIZONTAL si está en suelo y no hay colisión lateral
+			if (grounded) {
+				if (CheckMoveX()) {
+					playerState = RUN;
+					MoveX();
+				}
+				else {
+					playerState = IDLE;
 				}
 			}
 			break;
@@ -499,16 +513,19 @@ bool Player::CleanUp()
 // L08 TODO 6: Define OnCollision function for the player. 
 void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	int soulAmount = 1;
-	if (physA == leftSensor && physB->ctype == ColliderType::PLATFORM || physA == leftSensor && physB->ctype == ColliderType::CLIMBINGWALL)
+	
+	//Colision de los sensores
+	if (physA == leftSensor && physB->ctype == ColliderType::PLATFORM || physA == leftSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == leftSensor && physB->ctype == ColliderType::PICKAXE)
 	{
 		leftBlocked = true;
 	}
 
-	if (physA == rightSensor && physB->ctype == ColliderType::PLATFORM || physA == rightSensor && physB->ctype == ColliderType::CLIMBINGWALL)
+	if (physA == rightSensor && physB->ctype == ColliderType::PLATFORM || physA == rightSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == rightSensor && physB->ctype == ColliderType::PICKAXE)
 	{
 		rightBlocked = true;
 	}
 
+	//Colisión del cuerpo principal
 	switch (physB->ctype)
 	{
 	case ColliderType::PLATFORM:
@@ -589,16 +606,18 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 {
-	if (physA == leftSensor && physB->ctype == ColliderType::PLATFORM || physA == leftSensor && physB->ctype == ColliderType::CLIMBINGWALL)
+	//Colision de los sensores
+	if (physA == leftSensor && physB->ctype == ColliderType::PLATFORM || physA == leftSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == leftSensor && physB->ctype == ColliderType::PICKAXE)
 	{
 		leftBlocked = false;
 	}
 
-	if (physA == rightSensor && physB->ctype == ColliderType::PLATFORM || physA == rightSensor && physB->ctype == ColliderType::CLIMBINGWALL)
+	if (physA == rightSensor && physB->ctype == ColliderType::PLATFORM || physA == rightSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == rightSensor && physB->ctype == ColliderType::PICKAXE)
 	{
 		rightBlocked = false;
 	}
 	
+	//Colisión del cuerpo principal
 	switch (physB->ctype)
 	{
 	case ColliderType::PLATFORM:
