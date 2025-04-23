@@ -58,7 +58,7 @@ bool CurrencyOrb::Start(bool createBody)
         b2Vec2 direction = b2Vec2(velX, -velY);
         pbody->body->ApplyLinearImpulseToCenter(direction, true);
 
-        // Establecer tipo de colisión
+        // Establecer tipo de colisiï¿½n
         pbody->ctype = ColliderType::ORB;
         pbody->body->SetEnabled(true);
 
