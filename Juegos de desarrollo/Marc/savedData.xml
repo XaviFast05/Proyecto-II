@@ -1,17 +1,10 @@
 <?xml version="1.0"?>
 <savedData saved="true" level="1" time="4.10140848" startBossFight="false" bossKilled="false">
 	<lvl1>
-<<<<<<< Updated upstream
 		<player x="150" y="3400" lives="3" transformable="false" transformed="false" candies="0" />
 		<enemy0 dead="false" x="2016" y="3423" />
 		<enemy1 dead="false" x="2272" y="3296" />
 		<enemy2 dead="false" x="2208" y="96" />
-=======
-		<player x="3701" y="2527" lives="3" transformable="false" transformed="false" candies="0" />
-		<enemy0 dead="false" x="2016" y="3447" />
-		<enemy1 dead="false" x="2272" y="3296" />
-		<enemy2 dead="false" x="2208" y="196" />
->>>>>>> Stashed changes
 		<enemy3 dead="false" x="1632" y="159" />
 		<enemy4 dead="false" x="1504" y="416" />
 		<checkPoint0 alight="true" x="" y="" />
