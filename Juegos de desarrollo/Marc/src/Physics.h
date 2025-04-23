@@ -40,6 +40,7 @@ enum class ColliderType {
 	BOSS_STARTER,
 	CLIMBINGWALL,
 	ORB,
+	SOUL_ROCK,
 	UNKNOWN
 };
 

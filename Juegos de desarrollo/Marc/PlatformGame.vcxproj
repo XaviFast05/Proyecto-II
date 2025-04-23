@@ -181,6 +181,7 @@
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Render.cpp" />
     <ClCompile Include="src\Scene.cpp" />
+    <ClCompile Include="src\SoulRock.cpp" />
     <ClCompile Include="src\Textures.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\Vector2D.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="src\Santa.h" />
     <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\Settings.h" />
+    <ClInclude Include="src\SoulRock.h" />
     <ClInclude Include="src\Textures.h" />
     <ClInclude Include="src\Timer.h" />
     <ClInclude Include="src\Vector2D.h" />

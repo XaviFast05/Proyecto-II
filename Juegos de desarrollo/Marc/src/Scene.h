@@ -27,6 +27,7 @@ class EntityManager;
 class GuiControlButton;
 class GuiControlSlider;
 class GuiControlCheckBox;
+class SoulRock;
 
 
 enum Levels {
@@ -70,6 +71,8 @@ public:
 
 
 	void LoadItem(CheckPoint* checkPoint, pugi::xml_node instanceNode);
+
+	void LoadSoulRock(SoulRock* soulRocks, pugi::xml_node instanceNode);
 
 	void LoadState();
 
@@ -149,6 +152,7 @@ private:
 
 	std::vector<Enemy*> enemies;
 	std::vector<CheckPoint*> checkPoints;
+	std::vector<SoulRock*> soulRocks;
 	pugi::xml_node musicNode;
 
 	std::map<std::string, GuiControlButton*> pauseButtons;
