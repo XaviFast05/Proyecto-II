@@ -69,6 +69,7 @@ public:
 
 	void LoadEnemy(Enemy* enemy, pugi::xml_node instanceNode);
 
+
 	void LoadItem(CheckPoint* checkPoint, pugi::xml_node instanceNode);
 
 	void LoadSoulRock(SoulRock* soulRocks, pugi::xml_node instanceNode);
@@ -108,6 +109,8 @@ public:
 	
 	std::string GetLevelString(Levels level);
 
+
+
 public:
 	Levels level;
 	bool paused = false;
@@ -125,7 +128,7 @@ public:
 	GuiControlCheckBox* fullScreenCheckBox;
 	SDL_Texture* pausePanel;
 	
-	SDL_Texture* heartsTexture, * piquetaNormal, * piquetaGastada, * barraPiqueta, * barraRoja;
+	SDL_Texture* heartsTexture, * piquetaNormal, * piquetaGastada;
 	
 	Vector2D pausePos;
 

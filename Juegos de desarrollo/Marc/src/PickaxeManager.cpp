@@ -41,7 +41,6 @@ bool PickaxeManager::CleanUp()
 void PickaxeManager::ThrowPickaxe(Vector2D Direction, Vector2D Position)
 {
 	pickaxeCount--;
-	pickaxeRecollectTimer.Start();
 	Bullet* bullet = (Bullet*)Engine::GetInstance().entityManager->GetPooledEntity(EntityType::SHOT);
 	if (!bullet)
 	{
@@ -73,8 +72,4 @@ int PickaxeManager::GetNumPickaxes()
 	return pickaxeCount;
 }
 
-int PickaxeManager::GetNumRed() {
-	float timeFactor = pickaxeRecollectTimer.ReadSec() / (pickaxeRecollectCount - 0.2f);
-	int num = timeFactor * 8;
-	return num;
-}
+

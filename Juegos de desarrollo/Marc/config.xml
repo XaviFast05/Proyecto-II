@@ -42,8 +42,6 @@
 			<heartContainers path="Assets/Textures/UI/lifeSimp.png" />
 			<piquetaNormal path="Assets/Textures/UI/piqueta_normal.png" />
 			<piquetaGastada path="Assets/Textures/UI/piqueta_gastada.png" />
-			<barraPiqueta path="Assets/Textures/UI/barra.png" />
-			<barraRoja path="Assets/Textures/UI/barra_roja.png" />
 		</ui>
 		<map>
 			<paths>
@@ -339,8 +337,8 @@
 					<properties w="64" h="64" texture="Assets/Textures/Objects/SoulRock.png" />
 					<instances>
 						<lvl1>
-							<instance entityType="8" x="4235" y="876" flipped="true" />
-							<instance entityType="8" x="8931" y="4524" flipped="false" />
+							<instance entityType="8" x="4235" y="876" flipped ="true"/>
+							<instance entityType="8" x="8931" y="4524" flipped ="false"/>
 						</lvl1>
 					</instances>
 					<animations>

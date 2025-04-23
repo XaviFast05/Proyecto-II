@@ -27,7 +27,6 @@ public:
 
 	int GetNumPickaxes();
 
-	int GetNumRed();
 
 public:
 
