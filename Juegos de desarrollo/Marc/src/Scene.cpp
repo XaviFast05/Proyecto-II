@@ -153,7 +153,8 @@ bool Scene::Start()
 	heartsTexture = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("heartContainers").attribute("path").as_string());
 	piquetaNormal = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("piquetaNormal").attribute("path").as_string());
 	piquetaGastada = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("piquetaGastada").attribute("path").as_string());
-
+	barraPiqueta = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("barraPiqueta").attribute("path").as_string());
+	barraRoja = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("barraRoja").attribute("path").as_string());
 
 	return true;
 }
@@ -697,6 +698,7 @@ void Scene::DrawPickaxesUI()
 	int startX = 100; // Coordenada X inicial
 	int startY = 100;  // Coordenada Y inicial
 	int spacing = 50; // Espaciado entre las piquetas
+	int spacingRed = 8; // Espaciado entre las piquetas
 
 	for (int i = 0; i < MAX_PICKAXES; ++i) {
 		// Si el índice es menor que el número de piquetas disponibles, dibuja una piqueta normal
@@ -714,6 +716,21 @@ void Scene::DrawPickaxesUI()
 				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 120 + (i * spacing), // Posición X
 				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 70    // Posición Y
 			);
+			Engine::GetInstance().render.get()->DrawTexture(
+				barraPiqueta,
+				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 120 + (numPickaxes * spacing), // Posición X
+				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 120    // Posición Y
+			);
+			int redBars = player->pickaxeManager->GetNumRed();
+			int drawRedSpacing = 0;
+			for (int i = 0; i < redBars; i++) {
+				Engine::GetInstance().render.get()->DrawTexture(
+					barraRoja,
+					-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 120 + (numPickaxes * spacing) + drawRedSpacing, // Posición X
+					-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 120    // Posición Y
+				);
+				drawRedSpacing += spacingRed;
+			}
 		}
 	}
 }
@@ -736,8 +753,6 @@ void Scene::DrawCurrencyUI()
 		-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale - 20,    // Posición Y
 		&section
 	);
-
-	
 
 	// Texto que muestra el número de monedas
 	std::string currencyText = std::to_string(player->currencyManager->GetCurrency());
