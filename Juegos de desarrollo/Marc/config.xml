@@ -180,7 +180,7 @@
 			</shot>
 			<enemies>
 				<skeleton x="100" y="420" w="48" h="48" texture="Assets/Textures/Enemies/Undead/SwordsMan-reorganized_spritesheet.png">
-					<properties speed="1" chaseArea="100" attackArea="20" jumpForce="0.3f" attackTime="1.0f" deathTime="1.5f" lives="3" pushForce="1" pushFriction="5" lootAmount="5" canPush="true" />
+					<properties speed="1" chaseArea="400" attackArea="20" jumpForce="0.3f" attackTime="1.0f" deathTime="1.5f" lives="3" pushForce="1" pushFriction="5" lootAmount="5" canPush="true" />
 					<animations>
 						<idle loop="true" speed="0.2f">
 							<frame x="0" y="0" w="48" h="48" />
@@ -297,24 +297,24 @@
 				<instances>
 					<lvl1>
 						<instance enemyType="skeleton" entityType="5">
-							<point x="2020" y=" 3432" />
-							<point x="1668" y=" 3432" />
-						</instance>
-						<instance enemyType="bat" entityType="4">
-							<point x="2268" y=" 3300" />
-							<point x="1668" y=" 3300" />
+							<point x="5210" y=" 2530" />
+							<point x="5210" y=" 2530" />
 						</instance>
 						<instance enemyType="skeleton" entityType="5">
-							<point x="2200" y="124" />
-							<point x="2000" y="130" />
-						</instance>
-						<instance enemyType="bat" entityType="4">
-							<point x="1618" y="176" />
-							<point x="1696" y="176" />
+							<point x="4642" y=" 920" />
+							<point x="4642" y=" 920" />
 						</instance>
 						<instance enemyType="skeleton" entityType="5">
-							<point x="1505" y="432" />
-							<point x="1713" y="432" />
+							<point x="7530" y="3625" />
+							<point x="7530" y="3625" />
+						</instance>
+						<instance enemyType="skeleton" entityType="5">
+							<point x="7400" y="4500" />
+							<point x="7400" y="4500" />
+						</instance>
+						<instance enemyType="skeleton" entityType="5">
+							<point x="9630" y="1370" />
+							<point x="9630" y="1370" />
 						</instance>
 					</lvl1>
 				</instances>
