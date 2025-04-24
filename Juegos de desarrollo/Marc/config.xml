@@ -298,11 +298,11 @@
 					<lvl1>
 						<instance enemyType="skeleton" entityType="5">
 							<point x="2020" y=" 3432" />
-							<point x="2020" y=" 3432" />
+							<point x="1668" y=" 3432" />
 						</instance>
 						<instance enemyType="bat" entityType="4">
 							<point x="2268" y=" 3300" />
-							<point x="2268" y=" 3300" />
+							<point x="1668" y=" 3300" />
 						</instance>
 						<instance enemyType="skeleton" entityType="5">
 							<point x="2200" y="124" />
