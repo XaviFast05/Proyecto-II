@@ -147,6 +147,7 @@ bool GroundEnemy::Update(float dt) {
 
 
 
+
 			Vector2D playerPos = player->pbody->GetPhysBodyWorldPosition();
 			Vector2D playerPosCenteredOnTile = Engine::GetInstance().map.get()->WorldToWorldCenteredOnTile(playerPos.getX(), playerPos.getY());
 
@@ -237,7 +238,6 @@ bool GroundEnemy::Update(float dt) {
 		switch (state) {
 			break;
 		case CHASING:
-			currentAnimation = &walk;
 			break;
 		case PATROL:
 			currentAnimation = &walk;
@@ -250,6 +250,13 @@ bool GroundEnemy::Update(float dt) {
 			break;
 		default:
 			break;
+		}
+
+		if (pbody->body->GetLinearVelocity().LengthSquared() == 0 && state != DEAD) {
+			currentAnimation = &idle;
+		}
+		if (pbody->body->GetLinearVelocity().LengthSquared() != 0 && state != DEAD) {
+			currentAnimation = &walk;
 		}
 
 		//DIRECTION
@@ -286,10 +293,10 @@ bool GroundEnemy::Update(float dt) {
 
 
 			if (dir == LEFT) {
-				Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
+				Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY() + 10, &currentAnimation->GetCurrentFrame());
 			}
 			else if (dir == RIGHT) {
-				Engine::GetInstance().render.get()->DrawTextureFlipped(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
+				Engine::GetInstance().render.get()->DrawTextureFlipped(texture, (int)position.getX(), (int)position.getY() + 10, &currentAnimation->GetCurrentFrame());
 			}
 		}
 

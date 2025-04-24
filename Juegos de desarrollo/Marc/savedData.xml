@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <savedData saved="true" level="1" time="4.10140848" startBossFight="false" bossKilled="false">
 	<lvl1>
-		<player x="150" y="3400" lives="3" transformable="false" transformed="false" candies="0" />
-		<enemy0 dead="false" x="2016" y="3423" />
-		<enemy1 dead="false" x="2272" y="3296" />
-		<enemy2 dead="false" x="2208" y="96" />
-		<enemy3 dead="false" x="1632" y="159" />
-		<enemy4 dead="false" x="1504" y="416" />
+		<player x="3716" y="2454" lives="3" transformable="false" transformed="false" candies="0" />
+		<enemy0 dead="false" x="5216" y="2529" />
+		<enemy1 dead="false" x="4640" y="907" />
+		<enemy2 dead="false" x="7519" y="3617" />
+		<enemy3 dead="false" x="7392" y="4513" />
+		<enemy4 dead="false" x="9632" y="1475" />
 		<checkPoint0 alight="true" x="" y="" />
 		<checkPoint1 alight="true" x="" y="" />
 	</lvl1>
