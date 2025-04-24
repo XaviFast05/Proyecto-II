@@ -433,7 +433,6 @@ bool Player::Update(float dt)
 			resetAnimation = true;
 		}
 		currentAnim = &idle;
-		LOG("IDLE");
 		break;
 	case RUN:
 		currentAnim = &walk;
@@ -493,7 +492,6 @@ bool Player::Update(float dt)
 			currentAnim->Reset();
 			resetAnimation = false;
 		}
-		LOG("DEAD");
 		break;
 	}
 
@@ -571,7 +569,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 				pbody->body->SetLinearVelocity(b2Vec2(0, 0));
 				pbody->body->ApplyLinearImpulseToCenter(pushVec, true);
-				LOG("AUCH");
 			}
 			
 		}
