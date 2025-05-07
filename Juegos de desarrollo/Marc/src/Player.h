@@ -27,6 +27,7 @@ enum state {
 	THROW,
 	CHOP,
 	DASH,
+	CHARGED,
 	HURT,
 	DEAD
 };
@@ -112,6 +113,7 @@ public:
 	bool godMode;
 	bool canClimb;
 	bool reachedCheckPoint;
+	bool canHurt = true;
 	
 	Timer respawnTimer;
 	float respawnTime;
@@ -156,8 +158,12 @@ public:
 	bool canDash = true;
 
 	Timer dashCooldownTimer;
-	float dashCooldownTimerMax = 0.3;
+	float dashCooldownTimerMax = 0.5;
 	bool dashCooldownTimerOn = false;
+
+	bool charging = false;
+	Timer chargeAttackTimer;
+	float chargeAttackTimerMax = 0.5;
 
 	PhysBody* meleeArea;
 	Timer meleeTimer;

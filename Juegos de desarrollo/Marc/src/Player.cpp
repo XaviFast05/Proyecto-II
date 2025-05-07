@@ -210,13 +210,6 @@ bool Player::Update(float dt)
 			return true;
 		}
 
-		//printf("POSITION X: %f\n", position.getX());
-		//printf("POSITION Y: %f\n", position.getY());
-		// POSITION X: 4235.000000
-		// POSITION Y : 832.000000
-		// 
-		// POSITION X: 8931.000000
-		// POSITION Y : 4480.000000
 		//CHANGERS
 		if (playerState == DEAD) {
 		}
@@ -245,6 +238,7 @@ bool Player::Update(float dt)
 			stateTimer.Start();
 			playerState = CHOP;
 
+			charging = true;
 			meleeTimer.Start();
 			meleeTimerOn = true;
 		}
@@ -267,6 +261,11 @@ bool Player::Update(float dt)
 			pbody->body->SetLinearVelocity(b2Vec2_zero);
 			if (dir == RIGHT) pbody->body->ApplyLinearImpulseToCenter(b2Vec2(dashForce, 0), true);
 			else if (dir == LEFT) pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-dashForce, 0), true);
+
+			if (grounded && (playerState == IDLE || playerState == RUN)) {
+				dashCooldownTimerOn = true;
+				dashCooldownTimer.Start();
+			}
 
 			canDash = false;
 			dashTimer.Start();
@@ -294,18 +293,15 @@ bool Player::Update(float dt)
 				dashTimerOn = false;
 			}
 		}
-		if (canDash == false && dashCooldownTimerOn == false) {
-			if (grounded && (playerState == IDLE || playerState == RUN)) {
-				dashCooldownTimerOn = true;
-				dashCooldownTimer.Start();
-			}
-		}
+
+		//DASH PREVENT SPAMMING LOGIC
 		if (dashCooldownTimerOn) {
 			if (dashCooldownTimer.ReadSec() > dashCooldownTimerMax) {
 				dashCooldownTimerOn = false;
 				canDash = true;
 			}
 		}
+		else if (grounded && (playerState == IDLE || playerState == RUN)) canDash = true;
 
 		//PLUS JUMP LOGIC
 		if (plusJumpTimerOn) {
@@ -332,7 +328,6 @@ bool Player::Update(float dt)
 				meleeTimerOn = false;
 			}
 		}
-
 		if (respawnHeal == true) respawnHeal = false;
 
 		//LOGIC & SFX
@@ -410,9 +405,15 @@ bool Player::Update(float dt)
 				playSound = false;
 			}
 			if (CheckMoveX() && !grounded) MoveX();
+
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_UP) charging = false;
 			if (stateTimer.ReadSec() >= pickaxeTimerAnimation)
 			{
-				playerState = IDLE;
+				if (charging == true) {
+					playerState == CHARGED;
+					chargeAttackTimer.Start();
+				}
+				else playerState = IDLE;
 				if (playSound == false) {
 					playSound = true;
 				}
@@ -433,14 +434,16 @@ bool Player::Update(float dt)
 			}
 			break;
 		case DEAD:
-		{
 			pbody->body->SetLinearVelocity(b2Vec2(0, 0));
 			if (respawnTimer.ReadSec() >= respawnTime) {
 				Engine::GetInstance().scene.get()->LoadState();
 				playerState = IDLE;
 				hits = 3;
 			}
-		}
+			break;
+		case CHARGED:
+			if (chargeAttackTimer.ReadSec() > chargeAttackTimerMax) playerState = IDLE;
+			break;
 		default:
 			break;
 		}
@@ -590,7 +593,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::ENEMY:
 		LOG("Collision ENEMY");
-		if (!godMode) {
+		if (!godMode || !canHurt) {
 			if (playerState != DEAD) {
 				//HURT LOGIC
 				if (hits >= 1 && playerState != HURT) DamagePlayer();
