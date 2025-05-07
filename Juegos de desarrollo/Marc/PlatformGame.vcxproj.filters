@@ -87,9 +87,6 @@
     <ClCompile Include="src\Physics.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\Pumpkin.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
     <ClCompile Include="src\Pathfinding.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
@@ -100,9 +97,6 @@
       <Filter>Source Files\Game\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="src\Particle.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Candy.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
     <ClCompile Include="src\FadeToBlack.cpp">
@@ -168,6 +162,24 @@
     <ClCompile Include="src\Intro.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\CurrencyOrb.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CurrencyManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CheckPoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SoulRock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Intro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Audio.h">
@@ -221,9 +233,6 @@
     <ClInclude Include="src\Physics.h">
       <Filter>Source Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\Pumpkin.h">
-      <Filter>Source Files\Game</Filter>
-    </ClInclude>
     <ClInclude Include="src\Animation.h">
       <Filter>Source Files\Utils</Filter>
     </ClInclude>
@@ -237,9 +246,6 @@
       <Filter>Source Files\Game\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="src\Particle.h">
-      <Filter>Source Files\Game</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Candy.h">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
     <ClInclude Include="src\FadeToBlack.h">
@@ -296,6 +302,12 @@
       <Filter>Source Files\Engine\Gui</Filter>
     </ClInclude>
     <ClInclude Include="src\Intro.h" />
+    <ClInclude Include="src\CurrencyOrb.h" />
+    <ClInclude Include="src\CurrencyManager.h" />
+    <ClInclude Include="src\CheckPoint.h" />
+    <ClInclude Include="src\SoulRock.h" />
+    <ClInclude Include="src\Intro.h" />
+    <ClInclude Include="src\TextManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="config.xml">
