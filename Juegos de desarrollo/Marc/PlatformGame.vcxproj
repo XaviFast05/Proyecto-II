@@ -149,9 +149,11 @@
     <None Include="vcpkg.json" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Ally.cpp" />
+    <ClCompile Include="Merchant.cpp" />
+    <ClCompile Include="src\Ally.cpp" />
     <ClCompile Include="src\CurrencyOrb.cpp" />
     <ClCompile Include="src\CurrencyManager.cpp" />
+    <ClCompile Include="src\Merchant.cpp" />
     <ClCompile Include="src\PickaxeManager.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
     <ClCompile Include="src\DeathMenu.cpp" />
@@ -191,9 +193,11 @@
     <ClCompile Include="src\WinMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Ally.h" />
+    <ClInclude Include="Merchant.h" />
+    <ClInclude Include="src\Ally.h" />
     <ClInclude Include="src\CurrencyOrb.h" />
     <ClInclude Include="src\CurrencyManager.h" />
+    <ClInclude Include="src\Merchant.h" />
     <ClInclude Include="src\PickaxeManager.h" />
     <ClInclude Include="src\Bullet.h" />
     <ClInclude Include="src\DeathMenu.h" />

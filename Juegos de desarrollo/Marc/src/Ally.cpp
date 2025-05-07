@@ -39,7 +39,7 @@ bool Ally::Start() {
 	currentAnimation = &idle;
 
 	//Add a physics to an item - initialize the physics body
-	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX() + texH / 2, (int)position.getY() + texH / 2, texH / 2, bodyType::DYNAMIC);
+	pbody = Engine::GetInstance().physics.get()->CreateRectangleSensor((int)position.getX() + texH / 2, (int)position.getY() + texH / 2, texH / 2, bodyType::DYNAMIC);
 
 	//Assign collider type
 	pbody->ctype = ColliderType::ALLY;
@@ -47,11 +47,6 @@ bool Ally::Start() {
 
 	// Set the gravity of the body
 	if (!parameters.attribute("gravity").as_bool()) pbody->body->SetGravityScale(0);
-
-	dead = false;
-
-	currencyManager = new CurrencyManager();
-	currencyManager->Start();
 
 	// Initialize pathfinding
 	pathfinding = new Pathfinding();
@@ -136,27 +131,17 @@ void Ally::SetPath(pugi::xml_node pathNode)
 
 void Ally::SaveData(pugi::xml_node AllyNode)
 {
-	AllyNode.attribute("dead").set_value(dead);
 	AllyNode.attribute("x").set_value(pbody->GetPhysBodyWorldPosition().getX());
 	AllyNode.attribute("y").set_value(pbody->GetPhysBodyWorldPosition().getY());
-	AllyNode.attribute("lives").set_value(lives);
 }
 
 
 void Ally::LoadData(pugi::xml_node AllyNode)
 {
 	pbody->SetPhysPositionWithWorld(AllyNode.attribute("x").as_float(), AllyNode.attribute("y").as_float());
-	dead = AllyNode.attribute("dead").as_bool();
-	lives = AllyNode.attribute("lives").as_int();
-	if (dead) {
-		state = DEAD;
-		pbody->body->SetEnabled(false);
-	}
-	else
-	{
-		state = CHASING;
-		pbody->body->SetEnabled(true);
-	}
+	state = PATROL;
+	pbody->body->SetEnabled(true);
+	
 }
 
 void Ally::Restart()

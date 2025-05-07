@@ -108,6 +108,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::SOUL_ROCK:
 		entity = new SoulRock();
 		break;
+	case EntityType::ALLY:
+		entity = new SoulRock();
+		break;
 	default:
 		break;
 	}

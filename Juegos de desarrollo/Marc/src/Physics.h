@@ -44,6 +44,7 @@ enum class ColliderType {
 	CLIMBINGWALL,
 	ORB,
 	SOUL_ROCK,
+	ALLY,
 	UNKNOWN
 };
 
