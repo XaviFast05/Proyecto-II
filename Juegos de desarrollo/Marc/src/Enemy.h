@@ -69,7 +69,8 @@ public:
 
 	virtual void Restart();
 
-	virtual void DMGEnemy();
+	virtual void DMGEnemyPickaxe();
+	virtual void DMGEnemyMelee();
 
 	void DropLoot();
 
@@ -110,8 +111,12 @@ public:
 	int attackArea;
 	int noSound;
 
+	int pickaxeDamage = 3;
+	int meleeDamage = 4;
+
 	Timer deathTimer;
 	float deathTime;
+	bool damaged = false;
 	bool dead;
 	bool playingSound;
 

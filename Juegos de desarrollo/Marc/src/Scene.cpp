@@ -14,6 +14,7 @@
 #include "Physics.h"
 #include "BatEnemy.h"
 #include "GroundEnemy.h"
+#include "ChildEnemy.h"
 #include "SoulRock.h"
 #include <string>
 #include "Particle.h"
@@ -24,7 +25,6 @@
 #include "MainMenu.h"
 #include "FadeToBlack.h"
 #include "Settings.h"
-#include "Santa.h"
 #include "DeathMenu.h"
 #include "WinMenu.h"
 #include "PickaxeManager.h"

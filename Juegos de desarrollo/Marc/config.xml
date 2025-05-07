@@ -223,95 +223,40 @@
 						</death>
 					</animations>
 				</skeleton>
-				<bat x="250" y="350" w="32" h="32" texture="Assets/Textures/Enemies/Bat/Vampire/BatVampire_Sheet.png">
-					<properties speed="1" chaseArea="100" deathTime="1.0f" lives="3" pushForce="1" pushFriction="5" lootAmount="5" canPush="true" />
+				<bat x="250" y="350" w="64" h="64" texture="Assets/Textures/Enemies/voladores.png">
+					<properties speed="2" chaseArea="400" deathTime="1.0f" lives="12" pushForce="1" pushFriction="5" lootAmount="1" canPush="true" />
 					<animations>
 						<idle loop="true" speed="0.2f">
-							<frame x="0" y="0" w="32" h="32" />
-							<frame x="32" y="0" w="32" h="32" />
-							<frame x="64" y="0" w="32" h="32" />
-							<frame x="96" y="0" w="32" h="32" />
+							<frame x="0" y="0" w="64" h="64" />
 						</idle>
 						<attack loop="true" speed="0.2f">
-							<frame x="0" y="32" w="32" h="32" />
-							<frame x="32" y="32" w="32" h="32" />
-							<frame x="64" y="32" w="32" h="32" />
-							<frame x="96" y="32" w="32" h="32" />
-							<frame x="128" y="32" w="32" h="32" />
-							<frame x="160" y="32" w="32" h="32" />
+							<frame x="0" y="0" w="64" h="64" />
 						</attack>
 						<hurt loop=" false" speed="0.2f">
-							<frame x="0" y="64" w="32" h="32" />
-							<frame x="32" y="64" w="32" h="32" />
-							<frame x="64" y="64" w="32" h="32" />
-							<frame x="96" y="64" w="32" h="32" />
+							<frame x="0" y="0" w="64" h="64" />
 						</hurt>
 						<death loop=" false" speed="0.1f">
-							<frame x="0" y="96" w="32" h="32" />
-							<frame x="32" y="96" w="32" h="32" />
-							<frame x="64" y="96" w="32" h="32" />
-							<frame x="96" y="96" w="32" h="32" />
-							<frame x="128" y="96" w="32" h="32" />
-							<frame x="192" y="96" w="32" h="32" />
-							<frame x="224" y="96" w="32" h="32" />
+							<frame x="64" y="0" w="64" h="64" />
 						</death>
 					</animations>
 				</bat>
-				<santa x="250" y="350" w="32" h="32" texture="Assets/Textures/Enemies/Santa_Boss/santa_sheet.png" lvl="1">
-					<properties speed="1" deathTime="1.0f" jumpRange="100" jumpCooldown="5" attackRange="30" attackTime="1" pushForce="0.5f" hurtTime="1.0f" lives="10" />
+				<child x="250" y="350" w="64" h="64" texture="Assets/Textures/Enemies/voladores.png">
+					<properties speed="4" chaseArea="400" deathTime="1.0f" lives="12" pushForce="1" pushFriction="5" lootAmount="2" canPush="true" />
 					<animations>
 						<idle loop="true" speed="0.2f">
-							<frame x="0" y="0" w="32" h="32" />
-							<frame x="32" y="0" w="32" h="32" />
-							<frame x="64" y="0" w="32" h="32" />
-							<frame x="96" y="0" w="32" h="32" />
-							<frame x="128" y="0" w="32" h="32" />
-							<frame x="160" y="0" w="32" h="32" />
+							<frame x="0" y="64" w="64" h="64" />
 						</idle>
-						<walk loop="true" speed="0.2f">&gt;
-							<frame x="0" y="32" w="32" h="32" />
-							<frame x="32" y="32" w="32" h="32" />
-							<frame x="64" y="32" w="32" h="32" />
-							<frame x="96" y="32" w="32" h="32" />
-							<frame x="128" y="32" w="32" h="32" />
-							<frame x="160" y="32" w="32" h="32" />
-						</walk>
-						<jump loop="false" speed="0.2f">&gt;
-							<frame x="0" y="64" w="32" h="32" />
-							<frame x="32" y="64" w="32" h="32" />
-							<frame x="64" y="64" w="32" h="32" />
-							<frame x="96" y="64" w="32" h="32" />
-							<frame x="128" y="64" w="32" h="32" />
-							<frame x="160" y="64" w="32" h="32" />
-						</jump>
-						<fall loop="false" speed="0.2f">&gt;
-							<frame x="192" y="64" w="32" h="32" />
-							<frame x="224" y="64" w="32" h="32" />
-						</fall>
-						<hurt loop="false" speed="0.2f">
-							<frame x="0" y="96" w="32" h="32" />
-							<frame x="32" y="96" w="32" h="32" />
-							<frame x="64" y="96" w="32" h="32" />
-						</hurt>
-						<attack loop="false" speed="0.2f">&gt;
-							<frame x="0" y="128" w="32" h="32" />
-							<frame x="32" y="128" w="32" h="32" />
-							<frame x="64" y="128" w="32" h="32" />
-							<frame x="96" y="128" w="32" h="32" />
-							<frame x="128" y="128" w="32" h="32" />
-							<frame x="160" y="128" w="32" h="32" />
+						<attack loop="true" speed="0.2f">
+							<frame x="0" y="64" w="64" h="64" />
 						</attack>
-						<death loop="false" speed="0.2f">&gt;
-							<frame x="0" y="224" w="32" h="32" />
-							<frame x="32" y="224" w="32" h="32" />
-							<frame x="64" y="224" w="32" h="32" />
-							<frame x="96" y="224" w="32" h="32" />
-							<frame x="128" y="224" w="32" h="32" />
-							<frame x="160" y="224" w="32" h="32" />
-							<frame x="192" y="224" w="32" h="32" />
+						<hurt loop=" false" speed="0.2f">
+							<frame x="0" y="64" w="64" h="64" />
+						</hurt>
+						<death loop=" false" speed="0.1f">
+							<frame x="64" y="64" w="64" h="64" />
 						</death>
 					</animations>
-				</santa>
+				</child>
 				<instances>
 					<lvl1>
 						<instance enemyType="skeleton" entityType="5">
@@ -333,6 +278,14 @@
 						<instance enemyType="skeleton" entityType="5">
 							<point x="9630" y="1370" />
 							<point x="9630" y="1370" />
+						</instance>
+						<instance enemyType="bat" entityType="4">
+							<point x="5315" y="2500" />
+							<point x="5315" y="2500" />
+						</instance>
+						<instance enemyType="child" entityType="9">
+							<point x="1150" y="3200" />
+							<point x="1150" y="3200" />
 						</instance>
 					</lvl1>
 				</instances>

@@ -1,25 +1,23 @@
-#include "GroundEnemy.h"
+#include "ChildEnemy.h"
 #include "Engine.h"
 #include "Textures.h"
-#include "Audio.h"
 #include "Physics.h"
 #include "Scene.h"
 #include "Player.h"
 #include "LOG.h"
+#include "Audio.h"
 #include "tracy/Tracy.hpp"
 
-GroundEnemy::GroundEnemy()
+ChildEnemy::ChildEnemy()
 {
 
 }
 
-GroundEnemy::~GroundEnemy() {
+ChildEnemy::~ChildEnemy() {
 
 }
 
-
-bool GroundEnemy::Start() {
-
+bool ChildEnemy::Start() {
 	texture = Engine::GetInstance().textures.get()->Load(parameters.attribute("texture").as_string());
 	position.setX(parameters.attribute("x").as_float());
 	position.setY(parameters.attribute("y").as_float());
@@ -28,31 +26,27 @@ bool GroundEnemy::Start() {
 	drawOffsetX = 0;
 	drawOffsetY = 0;
 
-	//INIT ANIMS
-	AddAnimation(idle, 0, texW, 1);
-	idle.speed = 0.2f;
-	
-
-	AddAnimation(walk, 0, texW, 4);
-	walk.speed = 0.2f;
-	
-
-	AddAnimation(attack, 48, texW, 4);
-	AddAnimation(attack, 0, texW, 1);
-	attack.speed = 0.1f;
-	attack.loop = false;
-
-	AddAnimation(death, 96, texW, 3);
-	death.speed = 0.2f;
-	death.loop = false;
 
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
-	walk.LoadAnimations(parameters.child("animations").child("walk"));
 	attack.LoadAnimations(parameters.child("animations").child("attack"));
+	hurt.LoadAnimations(parameters.child("animations").child("hurt"));
 	death.LoadAnimations(parameters.child("animations").child("death"));
 
+
+
 	currentAnimation = &idle;
-	attacked = false;
+
+	//this is meant to be in Enemy.cpp as both enemies use it, but it doesn't work for some reason
+	pugi::xml_document audioFile;
+	pugi::xml_parse_result result = audioFile.load_file("config.xml");
+	audioNode = audioFile.child("config").child("audio").child("fx");
+
+	//SFX LOAD
+	batWingsSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("batWingsSFX").attribute("path").as_string());
+	farBatWingsSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("farBatWings").attribute("path").as_string());
+	batDeathSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("batDeathSFX").attribute("path").as_string());
+	noSound = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("noSound").attribute("path").as_string());
+
 
 	//INIT ROUTE
 	for (int i = 0; i < route.size(); i++)
@@ -63,49 +57,37 @@ bool GroundEnemy::Start() {
 	destinationPoint = route[routeDestinationIndex];
 
 	//INIT PHYSICS
-	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(),  30, bodyType::DYNAMIC);
+	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), 16, bodyType::DYNAMIC);
 	pbody->ctype = ColliderType::ENEMY;
-	pbody->body->SetGravityScale(1.2f);
+	pbody->body->SetGravityScale(0);
 	pbody->body->SetFixedRotation(true);
-	pbody->listener = this;
 	pbody->body->SetTransform({ PIXEL_TO_METERS(destinationPoint.getX()), PIXEL_TO_METERS(destinationPoint.getY()) }, 0);
+	pbody->listener = this;
 
 	//INIT PATH
 	pathfinding = new Pathfinding();
 	ResetPath();
 
 	//INIT VARIABLES
-	state = PATROL;
 	speed = parameters.child("properties").attribute("speed").as_float();
 	chaseArea = parameters.child("properties").attribute("chaseArea").as_float();
-	attackArea = parameters.child("properties").attribute("attackArea").as_float();
-	jumpForce = parameters.child("properties").attribute("jumpForce").as_float();
-	attackTime = parameters.child("properties").attribute("attackTime").as_float();
 	deathTime = parameters.child("properties").attribute("deathTime").as_float();
 
 	pushForce = parameters.child("properties").attribute("pushForce").as_float();
 	pushFriction = parameters.child("properties").attribute("pushFriction").as_float();
 	lootAmount = parameters.child("properties").attribute("lootAmount").as_float();
 	droppedLoot = parameters.child("properties").attribute("droppedLoot").as_bool();
-	dir = LEFT;
+	state = PATROL;
 
-	//LOAD SFX
-	pugi::xml_document audioFile;
-	pugi::xml_parse_result result = audioFile.load_file("config.xml");
-	audioNode = audioFile.child("config").child("audio").child("fx");
-
-	swordSlashSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("swordSFX").attribute("path").as_string());
-	skeletonDeathSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("skeletonDeathSFX").attribute("path").as_string());
-
+	playingSound = false;
 	return true;
 }
 
-bool GroundEnemy::Update(float dt) {
-
+bool ChildEnemy::Update(float dt) {
 	ZoneScoped;
 
 	if (!dead) {
-		
+
 		if (!Engine::GetInstance().render.get()->InCameraView(pbody->GetPosition().getX() - texW, pbody->GetPosition().getY() - texH, texW, texH))
 		{
 			pbody->body->SetEnabled(false);
@@ -117,55 +99,28 @@ bool GroundEnemy::Update(float dt) {
 		}
 
 		if (!Engine::GetInstance().scene.get()->paused) {
-			dist = pbody->GetPhysBodyWorldPosition().distanceEuclidean(player->pbody->GetPhysBodyWorldPosition());
-
+			pbody->body->SetGravityScale(0);
 			//STATES CHANGERS
-			if (state != ATTACK && state != DEAD)
-			{
-				if (dist > chaseArea && state != PATROL)
+			if (state != DEAD) {
+				if (pbody->GetPhysBodyWorldPosition().distanceEuclidean(player->pbody->GetPhysBodyWorldPosition()) > chaseArea && state != PATROL)
 				{
 					state = PATROL;
 					ResetPath();
 					destinationPoint = route[routeDestinationIndex];
+
 				}
-				else if (dist <= chaseArea/* && state != CHASING*/)
+				else if (pbody->GetPhysBodyWorldPosition().distanceEuclidean(player->pbody->GetPhysBodyWorldPosition()) <= chaseArea && state != CHASING)
 				{
-					if (dist <= attackArea && state != ATTACK) {
-						state = ATTACK;
-						Engine::GetInstance().audio.get()->PlayFx(swordSlashSFX, 0, -1);
-						attackTimer.Start();
-						pbody->body->SetLinearVelocity({ 0,0 });
-						attack.Reset();
-					}
-					else if (state != CHASING)
-					{
-						state = CHASING;
-						ResetPath();
-					}
+					state = CHASING;
+					ResetPath();
 				}
 			}
-
-
-
-
-			Vector2D playerPos = player->pbody->GetPhysBodyWorldPosition();
-			Vector2D playerPosCenteredOnTile = Engine::GetInstance().map.get()->WorldToWorldCenteredOnTile(playerPos.getX(), playerPos.getY());
 
 			//STATES CONTROLER
-			if (state == DEAD) {
 
-				if (deathTimer.ReadSec() > deathTime) {
+			if (state == PATROL) {
 
-					pbody->body->SetEnabled(false);
-					dead = true;
-				}
-
-			}
-
-			else if (state == PATROL) {
-
-				Vector2D physPos = pbody->GetPhysBodyWorldPosition();
-				if (CheckIfTwoPointsNear(destinationPoint, { physPos.getX(), physPos.getY() }, 7))
+				if (CheckIfTwoPointsNear(destinationPoint, { (float)METERS_TO_PIXELS(pbody->body->GetPosition().x), (float)METERS_TO_PIXELS(pbody->body->GetPosition().y) }, 5))
 				{
 					routeDestinationIndex++;
 					if (routeDestinationIndex == route.size()) routeDestinationIndex = 0;
@@ -175,29 +130,42 @@ bool GroundEnemy::Update(float dt) {
 			}
 			else if (state == CHASING) {
 
+				Vector2D playerPos = player->pbody->GetPhysBodyWorldPosition();
+				Vector2D playerPosCenteredOnTile = Engine::GetInstance().map.get()->WorldToWorldCenteredOnTile(playerPos.getX(), playerPos.getY());
 				if (destinationPoint != playerPosCenteredOnTile)
 				{
 					destinationPoint = playerPosCenteredOnTile;
 					ResetPath();
 				}
 			}
-			else if (state == ATTACK) {
+			else if (state == DEAD) {
+				pbody->body->SetGravityScale(1);
 
-				if (attackTimer.ReadSec() > attackTime) {
-
-					state = PATROL;
+				if (deathTimer.ReadSec() > deathTime && !dead) {
+					pbody->body->SetEnabled(false);
+					dead = true;
 				}
 			}
 
 			//PATHFINDING CONTROLER
-			if (state == PATROL || state == CHASING)
-			{
+			if (state == PATROL || state == CHASING) {
+
+				if (pbody->GetPhysBodyWorldPosition().distanceEuclidean(player->pbody->GetPhysBodyWorldPosition()) <= (float)chaseArea * 1.5f && !playingSound) {
+					Engine::GetInstance().audio.get()->PlayFx(farBatWingsSFX, 1);
+					playingSound = true;
+				}
+				else if (pbody->GetPhysBodyWorldPosition().distanceEuclidean(player->pbody->GetPhysBodyWorldPosition()) >= chaseArea * 1.5f && playingSound) {
+					Engine::GetInstance().audio.get()->PlayFx(noSound, 1);
+					playingSound = false;
+				}
+
+
+
 				if (pathfinding->pathTiles.empty())
 				{
 					while (pathfinding->pathTiles.empty())
 					{
-						pathfinding->PropagateAStar(SQUARED, destinationPoint, Pathfinding::WALK);
-
+						pathfinding->PropagateAStar(SQUARED, destinationPoint);
 					}
 					pathfinding->pathTiles.pop_back();
 				}
@@ -206,6 +174,7 @@ bool GroundEnemy::Update(float dt) {
 
 					Vector2D nextTile = pathfinding->pathTiles.back();
 					Vector2D nextTileWorld = Engine::GetInstance().map.get()->MapToWorldCentered(nextTile.getX(), nextTile.getY());
+
 
 					if (CheckIfTwoPointsNear(nextTileWorld, { (float)METERS_TO_PIXELS(pbody->body->GetPosition().x), (float)METERS_TO_PIXELS(pbody->body->GetPosition().y) }, 3)) {
 
@@ -216,31 +185,35 @@ bool GroundEnemy::Update(float dt) {
 						Vector2D nextTilePhysics = { PIXEL_TO_METERS(nextTileWorld.getX()),PIXEL_TO_METERS(nextTileWorld.getY()) };
 						b2Vec2 direction = { nextTilePhysics.getX() - pbody->body->GetPosition().x, nextTilePhysics.getY() - pbody->body->GetPosition().y };
 						direction.Normalize();
-						pbody->body->SetLinearVelocity({ direction.x * speed, pbody->body->GetLinearVelocity().y });
+						pbody->body->SetLinearVelocity({ direction.x * speed, direction.y * speed });
 					}
-				}
-				Vector2D currentTile = Engine::GetInstance().map.get()->WorldToMap(pbody->GetPhysBodyWorldPosition().getX(), pbody->GetPhysBodyWorldPosition().getY());
-
-				if (pathfinding->IsJumpable(currentTile.getX(), currentTile.getY()) && VALUE_NEAR_TO_0(pbody->body->GetLinearVelocity().LengthSquared()))
-				{
-					pbody->body->ApplyLinearImpulseToCenter({ 0, -jumpForce }, true);
 				}
 			}
 
-		} 
-		else 
-		{
-			pbody->body->SetLinearVelocity({ 0,0 });
+
+
 
 		}
-	
+		else {
+
+			pbody->body->SetLinearVelocity({ 0,0 });
+		}
+
+
+		if (pbody->body->GetLinearVelocity().x > 0.2f) {
+			dir = RIGHT;
+		}
+		else if (pbody->body->GetLinearVelocity().x < -0.2f) {
+			dir = LEFT;
+		}
 
 		switch (state) {
 			break;
 		case CHASING:
+			currentAnimation = &attack;
 			break;
 		case PATROL:
-			currentAnimation = &walk;
+			currentAnimation = &idle;
 			break;
 		case ATTACK:
 			currentAnimation = &attack;
@@ -252,21 +225,6 @@ bool GroundEnemy::Update(float dt) {
 			break;
 		}
 
-		if (pbody->body->GetLinearVelocity().LengthSquared() == 0 && state != DEAD) {
-			currentAnimation = &idle;
-		}
-		if (pbody->body->GetLinearVelocity().LengthSquared() != 0 && state != DEAD) {
-			currentAnimation = &walk;
-		}
-
-		//DIRECTION
-		if (pbody->body->GetLinearVelocity().x > 0.2f) {
-			dir = RIGHT;
-		}
-		else if (pbody->body->GetLinearVelocity().x < -0.2f) {
-			dir = LEFT;
-		}
-
 		if (state == DEAD && !droppedLoot) {
 			DropLoot();
 			pbody->ctype = ColliderType::DEADENEMY;
@@ -276,7 +234,6 @@ bool GroundEnemy::Update(float dt) {
 		//DRAW
 
 		if (pbody->body->IsEnabled()) {
-
 			if (Engine::GetInstance().GetDebug())
 			{
 				Engine::GetInstance().render.get()->DrawCircle(position.getX() + texW / 2, position.getY() + texH / 2, chaseArea * 2, 255, 255, 255);
@@ -288,24 +245,23 @@ bool GroundEnemy::Update(float dt) {
 
 			b2Transform pbodyPos = pbody->body->GetTransform();
 			position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texW / 2 + drawOffsetX);
-			position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 1.5 + drawOffsetY);
-
-
-
+			position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2 + drawOffsetY);
 			if (dir == LEFT) {
-				Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY() + 10, &currentAnimation->GetCurrentFrame());
+				Engine::GetInstance().render.get()->DrawTextureFlipped(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
 			}
 			else if (dir == RIGHT) {
-				Engine::GetInstance().render.get()->DrawTextureFlipped(texture, (int)position.getX(), (int)position.getY() + 10, &currentAnimation->GetCurrentFrame());
+				Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
 			}
 		}
 
 	}
-	
+
+
+
 	return true;
 }
 
-void GroundEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
+void ChildEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 	bool push = false;
 
 	switch (physB->ctype) {

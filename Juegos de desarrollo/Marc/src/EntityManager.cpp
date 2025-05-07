@@ -7,8 +7,8 @@
 #include "CheckPoint.h"
 #include "BatEnemy.h"
 #include "GroundEnemy.h"
+#include "ChildEnemy.h"
 #include "Particle.h"
-#include "Santa.h"
 #include "SoulRock.h"
 #include "Bullet.h"
 #include "CurrencyOrb.h"
@@ -96,8 +96,8 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::GROUND_ENEMY:
 		entity = new GroundEnemy();
 		break;
-	case EntityType::BOSS:
-		entity = new Santa();
+	case EntityType::CHILD_ENEMY:
+		entity = new ChildEnemy();
 		break;
 	case EntityType::SHOT:
 		entity = new Bullet();
@@ -140,8 +140,10 @@ std::list<Entity*> EntityManager::CreatePooledEntities(EntityType type, int num)
 		case EntityType::GROUND_ENEMY:
 			entity = new GroundEnemy();
 			break;
+		case EntityType::CHILD_ENEMY:
+			entity = new ChildEnemy();
+			break;
 		case EntityType::BOSS:
-			entity = new Santa();
 			break;
 		case EntityType::SHOT:
 			entity = new Bullet();
@@ -186,8 +188,10 @@ Entity* EntityManager::CreatePooledEntities(EntityType type)
 	case EntityType::GROUND_ENEMY:
 		entity = new GroundEnemy();
 		break;
+	case EntityType::CHILD_ENEMY:
+		entity = new ChildEnemy();
+		break;
 	case EntityType::BOSS:
-		entity = new Santa();
 		break;
 	case EntityType::SHOT:
 		entity = new Bullet();

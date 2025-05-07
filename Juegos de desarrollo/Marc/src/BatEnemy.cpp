@@ -57,7 +57,7 @@ bool BatEnemy::Start() {
 	destinationPoint = route[routeDestinationIndex];
 
 	//INIT PHYSICS
-	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), 32 / 4, bodyType::DYNAMIC);
+	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), 16, bodyType::DYNAMIC);
 	pbody->ctype = ColliderType::ENEMY;
 	pbody->body->SetGravityScale(0);
 	pbody->body->SetFixedRotation(true);
@@ -268,12 +268,12 @@ void BatEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::WEAPON:
 		break;
 	case ColliderType::PICKAXE:
-		if (state != DEAD) 	DMGEnemy();
+		if (state != DEAD) 	DMGEnemyPickaxe();
 		break;
 	case ColliderType::MELEE_AREA:
 		if (state != DEAD) {
 			if (canPush) push = true;
-			DMGEnemy();
+			DMGEnemyMelee();
 		}
 		break;
 	case ColliderType::SPYKE:
