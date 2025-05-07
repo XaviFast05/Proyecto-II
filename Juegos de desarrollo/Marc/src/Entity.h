@@ -15,6 +15,7 @@ enum class EntityType
 	BOSS,
 	CURRENCY_ORB,
 	SOUL_ROCK,
+	ALLY,
 	UNKNOWN
 };
 
