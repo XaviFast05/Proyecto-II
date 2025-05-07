@@ -29,8 +29,8 @@ public:
 		RIGHT
 	};
 
-	Allie();
-	virtual ~Allie();
+	Ally();
+	virtual ~Ally();
 
 	bool Awake();
 
