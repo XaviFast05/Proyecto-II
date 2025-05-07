@@ -26,6 +26,7 @@ enum state {
 	PUNCH,
 	THROW,
 	CHOP,
+	DASH,
 	HURT,
 	DEAD
 };
@@ -142,11 +143,21 @@ public:
 
 	Timer coyoteTimer;
 	bool coyoteTimerOn = false;
-	float coyoteTimerMax = 0.15;
+	float coyoteTimerMax = 0.1;
 
 	Timer plusJumpTimer;
 	bool plusJumpTimerOn = false;
 	float plusJumpTimerMax = 0.2; // 0.15 - 0.2 to adjust
+
+	Timer dashTimer;
+	float dashTimerMax = 0.2;
+	bool dashTimerOn = false;
+	float dashForce = 10;
+	bool canDash = true;
+
+	Timer dashCooldownTimer;
+	float dashCooldownTimerMax = 0.3;
+	bool dashCooldownTimerOn = false;
 
 	PhysBody* meleeArea;
 	Timer meleeTimer;

@@ -232,7 +232,6 @@ bool Player::Update(float dt)
 			grounded = false;
 			plusJumpTimer.Start();
 			plusJumpTimerOn = true;
-
 		}
 		else if (pbody->body->GetLinearVelocity().y > 0.001 && stateFlow[playerState][FALL]) {
 			if (playerState == RUN) {
@@ -264,6 +263,16 @@ bool Player::Update(float dt)
 			stateTimer.Start();
 			playerState = THROW;
 		}
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN && stateFlow[playerState][DASH] && canDash == true) {
+			pbody->body->SetLinearVelocity(b2Vec2_zero);
+			if (dir == RIGHT) pbody->body->ApplyLinearImpulseToCenter(b2Vec2(dashForce, 0), true);
+			else if (dir == LEFT) pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-dashForce, 0), true);
+
+			canDash = false;
+			dashTimer.Start();
+			dashTimerOn = true;
+			playerState = DASH;
+		}
 
 		//COYOTE TIME LOGIC
 		if (coyoteTimerOn) {
@@ -276,6 +285,26 @@ bool Player::Update(float dt)
 				plusJumpTimerOn = true;
 			}
 			if (coyoteTimer.ReadSec() >= coyoteTimerMax) coyoteTimerOn = false;
+		}
+
+		//DASH LOGIC
+		if (dashTimerOn) {
+			if (dashTimer.ReadSec() > dashTimerMax) {
+				playerState = IDLE;
+				dashTimerOn = false;
+			}
+		}
+		if (canDash == false && dashCooldownTimerOn == false) {
+			if (grounded && (playerState == IDLE || playerState == RUN)) {
+				dashCooldownTimerOn = true;
+				dashCooldownTimer.Start();
+			}
+		}
+		if (dashCooldownTimerOn) {
+			if (dashCooldownTimer.ReadSec() > dashCooldownTimerMax) {
+				dashCooldownTimerOn = false;
+				canDash = true;
+			}
 		}
 
 		//PLUS JUMP LOGIC
@@ -411,13 +440,14 @@ bool Player::Update(float dt)
 				playerState = IDLE;
 				hits = 3;
 			}
-
 		}
 		default:
 			break;
 		}
 
-		velocity = { velocity.x, pbody->body->GetLinearVelocity().y };
+		if (playerState == DASH) velocity = { pbody->body->GetLinearVelocity().x, 0 };
+		else velocity = { velocity.x, pbody->body->GetLinearVelocity().y };
+
 		pbody->body->SetLinearVelocity(velocity);
 	}
 
@@ -478,7 +508,12 @@ bool Player::Update(float dt)
 		}
 		break;
 
-
+	case DASH:
+		currentAnim = &idle;
+		if (resetAnimation == true) {
+			currentAnim->Reset();
+			resetAnimation = false;
+		}
 	case HURT:
 		currentAnim = &hurt;
 		if (resetAnimation == true) {
