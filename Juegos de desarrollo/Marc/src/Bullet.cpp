@@ -13,7 +13,7 @@
 #include "Scene.h"
 
 Bullet::Bullet(BulletType type)
-    : Entity(EntityType::PICKAXE),
+    : Entity(EntityType::SHOT),
     direction(1, 0),
     pbody(nullptr),
     texW(0),

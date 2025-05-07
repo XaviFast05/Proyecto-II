@@ -74,9 +74,9 @@ public:
     int iterations;
 
     
-    int blockedGid = 296; //Gid of the tiles that block the path - Important adjust this value to your map
-    int walkableGid = 297; //Gid of the tiles that block the path - Important adjust this value to your map
-    int jumpableGid = 298; //Gid of the tiles that block the path - Important adjust this value to your map
+    int blockedGid = 582; //Gid of the tiles that block the path - Important adjust this value to your map
+    int walkableGid = 583; //Gid of the tiles that block the path - Important adjust this value to your map
+    int jumpableGid = 584; //Gid of the tiles that block the path - Important adjust this value to your map
     int highCostGid = 50; //Gid of the tiles that have high cost - Important adjust this value to your map
     int checkPointGid = 295;
 };

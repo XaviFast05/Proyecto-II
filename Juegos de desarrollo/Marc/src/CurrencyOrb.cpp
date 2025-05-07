@@ -11,13 +11,13 @@ CurrencyOrb::CurrencyOrb() : Entity(EntityType::CURRENCY_ORB)
 bool CurrencyOrb::Start(bool createBody)
 {
     SetParameters(Engine::GetInstance().scene.get()->configParameters);
-    texture = Engine::GetInstance().textures.get()->Load(parameters.attribute("texture").as_string());
-    texW = parameters.attribute("w").as_int();
-    texH = parameters.attribute("h").as_int();
+ //   texture = Engine::GetInstance().textures.get()->Load(parameters.child("properties").attribute("texture").as_string());
+ //   texW = parameters.child("properties").attribute("w").as_float();
+ //   texH = parameters.child("properties").attribute("h").as_float();
 
-	orbSmall.LoadAnimations(parameters.child("animations").child("orbSmall"));
-	orbMedium.LoadAnimations(parameters.child("animations").child("orbMedium"));
-	orbBig.LoadAnimations(parameters.child("animations").child("orbBig"));
+	//orbSmall.LoadAnimations(parameters.child("animations").child("orbSmall"));
+	//orbMedium.LoadAnimations(parameters.child("animations").child("orbMedium"));
+	//orbBig.LoadAnimations(parameters.child("animations").child("orbBig"));
 
     int radius = 1;
     if (createBody) {
@@ -27,19 +27,19 @@ bool CurrencyOrb::Start(bool createBody)
             texW = 16;
             texH = 16;
             radius = 8;
-			currentAnimation = &orbSmall;
+            texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/Orb.png");
             break;
         case 2:
             texW = 32;
             texH = 32;
             radius = 14;
-            currentAnimation = &orbMedium;
+            texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/OrbMedium.png");
             break;
         case 3:
             texW = 64;
             texH = 64;
             radius = 20;
-            currentAnimation = &orbBig;
+            texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/OrbBig.png");
             break;
         default:
             break;
@@ -58,7 +58,7 @@ bool CurrencyOrb::Start(bool createBody)
         b2Vec2 direction = b2Vec2(velX, -velY);
         pbody->body->ApplyLinearImpulseToCenter(direction, true);
 
-        // Establecer tipo de colisión
+        // Establecer tipo de colisiï¿½n
         pbody->ctype = ColliderType::ORB;
         pbody->body->SetEnabled(true);
 
@@ -79,6 +79,7 @@ bool CurrencyOrb::Start(bool createBody)
 
 bool CurrencyOrb::Update(float dt)
 {
+	//currentFrame = currentAnimation->GetCurrentFrame();
     direction = { player->pbody->body->GetPosition().x - pbody->body->GetPosition().x, player->pbody->body->GetPosition().y - pbody->body->GetPosition().y };
     float distance = direction.magnitude();
     if (distance < distToStartMoving)
@@ -101,7 +102,7 @@ bool CurrencyOrb::Update(float dt)
         
     position.setX(pbody->GetPhysBodyWorldPosition().getX() - texW/2);
     position.setY(pbody->GetPhysBodyWorldPosition().getY() - texH/2);
-    Engine::GetInstance().render.get()->DrawTexture(texture, position.getX(), position.getY(), &currentFrame);
+    Engine::GetInstance().render.get()->DrawTexture(texture, position.getX(), position.getY());
 
     if (disable)
     {

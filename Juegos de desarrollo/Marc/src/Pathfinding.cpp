@@ -20,7 +20,7 @@ Pathfinding::Pathfinding() {
 }
 
 Pathfinding::~Pathfinding() {
-    
+
 }
 
 // L11: BFS Pathfinding methods
@@ -66,7 +66,7 @@ void Pathfinding::DrawPath() {
     // Draw visited
     for (const auto& pathTile : visited) {
         Vector2D pathTileWorld = Engine::GetInstance().map.get()->MapToWorld(pathTile.getX(), pathTile.getY());
-        SDL_Rect rect = { 0,0,16,16 };
+        SDL_Rect rect = { 0,0,64,64 };
         Engine::GetInstance().render.get()->DrawTexture(pathTex, pathTileWorld.getX(), pathTileWorld.getY(), &rect);
     }
 
@@ -83,7 +83,7 @@ void Pathfinding::DrawPath() {
         //Get the position of the frontier tile in the world
         Vector2D pos = Engine::GetInstance().map.get()->MapToWorld(frontierTile.getX(), frontierTile.getY());
         //Draw the frontier tile
-        SDL_Rect rect = { 0,0,16,16 };
+        SDL_Rect rect = { 0,0,64,64 };
         Engine::GetInstance().render.get()->DrawTexture(pathTex, pos.getX(), pos.getY(), &rect);
         //Remove the front element from the queue
         frontierCopy.pop();
@@ -102,7 +102,7 @@ void Pathfinding::DrawPath() {
         //Get the position of the frontier tile in the world
         Vector2D pos = Engine::GetInstance().map.get()->MapToWorld(frontierTile.getX(), frontierTile.getY());
         //Draw the frontier tile
-        SDL_Rect rect = { 0,0,16,16 };
+        SDL_Rect rect = { 0,0,64,64 };
         Engine::GetInstance().render.get()->DrawTexture(pathTex, pos.getX(), pos.getY(), &rect);
         //Remove the front element from the queue
         frontierDijkstraCopy.pop();
@@ -121,7 +121,7 @@ void Pathfinding::DrawPath() {
         //Get the position of the frontier tile in the world
         Vector2D pos = Engine::GetInstance().map.get()->MapToWorld(frontierTile.getX(), frontierTile.getY());
         //Draw the frontier tile
-        SDL_Rect rect = { 17,0,16,16 };
+        SDL_Rect rect = { 68,0,64,64 };
         Engine::GetInstance().render.get()->DrawTexture(pathTex, pos.getX(), pos.getY(), &rect);
         //Remove the front element from the queue
         frontierAStarCopy.pop();
@@ -131,7 +131,7 @@ void Pathfinding::DrawPath() {
     // Draw path
     for (const auto& pathTile : pathTiles) {
         Vector2D pathTileWorld = map->MapToWorld(pathTile.getX(), pathTile.getY());
-        Engine::GetInstance().render.get()->DrawTexture(tileX, pathTileWorld.getX(), pathTileWorld.getY());
+        Engine::GetInstance().render.get()->DrawTexture(tileX, pathTileWorld.getX()+2, pathTileWorld.getY()+2);
     }
 }
 
@@ -157,7 +157,7 @@ bool Pathfinding::IsFlyable(int x, int y) {
 
 bool Pathfinding::CleanUp()
 {
-    
+
     return true;
 }
 
@@ -333,7 +333,7 @@ void Pathfinding::PropagateAStar(ASTAR_HEURISTICS heuristic, Vector2D destinatio
         Vector2D frontierTile = frontierAStar.top().second;
 
         if (frontierTile == destinationTile) {
-            
+
             foundDestination = true;
             // L12: TODO 2: When the destination is reach, call the function ComputePath
             ComputePath(frontierTile.getX(), frontierTile.getY());
@@ -360,7 +360,7 @@ void Pathfinding::PropagateAStar(ASTAR_HEURISTICS heuristic, Vector2D destinatio
             if (IsFlyable(frontierTile.getX() - 1, frontierTile.getY())) {
                 neighbors.push_back(Vector2D((int)frontierTile.getX() - 1, (int)frontierTile.getY()));
             }
-            if (IsFlyable(frontierTile.getX(), frontierTile.getY() -1)) {
+            if (IsFlyable(frontierTile.getX(), frontierTile.getY() - 1)) {
                 neighbors.push_back(Vector2D((int)frontierTile.getX(), (int)frontierTile.getY() - 1));
             }
         }
