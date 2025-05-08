@@ -69,7 +69,7 @@ public:
 
 	virtual void Restart();
 
-	virtual void DMGEnemy();
+	virtual void DMGEnemy(int damage);
 
 	void DropLoot();
 

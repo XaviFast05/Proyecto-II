@@ -211,7 +211,7 @@ bool Player::Update(float dt)
 		}
 
 		//CHANGERS
-		if (playerState == DEAD) {
+		if (playerState == DEAD || playerState == CHARGED) {
 		}
 		else if (playerState == HURT) {
 			if (hurtTimer.ReadSec() >= hurtTime) playerState = IDLE;
@@ -238,6 +238,7 @@ bool Player::Update(float dt)
 			stateTimer.Start();
 			playerState = CHOP;
 
+			if (meleeTimerOn) deleteCharged = true;
 			charging = true;
 			meleeTimer.Start();
 			meleeTimerOn = true;
@@ -312,12 +313,32 @@ bool Player::Update(float dt)
 			if (plusJumpTimer.ReadSec() >= plusJumpTimerMax) plusJumpTimerOn = false;
 		}
 
+		//CHARGED ATTACK LOGIC
+		if (chargedCooldown) {
+			if (chargedCooldownTimer.ReadSec() > chargedCooldownTimerMax) chargedCooldown = false;
+		}
+		if (playerState == CHARGED && meleeTimerOn == false && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_UP) {
+			meleeTimer.Start();
+			meleeTimerOn = true;
+		}
+
 		//MELEE ATTACKS LOGIC
 		if (meleeTimerOn) {
+			if (deleteCharged) {
+				meleeArea->body->SetEnabled(false);
+				deleteCharged = false;
+			}
 			if (meleeTimer.ReadSec() == 0.0) {
-				meleeDisplace = (dir == RIGHT) ? (2 * texW / 3 + MELEE_AREA_WIDTH / 2) : (texW / 3 - MELEE_AREA_WIDTH / 2);
-				meleeArea = Engine::GetInstance().physics.get()->CreateRectangleSensor((position.getX() + meleeDisplace), position.getY() + texH / 2, MELEE_AREA_WIDTH, texH, DYNAMIC);
-				meleeArea->ctype = ColliderType::MELEE_AREA;
+				if (playerState == CHARGED) {
+					meleeDisplace = (dir == RIGHT) ? (2 * texW / 3 + MELEE_AREA_WIDTH) : (texW / 3 - MELEE_AREA_WIDTH);
+					meleeArea = Engine::GetInstance().physics.get()->CreateRectangleSensor((position.getX() + meleeDisplace), position.getY() + texH / 2, MELEE_AREA_WIDTH * 2, texH * 1.5, DYNAMIC);
+					meleeArea->ctype = ColliderType::MELEE_AREA_CHARGED;
+				}
+				else {
+					meleeDisplace = (dir == RIGHT) ? (2 * texW / 3 + MELEE_AREA_WIDTH / 2) : (texW / 3 - MELEE_AREA_WIDTH / 2);
+					meleeArea = Engine::GetInstance().physics.get()->CreateRectangleSensor((position.getX() + meleeDisplace), position.getY() + texH / 2, MELEE_AREA_WIDTH, texH, DYNAMIC);
+					meleeArea->ctype = ColliderType::MELEE_AREA;
+				}
 			}
 			if (meleeTimer.ReadSec() < meleeTimerMax) {
 				b2Vec2 meleeAreaMovePos = b2Vec2(pbody->body->GetPosition().x + PIXEL_TO_METERS(meleeDisplace) - PIXEL_TO_METERS(texW/2), pbody->body->GetPosition().y);
@@ -409,9 +430,10 @@ bool Player::Update(float dt)
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_UP) charging = false;
 			if (stateTimer.ReadSec() >= pickaxeTimerAnimation)
 			{
-				if (charging == true) {
-					playerState == CHARGED;
+				if (charging == true && chargedCooldown == false) {
+					playerState = CHARGED;
 					chargeAttackTimer.Start();
+					break;
 				}
 				else playerState = IDLE;
 				if (playSound == false) {
@@ -442,7 +464,11 @@ bool Player::Update(float dt)
 			}
 			break;
 		case CHARGED:
-			if (chargeAttackTimer.ReadSec() > chargeAttackTimerMax) playerState = IDLE;
+			if (chargeAttackTimer.ReadSec() > chargeAttackTimerMax || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_UP) {
+				chargedCooldownTimer.Start();
+				chargedCooldown = true;
+				playerState = IDLE;
+			}
 			break;
 		default:
 			break;
@@ -512,6 +538,14 @@ bool Player::Update(float dt)
 		break;
 
 	case DASH:
+		//aquí poner animación dash
+		currentAnim = &idle;
+		if (resetAnimation == true) {
+			currentAnim->Reset();
+			resetAnimation = false;
+		}
+	case CHARGED:
+		//aquí poner animación ataque cargado
 		currentAnim = &idle;
 		if (resetAnimation == true) {
 			currentAnim->Reset();

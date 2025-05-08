@@ -145,25 +145,30 @@ public:
 
 	Timer coyoteTimer;
 	bool coyoteTimerOn = false;
-	float coyoteTimerMax = 0.1;
+	float coyoteTimerMax = 0.1; // margen de coyote time
 
 	Timer plusJumpTimer;
 	bool plusJumpTimerOn = false;
-	float plusJumpTimerMax = 0.2; // 0.15 - 0.2 to adjust
+	float plusJumpTimerMax = 0.2; // salto extra del salto
 
 	Timer dashTimer;
-	float dashTimerMax = 0.2;
+	float dashTimerMax = 0.2; // lo que dura el dash
 	bool dashTimerOn = false;
-	float dashForce = 10;
+	float dashForce = 10; // impulso de dash
 	bool canDash = true;
 
 	Timer dashCooldownTimer;
-	float dashCooldownTimerMax = 0.5;
+	float dashCooldownTimerMax = 0.5; // cooldown entre dashes
 	bool dashCooldownTimerOn = false;
 
 	bool charging = false;
 	Timer chargeAttackTimer;
-	float chargeAttackTimerMax = 0.5;
+	float chargeAttackTimerMax = 1; // lo que dura el ataque cargado de máximo
+
+	bool chargedCooldown = false;
+	Timer chargedCooldownTimer;
+	float chargedCooldownTimerMax = 5; // tiempo entre ataque cargado
+	bool deleteCharged = false;
 
 	PhysBody* meleeArea;
 	Timer meleeTimer;
