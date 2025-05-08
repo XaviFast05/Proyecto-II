@@ -17,13 +17,15 @@ bool TextManager::Awake()
 
     for (pugi::xml_node textNode : textsFile.child("Texts").children())
     {
-        std::string key = textNode.attribute("ID").as_string();
+        std::string key = textNode.attribute("id").as_string();
         std::vector<std::string> versions;
-        versions.push_back(textNode.attribute("ES").as_string());
-        versions.push_back(textNode.attribute("CA").as_string());
-        versions.push_back(textNode.attribute("EN").as_string());
 
-        if (versions.size() < 3) LOG("Incorrect xml format in text %s", key.c_str());
+        for (pugi::xml_node versionNode : textNode.children())
+        {
+            versions.push_back(versionNode.text().as_string());
+        }
+
+        if (versions.size() < 3) LOG("Incorrect xml format in text %", key.c_str());
 
         idToText.emplace(key, versions);
     }

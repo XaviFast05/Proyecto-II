@@ -238,6 +238,7 @@
   <ItemGroup>
     <Xml Include="config.xml" />
     <Xml Include="savedData.xml" />
+    <Xml Include="texts.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,20 +6,22 @@
 #include "Input.h"
 #include "Module.h"
 
-class TextManager : Module
+class TextManager : public Module
 {
 private:
 
     int languageIndex = 0;
     std::map<std::string, std::vector<std::string>> idToText;
 
+    
+
+public:
+
     TextManager(bool startEnabled);
-    virtual ~TextManager();
+    ~TextManager();
 
     bool Awake();
     bool Update();
-
-public:
 
     void ChangeIdiom(int idiom);
     std::string GetText(std::string id);
