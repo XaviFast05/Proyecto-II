@@ -317,7 +317,7 @@ bool Player::Update(float dt)
 		if (chargedCooldown) {
 			if (chargedCooldownTimer.ReadSec() > chargedCooldownTimerMax) chargedCooldown = false;
 		}
-		if (playerState == CHARGED && meleeTimerOn == false && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_UP) {
+		if (playerState == CHARGED && (meleeTimerOn == false && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_UP || chargeAttackTimer.ReadSec() > chargeAttackTimerMax)) {
 			meleeTimer.Start();
 			meleeTimerOn = true;
 		}
