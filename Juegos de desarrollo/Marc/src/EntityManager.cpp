@@ -8,6 +8,7 @@
 #include "BatEnemy.h"
 #include "GroundEnemy.h"
 #include "ChildEnemy.h"
+#include "JumpingEnemy.h"
 #include "Particle.h"
 #include "SoulRock.h"
 #include "Bullet.h"
@@ -99,6 +100,10 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::CHILD_ENEMY:
 		entity = new ChildEnemy();
 		break;
+	case EntityType::JUMPING_ENEMY:
+		entity = new JumpingEnemy();
+		LOG("Jumping enemy created");
+		break;
 	case EntityType::SHOT:
 		entity = new Bullet();
 		break;
@@ -142,6 +147,9 @@ std::list<Entity*> EntityManager::CreatePooledEntities(EntityType type, int num)
 			break;
 		case EntityType::CHILD_ENEMY:
 			entity = new ChildEnemy();
+			break;
+		case EntityType::JUMPING_ENEMY:
+			entity = new JumpingEnemy();
 			break;
 		case EntityType::BOSS:
 			break;

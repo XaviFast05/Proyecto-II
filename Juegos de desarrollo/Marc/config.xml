@@ -64,7 +64,7 @@
 					<lvl1 x="150" y="3400" />
 					<lvl2 x="150" y="1040" />
 				</startPositions>
-				<propierties gJumpForce="6.5f" pJumpForce="6.5f" pushForce="7.0f" moveSpeed="0.7f" friction="0.0f" gravity="9.0f" attack1Time="0.8f" attack2Time="1.0f" hurtTime="1.0f" respawnTime=" 2.0f" playerState="0" direction="1" shootCooldown="5" />
+				<propierties gJumpForce="4.0f" pJumpForce="4.0f" pushForce="7.0f" moveSpeed="0.5f" friction="0.0f" gravity="9.0f" attack1Time="0.8f" attack2Time="1.0f" hurtTime="1.0f" respawnTime=" 2.0f" playerState="0" direction="1" shootCooldown="5" />
 				<statesFlow>
 					<idle idle="false" run="true" jump="true" fall="true" punch="true" throw="true" mele="true" hurt="true" dead="true" />
 					<run idle="true" run="false" jump="true" fall="true" punch="true" throw="true" mele="true" hurt="true" dead="true" />
@@ -223,20 +223,38 @@
 						</death>
 					</animations>
 				</skeleton>
-				<bat x="250" y="350" w="64" h="64" texture="Assets/Textures/Enemies/voladores.png">
+				<bat x="250" y="350" w="64" h="64" texture="Assets/Textures/Enemies/Fantasma/fantasmavolador.png">
 					<properties speed="2" chaseArea="400" deathTime="1.0f" lives="10" pushForce="1" pushFriction="5" lootAmount="1" canPush="true" />
 					<animations>
 						<idle loop="true" speed="0.2f">
-							<frame x="0" y="0" w="64" h="64" />
+							<frame x="0" y="64" w="64" h="64" />
+							<frame x="64" y="64" w="64" h="64" />
+							<frame x="128" y="64" w="64" h="64" />
+							<frame x="192" y="64" w="64" h="64" />
+							<frame x="256" y="64" w="64" h="64" />
+							<frame x="320" y="64" w="64" h="64" />
+							<frame x="384" y="64" w="64" h="64" />
 						</idle>
 						<attack loop="true" speed="0.2f">
-							<frame x="0" y="0" w="64" h="64" />
+							<frame x="0" y="64" w="64" h="64" />
+							<frame x="64" y="64" w="64" h="64" />
+							<frame x="128" y="64" w="64" h="64" />
+							<frame x="192" y="64" w="64" h="64" />
+							<frame x="256" y="64" w="64" h="64" />
+							<frame x="320" y="64" w="64" h="64" />
+							<frame x="384" y="64" w="64" h="64" />
 						</attack>
 						<hurt loop=" false" speed="0.2f">
 							<frame x="0" y="0" w="64" h="64" />
 						</hurt>
 						<death loop=" false" speed="0.1f">
-							<frame x="64" y="0" w="64" h="64" />
+							<frame x="0" y="128" w="64" h="64" />
+							<frame x="64" y="128" w="64" h="64" />
+							<frame x="128" y="128" w="64" h="64" />
+							<frame x="192" y="128" w="64" h="64" />
+							<frame x="256" y="128" w="64" h="64" />
+							<frame x="320" y="128" w="64" h="64" />
+							<frame x="384" y="128" w="64" h="64" />
 						</death>
 					</animations>
 				</bat>
@@ -257,6 +275,32 @@
 						</death>
 					</animations>
 				</child>
+				<jumper x="250" y="350" w="64" h="64" texture="Assets/Textures/Enemies/Jumper/saltador.png">
+					<properties speed="4" chaseArea="400" deathTime="1.0f" lives="5" pushForce="1" pushFriction="5" lootAmount="2" canPush="true" />
+					<animations>
+						<idle loop="true" speed="0.1f">
+							<frame x="0" y="0" w="64" h="64" />
+							<frame x="64" y="0" w="64" h="64" />
+							<frame x="128" y="0" w="64" h="64" />
+							<frame x="192" y="0" w="64" h="64" />
+						</idle>
+						<walk loop="true" speed="0.1f">
+							<frame x="0" y="0" w="64" h="64" />
+							<frame x="64" y="0" w="64" h="64" />
+							<frame x="128" y="0" w="64" h="64" />
+							<frame x="192" y="0" w="64" h="64" />
+						</walk>
+						<attack loop="true" speed="0.2f">
+							<frame x="0" y="64" w="64" h="64" />
+						</attack>
+						<hurt loop=" false" speed="0.2f">
+							<frame x="0" y="64" w="64" h="64" />
+						</hurt>
+						<death loop=" false" speed="0.1f">
+							<frame x="64" y="64" w="64" h="64" />
+						</death>
+					</animations>
+				</jumper>
 				<instances>
 					<lvl1>
 						<instance enemyType="skeleton" entityType="5">
@@ -284,6 +328,10 @@
 							<point x="5315" y="2500" />
 						</instance>
 						<instance enemyType="child" entityType="9">
+							<point x="1150" y="3200" />
+							<point x="1150" y="3200" />
+						</instance>
+						<instance enemyType="jumper" entityType="10">
 							<point x="1150" y="3200" />
 							<point x="1150" y="3200" />
 						</instance>

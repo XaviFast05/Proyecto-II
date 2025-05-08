@@ -15,6 +15,7 @@
 #include "BatEnemy.h"
 #include "GroundEnemy.h"
 #include "ChildEnemy.h"
+#include "JumpingEnemy.h"
 #include "SoulRock.h"
 #include <string>
 #include "Particle.h"
