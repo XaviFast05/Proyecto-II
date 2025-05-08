@@ -36,6 +36,7 @@ public:
 	int pickaxeCount;
 
 	Timer pickaxeRecollectTimer;
-	float pickaxeRecollectCount = 2.5;
+	float pickaxeRecollectCount;
 	bool recollectingPickaxes = false;
+	int maxPickaxes;
 }; 

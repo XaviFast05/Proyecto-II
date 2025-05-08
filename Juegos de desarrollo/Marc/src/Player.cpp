@@ -130,9 +130,11 @@ bool Player::Start() {
 	respawnTimer = Timer();
 
 	pickaxeManager = new PickaxeManager();
-	pickaxeManager->Start();
 	currencyManager = new CurrencyManager();
 	currencyManager->Start();
+
+	LoadDefaults();
+	pickaxeManager->Start();
 
 	return true;
 }
@@ -806,4 +808,15 @@ void Player::DamagePlayer() {
 	hits--;
 	playerState = HURT;
 	hurtTimer.Start();
+}
+
+void Player::LoadDefaults() {
+	plusJumpTimerMax = 0.2; // salto extra del salto
+	dashForce = 8; // impulso de dash
+	chargedCooldownTimerMax = 5; // tiempo entre ataque cargado
+	pickaxeManager->pickaxeRecollectCount = 2.5; // tiempo entre piqueta y piqueta
+	moveSpeed = 0.7; // velocidad del player
+	damageAdded = 0; // añadido de daño al base
+	maxPickaxes = 3; // piquetas máximas
+	pickaxeManager->maxPickaxes = maxPickaxes;
 }

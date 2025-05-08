@@ -9,7 +9,7 @@
 
 
 #define GHOST_W 32
-#define MAX_PICKAXES 3
+//#define MAX_PICKAXES 4
 #define MELEE_AREA_WIDTH 30
 
 //FORWARD DECLARATION
@@ -79,9 +79,12 @@ public:
 
 	void DamagePlayer();
 
+	void LoadDefaults();
+
 	Vector2D GetDirection() const;
 
 public:
+	int maxPickaxes; // piquetas máximas
 	int hits = 3;
 	Timer hurtTimer;
 	float hurtTime = 0.5;
@@ -149,12 +152,12 @@ public:
 
 	Timer plusJumpTimer;
 	bool plusJumpTimerOn = false;
-	float plusJumpTimerMax = 0.2; // salto extra del salto
+	float plusJumpTimerMax; // salto extra del salto
 
 	Timer dashTimer;
 	float dashTimerMax = 0.2; // lo que dura el dash
 	bool dashTimerOn = false;
-	float dashForce = 10; // impulso de dash
+	float dashForce; // impulso de dash
 	bool canDash = true;
 
 	Timer dashCooldownTimer;
@@ -167,8 +170,10 @@ public:
 
 	bool chargedCooldown = false;
 	Timer chargedCooldownTimer;
-	float chargedCooldownTimerMax = 5; // tiempo entre ataque cargado
+	float chargedCooldownTimerMax; // tiempo entre ataque cargado
 	bool deleteCharged = false;
+
+	int damageAdded; // añadido de daño al base
 
 	PhysBody* meleeArea;
 	Timer meleeTimer;

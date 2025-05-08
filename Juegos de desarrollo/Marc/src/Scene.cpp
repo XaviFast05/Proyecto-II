@@ -317,7 +317,7 @@ bool Scene::Update(float dt)
 	//pickaxeText = std::to_string((int)player->pickaxeManager->GetNumPickaxes()) + " pickaxes";
 	//Engine::GetInstance().render.get()->DrawText(pickaxeText.c_str(), 800, 50, 200, 18);
 
-	if (player->pickaxeManager->GetNumPickaxes() < MAX_PICKAXES) {
+	if (player->pickaxeManager->GetNumPickaxes() < player->maxPickaxes) {
 		std::string number = std::to_string(player->pickaxeManager->pickaxeRecollectCount - player->pickaxeManager->pickaxeRecollectTimer.ReadSec());
 		number.resize(3);
 		//timeTilPickaxeText = "time until next pickage: " + number + "s";
@@ -742,7 +742,7 @@ void Scene::DrawPickaxesUI()
 	int spacing = 50; // Espaciado entre las piquetas
 	int spacingRed = 8; // Espaciado entre las piquetas
 
-	for (int i = 0; i < MAX_PICKAXES; ++i) {
+	for (int i = 0; i < player->maxPickaxes; ++i) {
 		// Si el índice es menor que el número de piquetas disponibles, dibuja una piqueta normal
 		if (i < numPickaxes) {
 			Engine::GetInstance().render.get()->DrawTexture(

@@ -7,20 +7,19 @@ PickaxeManager::PickaxeManager()
 
 bool PickaxeManager::Start()
 {
-	startNumPickaxe = 3;
-	for (int i = 0; i < startNumPickaxe; i++)
+	for (int i = 0; i < maxPickaxes; i++)
 	{
 		Bullet* bullet = (Bullet*)CreatePickaxe();
 	}
 
-	pickaxeCount = startNumPickaxe;
+	pickaxeCount = maxPickaxes;
 	return true;
 }
 
 bool PickaxeManager::Update(float dt)
 {
 	//PICKAXE LOGIC
-	if (pickaxeCount < MAX_PICKAXES && not recollectingPickaxes) {
+	if (pickaxeCount < maxPickaxes && not recollectingPickaxes) {
 		pickaxeRecollectTimer.Start();
 		recollectingPickaxes = true;
 	}
@@ -28,7 +27,6 @@ bool PickaxeManager::Update(float dt)
 		pickaxeCount++;
 		recollectingPickaxes = false;
 	}
-
 
 	return true;
 }

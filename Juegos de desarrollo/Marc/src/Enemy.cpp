@@ -232,7 +232,7 @@ void Enemy::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 }
 
 void Enemy::DMGEnemy(int damage) {
-	lives -= damage;
+	lives -= (damage + player->damageAdded);
 	if (lives <= 0) {
 		deathTimer.Start();
 		death.Reset();
