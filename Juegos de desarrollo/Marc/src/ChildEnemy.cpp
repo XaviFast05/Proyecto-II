@@ -26,6 +26,7 @@ bool ChildEnemy::Start() {
 	drawOffsetX = 0;
 	drawOffsetY = 0;
 
+	lives = 1;
 
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
 	attack.LoadAnimations(parameters.child("animations").child("attack"));

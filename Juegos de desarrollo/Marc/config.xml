@@ -180,7 +180,7 @@
 			</shot>
 			<enemies>
 				<skeleton x="100" y="420" w="64" h="64" texture="Assets/Textures/Enemies/Fantasma/Fantasma_spriteSheet.png">
-					<properties speed="1" chaseArea="400" attackArea="20" jumpForce="0.3f" attackTime="1.0f" deathTime="1.5f" lives="3" pushForce="1" pushFriction="5" lootAmount="5" canPush="true" />
+					<properties speed="1" chaseArea="400" attackArea="20" jumpForce="0.3f" attackTime="1.0f" deathTime="1.5f" lives="5" pushForce="1" pushFriction="5" lootAmount="5" canPush="true" />
 					<animations>
 						<idle loop="true" speed="0.2f">
 							<frame x="0" y="0" w="64" h="64" />
@@ -224,7 +224,7 @@
 					</animations>
 				</skeleton>
 				<bat x="250" y="350" w="64" h="64" texture="Assets/Textures/Enemies/voladores.png">
-					<properties speed="2" chaseArea="400" deathTime="1.0f" lives="12" pushForce="1" pushFriction="5" lootAmount="1" canPush="true" />
+					<properties speed="2" chaseArea="400" deathTime="1.0f" lives="10" pushForce="1" pushFriction="5" lootAmount="1" canPush="true" />
 					<animations>
 						<idle loop="true" speed="0.2f">
 							<frame x="0" y="0" w="64" h="64" />
@@ -241,7 +241,7 @@
 					</animations>
 				</bat>
 				<child x="250" y="350" w="64" h="64" texture="Assets/Textures/Enemies/voladores.png">
-					<properties speed="4" chaseArea="400" deathTime="1.0f" lives="12" pushForce="1" pushFriction="5" lootAmount="2" canPush="true" />
+					<properties speed="4" chaseArea="400" deathTime="1.0f" lives="1" pushForce="1" pushFriction="5" lootAmount="2" canPush="true" />
 					<animations>
 						<idle loop="true" speed="0.2f">
 							<frame x="0" y="64" w="64" h="64" />

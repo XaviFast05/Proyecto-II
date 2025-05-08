@@ -28,6 +28,8 @@ bool GroundEnemy::Start() {
 	drawOffsetX = 0;
 	drawOffsetY = 0;
 
+	lives = 5;
+
 	//INIT ANIMS
 	AddAnimation(idle, 0, texW, 1);
 	idle.speed = 0.2f;

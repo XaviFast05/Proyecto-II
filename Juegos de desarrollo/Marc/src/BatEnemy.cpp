@@ -26,6 +26,7 @@ bool BatEnemy::Start() {
 	drawOffsetX = 0;
 	drawOffsetY = 0;
 
+	lives = 10;
 
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
 	attack.LoadAnimations(parameters.child("animations").child("attack"));
@@ -57,7 +58,7 @@ bool BatEnemy::Start() {
 	destinationPoint = route[routeDestinationIndex];
 
 	//INIT PHYSICS
-	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), 16, bodyType::DYNAMIC);
+	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), 24, bodyType::DYNAMIC);
 	pbody->ctype = ColliderType::ENEMY;
 	pbody->body->SetGravityScale(0);
 	pbody->body->SetFixedRotation(true);
