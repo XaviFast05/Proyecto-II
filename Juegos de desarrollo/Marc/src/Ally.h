@@ -14,10 +14,6 @@ struct SDL_Texture;
 class Ally : public Entity
 {
 public:
-	enum Type {
-		FLY,
-		GROUND
-	};
 
 	enum State {
 		PATROL,
@@ -81,9 +77,6 @@ public:
 
 	Animation* currentAnimation = nullptr;
 	Animation idle;
-	Animation attack;
-	Animation hurt;
-	Animation death;
 	Animation jump;
 	Animation fall;
 	Animation walk;
@@ -96,21 +89,10 @@ public:
 
 	//PROPERTIES
 	int speed;
-	int lives;
 	int chaseArea;
 	int attackArea;
 	int noSound;
 
-	Timer deathTimer;
-	float deathTime;
-	bool dead;
 	bool playingSound;
 
-	float pushForce; //rango óptimo alrededor de 1
-	float pushFriction; //rango óptimo alrededor de 5
-	int lootAmount; //entre 0 y 5
-
-	CurrencyManager* currencyManager;
-	bool canPush;
-	bool droppedLoot = false;
 };

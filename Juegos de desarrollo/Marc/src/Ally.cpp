@@ -8,7 +8,7 @@
 #include "Log.h"
 #include "Physics.h"
 #include "Map.h"
-#include "Player.h
+#include "Player.h"
 #include "Pathfinding.h"
 #include "Audio.h"
 
@@ -39,7 +39,7 @@ bool Ally::Start() {
 	currentAnimation = &idle;
 
 	//Add a physics to an item - initialize the physics body
-	pbody = Engine::GetInstance().physics.get()->CreateRectangleSensor((int)position.getX() + texH / 2, (int)position.getY() + texH / 2, texH / 2, bodyType::DYNAMIC);
+	pbody = Engine::GetInstance().physics.get()->CreateRectangleSensor((int)position.getX() + texH / 2, (int)position.getY() + texH / 2, texW, texH, bodyType::DYNAMIC);
 
 	//Assign collider type
 	pbody->ctype = ColliderType::ALLY;

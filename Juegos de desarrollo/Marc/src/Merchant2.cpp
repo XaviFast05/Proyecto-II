@@ -81,7 +81,7 @@ bool Merchant::Update(float dt) {
 
 	ZoneScoped;
 
-	
+
 
 	if (!Engine::GetInstance().render.get()->InCameraView(pbody->GetPosition().getX() - texW, pbody->GetPosition().getY() - texH, texW, texH))
 	{
@@ -248,7 +248,7 @@ bool Merchant::Update(float dt) {
 		}
 	}
 
-	
+
 
 	return true;
 }
