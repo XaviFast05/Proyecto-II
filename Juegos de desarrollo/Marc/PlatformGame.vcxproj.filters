@@ -177,8 +177,11 @@
     <ClCompile Include="src\Intro.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\TextManager.cpp">
+    <ClCompile Include="src\Intro.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextManager.cpp">
+      <Filter>Source Files\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -307,7 +310,10 @@
     <ClInclude Include="src\CheckPoint.h" />
     <ClInclude Include="src\SoulRock.h" />
     <ClInclude Include="src\Intro.h" />
-    <ClInclude Include="src\TextManager.h" />
+    <ClInclude Include="src\Intro.h" />
+    <ClInclude Include="src\TextManager.h">
+      <Filter>Source Files\Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="config.xml">

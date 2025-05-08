@@ -2,7 +2,7 @@
 
 TextManager::TextManager(bool startEnabled) : Module(startEnabled)
 {
-
+    name = "textmanager";
 }
 TextManager::~TextManager()
 {

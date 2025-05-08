@@ -18,6 +18,7 @@ class Audio;
 class Scene;
 class MainMenu;
 class EntityManager;
+class TextManager;
 class Map;
 class Physics;
 class ParticleManager;
@@ -117,6 +118,7 @@ public:
 	std::shared_ptr<Scene> scene;
 	std::shared_ptr<MainMenu> mainMenu;
 	std::shared_ptr<EntityManager> entityManager;
+	std::shared_ptr<TextManager> textManager;
 	std::shared_ptr<Map> map;
 	std::shared_ptr<Physics> physics;
 	std::shared_ptr<GuiManager> guiManager;
