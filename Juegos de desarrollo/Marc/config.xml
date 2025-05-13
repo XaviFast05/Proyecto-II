@@ -62,7 +62,7 @@
 			<player w="64" h="64" lives="3" texture="Assets/Textures/Kim/Kim_spriteSheet.png">
 				<startPositions>
 					<lvl1 x="150" y="3400" />
-					<lvl2 x="150" y="1040" />
+					<lvl2 x="150" y="3400" />
 				</startPositions>
 				<propierties gJumpForce="4.0f" pJumpForce="4.0f" pushForce="7.0f" moveSpeed="0.5f" friction="0.0f" gravity="9.0f" attack1Time="0.8f" attack2Time="1.0f" hurtTime="1.0f" respawnTime=" 2.0f" playerState="0" direction="1" shootCooldown="5" />
 				<statesFlow>
@@ -276,7 +276,7 @@
 					</animations>
 				</child>
 				<jumper x="250" y="350" w="64" h="64" texture="Assets/Textures/Enemies/Jumper/saltador.png">
-					<properties speed="4" chaseArea="400" deathTime="1.0f" lives="5" pushForce="1" pushFriction="5" lootAmount="2" canPush="true" />
+					<properties speed="4" chaseArea="400" deathTime="1.0f" lives="20" pushForce="1" pushFriction="5" lootAmount="2" canPush="true" />
 					<animations>
 						<idle loop="true" speed="0.1f">
 							<frame x="0" y="0" w="64" h="64" />
@@ -336,6 +336,12 @@
 							<point x="1150" y="3200" />
 						</instance>
 					</lvl1>
+					<lvl2>
+						<instance enemyType="jumper" entityType="10">
+							<point x="3456" y="3200" />
+							<point x="3456" y="3200" />
+						</instance>
+					</lvl2>
 				</instances>
 			</enemies>
 			<items>

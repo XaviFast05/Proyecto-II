@@ -28,7 +28,7 @@ bool JumpingEnemy::Start() {
 	drawOffsetX = 0;
 	drawOffsetY = 0;
 
-	lives = 5;
+	lives = 20;
 
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
 	walk.LoadAnimations(parameters.child("animations").child("walk"));
