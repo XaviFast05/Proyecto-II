@@ -46,6 +46,7 @@ bool JumpingEnemy::Start() {
 	routeDestinationIndex = 0;
 	destinationPoint = route[routeDestinationIndex];
 
+
 	//INIT PHYSICS
 	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), 30, bodyType::DYNAMIC);
 	pbody->ctype = ColliderType::ENEMY;
@@ -57,6 +58,7 @@ bool JumpingEnemy::Start() {
 	//INIT PATH
 	pathfinding = new Pathfinding();
 	ResetPath();
+
 
 	//INIT VARIABLES
 	state = PATROL;
@@ -173,8 +175,27 @@ bool JumpingEnemy::Update(float dt) {
 				}
 			}
 
+			if (isBossJumping) {
+				Vector2D physPos = pbody->GetPhysBodyWorldPosition();
+
+				// Cuando lleguemos cerca del destino horizontal y ya bajamos (vel Y casi cero)
+				float dx = fabs(physPos.getX() - bossJumpTargetX);
+				float vy = fabs(pbody->body->GetLinearVelocity().y);
+
+				if (dx < 5.0f && vy < 0.1f) {
+					// Caída completada
+					isBossJumping = false;
+					pbody->body->SetLinearVelocity({ 0, 0 });
+
+					// Alternamos dirección para el siguiente salto
+					bossDirection *= -1;
+				}
+				// Mientras tanto, NO ejecutamos el IA normal
+				return true;
+			}
+
 			//PATHFINDING CONTROLER
-			if (state == PATROL || state == CHASING)
+			/*if (state == PATROL || state == CHASING)
 			{
 				if (pathfinding->pathTiles.empty())
 				{
@@ -209,7 +230,7 @@ bool JumpingEnemy::Update(float dt) {
 				{
 					pbody->body->ApplyLinearImpulseToCenter({ 0, -jumpForce }, true);
 				}
-			}
+			}*/
 
 		}
 		else
@@ -293,17 +314,41 @@ void JumpingEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 	bool push = false;
 
 	switch (physB->ctype) {
+	case ColliderType::PLATFORM:
+		if (isBossJumping) {
+			// ¡acaba el salto!
+			isBossJumping = false;
+
+			// Deten completamente cualquier movimiento
+			pbody->body->SetLinearVelocity({ 0.0f, 0.0f });
+
+			// (Opcional) Resetear acumuladores
+			damageAccumulated = 0;
+		}
+		break;
 	case ColliderType::WEAPON:
 		break;
 	case ColliderType::PICKAXE:
 		if (state != DEAD) 	DMGEnemyPickaxe();
+		// --- Nuevo código para el boss ---
+		damageAccumulated++;
+		if (damageAccumulated >= 3 && !isBossJumping) {
+			TriggerBossJump();
+		}
 		break;
 	case ColliderType::MELEE_AREA:
 		if (state != DEAD) {
 			if (canPush) push = true;
 			DMGEnemyMelee();
+
+			// --- Nuevo código para el boss ---
+			damageAccumulated++;
+			if (damageAccumulated >= 3 && !isBossJumping) {
+				TriggerBossJump();
+			}
 		}
 		break;
+
 	case ColliderType::SPYKE:
 		break;
 	case ColliderType::ENEMY:
@@ -326,4 +371,21 @@ void JumpingEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 		pbody->body->ApplyLinearImpulseToCenter(pushVec, true);
 		pbody->body->SetLinearDamping(pushFriction);
 	}
+}
+
+void JumpingEnemy::TriggerBossJump()
+{
+	// Calcula destino en píxeles
+	bossJumpTargetX = position.getX() + bossDirection * bossJumpDistance;
+
+	// Convierte velocidades a tus unidades físicas (metros/s)
+	float vx = PIXEL_TO_METERS(bossDirection * bossJumpSpeedH);
+	float vy = PIXEL_TO_METERS(-bossJumpSpeedV);
+
+	// Lanza el salto
+	pbody->body->SetLinearVelocity({ vx, vy });
+
+	// Prepara estado de salto
+	isBossJumping = true;
+	damageAccumulated = 0;
 }
