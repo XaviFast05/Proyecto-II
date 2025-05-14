@@ -43,6 +43,14 @@ private:
 
 	float jumpForce;
 
+	int bossJumpTargetXLeft = 2765; //ESTO HAY QUE CAMBIARLO SEGÚN DONDE SE QUIERA PONER EL BOSS
+	int bossJumpTargetXRight = 3465;
+
+	float jumpStartX = 0.0f;   // X (px) donde empieza el salto
+	float jumpTargetX = 0.0f;   // X destino (px)
+	float jumpTimeFlight = 0.0f;   // Duración total del salto (s)
+	Timer jumpTimer;                // Crono para medir el salto
+
 	//sound FX
 	int swordSlashSFX;
 	int skeletonDeathSFX;
@@ -56,16 +64,7 @@ private:
 	// Dirección actual del salto: -1 = izquierda, +1 = derecha
 	int bossDirection = -1;
 
-	// Distancia horizontal del salto: 12 bloques de 64px
-	const float bossJumpDistance = 20 * 64.0f;
-
-	// Velocidad de impulso horizontal (en unidades de tu mundo físico)
-	float bossJumpSpeedH = 320.0f;    // ajústalo a tu gusto
-
 	// Velocidad de impulso vertical (altura del salto)
-	float bossJumpSpeedV = 750.0f;
-
-	// Posición X objetivo del salto (en píxeles)
-	float bossJumpTargetX = 0.0f;
+	float bossJumpSpeedV = 700.0f;
 };
 

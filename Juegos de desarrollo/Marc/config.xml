@@ -276,7 +276,7 @@
 					</animations>
 				</child>
 				<jumper x="250" y="350" w="64" h="64" texture="Assets/Textures/Enemies/Jumper/saltador.png">
-					<properties speed="4" chaseArea="600" deathTime="1.0f" lives="20" pushForce="1" pushFriction="5" lootAmount="2" canPush="true" />
+					<properties speed="4" chaseArea="600" deathTime="1.0f" lives="40" pushForce="1" pushFriction="5" lootAmount="5" canPush="true" />
 					<animations>
 						<idle loop="true" speed="0.1f">
 							<frame x="0" y="0" w="64" h="64" />
@@ -290,6 +290,9 @@
 							<frame x="128" y="0" w="64" h="64" />
 							<frame x="192" y="0" w="64" h="64" />
 						</walk>
+						<jump loop="false" speed="0.2f">
+							<frame x="0" y="128" w="64" h="64" />
+						</jump>
 						<attack loop="true" speed="0.2f">
 							<frame x="0" y="64" w="64" h="64" />
 						</attack>

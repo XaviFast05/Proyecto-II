@@ -28,10 +28,11 @@ bool JumpingEnemy::Start() {
 	drawOffsetX = 0;
 	drawOffsetY = 0;
 
-	lives = 20;
+	lives = 40;
 
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
 	walk.LoadAnimations(parameters.child("animations").child("walk"));
+	jump.LoadAnimations(parameters.child("animations").child("jump")); 
 	attack.LoadAnimations(parameters.child("animations").child("attack"));
 	death.LoadAnimations(parameters.child("animations").child("death"));
 
@@ -48,7 +49,7 @@ bool JumpingEnemy::Start() {
 
 
 	//INIT PHYSICS
-	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), 30, bodyType::DYNAMIC);
+	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), 60, bodyType::DYNAMIC);
 	pbody->ctype = ColliderType::ENEMY;
 	pbody->body->SetGravityScale(1.2f);
 	pbody->body->SetFixedRotation(true);
@@ -87,251 +88,94 @@ bool JumpingEnemy::Start() {
 }
 
 bool JumpingEnemy::Update(float dt) {
-
 	ZoneScoped;
+	if (dead) return true;
 
-	if (!dead) {
+	if (state == DEAD) {
 
-		if (!Engine::GetInstance().render.get()->InCameraView(pbody->GetPosition().getX() - texW, pbody->GetPosition().getY() - texH, texW, texH))
-		{
+		if (deathTimer.ReadSec() > deathTime) {
+
 			pbody->body->SetEnabled(false);
-			return true;
-		}
-		else
-		{
-			pbody->body->SetEnabled(true);
-		}
-
-		if (!Engine::GetInstance().scene.get()->paused) {
-			dist = pbody->GetPhysBodyWorldPosition().distanceEuclidean(player->pbody->GetPhysBodyWorldPosition());
-
-			//STATES CHANGERS
-			if (state != ATTACK && state != DEAD)
-			{
-				if (dist > chaseArea && state != PATROL)
-				{
-					state = PATROL;
-					ResetPath();
-					destinationPoint = route[routeDestinationIndex];
-				}
-				else if (dist <= chaseArea/* && state != CHASING*/)
-				{
-					if (dist <= attackArea && state != ATTACK) {
-						state = ATTACK;
-						Engine::GetInstance().audio.get()->PlayFx(swordSlashSFX, 0, -1);
-						attackTimer.Start();
-						pbody->body->SetLinearVelocity({ 0,0 });
-						attack.Reset();
-					}
-					else if (state != CHASING)
-					{
-						state = CHASING;
-						ResetPath();
-					}
-				}
-			}
-
-
-
-
-			Vector2D playerPos = player->pbody->GetPhysBodyWorldPosition();
-			Vector2D playerPosCenteredOnTile = Engine::GetInstance().map.get()->WorldToWorldCenteredOnTile(playerPos.getX(), playerPos.getY());
-
-			//STATES CONTROLER
-			if (state == DEAD) {
-
-				if (deathTimer.ReadSec() > deathTime) {
-
-					pbody->body->SetEnabled(false);
-					dead = true;
-				}
-
-			}
-
-			else if (state == PATROL) {
-
-				Vector2D physPos = pbody->GetPhysBodyWorldPosition();
-				if (CheckIfTwoPointsNear(destinationPoint, { physPos.getX(), physPos.getY() }, 7))
-				{
-					routeDestinationIndex++;
-					if (routeDestinationIndex == route.size()) routeDestinationIndex = 0;
-					destinationPoint = route[routeDestinationIndex];
-					ResetPath();
-				}
-			}
-			else if (state == CHASING) {
-
-				if (destinationPoint != playerPosCenteredOnTile)
-				{
-					destinationPoint = playerPosCenteredOnTile;
-					ResetPath();
-				}
-			}
-			else if (state == ATTACK) {
-
-				if (attackTimer.ReadSec() > attackTime) {
-
-					state = PATROL;
-				}
-			}
-
-			if (isBossJumping) {
-				Vector2D physPos = pbody->GetPhysBodyWorldPosition();
-
-				// Cuando lleguemos cerca del destino horizontal y ya bajamos (vel Y casi cero)
-				float dx = fabs(physPos.getX() - bossJumpTargetX);
-				float vy = fabs(pbody->body->GetLinearVelocity().y);
-
-				if (dx < 5.0f && vy < 0.1f) {
-					// Caída completada
-					isBossJumping = false;
-					pbody->body->SetLinearVelocity({ 0, 0 });
-
-					// Alternamos dirección para el siguiente salto
-					bossDirection *= -1;
-				}
-				// Mientras tanto, NO ejecutamos el IA normal
-				return true;
-			}
-
-			//PATHFINDING CONTROLER
-			/*if (state == PATROL || state == CHASING)
-			{
-				if (pathfinding->pathTiles.empty())
-				{
-					while (pathfinding->pathTiles.empty())
-					{
-						pathfinding->PropagateAStar(SQUARED, destinationPoint, Pathfinding::WALK);
-
-					}
-					pathfinding->pathTiles.pop_back();
-				}
-				else
-				{
-
-					Vector2D nextTile = pathfinding->pathTiles.back();
-					Vector2D nextTileWorld = Engine::GetInstance().map.get()->MapToWorldCentered(nextTile.getX(), nextTile.getY());
-
-					if (CheckIfTwoPointsNear(nextTileWorld, { (float)METERS_TO_PIXELS(pbody->body->GetPosition().x), (float)METERS_TO_PIXELS(pbody->body->GetPosition().y) }, 3)) {
-
-						pathfinding->pathTiles.pop_back();
-						if (pathfinding->pathTiles.empty()) ResetPath();
-					}
-					else {
-						Vector2D nextTilePhysics = { PIXEL_TO_METERS(nextTileWorld.getX()),PIXEL_TO_METERS(nextTileWorld.getY()) };
-						b2Vec2 direction = { nextTilePhysics.getX() - pbody->body->GetPosition().x, nextTilePhysics.getY() - pbody->body->GetPosition().y };
-						direction.Normalize();
-						pbody->body->SetLinearVelocity({ direction.x * speed, pbody->body->GetLinearVelocity().y });
-					}
-				}
-				Vector2D currentTile = Engine::GetInstance().map.get()->WorldToMap(pbody->GetPhysBodyWorldPosition().getX(), pbody->GetPhysBodyWorldPosition().getY());
-
-				if (pathfinding->IsJumpable(currentTile.getX(), currentTile.getY()) && VALUE_NEAR_TO_0(pbody->body->GetLinearVelocity().LengthSquared()))
-				{
-					pbody->body->ApplyLinearImpulseToCenter({ 0, -jumpForce }, true);
-				}
-			}*/
-
-		}
-		else
-		{
-			pbody->body->SetLinearVelocity({ 0,0 });
-
-		}
-
-
-		switch (state) {
-			break;
-		case CHASING:
-			break;
-		case PATROL:
-			currentAnimation = &walk;
-			break;
-		case ATTACK:
-			currentAnimation = &attack;
-			break;
-		case DEAD:
-			currentAnimation = &death;
-			break;
-		default:
-			break;
-		}
-
-		if (pbody->body->GetLinearVelocity().LengthSquared() == 0 && state != DEAD) {
-			currentAnimation = &idle;
-		}
-		if (pbody->body->GetLinearVelocity().LengthSquared() != 0 && state != DEAD) {
-			currentAnimation = &walk;
-		}
-
-		//DIRECTION
-		if (pbody->body->GetLinearVelocity().x > 0.2f) {
-			dir = RIGHT;
-		}
-		else if (pbody->body->GetLinearVelocity().x < -0.2f) {
-			dir = LEFT;
-		}
-
-		if (state == DEAD && !droppedLoot) {
-			DropLoot();
-			pbody->ctype = ColliderType::DEADENEMY;
-			droppedLoot = true;
-		}
-
-		//DRAW
-
-		if (pbody->body->IsEnabled()) {
-
-			if (Engine::GetInstance().GetDebug())
-			{
-				Engine::GetInstance().render.get()->DrawCircle(position.getX() + texW / 2, position.getY() + texH / 2, chaseArea * 2, 255, 255, 255);
-				Engine::GetInstance().render.get()->DrawCircle(destinationPoint.getX(), destinationPoint.getY(), 3, 255, 0, 0);
-				pathfinding->DrawPath();
-			}
-
-			currentAnimation->Update();
-
-			b2Transform pbodyPos = pbody->body->GetTransform();
-			position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texW / 2 + drawOffsetX);
-			position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 1.5 + drawOffsetY);
-
-
-
-			if (dir == LEFT) {
-				Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY() + 10, &currentAnimation->GetCurrentFrame());
-			}
-			else if (dir == RIGHT) {
-				Engine::GetInstance().render.get()->DrawTextureFlipped(texture, (int)position.getX(), (int)position.getY() + 10, &currentAnimation->GetCurrentFrame());
-			}
+			dead = true;
 		}
 
 	}
 
+	// Actualiza animación
+	switch (state) {
+	case JUMP:   currentAnimation = &jump;  break;
+	case ATTACK: currentAnimation = &attack;break;
+	case PATROL: currentAnimation = &walk;  break;
+	case DEAD:   currentAnimation = &death; break;
+	default:
+		if (pbody->body->GetLinearVelocity().LengthSquared() == 0)
+			currentAnimation = &idle;
+		else
+			currentAnimation = &walk;
+	}
+	currentAnimation->Update();
+
+	// Actualiza posición
+	b2Transform xf = pbody->body->GetTransform();
+	position.setX(METERS_TO_PIXELS(xf.p.x) - texW / 2 + drawOffsetX);
+	position.setY(METERS_TO_PIXELS(xf.p.y) - texH / 1.5 + drawOffsetY);
+
+	if (state == DEAD && !droppedLoot) {
+		DropLoot();
+		pbody->ctype = ColliderType::DEADENEMY;
+		droppedLoot = true;
+	}
+
+
+	// Culling + dibujo
+	float cx = position.getX();
+	float cy = position.getY();
+	bool insideCam = Engine::GetInstance().render->InCameraView(cx, cy, texW, texH);
+	if (insideCam && pbody->body->IsEnabled()) {
+		if (Engine::GetInstance().GetDebug()) {
+			Engine::GetInstance().render->DrawCircle(position.getX() + texW / 2,
+				position.getY() + texH / 2,
+				chaseArea * 2, 255, 255, 255);
+		}
+		if (dir == LEFT) {
+			Engine::GetInstance().render->DrawTexture(texture,
+				(int)position.getX(),
+				(int)position.getY() + 10,
+				&currentAnimation->GetCurrentFrame());
+		}
+		else {
+			Engine::GetInstance().render->DrawTextureFlipped(texture,
+				(int)position.getX(),
+				(int)position.getY() + 10,
+				&currentAnimation->GetCurrentFrame());
+		}
+	}
+
 	return true;
 }
+
 
 void JumpingEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 	bool push = false;
 
 	switch (physB->ctype) {
 	case ColliderType::PLATFORM:
-		if (isBossJumping) {
-			// ¡acaba el salto!
+		if (isBossJumping) { // Detectar plataforma tras haber saltado para detener el salto y reiniciar el proceso
 			isBossJumping = false;
-
-			// Deten completamente cualquier movimiento
 			pbody->body->SetLinearVelocity({ 0.0f, 0.0f });
+			bossDirection *= -1; // derecha o izquierda
 
-			// (Opcional) Resetear acumuladores
-			damageAccumulated = 0;
+			state = PATROL;
+			ResetPath();
+			destinationPoint = route[routeDestinationIndex]; //esto cambia de derecha a izquierda el destino del salto
 		}
 		break;
 	case ColliderType::WEAPON:
 		break;
 	case ColliderType::PICKAXE:
 		if (state != DEAD) 	DMGEnemyPickaxe();
-		// --- Nuevo código para el boss ---
-		damageAccumulated++;
+
+		damageAccumulated++; //Logica de recibir daño para saltar
 		if (damageAccumulated >= 3 && !isBossJumping) {
 			TriggerBossJump();
 		}
@@ -341,8 +185,7 @@ void JumpingEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 			if (canPush) push = true;
 			DMGEnemyMelee();
 
-			// --- Nuevo código para el boss ---
-			damageAccumulated++;
+			damageAccumulated++; //Logica de recibir daño para saltar
 			if (damageAccumulated >= 3 && !isBossJumping) {
 				TriggerBossJump();
 			}
@@ -373,19 +216,26 @@ void JumpingEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 	}
 }
 
+//Salto del Boss usando la fórmula de caída libre. No me puedo creer que esté usando la física para hacer esto
 void JumpingEnemy::TriggerBossJump()
 {
-	// Calcula destino en píxeles
-	bossJumpTargetX = position.getX() + bossDirection * bossJumpDistance;
+	if (state != DEAD) {
+		jumpTargetX = (bossDirection < 0) ? bossJumpTargetXLeft : bossJumpTargetXRight;
+		float currentX = pbody->GetPhysBodyWorldPosition().getX();
+		float dx = jumpTargetX - currentX;
 
-	// Convierte velocidades a tus unidades físicas (metros/s)
-	float vx = PIXEL_TO_METERS(bossDirection * bossJumpSpeedH);
-	float vy = PIXEL_TO_METERS(-bossJumpSpeedV);
+		float vy_mps = PIXEL_TO_METERS(bossJumpSpeedV);
+		float g = 9.8f * pbody->body->GetGravityScale();
+		float t_flight = 2.0f * (vy_mps / g);
+		float vx_px_s = dx / t_flight;
+		float vx_mps = PIXEL_TO_METERS(vx_px_s);
 
-	// Lanza el salto
-	pbody->body->SetLinearVelocity({ vx, vy });
+		pbody->body->SetLinearDamping(0.0f);
+		pbody->body->SetLinearVelocity({ vx_mps, -vy_mps });
 
-	// Prepara estado de salto
-	isBossJumping = true;
-	damageAccumulated = 0;
+		// 5) Marca que está saltando y cambia animación
+		isBossJumping = true;
+		damageAccumulated = 0;
+		state = JUMP;
+	}
 }
