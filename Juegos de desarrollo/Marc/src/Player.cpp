@@ -81,10 +81,9 @@ bool Player::Start() {
 			flow.push_back(stateAttribute.as_bool());
 		}
 		stateFlow.push_back(flow);
-
-		
 	}
 
+	upgrades.empty();
 	godMode = false;
 	canClimb = false;
 	reachedCheckPoint = false;
@@ -212,6 +211,11 @@ bool Player::Update(float dt)
 			return true;
 		}
 
+		//DAMAGE BOOST
+		if (damageBoost && hits == 1) damageAdded = damageBoostAdded;
+		else if (damageBoost && hits != 1 && damageSmallBoost) damageAdded = 2;
+		else if (damageBoost && hits != 1 && !damageSmallBoost) damageAdded = 0;
+
 		//CHANGERS
 		if (playerState == DEAD || playerState == CHARGED) {
 		}
@@ -240,6 +244,8 @@ bool Player::Update(float dt)
 			stateTimer.Start();
 			playerState = CHOP;
 
+
+			LOG("%i", damageAdded);
 			if (meleeTimerOn) deleteCharged = true;
 			charging = true;
 			meleeTimer.Start();
@@ -569,7 +575,6 @@ bool Player::Update(float dt)
 		break;
 	}
 
-
 	b2Transform pbodyPos = pbody->body->GetTransform();
 
 	if (renderable) {
@@ -819,4 +824,72 @@ void Player::LoadDefaults() {
 	damageAdded = 0; // añadido de daño al base
 	maxPickaxes = 3; // piquetas máximas
 	pickaxeManager->maxPickaxes = maxPickaxes;
+	damageSmallBoost = false;
+	damageBoost = false; // hacer mas daño cuando tienes un corazón
+	damageBoostAdded = 5; // el daño que haces cuando tienes un corazón y el boost
+}
+
+void Player::LoadUpgrades() {
+	LoadDefaults();
+	for (int i = 0; i < upgrades.size(); i++) {
+		switch (upgrades[i]) {
+		case 0:
+			plusJumpTimerMax = 0.25;
+			break;
+		case 1:
+			dashForce = 12;
+			break;
+		case 2:
+			chargedCooldownTimerMax = 3;
+			break;
+		case 3:
+			pickaxeManager->pickaxeRecollectCount = 1.25;
+			break;
+		case 4:
+			moveSpeed = 0.9;
+			break;
+		case 5:
+			damageSmallBoost = true;
+			damageAdded = 2;
+			break;
+		case 6:
+			maxPickaxes = 4;
+			pickaxeManager->pickaxeCount = maxPickaxes;
+			pickaxeManager->maxPickaxes = maxPickaxes;
+			break;
+		case 7:
+			damageBoost = true;
+			break;
+		case 8:
+			break;
+		case 9:
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+void Player::AddUpgrade(int num) {
+	bool canAdd = true;
+	if (upgrades.size() <= maxUpgrades && num >= 0 && num <= 9) {
+		for (int i = 0; i < upgrades.size(); i++) {
+			if (upgrades[i] == num) canAdd = false;
+		}
+		if (canAdd == false) {
+		}//aquí poner que esa mejora ya la tienes
+		else upgrades.push_back(num);
+	}
+	//else aquí poner algo en plan que tienes demasiadas mejoras
+	LoadUpgrades();
+}
+
+void Player::RemoveUpgrade(int num) {
+	int index = -1;
+	for (int i = 0; i < upgrades.size(); i++) {
+		if (upgrades[i] == num) index = i;
+	}
+	if (index >= 0) upgrades.erase(upgrades.begin() + index);
+	//else aquí poner algo rollo esta mejora no la tienes activa
+	LoadUpgrades();
 }

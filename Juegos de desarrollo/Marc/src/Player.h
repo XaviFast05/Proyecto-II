@@ -81,6 +81,12 @@ public:
 
 	void LoadDefaults();
 
+	void LoadUpgrades();
+
+	void AddUpgrade(int num);
+
+	void RemoveUpgrade(int num);
+
 	Vector2D GetDirection() const;
 
 public:
@@ -174,6 +180,12 @@ public:
 	bool deleteCharged = false;
 
 	int damageAdded; // añadido de daño al base
+	int damageBoostAdded; // añadido de daño al base cargado
+	bool damageBoost = false;
+	bool damageSmallBoost = false;
+
+	std::vector <int> upgrades;
+	int maxUpgrades = 2;
 
 	PhysBody* meleeArea;
 	Timer meleeTimer;
