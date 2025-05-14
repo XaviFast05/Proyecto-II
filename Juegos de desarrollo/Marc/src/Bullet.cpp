@@ -89,7 +89,7 @@ bool Bullet::Update(float dt) {
     if (type == BulletType::HORIZONTAL)
     {
         if (direction.getX() < 0) {
-            Engine::GetInstance().render.get()->DrawTextureFlipped(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()));
+            Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()), true);
         }
         else {
             Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()));
@@ -97,7 +97,7 @@ bool Bullet::Update(float dt) {
     }
     else
     {
-        Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()),0,1.0f,270);
+        Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()),false, 0,0,1.0f,270);
     }
     
 

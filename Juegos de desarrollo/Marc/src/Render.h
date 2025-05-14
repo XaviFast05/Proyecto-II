@@ -4,10 +4,28 @@
 #include "Vector2D.h"
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_ttf.h"
+#include "list"
+#include "map"
+
+#define MAX_RENDER_LAYERS 10
 
 class Render : public Module
 {
 public:
+
+	struct RenderOrder
+	{
+		SDL_Texture* texture;
+		int x;
+		int y;
+		const SDL_Rect* section;
+		bool flipped;
+		int zbuffer;
+		float speed;
+		double angle;
+		int pivotX;
+		int pivotY;
+	};
 
 	Render(bool startEnabled);
 
@@ -32,8 +50,7 @@ public:
 	void ResetViewPort();
 
 	// Drawing
-	bool DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, float speed = 1.0f, double angle = 0, int pivotX = INT_MAX, int pivotY = INT_MAX) const;
-	bool DrawTextureFlipped(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, float speed = 1.0f, double angle = 0, int pivotX = INT_MAX, int pivotY = INT_MAX) const;
+	bool DrawTexture(SDL_Texture* texture, int x, int y, bool flip = false, int zBuffer = 0, const SDL_Rect* section = NULL, float speed = 1.0f, double angle = 0, int pivotX = INT_MAX, int pivotY = INT_MAX) const;
 	bool DrawRectangle(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool filled = true, bool useCamera = true) const;
 	bool DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool useCamera = true) const;
 	bool DrawCircle(int x1, int y1, int redius, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool useCamera = true) const;
@@ -49,6 +66,7 @@ public:
 public:
 
 	SDL_Renderer* renderer;
+	std::map<int, std::list<RenderOrder>> zBufferQuery;
 	SDL_Rect camera;
 	SDL_Rect viewport;
 	SDL_Color background;

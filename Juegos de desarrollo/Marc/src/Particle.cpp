@@ -59,7 +59,7 @@ bool Particle::Update(float dt)
 			position.setY(pbody->GetPhysBodyWorldPosition().getY() - texH / 2);
 
 			if (direction.getX() > 0)Engine::GetInstance().render.get()->DrawTexture(texture, position.getX(), position.getY(), &anim.GetCurrentFrame());
-			else Engine::GetInstance().render.get()->DrawTextureFlipped(texture, position.getX(), position.getY(), &anim.GetCurrentFrame());
+			else Engine::GetInstance().render.get()->DrawTexture(texture, position.getX(), position.getY(), &anim.GetCurrentFrame(), true);
 			
 		}
 		else if (isAlive && aliveTimer.ReadSec() >= lifeTime)
