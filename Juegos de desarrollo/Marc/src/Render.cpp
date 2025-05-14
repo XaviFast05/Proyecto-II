@@ -78,7 +78,6 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
-	
 	for (int i = -MAX_RENDER_LAYERS; i < MAX_RENDER_LAYERS; i++)
 	{
 		for (RenderOrder order : zBufferQuery[i])
@@ -127,6 +126,7 @@ bool Render::Update(float dt)
 				}
 			}
 		}
+		zBufferQuery[i].clear();
 	}
 
 	return true;
@@ -155,6 +155,7 @@ void Render::SetBackgroundColor(SDL_Color color)
 
 void Render::SetViewPort(const SDL_Rect& rect)
 {
+
 	SDL_RenderSetViewport(renderer, &rect);
 }
 
@@ -163,8 +164,7 @@ void Render::ResetViewPort()
 	SDL_RenderSetViewport(renderer, &viewport);
 }
 
-// Blit to screen
-bool Render::DrawTexture(SDL_Texture* _texture, int _x, int _y, bool _flipped, int _zbuffer, const SDL_Rect* _section, float _speed, double _angle, int _pivotX, int _pivotY) const
+bool Render::DrawTexture(SDL_Texture* _texture, int _x, int _y, bool _flipped, int _zbuffer, const SDL_Rect* _section, float _speed, double _angle, int _pivotX, int _pivotY) 
 {
 	bool ret = true;
 
@@ -179,6 +179,8 @@ bool Render::DrawTexture(SDL_Texture* _texture, int _x, int _y, bool _flipped, i
 	renderOrder.angle = _angle;
 	renderOrder.pivotX = _pivotX;
 	renderOrder.pivotY = _pivotY;
+
+	zBufferQuery[_zbuffer].push_back(renderOrder);
 
 	return ret;
 }
