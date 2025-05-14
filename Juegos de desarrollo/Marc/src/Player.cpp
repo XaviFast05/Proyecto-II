@@ -304,6 +304,8 @@ bool Player::Update(float dt)
 			}
 		}
 
+		if (respawnHeal == true) respawnHeal = false;
+
 		//LOGIC & SFX
 		switch (playerState) {
 		case IDLE:
@@ -405,8 +407,11 @@ bool Player::Update(float dt)
 		{
 			pbody->body->SetLinearVelocity(b2Vec2(0, 0));
 			if (respawnTimer.ReadSec() >= respawnTime) {
-				Engine::GetInstance().fade.get()->Fade(Engine::GetInstance().scene.get(), Engine::GetInstance().scene.get());
+				Engine::GetInstance().scene.get()->LoadState();
+				playerState = IDLE;
+				hits = 3;
 			}
+
 		}
 		default:
 			break;
@@ -503,9 +508,6 @@ bool Player::Update(float dt)
 
 	currentAnim->Update();
 
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {
-		currencyManager->EnableOrb(pbody->body->GetPosition().x + 10, pbody->body->GetPosition().y, 2);
-	}
 	return true;
 }
 
@@ -554,18 +556,21 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::ENEMY:
 		LOG("Collision ENEMY");
 		if (!godMode) {
-			//HURT LOGIC
-			if (hits >= 1 && playerState != HURT) DamagePlayer();
-			if (hits == 0) KillPlayer();
-			//PUSHING THE PLAYER WHEN HURT
-			b2Vec2 pushVec((physA->body->GetPosition().x - physB->body->GetPosition().x),
-				(physA->body->GetPosition().y - physB->body->GetPosition().y));
-			pushVec.Normalize();
-			pushVec *= pushForce;
-			pushVec.x *= 6;
+			if (playerState != DEAD) {
+				//HURT LOGIC
+				if (hits >= 1 && playerState != HURT) DamagePlayer();
+				if (hits == 0) KillPlayer();
+				//PUSHING THE PLAYER WHEN HURT
+				b2Vec2 pushVec((physA->body->GetPosition().x - physB->body->GetPosition().x),
+					(physA->body->GetPosition().y - physB->body->GetPosition().y));
+				pushVec.Normalize();
+				pushVec *= pushForce;
+				pushVec.x *= 6;
 
-			pbody->body->SetLinearVelocity(b2Vec2(0, 0));
-			pbody->body->ApplyLinearImpulseToCenter(pushVec, true);
+				pbody->body->SetLinearVelocity(b2Vec2(0, 0));
+				pbody->body->ApplyLinearImpulseToCenter(pushVec, true);
+			}
+			
 		}
 		break;
 	case ColliderType::ABYSS:
@@ -587,6 +592,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::CHECKPOINT:
 		reachedCheckPoint = true;
+		hits = 3;
 		Engine::GetInstance().scene.get()->SaveState();
 		break;
 	case ColliderType::LEVEL_CHANGER:

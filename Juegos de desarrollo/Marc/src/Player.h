@@ -171,5 +171,7 @@ public:
 
 	bool playSound = true;
 
+	bool respawnHeal = false;
+
 	Direction dir;
 };

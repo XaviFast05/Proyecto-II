@@ -63,7 +63,7 @@ bool GroundEnemy::Start() {
 	destinationPoint = route[routeDestinationIndex];
 
 	//INIT PHYSICS
-	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(),  32/4, bodyType::DYNAMIC);
+	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(),  30, bodyType::DYNAMIC);
 	pbody->ctype = ColliderType::ENEMY;
 	pbody->body->SetGravityScale(1.2f);
 	pbody->body->SetFixedRotation(true);
@@ -144,6 +144,7 @@ bool GroundEnemy::Update(float dt) {
 					}
 				}
 			}
+
 
 
 
@@ -237,7 +238,6 @@ bool GroundEnemy::Update(float dt) {
 		switch (state) {
 			break;
 		case CHASING:
-			currentAnimation = &walk;
 			break;
 		case PATROL:
 			currentAnimation = &walk;
@@ -250,6 +250,13 @@ bool GroundEnemy::Update(float dt) {
 			break;
 		default:
 			break;
+		}
+
+		if (pbody->body->GetLinearVelocity().LengthSquared() == 0 && state != DEAD) {
+			currentAnimation = &idle;
+		}
+		if (pbody->body->GetLinearVelocity().LengthSquared() != 0 && state != DEAD) {
+			currentAnimation = &walk;
 		}
 
 		//DIRECTION
@@ -286,10 +293,10 @@ bool GroundEnemy::Update(float dt) {
 
 
 			if (dir == LEFT) {
-				Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
+				Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY() + 10, &currentAnimation->GetCurrentFrame());
 			}
 			else if (dir == RIGHT) {
-				Engine::GetInstance().render.get()->DrawTextureFlipped(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
+				Engine::GetInstance().render.get()->DrawTextureFlipped(texture, (int)position.getX(), (int)position.getY() + 10, &currentAnimation->GetCurrentFrame());
 			}
 		}
 
