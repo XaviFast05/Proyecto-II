@@ -98,6 +98,51 @@ bool Map::Update(float dt)
     return ret;
 }
 
+bool Map::PostUpdate()
+{
+    ZoneScoped;
+    bool ret = true;
+
+    if (mapLoaded) {
+
+        // L07 TODO 5: Prepare the loop to draw all tiles in a layer + DrawTexture()
+        // iterate all tiles in a layer
+        for (const auto& mapLayer : mapData.layers) {
+            //Check if the property Draw exist get the value, if it's true draw the lawyer
+            if (mapLayer->properties.GetProperty("PostDraw") != NULL && mapLayer->properties.GetProperty("PostDraw")->value == true) {
+                for (int i = 0; i < mapData.width; i++) {
+                    for (int j = 0; j < mapData.height; j++) {
+
+                        // L07 TODO 9: Complete the draw function
+
+                        Vector2D mapInWorld = MapToWorld(i, j);
+                        if (Engine::GetInstance().render.get()->InCameraView(mapInWorld.getX(), mapInWorld.getY(), mapData.tileWidth, mapData.tileHeight))
+                        {
+                            //Get the gid from tile
+                            int gid = mapLayer->Get(i, j);
+                            //Check if the gid is different from 0 - some tiles are empty
+                            if (gid != 0) {
+                                //L09: TODO 3: Obtain the tile set using GetTilesetFromTileId
+                                TileSet* tileSet = GetTilesetFromTileId(gid);
+                                if (tileSet != nullptr) {
+                                    //Get the Rect from the tileSetTexture;
+                                    SDL_Rect tileRect = tileSet->GetRect(gid);
+                                    //Get the screen coordinates from the tile coordinates
+                                    Vector2D mapCoord = MapToWorld(i, j);
+                                    //Draw the texture
+                                    Engine::GetInstance().render->DrawTexture(tileSet->texture, mapCoord.getX(), mapCoord.getY(), &tileRect);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return ret;
+}
+
 // L09: TODO 2: Implement function to the Tileset based on a tile id
 TileSet* Map::GetTilesetFromTileId(int gid) const
 {
