@@ -5,6 +5,7 @@
 #include "SDL2/SDL.h"
 #include "Animation.h"
 #include "Pathfinding.h"
+#include "PickaxeManager.h"
 #include <vector>
 #include "Timer.h"
 
@@ -66,5 +67,9 @@ private:
 
 	// Velocidad de impulso vertical (altura del salto)
 	float bossJumpSpeedV = 700.0f;
+
+	ProjectileManager* projectileManager;
+	bool shouldShootProjectiles = false;
+
 };
 

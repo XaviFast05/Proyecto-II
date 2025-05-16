@@ -101,6 +101,11 @@ bool JumpingEnemy::Update(float dt) {
 
 	}
 
+	if (shouldShootProjectiles) {
+		projectileManager->ThrowJumpProjectiles(pbody->GetPhysBodyWorldPosition());
+		shouldShootProjectiles = false;
+	}
+
 	// Actualiza animación
 	switch (state) {
 	case JUMP:   currentAnimation = &jump;  break;
@@ -164,6 +169,8 @@ void JumpingEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 			isBossJumping = false;
 			pbody->body->SetLinearVelocity({ 0.0f, 0.0f });
 			bossDirection *= -1; // derecha o izquierda
+
+			shouldShootProjectiles = true;
 
 			state = PATROL;
 			ResetPath();
@@ -237,5 +244,8 @@ void JumpingEnemy::TriggerBossJump()
 		isBossJumping = true;
 		damageAccumulated = 0;
 		state = JUMP;
+
+		shouldShootProjectiles = true;
+
 	}
 }

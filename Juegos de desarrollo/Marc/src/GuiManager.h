@@ -26,7 +26,7 @@ public:
 	bool CleanUp();
 
 	// Additional methods
-	GuiControl* CreateGuiControl(GuiControlType type, const char* name, const char* text, SDL_Rect bounds, Module* observer, SDL_Rect sliderBounds = { 0,0,0,0 }, SDL_Texture* tex = nullptr, SDL_Texture* sliderTex = nullptr);
+	GuiControl* CreateGuiControl(GuiControlType bullet_direction, const char* name, const char* text, SDL_Rect bounds, Module* observer, SDL_Rect sliderBounds = { 0,0,0,0 }, SDL_Texture* tex = nullptr, SDL_Texture* sliderTex = nullptr);
 
 public:
 

@@ -76,11 +76,11 @@ bool EntityManager::CleanUp()
 	return ret;
 }
 
-Entity* EntityManager::CreateEntity(EntityType type)
+Entity* EntityManager::CreateEntity(EntityType bullet_direction)
 {
 	Entity* entity = nullptr; 
 
-	switch (type)
+	switch (bullet_direction)
 	{
 	case EntityType::PLAYER:
 		entity = new Player();
@@ -105,7 +105,13 @@ Entity* EntityManager::CreateEntity(EntityType type)
 		LOG("Jumping enemy created");
 		break;
 	case EntityType::SHOT:
-		entity = new Bullet();
+		entity = new Bullet(BulletType::PICKAXE, BulletDirection::HORIZONTAL);
+		break;
+	case EntityType::JUMPSHOT:
+		entity = new Bullet(BulletType::BOSSJUMP, BulletDirection::HORIZONTAL);
+		break;
+	case EntityType::FINALBOSSSHOT:
+		entity = new Bullet(BulletType::FINALBOSS, BulletDirection::HORIZONTAL);
 		break;
 	case EntityType::CURRENCY_ORB:
 		entity = new CurrencyOrb();
@@ -122,13 +128,13 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	return entity;
 }
 
-std::list<Entity*> EntityManager::CreatePooledEntities(EntityType type, int num)
+std::list<Entity*> EntityManager::CreatePooledEntities(EntityType bullet_direction, int num)
 {
 	for (int i = 0; i < num; i++)
 	{
 		Entity* entity = nullptr;
 
-		switch (type)
+		switch (bullet_direction)
 		{
 		case EntityType::PLAYER:
 			entity = new Player();
@@ -154,8 +160,13 @@ std::list<Entity*> EntityManager::CreatePooledEntities(EntityType type, int num)
 		case EntityType::BOSS:
 			break;
 		case EntityType::SHOT:
-			entity = new Bullet();
+			entity = new Bullet(BulletType::PICKAXE, BulletDirection::HORIZONTAL);
 			break;
+		case EntityType::JUMPSHOT:
+			entity = new Bullet(BulletType::BOSSJUMP, BulletDirection::HORIZONTAL);
+			break;
+		case EntityType::FINALBOSSSHOT:
+			entity = new Bullet(BulletType::FINALBOSS, BulletDirection::HORIZONTAL);
 		case EntityType::CURRENCY_ORB:
 			entity = new CurrencyOrb();
 			break;
@@ -168,18 +179,18 @@ std::list<Entity*> EntityManager::CreatePooledEntities(EntityType type, int num)
 
 		entity->Disable();
 		entities.push_back(entity);
-		pooledEntities[type].push_back(entity);
+		pooledEntities[bullet_direction].push_back(entity);
 	}
 
-	return pooledEntities[type];
+	return pooledEntities[bullet_direction];
 }
 
-Entity* EntityManager::CreatePooledEntities(EntityType type)
+Entity* EntityManager::CreatePooledEntities(EntityType bullet_direction)
 {
 
 	Entity* entity = nullptr;
 
-	switch (type)
+	switch (bullet_direction)
 	{
 	case EntityType::PLAYER:
 		entity = new Player();
@@ -202,8 +213,13 @@ Entity* EntityManager::CreatePooledEntities(EntityType type)
 	case EntityType::BOSS:
 		break;
 	case EntityType::SHOT:
-		entity = new Bullet();
+		entity = new Bullet(BulletType::PICKAXE, BulletDirection::HORIZONTAL);
 		break;
+	case EntityType::JUMPSHOT:
+		entity = new Bullet(BulletType::BOSSJUMP, BulletDirection::HORIZONTAL);
+		break;
+	case EntityType::FINALBOSSSHOT:
+		entity = new Bullet(BulletType::FINALBOSS, BulletDirection::HORIZONTAL);
 	case EntityType::CURRENCY_ORB:
 		entity = new CurrencyOrb();
 		break;
@@ -216,14 +232,14 @@ Entity* EntityManager::CreatePooledEntities(EntityType type)
 
 	entity->Disable();
 	entities.push_back(entity);
-	pooledEntities[type].push_back(entity);
+	pooledEntities[bullet_direction].push_back(entity);
 
 	return entity;
 }
 
-Entity* EntityManager::GetPooledEntity(EntityType type)
+Entity* EntityManager::GetPooledEntity(EntityType bullet_direction)
 {
-	for (Entity* entity : pooledEntities[type])
+	for (Entity* entity : pooledEntities[bullet_direction])
 	{
 		if (!entity->active)
 		{
