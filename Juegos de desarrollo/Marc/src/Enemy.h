@@ -25,6 +25,8 @@ public:
 		CHASING,
 		ATTACK,
 		JUMP,
+		RUN,
+		TIRED,
 		DEAD,
 		HURT
 	};
@@ -97,6 +99,8 @@ public:
 	Animation jump;
 	Animation fall;
 	Animation walk;
+	Animation run;
+	Animation tired;
 
 	//PATH
 	Pathfinding* pathfinding;

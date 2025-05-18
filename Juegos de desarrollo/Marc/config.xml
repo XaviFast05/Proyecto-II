@@ -61,8 +61,8 @@
 		<entities>
 			<player w="64" h="64" lives="3" texture="Assets/Textures/Kim/Kim_spriteSheet.png">
 				<startPositions>
-					<lvl1 x="150" y="3400" />
-					<lvl2 x="150" y="3400" />
+					<lvl1 x="160" y="3400" />
+					<lvl2 x="160" y="3400" />
 				</startPositions>
 				<propierties gJumpForce="4.0f" pJumpForce="4.0f" pushForce="7.0f" moveSpeed="0.5f" friction="0.0f" gravity="9.0f" attack1Time="0.8f" attack2Time="1.0f" hurtTime="1.0f" respawnTime=" 2.0f" playerState="0" direction="1" shootCooldown="5" />
 				<statesFlow>
@@ -276,7 +276,7 @@
 					</animations>
 				</child>
 				<jumper x="250" y="350" w="64" h="64" texture="Assets/Textures/Enemies/Jumper/saltador.png">
-					<properties speed="4" chaseArea="600" deathTime="1.0f" lives="40" pushForce="1" pushFriction="5" lootAmount="5" canPush="true" />
+					<properties speed="4" chaseArea="600" deathTime="1.0f" lives="40" pushForce="1" pushFriction="5" lootAmount="5" canPush="false" />
 					<animations>
 						<idle loop="true" speed="0.1f">
 							<frame x="0" y="0" w="64" h="64" />
@@ -304,6 +304,29 @@
 						</death>
 					</animations>
 				</jumper>
+				<runner x="4225" y="4220" w="64" h="64" texture="Assets/Textures/Enemies/Runner/cabra.png">
+					<properties speed="9" chaseArea="700" deathTime="1.0f" lives="10" pushForce="1" pushFriction="5" lootAmount="5" canPush="false" />
+					<animations>
+						<idle loop="true" speed="0.1f">
+							<frame x="0" y="0" w="64" h="64" />
+							<frame x="64" y="0" w="64" h="64" />
+						</idle>
+						<run loop="true" speed="0.1f">
+							<frame x="0" y="64" w="64" h="64" />
+							<frame x="64" y="64" w="64" h="64" />
+						</run>
+						<tired loop="true" speed="0.2f">
+							<frame x="0" y="128" w="64" h="64" />
+							<frame x="64" y="128" w="64" h="64" />
+						</tired>
+						<hurt loop=" false" speed="0.2f">
+							<frame x="0" y="64" w="64" h="64" />
+						</hurt>
+						<death loop=" false" speed="0.1f">
+							<frame x="0" y="192" w="64" h="64" />
+						</death>
+					</animations>
+				</runner>
 				<instances>
 					<lvl1>
 						<instance enemyType="skeleton" entityType="5">
@@ -343,6 +366,10 @@
 						<instance enemyType="jumper" entityType="10">
 							<point x="3456" y="3200" />
 							<point x="3456" y="3200" />
+						</instance>
+						<instance enemyType="runner" entityType="11">
+							<point x="4225" y="4220" />
+							<point x="4225" y="4220" />
 						</instance>
 					</lvl2>
 				</instances>

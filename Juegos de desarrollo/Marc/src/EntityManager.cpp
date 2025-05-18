@@ -9,6 +9,7 @@
 #include "GroundEnemy.h"
 #include "ChildEnemy.h"
 #include "JumpingEnemy.h"
+#include "RunningEnemy.h"
 #include "Particle.h"
 #include "SoulRock.h"
 #include "Bullet.h"
@@ -102,7 +103,9 @@ Entity* EntityManager::CreateEntity(EntityType bullet_direction)
 		break;
 	case EntityType::JUMPING_ENEMY:
 		entity = new JumpingEnemy();
-		LOG("Jumping enemy created");
+		break;
+	case EntityType::RUNNING_ENEMY:
+		entity = new RunningEnemy();
 		break;
 	case EntityType::SHOT:
 		entity = new Bullet(BulletType::PICKAXE, BulletDirection::HORIZONTAL);
@@ -157,6 +160,9 @@ std::list<Entity*> EntityManager::CreatePooledEntities(EntityType bullet_directi
 		case EntityType::JUMPING_ENEMY:
 			entity = new JumpingEnemy();
 			break;
+		case EntityType::RUNNING_ENEMY:
+			entity = new RunningEnemy();
+			break;
 		case EntityType::BOSS:
 			break;
 		case EntityType::SHOT:
@@ -209,6 +215,12 @@ Entity* EntityManager::CreatePooledEntities(EntityType bullet_direction)
 		break;
 	case EntityType::CHILD_ENEMY:
 		entity = new ChildEnemy();
+		break;
+	case EntityType::JUMPING_ENEMY:
+		entity = new JumpingEnemy();
+		break;
+	case EntityType::RUNNING_ENEMY:
+		entity = new RunningEnemy();
 		break;
 	case EntityType::BOSS:
 		break;
