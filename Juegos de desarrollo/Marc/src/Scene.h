@@ -103,6 +103,8 @@ public:
 	void DrawPickaxesUI();
 
 	void DrawCurrencyUI();
+
+	void DrawMap();
 	
 	std::string GetCurrentLevelString();
 	
@@ -125,7 +127,7 @@ public:
 	GuiControlCheckBox* fullScreenCheckBox;
 	SDL_Texture* pausePanel;
 	
-	SDL_Texture* heartsTexture, * piquetaNormal, * piquetaGastada, * barraPiqueta, * barraRoja, * orbSoul;
+	SDL_Texture* heartsTexture, * piquetaNormal, * piquetaGastada, * barraPiqueta, * barraRoja, * orbSoul, *bgTutorial, *bgLvl1, *kimHead;
 	
 	Vector2D pausePos;
 

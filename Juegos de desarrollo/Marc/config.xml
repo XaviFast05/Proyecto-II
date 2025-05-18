@@ -45,6 +45,8 @@
 			<barraPiqueta path="Assets/Textures/UI/barra.png" />
 			<barraRoja path="Assets/Textures/UI/barra_roja.png" />
 			<orbSoul path="Assets/Textures/UI/orbSoul.png" />
+			<bgTut path="Assets/Maps/fondo_tut.png" />
+			<kimHead path="Assets/Textures/kim.png" />
 		</ui>
 		<map>
 			<paths>

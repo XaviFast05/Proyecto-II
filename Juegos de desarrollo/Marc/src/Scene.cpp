@@ -163,6 +163,8 @@ bool Scene::Start()
 	barraPiqueta = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("barraPiqueta").attribute("path").as_string());
 	barraRoja = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("barraRoja").attribute("path").as_string());
 	orbSoul = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("orbSoul").attribute("path").as_string());
+	bgTutorial = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("bgTut").attribute("path").as_string());
+	kimHead = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("kimHead").attribute("path").as_string());
 
 	return true;
 }
@@ -363,12 +365,15 @@ bool Scene::PostUpdate()
 
 	//UI
 	if (!Engine::GetInstance().settings.get()->settingsOpen) {
+		LOG("%f %f", player->pbody->body->GetPosition().x, player->pbody->body->GetPosition().y);
 
 		DrawPlayerHitsUI();
 
 		DrawPickaxesUI();
 
 		DrawCurrencyUI();
+
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_TAB)) DrawMap();
 
 		if (paused && !Engine::GetInstance().settings.get()->settingsOpen) {
 			
@@ -795,4 +800,24 @@ void Scene::DrawCurrencyUI()
 	// Dibujar el texto del número de monedas
 	Engine::GetInstance().render.get()->DrawText(
 		currencyText.c_str(), 1200, 32, 48, 32);
+}
+
+void Scene::DrawMap()
+{
+	// 3 x 68.465
+
+	float posX = player->pbody->body->GetPosition().x;
+	float posY = player->pbody->body->GetPosition().y;
+	int centerX = -Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + (Engine::GetInstance().window.get()->width / 2) - 360;
+	int centerY = -Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + (Engine::GetInstance().window.get()->height / 2) - 180;
+	switch (level) {
+	case LVL1:				
+		Engine::GetInstance().render.get()->DrawTexture(bgTutorial, centerX, centerY);
+		Engine::GetInstance().render.get()->DrawTexture(kimHead, centerX + (posX * 720 / 225 - 10), centerY + (posY * 360 / 96 - 25));
+		break;
+	case LVL2:
+		break;
+	default:
+		break;
+	}
 }
