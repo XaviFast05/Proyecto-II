@@ -601,6 +601,8 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		}
 		else if (Engine::GetInstance().scene.get()->level == LVL2) {
 		}
+		else if (Engine::GetInstance().scene.get()->level == LVL3) {
+		}
 		break;
 	
 	case ColliderType::BOSS_STARTER:

@@ -148,7 +148,9 @@ bool Scene::Start()
 	if (level == LVL1)Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl1Mus").attribute("path").as_string());
 	else if (level == LVL2) {
 		Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl2Mus").attribute("path").as_string());
-		
+	}
+	else if (level == LVL3) {
+		Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl2Mus").attribute("path").as_string());
 	}
 	
 	startBossFight = false;
@@ -243,6 +245,14 @@ bool Scene::Update(float dt)
 		Engine::GetInstance().fade.get()->Fade(this, this);
 	}
 
+	if (level != LVL3 && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		level = LVL3;
+		loadScene = false;
+		Engine::GetInstance().fade.get()->Fade(this, this);
+	}
+
+
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
 		loadScene = false;
@@ -284,13 +294,32 @@ bool Scene::Update(float dt)
 		//CAMERA Y
 		Engine::GetInstance().render.get()->camera.y = (METERS_TO_PIXELS(player->pbody->body->GetPosition().y) + CAM_EXTRA_DISPLACEMENT_Y) * -Engine::GetInstance().window.get()->scale;
 
-		//CAMERA LIMITS X
-		if (Engine::GetInstance().render.get()->camera.x < -9980) Engine::GetInstance().render.get()->camera.x = -9980;
-		else if (Engine::GetInstance().render.get()->camera.x > -35) Engine::GetInstance().render.get()->camera.x = -35;
+	
+		if (level == LVL1)
+		{
+			//CAMERA LIMITS X
+			if (Engine::GetInstance().render.get()->camera.x < -9980) Engine::GetInstance().render.get()->camera.x = -9980;
+			else if (Engine::GetInstance().render.get()->camera.x > -35) Engine::GetInstance().render.get()->camera.x = -35;
 
-		//CAMERA LIMITS Y
-		if (Engine::GetInstance().render.get()->camera.y < -4088) Engine::GetInstance().render.get()->camera.y = -4088;
-		else if (Engine::GetInstance().render.get()->camera.y > 0) Engine::GetInstance().render.get()->camera.y = 0;
+			//CAMERA LIMITS Y
+			if (Engine::GetInstance().render.get()->camera.y < -4088) Engine::GetInstance().render.get()->camera.y = -4088;
+			else if (Engine::GetInstance().render.get()->camera.y > 0) Engine::GetInstance().render.get()->camera.y = 0;
+		}
+		else if (level == LVL2)
+		{
+			//CAMERA LIMITS X
+			if (Engine::GetInstance().render.get()->camera.x < -9980) Engine::GetInstance().render.get()->camera.x = -9980;
+			else if (Engine::GetInstance().render.get()->camera.x > -35) Engine::GetInstance().render.get()->camera.x = -35;
+
+			//CAMERA LIMITS Y
+			if (Engine::GetInstance().render.get()->camera.y < -4088) Engine::GetInstance().render.get()->camera.y = -4088;
+			else if (Engine::GetInstance().render.get()->camera.y > 0) Engine::GetInstance().render.get()->camera.y = 0;
+		}
+		else if (level == LVL3)
+		{
+
+		}
+		
 
 	}
 

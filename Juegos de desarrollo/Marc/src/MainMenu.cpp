@@ -204,6 +204,13 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control) {
 
 		break;
 	}
+	if (control->id == GuiControlId::FIRST_CAPE) {
+		if (control->state == GuiControlState::PRESSED) {
+			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)Engine::GetInstance().scene.get(), 30);
+			Engine::GetInstance().scene.get()->SetLoadState(false);
+			Engine::GetInstance().scene.get()->SetLevel(LVL3);
+		}
+	}
 
 	
 	return true;

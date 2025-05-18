@@ -20,6 +20,7 @@
 		<buttons defaultTex="Assets/Textures/Menus/Title Screen/title screen button sheet.png">
 			<newGameBt id="1" x="448" y="230" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/New Game Button Sheet.png" />
 			<testLevelBt id="13" x="448" y="326" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Test Level Button Sheet.png" />
+			<thirdLevelBt id="14" x="700" y="326" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Test Level Button Sheet.png" />
 			<continueBt id="2" x="4000" y="78" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Continue Button Sheet.png" />
 			<optionsBt id="3" x="448" y="422" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Options Button Sheet.png" />
 			<creditsBt id="4" x="448" y="518" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Credits Button Sheet.png" />
@@ -50,6 +51,7 @@
 			<paths>
 				<lvl1 path="Assets/Maps/" name="Tutorial.tmx" />
 				<lvl2 path="Assets/Maps/" name="Playground.tmx" />
+				<lvl3 path="Assets/Maps/" name="level1 (1).tmx" />
 			</paths>
 			<parallax>
 				<layer name="sky" path="Assets/Textures/Parallax/Fondo_Front.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="5" repeatNum="15" slowY="1" />
@@ -63,6 +65,7 @@
 				<startPositions>
 					<lvl1 x="150" y="3400" />
 					<lvl2 x="150" y="1040" />
+					<lvl3 x="6592" y="832" />
 				</startPositions>
 				<propierties gJumpForce="6.5f" pJumpForce="6.5f" pushForce="7.0f" moveSpeed="0.7f" friction="0.0f" gravity="9.0f" attack1Time="0.8f" attack2Time="1.0f" hurtTime="1.0f" respawnTime=" 2.0f" playerState="0" direction="1" shootCooldown="5" />
 				<statesFlow>
