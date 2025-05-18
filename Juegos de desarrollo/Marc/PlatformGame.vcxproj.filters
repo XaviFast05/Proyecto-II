@@ -87,9 +87,6 @@
     <ClCompile Include="src\Physics.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\Pumpkin.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
     <ClCompile Include="src\Pathfinding.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
@@ -102,14 +99,8 @@
     <ClCompile Include="src\Particle.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
-    <ClCompile Include="src\Candy.cpp">
-      <Filter>Source Files\Game</Filter>
-    </ClCompile>
     <ClCompile Include="src\FadeToBlack.cpp">
       <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Santa.cpp">
-      <Filter>Source Files\Game\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="src\Settings.cpp">
       <Filter>Source Files\Game</Filter>
@@ -168,6 +159,36 @@
     <ClCompile Include="src\Intro.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\CurrencyOrb.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CurrencyManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CheckPoint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SoulRock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Intro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ChildEnemy.cpp">
+      <Filter>Source Files\Game\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Intro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JumpingEnemy.cpp">
+      <Filter>Source Files\Game\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Intro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RunningEnemy.cpp">
+      <Filter>Source Files\Game\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Audio.h">
@@ -221,9 +242,6 @@
     <ClInclude Include="src\Physics.h">
       <Filter>Source Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\Pumpkin.h">
-      <Filter>Source Files\Game</Filter>
-    </ClInclude>
     <ClInclude Include="src\Animation.h">
       <Filter>Source Files\Utils</Filter>
     </ClInclude>
@@ -239,14 +257,8 @@
     <ClInclude Include="src\Particle.h">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
-    <ClInclude Include="src\Candy.h">
-      <Filter>Source Files\Game</Filter>
-    </ClInclude>
     <ClInclude Include="src\FadeToBlack.h">
       <Filter>Source Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Santa.h">
-      <Filter>Source Files\Game\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="src\Settings.h">
       <Filter>Source Files\Game</Filter>
@@ -296,6 +308,22 @@
       <Filter>Source Files\Engine\Gui</Filter>
     </ClInclude>
     <ClInclude Include="src\Intro.h" />
+    <ClInclude Include="src\CurrencyOrb.h" />
+    <ClInclude Include="src\CurrencyManager.h" />
+    <ClInclude Include="src\CheckPoint.h" />
+    <ClInclude Include="src\SoulRock.h" />
+    <ClInclude Include="src\Intro.h" />
+    <ClInclude Include="src\ChildEnemy.h">
+      <Filter>Source Files\Game\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Intro.h" />
+    <ClInclude Include="src\JumpingEnemy.h">
+      <Filter>Source Files\Game\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Intro.h" />
+    <ClInclude Include="src\RunningEnemy.h">
+      <Filter>Source Files\Game\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="config.xml">

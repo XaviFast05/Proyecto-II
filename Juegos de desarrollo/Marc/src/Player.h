@@ -7,13 +7,12 @@
 #include "Timer.h"
 #include "Particle.h"
 
-
 #define GHOST_W 32
 #define MAX_PICKAXES 3
 #define MELEE_AREA_WIDTH 30
 
 //FORWARD DECLARATION
-class PickaxeManager;
+class ProjectileManager;
 class CurrencyManager;
 
 struct SDL_Texture;
@@ -137,7 +136,7 @@ public:
 	bool resetAnimation = false;
 
 	//MANAGERS
-	PickaxeManager* pickaxeManager;
+	ProjectileManager* projectileManager;
 	CurrencyManager* currencyManager;
 
 	Timer coyoteTimer;
@@ -172,6 +171,5 @@ public:
 	bool playSound = true;
 
 	bool respawnHeal = false;
-
 	Direction dir;
 };

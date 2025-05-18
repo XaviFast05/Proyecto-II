@@ -219,7 +219,7 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control) {
 void MainMenu::SetGuiParameters(GuiControl* bt, std::string btName, pugi::xml_node parameters) {
 	
 	bt->id = (GuiControlId)parameters.child(btName.c_str()).attribute("id").as_int();
-	if (bt->type == GuiControlType::SLIDER) {
+	if (bt->bullet_direction == GuiControlType::SLIDER) {
 		bt->bounds.x = parameters.child(btName.c_str()).attribute("circleX").as_int();
 		bt->bounds.y = parameters.child(btName.c_str()).attribute("circleY").as_int();
 	}

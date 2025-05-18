@@ -63,11 +63,11 @@
 		<entities>
 			<player w="64" h="64" lives="3" texture="Assets/Textures/Kim/Kim_spriteSheet.png">
 				<startPositions>
-					<lvl1 x="150" y="3400" />
-					<lvl2 x="150" y="1040" />
+					<lvl1 x="160" y="3400" />
+					<lvl2 x="160" y="3400" />
 					<lvl3 x="6592" y="832" />
 				</startPositions>
-				<propierties gJumpForce="6.5f" pJumpForce="6.5f" pushForce="7.0f" moveSpeed="0.7f" friction="0.0f" gravity="9.0f" attack1Time="0.8f" attack2Time="1.0f" hurtTime="1.0f" respawnTime=" 2.0f" playerState="0" direction="1" shootCooldown="5" />
+				<propierties gJumpForce="4.0f" pJumpForce="4.0f" pushForce="7.0f" moveSpeed="0.5f" friction="0.0f" gravity="9.0f" attack1Time="0.8f" attack2Time="1.0f" hurtTime="1.0f" respawnTime=" 2.0f" playerState="0" direction="1" shootCooldown="5" />
 				<statesFlow>
 					<idle idle="false" run="true" jump="true" fall="true" punch="true" throw="true" mele="true" hurt="true" dead="true" />
 					<run idle="true" run="false" jump="true" fall="true" punch="true" throw="true" mele="true" hurt="true" dead="true" />
@@ -183,7 +183,7 @@
 			</shot>
 			<enemies>
 				<skeleton x="100" y="420" w="64" h="64" texture="Assets/Textures/Enemies/Fantasma/Fantasma_spriteSheet.png">
-					<properties speed="1" chaseArea="400" attackArea="20" jumpForce="0.3f" attackTime="1.0f" deathTime="1.5f" lives="3" pushForce="1" pushFriction="5" lootAmount="5" canPush="true" />
+					<properties speed="1" chaseArea="400" attackArea="20" jumpForce="0.3f" attackTime="1.0f" deathTime="1.5f" lives="5" pushForce="1" pushFriction="5" lootAmount="5" canPush="true" />
 					<animations>
 						<idle loop="true" speed="0.2f">
 							<frame x="0" y="0" w="64" h="64" />
@@ -226,95 +226,110 @@
 						</death>
 					</animations>
 				</skeleton>
-				<bat x="250" y="350" w="32" h="32" texture="Assets/Textures/Enemies/Bat/Vampire/BatVampire_Sheet.png">
-					<properties speed="1" chaseArea="100" deathTime="1.0f" lives="3" pushForce="1" pushFriction="5" lootAmount="5" canPush="true" />
+				<bat x="250" y="350" w="64" h="64" texture="Assets/Textures/Enemies/Fantasma/fantasmavolador.png">
+					<properties speed="2" chaseArea="400" deathTime="1.0f" lives="10" pushForce="1" pushFriction="5" lootAmount="1" canPush="true" />
 					<animations>
 						<idle loop="true" speed="0.2f">
-							<frame x="0" y="0" w="32" h="32" />
-							<frame x="32" y="0" w="32" h="32" />
-							<frame x="64" y="0" w="32" h="32" />
-							<frame x="96" y="0" w="32" h="32" />
+							<frame x="0" y="64" w="64" h="64" />
+							<frame x="64" y="64" w="64" h="64" />
+							<frame x="128" y="64" w="64" h="64" />
+							<frame x="192" y="64" w="64" h="64" />
+							<frame x="256" y="64" w="64" h="64" />
+							<frame x="320" y="64" w="64" h="64" />
+							<frame x="384" y="64" w="64" h="64" />
 						</idle>
 						<attack loop="true" speed="0.2f">
-							<frame x="0" y="32" w="32" h="32" />
-							<frame x="32" y="32" w="32" h="32" />
-							<frame x="64" y="32" w="32" h="32" />
-							<frame x="96" y="32" w="32" h="32" />
-							<frame x="128" y="32" w="32" h="32" />
-							<frame x="160" y="32" w="32" h="32" />
+							<frame x="0" y="64" w="64" h="64" />
+							<frame x="64" y="64" w="64" h="64" />
+							<frame x="128" y="64" w="64" h="64" />
+							<frame x="192" y="64" w="64" h="64" />
+							<frame x="256" y="64" w="64" h="64" />
+							<frame x="320" y="64" w="64" h="64" />
+							<frame x="384" y="64" w="64" h="64" />
 						</attack>
 						<hurt loop=" false" speed="0.2f">
-							<frame x="0" y="64" w="32" h="32" />
-							<frame x="32" y="64" w="32" h="32" />
-							<frame x="64" y="64" w="32" h="32" />
-							<frame x="96" y="64" w="32" h="32" />
+							<frame x="0" y="0" w="64" h="64" />
 						</hurt>
 						<death loop=" false" speed="0.1f">
-							<frame x="0" y="96" w="32" h="32" />
-							<frame x="32" y="96" w="32" h="32" />
-							<frame x="64" y="96" w="32" h="32" />
-							<frame x="96" y="96" w="32" h="32" />
-							<frame x="128" y="96" w="32" h="32" />
-							<frame x="192" y="96" w="32" h="32" />
-							<frame x="224" y="96" w="32" h="32" />
+							<frame x="0" y="128" w="64" h="64" />
+							<frame x="64" y="128" w="64" h="64" />
+							<frame x="128" y="128" w="64" h="64" />
+							<frame x="192" y="128" w="64" h="64" />
+							<frame x="256" y="128" w="64" h="64" />
+							<frame x="320" y="128" w="64" h="64" />
+							<frame x="384" y="128" w="64" h="64" />
 						</death>
 					</animations>
 				</bat>
-				<santa x="250" y="350" w="32" h="32" texture="Assets/Textures/Enemies/Santa_Boss/santa_sheet.png" lvl="1">
-					<properties speed="1" deathTime="1.0f" jumpRange="100" jumpCooldown="5" attackRange="30" attackTime="1" pushForce="0.5f" hurtTime="1.0f" lives="10" />
+				<child x="250" y="350" w="64" h="64" texture="Assets/Textures/Enemies/voladores.png">
+					<properties speed="4" chaseArea="400" deathTime="1.0f" lives="1" pushForce="1" pushFriction="5" lootAmount="2" canPush="true" />
 					<animations>
 						<idle loop="true" speed="0.2f">
-							<frame x="0" y="0" w="32" h="32" />
-							<frame x="32" y="0" w="32" h="32" />
-							<frame x="64" y="0" w="32" h="32" />
-							<frame x="96" y="0" w="32" h="32" />
-							<frame x="128" y="0" w="32" h="32" />
-							<frame x="160" y="0" w="32" h="32" />
+							<frame x="0" y="64" w="64" h="64" />
 						</idle>
-						<walk loop="true" speed="0.2f">&gt;
-							<frame x="0" y="32" w="32" h="32" />
-							<frame x="32" y="32" w="32" h="32" />
-							<frame x="64" y="32" w="32" h="32" />
-							<frame x="96" y="32" w="32" h="32" />
-							<frame x="128" y="32" w="32" h="32" />
-							<frame x="160" y="32" w="32" h="32" />
-						</walk>
-						<jump loop="false" speed="0.2f">&gt;
-							<frame x="0" y="64" w="32" h="32" />
-							<frame x="32" y="64" w="32" h="32" />
-							<frame x="64" y="64" w="32" h="32" />
-							<frame x="96" y="64" w="32" h="32" />
-							<frame x="128" y="64" w="32" h="32" />
-							<frame x="160" y="64" w="32" h="32" />
-						</jump>
-						<fall loop="false" speed="0.2f">&gt;
-							<frame x="192" y="64" w="32" h="32" />
-							<frame x="224" y="64" w="32" h="32" />
-						</fall>
-						<hurt loop="false" speed="0.2f">
-							<frame x="0" y="96" w="32" h="32" />
-							<frame x="32" y="96" w="32" h="32" />
-							<frame x="64" y="96" w="32" h="32" />
-						</hurt>
-						<attack loop="false" speed="0.2f">&gt;
-							<frame x="0" y="128" w="32" h="32" />
-							<frame x="32" y="128" w="32" h="32" />
-							<frame x="64" y="128" w="32" h="32" />
-							<frame x="96" y="128" w="32" h="32" />
-							<frame x="128" y="128" w="32" h="32" />
-							<frame x="160" y="128" w="32" h="32" />
+						<attack loop="true" speed="0.2f">
+							<frame x="0" y="64" w="64" h="64" />
 						</attack>
-						<death loop="false" speed="0.2f">&gt;
-							<frame x="0" y="224" w="32" h="32" />
-							<frame x="32" y="224" w="32" h="32" />
-							<frame x="64" y="224" w="32" h="32" />
-							<frame x="96" y="224" w="32" h="32" />
-							<frame x="128" y="224" w="32" h="32" />
-							<frame x="160" y="224" w="32" h="32" />
-							<frame x="192" y="224" w="32" h="32" />
+						<hurt loop=" false" speed="0.2f">
+							<frame x="0" y="64" w="64" h="64" />
+						</hurt>
+						<death loop=" false" speed="0.1f">
+							<frame x="64" y="64" w="64" h="64" />
 						</death>
 					</animations>
-				</santa>
+				</child>
+				<jumper x="250" y="350" w="64" h="64" texture="Assets/Textures/Enemies/Jumper/saltador.png">
+					<properties speed="4" chaseArea="600" deathTime="1.0f" lives="40" pushForce="1" pushFriction="5" lootAmount="5" canPush="false" />
+					<animations>
+						<idle loop="true" speed="0.1f">
+							<frame x="0" y="0" w="64" h="64" />
+							<frame x="64" y="0" w="64" h="64" />
+							<frame x="128" y="0" w="64" h="64" />
+							<frame x="192" y="0" w="64" h="64" />
+						</idle>
+						<walk loop="true" speed="0.1f">
+							<frame x="0" y="0" w="64" h="64" />
+							<frame x="64" y="0" w="64" h="64" />
+							<frame x="128" y="0" w="64" h="64" />
+							<frame x="192" y="0" w="64" h="64" />
+						</walk>
+						<jump loop="false" speed="0.2f">
+							<frame x="0" y="128" w="64" h="64" />
+						</jump>
+						<attack loop="true" speed="0.2f">
+							<frame x="0" y="64" w="64" h="64" />
+						</attack>
+						<hurt loop=" false" speed="0.2f">
+							<frame x="0" y="64" w="64" h="64" />
+						</hurt>
+						<death loop=" false" speed="0.1f">
+							<frame x="64" y="64" w="64" h="64" />
+						</death>
+					</animations>
+				</jumper>
+				<runner x="4225" y="4220" w="64" h="64" texture="Assets/Textures/Enemies/Runner/cabra.png">
+					<properties speed="9" chaseArea="700" deathTime="1.0f" lives="10" pushForce="1" pushFriction="5" lootAmount="5" canPush="false" />
+					<animations>
+						<idle loop="true" speed="0.1f">
+							<frame x="0" y="0" w="64" h="64" />
+							<frame x="64" y="0" w="64" h="64" />
+						</idle>
+						<run loop="true" speed="0.1f">
+							<frame x="0" y="64" w="64" h="64" />
+							<frame x="64" y="64" w="64" h="64" />
+						</run>
+						<tired loop="true" speed="0.2f">
+							<frame x="0" y="128" w="64" h="64" />
+							<frame x="64" y="128" w="64" h="64" />
+						</tired>
+						<hurt loop=" false" speed="0.2f">
+							<frame x="0" y="64" w="64" h="64" />
+						</hurt>
+						<death loop=" false" speed="0.1f">
+							<frame x="0" y="192" w="64" h="64" />
+						</death>
+					</animations>
+				</runner>
 				<instances>
 					<lvl1>
 						<instance enemyType="skeleton" entityType="5">
@@ -337,7 +352,29 @@
 							<point x="9630" y="1370" />
 							<point x="9630" y="1370" />
 						</instance>
+						<instance enemyType="bat" entityType="4">
+							<point x="5315" y="2500" />
+							<point x="5315" y="2500" />
+						</instance>
+						<instance enemyType="child" entityType="9">
+							<point x="1150" y="3200" />
+							<point x="1150" y="3200" />
+						</instance>
+						<instance enemyType="jumper" entityType="10">
+							<point x="1150" y="3200" />
+							<point x="1150" y="3200" />
+						</instance>
 					</lvl1>
+					<lvl2>
+						<instance enemyType="jumper" entityType="10">
+							<point x="3456" y="3200" />
+							<point x="3456" y="3200" />
+						</instance>
+						<instance enemyType="runner" entityType="11">
+							<point x="4225" y="4220" />
+							<point x="4225" y="4220" />
+						</instance>
+					</lvl2>
 				</instances>
 			</enemies>
 			<items>

@@ -26,6 +26,8 @@ bool BatEnemy::Start() {
 	drawOffsetX = 0;
 	drawOffsetY = 0;
 
+	lives = 3;
+
 
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
 	attack.LoadAnimations(parameters.child("animations").child("attack"));
@@ -57,7 +59,7 @@ bool BatEnemy::Start() {
 	destinationPoint = route[routeDestinationIndex];
 
 	//INIT PHYSICS
-	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), 32 / 4, bodyType::DYNAMIC);
+	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), 32, bodyType::DYNAMIC);
 	pbody->ctype = ColliderType::ENEMY;
 	pbody->body->SetGravityScale(0);
 	pbody->body->SetFixedRotation(true);
@@ -234,6 +236,7 @@ bool BatEnemy::Update(float dt) {
 		//DRAW
 
 		if (pbody->body->IsEnabled()) {
+
 			if (Engine::GetInstance().GetDebug())
 			{
 				Engine::GetInstance().render.get()->DrawCircle(position.getX() + texW / 2, position.getY() + texH / 2, chaseArea * 2, 255, 255, 255);
@@ -245,15 +248,18 @@ bool BatEnemy::Update(float dt) {
 
 			b2Transform pbodyPos = pbody->body->GetTransform();
 			position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texW / 2 + drawOffsetX);
-			position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2 + drawOffsetY);
+			position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 1.5 + drawOffsetY);
+
+
+
 			if (dir == LEFT) {
-				Engine::GetInstance().render.get()->DrawTextureFlipped(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
+				Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY() + 10, &currentAnimation->GetCurrentFrame());
 			}
 			else if (dir == RIGHT) {
-				Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentAnimation->GetCurrentFrame());
+				Engine::GetInstance().render.get()->DrawTextureFlipped(texture, (int)position.getX(), (int)position.getY() + 10, &currentAnimation->GetCurrentFrame());
 			}
 		}
-	
+
 	}
 
 	
@@ -268,12 +274,12 @@ void BatEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::WEAPON:
 		break;
 	case ColliderType::PICKAXE:
-		if (state != DEAD) 	DMGEnemy();
+		if (state != DEAD) 	DMGEnemyPickaxe();
 		break;
 	case ColliderType::MELEE_AREA:
 		if (state != DEAD) {
 			if (canPush) push = true;
-			DMGEnemy();
+			DMGEnemyMelee();
 		}
 		break;
 	case ColliderType::SPYKE:

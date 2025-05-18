@@ -14,6 +14,8 @@
 #include "Physics.h"
 #include "BatEnemy.h"
 #include "GroundEnemy.h"
+#include "ChildEnemy.h"
+#include "JumpingEnemy.h"
 #include "SoulRock.h"
 #include <string>
 #include "Particle.h"
@@ -24,7 +26,6 @@
 #include "MainMenu.h"
 #include "FadeToBlack.h"
 #include "Settings.h"
-#include "Santa.h"
 #include "DeathMenu.h"
 #include "WinMenu.h"
 #include "PickaxeManager.h"
@@ -346,8 +347,8 @@ bool Scene::Update(float dt)
 	//pickaxeText = std::to_string((int)player->pickaxeManager->GetNumPickaxes()) + " pickaxes";
 	//Engine::GetInstance().render.get()->DrawText(pickaxeText.c_str(), 800, 50, 200, 18);
 
-	if (player->pickaxeManager->GetNumPickaxes() < MAX_PICKAXES) {
-		std::string number = std::to_string(player->pickaxeManager->pickaxeRecollectCount - player->pickaxeManager->pickaxeRecollectTimer.ReadSec());
+	if (player->projectileManager->GetNumPickaxes() < MAX_PICKAXES) {
+		std::string number = std::to_string(player->projectileManager->pickaxeRecollectCount - player->projectileManager->pickaxeRecollectTimer.ReadSec());
 		number.resize(3);
 		//timeTilPickaxeText = "time until next pickage: " + number + "s";
 		//Engine::GetInstance().render.get()->DrawText(timeTilPickaxeText.c_str(), 800, 70, 400, 18);
@@ -762,7 +763,7 @@ void Scene::DrawPlayerHitsUI()
 
 void Scene::DrawPickaxesUI()
 {
-	int numPickaxes = player->pickaxeManager->GetNumPickaxes(); // Piquetas disponibles
+	int numPickaxes = player->projectileManager->GetNumPickaxes(); // Piquetas disponibles
 	int scale = Engine::GetInstance().window.get()->GetScale(); // Escala de la ventana
 
 	// Posición inicial para dibujar las piquetas
@@ -792,7 +793,7 @@ void Scene::DrawPickaxesUI()
 				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (numPickaxes * spacing), // Posición X
 				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 80    // Posición Y
 			);
-			int redBars = player->pickaxeManager->GetNumRed();
+			int redBars = player->projectileManager->GetNumRed();
 			int drawRedSpacing = 0;
 			for (int i = 0; i < redBars; i++) {
 				Engine::GetInstance().render.get()->DrawTexture(

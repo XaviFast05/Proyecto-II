@@ -70,13 +70,13 @@ bool Physics::PreUpdate()
 	return ret;
 }
 
-PhysBody* Physics::CreateRectangle(int x, int y, int width, int height, bodyType type)
+PhysBody* Physics::CreateRectangle(int x, int y, int width, int height, bodyType bullet_direction)
 {
 	b2BodyDef body;
 
-	if (type == DYNAMIC) body.type = b2_dynamicBody;
-	if (type == STATIC) body.type = b2_staticBody;
-	if (type == KINEMATIC) body.type = b2_kinematicBody;
+	if (bullet_direction == DYNAMIC) body.type = b2_dynamicBody;
+	if (bullet_direction == STATIC) body.type = b2_staticBody;
+	if (bullet_direction == KINEMATIC) body.type = b2_kinematicBody;
 
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
@@ -102,14 +102,14 @@ PhysBody* Physics::CreateRectangle(int x, int y, int width, int height, bodyType
 	return pbody;
 }
 
-PhysBody* Physics::CreateCircle(int x, int y, int radious, bodyType type)
+PhysBody* Physics::CreateCircle(int x, int y, int radious, bodyType bullet_direction)
 {
 	// Create BODY at position x,y
 	b2BodyDef body;
 
-	if (type == DYNAMIC) body.type = b2_dynamicBody;
-	if (type == STATIC) body.type = b2_staticBody;
-	if (type == KINEMATIC) body.type = b2_kinematicBody;
+	if (bullet_direction == DYNAMIC) body.type = b2_dynamicBody;
+	if (bullet_direction == STATIC) body.type = b2_staticBody;
+	if (bullet_direction == KINEMATIC) body.type = b2_kinematicBody;
 
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
@@ -142,14 +142,14 @@ PhysBody* Physics::CreateCircle(int x, int y, int radious, bodyType type)
 	return pbody;
 }
 
-PhysBody* Physics::CreateCircleSensor(int x, int y, int radious, bodyType type)
+PhysBody* Physics::CreateCircleSensor(int x, int y, int radious, bodyType bullet_direction)
 {
 	// Create BODY at position x,y
 	b2BodyDef body;
 
-	if (type == DYNAMIC) body.type = b2_dynamicBody;
-	if (type == STATIC) body.type = b2_staticBody;
-	if (type == KINEMATIC) body.type = b2_kinematicBody;
+	if (bullet_direction == DYNAMIC) body.type = b2_dynamicBody;
+	if (bullet_direction == STATIC) body.type = b2_staticBody;
+	if (bullet_direction == KINEMATIC) body.type = b2_kinematicBody;
 
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
@@ -183,13 +183,13 @@ PhysBody* Physics::CreateCircleSensor(int x, int y, int radious, bodyType type)
 	return pbody;
 }
 
-PhysBody* Physics::CreateRectangleSensor(int x, int y, int width, int height, bodyType type)
+PhysBody* Physics::CreateRectangleSensor(int x, int y, int width, int height, bodyType bullet_direction)
 {
 	// Create BODY at position x,y
 	b2BodyDef body;
-	if (type == DYNAMIC) body.type = b2_dynamicBody;
-	if (type == STATIC) body.type = b2_staticBody;
-	if (type == KINEMATIC) body.type = b2_kinematicBody;
+	if (bullet_direction == DYNAMIC) body.type = b2_dynamicBody;
+	if (bullet_direction == STATIC) body.type = b2_staticBody;
+	if (bullet_direction == KINEMATIC) body.type = b2_kinematicBody;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	// Add BODY to the world
@@ -222,13 +222,13 @@ PhysBody* Physics::CreateRectangleSensor(int x, int y, int width, int height, bo
 	return pbody;
 }
 
-PhysBody* Physics::CreateChain(int x, int y, int* points, int size, bodyType type)
+PhysBody* Physics::CreateChain(int x, int y, int* points, int size, bodyType bullet_direction)
 {
 	// Create BODY at position x,y
 	b2BodyDef body;
-	if (type == DYNAMIC) body.type = b2_dynamicBody;
-	if (type == STATIC) body.type = b2_staticBody;
-	if (type == KINEMATIC) body.type = b2_kinematicBody;
+	if (bullet_direction == DYNAMIC) body.type = b2_dynamicBody;
+	if (bullet_direction == STATIC) body.type = b2_staticBody;
+	if (bullet_direction == KINEMATIC) body.type = b2_kinematicBody;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 
 	// Add BODY to the world

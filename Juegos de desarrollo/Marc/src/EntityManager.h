@@ -27,12 +27,12 @@ public:
 	bool CleanUp();
 
 	// Additional methods
-	Entity* CreateEntity(EntityType type);
+	Entity* CreateEntity(EntityType bullet_direction);
 
-	std::list<Entity*> CreatePooledEntities(EntityType type, int num);
-	Entity* CreatePooledEntities(EntityType type);
+	std::list<Entity*> CreatePooledEntities(EntityType bullet_direction, int num);
+	Entity* CreatePooledEntities(EntityType bullet_direction);
 
-	Entity* GetPooledEntity(EntityType type);
+	Entity* GetPooledEntity(EntityType bullet_direction);
 
 	void DestroyEntity(Entity* entity);
 
