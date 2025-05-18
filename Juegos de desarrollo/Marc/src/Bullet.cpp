@@ -41,7 +41,7 @@ bool Bullet::Start() {
     texH = parameters.attribute("h").as_int();
 
 
-    if (!pbody) pbody = Engine::GetInstance().physics.get()->CreateRectangle(static_cast<int>(position.getX()), static_cast<int>(position.getY()), 48, 12, bodyType::DYNAMIC);
+    if (!pbody) pbody = Engine::GetInstance().physics.get()->CreateRectangle(static_cast<int>(position.getX()), static_cast<int>(position.getY()), hitboxWidth, hitboxHeight, bodyType::DYNAMIC);
     if (pbody == nullptr) {
         LOG("Error: PhysBody creation failed!");
         return false;
@@ -57,6 +57,16 @@ bool Bullet::Start() {
     active = true;
     stuckOnWall = false;
     destroyPickaxe = false;
+
+    fixture = pbody->body->GetFixtureList();
+    if (fixture) {
+        b2Filter filter = fixture->GetFilterData();
+        filter.categoryBits = CATEGORY_PICKAXE;
+        filter.maskBits = 0xFFFF & ~CATEGORY_PLAYER;
+        fixture->SetFilterData(filter);
+    }
+
+    player = Engine::GetInstance().scene.get()->player;
 
     return true;
 }
@@ -99,7 +109,20 @@ bool Bullet::Update(float dt) {
     {
         Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()),0,1.0f,270);
     }
-    
+
+    //LOG("Pickaxe: %f, Player: %f", pbody->body->GetPosition().y, player->pbody->body->GetPosition().y);
+    if ((pbody->body->GetPosition().y - 0.5) > (player->pbody->body->GetPosition().y)) {
+        b2Filter filter = fixture->GetFilterData();
+        filter.categoryBits = CATEGORY_DEFAULT;
+        filter.maskBits = 0xFFFF;
+        fixture->SetFilterData(filter);
+    }
+    else {
+        b2Filter filter = fixture->GetFilterData();
+        filter.categoryBits = CATEGORY_PICKAXE;
+        filter.maskBits = 0xFFFF & ~CATEGORY_PLAYER;
+        fixture->SetFilterData(filter);
+    }
 
     return true;
 }

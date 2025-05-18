@@ -61,4 +61,10 @@ private:
     Animation* currentAnimation = nullptr;
     Animation travel;
     PhysBody* pbody;
+
+    Player* player;
+
+    int hitboxWidth = 48;
+    int hitboxHeight = 12;
+    b2Fixture* fixture;
 };

@@ -135,6 +135,14 @@ bool Player::Start() {
 	LoadDefaults();
 	pickaxeManager->Start();
 
+	b2Fixture* fixture = pbody->body->GetFixtureList();
+	if (fixture) {
+		b2Filter filter = fixture->GetFilterData();
+		filter.categoryBits = CATEGORY_PLAYER;
+		filter.maskBits = 0xFFFF & ~CATEGORY_PICKAXE;
+		fixture->SetFilterData(filter);
+	}
+
 	return true;
 }
 
