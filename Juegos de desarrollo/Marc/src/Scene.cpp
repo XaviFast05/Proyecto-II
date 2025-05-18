@@ -15,6 +15,8 @@
 #include "BatEnemy.h"
 #include "GroundEnemy.h"
 #include "SoulRock.h"
+#include "Ally.h"
+#include "Merchant.h"
 #include <string>
 #include "Particle.h"
 #include "tracy/Tracy.hpp"
@@ -98,6 +100,12 @@ bool Scene::Start()
 	{
 		SoulRock* soulRock = (SoulRock*)Engine::GetInstance().entityManager->CreateEntity((EntityType)soulRockNode.attribute("entityType").as_int());;
 		LoadSoulRock(soulRock, soulRockNode);
+	}
+
+	for (pugi::xml_node alliesNode : configParameters.child("entities").child("allies").child("merchant").child("instances").child(GetCurrentLevelString().c_str()).children())
+	{
+		Merchant* ally = (Merchant*)Engine::GetInstance().entityManager->CreateEntity((EntityType)alliesNode.attribute("entityType").as_int());;
+		LoadAlly(ally, alliesNode);
 	}
 
 	std::list<Entity*> entities = Engine::GetInstance().entityManager.get()->entities;
@@ -190,6 +198,15 @@ void Scene::LoadItem(CheckPoint* checkPoint, pugi::xml_node instanceNode) {
 	checkPoint->SetParameters(configParameters.child("entities").child("items").child("checkPoints"));
 	checkPoint->SetInstanceParameters(instanceNode);
 	checkPoints.push_back(checkPoint);
+}
+
+void Scene::LoadAlly(Merchant* merchant, pugi::xml_node instanceNode) {
+
+	merchant->SetPlayer(player);
+	merchant->SetParameters(configParameters.child("entities").child("allies").child("merchant"));
+	merchant->SetInstanceParameters(instanceNode);
+	allies.push_back(merchant);
+
 }
 
 

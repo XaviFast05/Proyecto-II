@@ -48,9 +48,9 @@ bool Ally::Start() {
 	// Set the gravity of the body
 	if (!parameters.attribute("gravity").as_bool()) pbody->body->SetGravityScale(0);
 
-	// Initialize pathfinding
-	pathfinding = new Pathfinding();
-	ResetPath();
+	//// Initialize pathfinding
+	//pathfinding = new Pathfinding();
+	//ResetPath();
 
 	//SFX Node Load
 	return true;
@@ -148,7 +148,6 @@ void Ally::Restart()
 {
 	pbody->SetPhysPositionWithWorld(route[0].getX(), route[0].getY());
 	state = PATROL;
-	dead = false;
 	pbody->body->SetEnabled(true);
 
 	ResetPath();

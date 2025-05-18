@@ -16,6 +16,7 @@ enum class EntityType
 	CURRENCY_ORB,
 	SOUL_ROCK,
 	ALLY,
+	MERCHANT,
 	UNKNOWN
 };
 

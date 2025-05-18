@@ -23,15 +23,25 @@ public:
 	bool Update(float dt) override;
 
 	void OnCollision(PhysBody* physA, PhysBody* physB) override;
+	void OnCollisionEnd(PhysBody* physA, PhysBody* physB) override;
 
 
 private:
 
 	int drawOffsetX = 0;
 	int drawOffsetY = 0;
-	Vector2D destinationPoint;
+	
 	Animation walk;
+	Animation idle;
 
+	Timer lookTimer;
+	float lookTime;
+	bool lookTimerOn;
+
+	bool justTurned;
+	float movementArea;
+	float detectionArea;
+	float initialPosX;
 	float dist;
 
 	float jumpForce;

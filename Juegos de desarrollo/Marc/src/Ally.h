@@ -17,6 +17,7 @@ public:
 
 	enum State {
 		PATROL,
+		DETECTION,
 		INTERACTION
 	};
 
@@ -88,9 +89,8 @@ public:
 	Vector2D destinationPoint;
 
 	//PROPERTIES
-	int speed;
+	float speed;
 	int chaseArea;
-	int attackArea;
 	int noSound;
 
 	bool playingSound;
