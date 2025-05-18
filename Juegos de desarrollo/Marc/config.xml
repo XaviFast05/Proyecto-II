@@ -65,7 +65,7 @@
 				<startPositions>
 					<lvl1 x="160" y="3400" />
 					<lvl2 x="160" y="3400" />
-					<lvl3 x="6592" y="832" />
+					<lvl3 x="9536" y="6970" />
 				</startPositions>
 				<propierties gJumpForce="4.0f" pJumpForce="4.0f" pushForce="7.0f" moveSpeed="0.5f" friction="0.0f" gravity="9.0f" attack1Time="0.8f" attack2Time="1.0f" hurtTime="1.0f" respawnTime=" 2.0f" playerState="0" direction="1" shootCooldown="5" />
 				<statesFlow>
