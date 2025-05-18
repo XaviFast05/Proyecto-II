@@ -11,6 +11,8 @@
 #include "Santa.h"
 #include "SoulRock.h"
 #include "Bullet.h"
+#include "Ally.h"
+#include "Merchant.h"
 #include "CurrencyOrb.h"
 
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
@@ -108,6 +110,9 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::SOUL_ROCK:
 		entity = new SoulRock();
 		break;
+	case EntityType::MERCHANT:
+		entity = new Merchant();
+		break;
 	default:
 		break;
 	}
@@ -151,6 +156,9 @@ std::list<Entity*> EntityManager::CreatePooledEntities(EntityType type, int num)
 			break;
 		case EntityType::SOUL_ROCK:
 			entity = new SoulRock();
+			break;
+		case EntityType::MERCHANT:
+			entity = new Merchant();
 			break;
 		default:
 			break;
@@ -197,6 +205,9 @@ Entity* EntityManager::CreatePooledEntities(EntityType type)
 		break;
 	case EntityType::SOUL_ROCK:
 		entity = new SoulRock();
+		break;
+	case EntityType::MERCHANT:
+		entity = new Merchant();
 		break;
 	default:
 		break;

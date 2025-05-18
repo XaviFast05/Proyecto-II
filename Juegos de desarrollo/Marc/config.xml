@@ -380,6 +380,41 @@
 					</animations>
 				</soulRock>
 			</items>
+			<allies>
+				<merchant x="400" y="3400" w="64" h="64" texture="Assets/Textures/Enemies/Fantasma/Fantasma_spriteSheet.png">
+					<properties speed="0.8" movementArea="300" detectionArea="200" />
+					<instances>
+						<lvl1>
+							<instance entityType="10" x="190" y="3400"/>
+						</lvl1>
+					</instances>
+					<animations>
+						<idle loop="true" speed="0.2f">
+							<frame x="0" y="0" w="64" h="64" />
+							<frame x="64" y="0" w="64" h="64" />
+							<frame x="128" y="0" w="64" h="64" />
+							<frame x="192" y="0" w="64" h="64" />
+							<frame x="256" y="0" w="64" h="64" />
+							<frame x="320" y="0" w="64" h="64" />
+							<frame x="384" y="0" w="64" h="64" />
+							<frame x="448" y="0" w="64" h="64" />
+							<frame x="512" y="0" w="64" h="64" />
+							<frame x="576" y="0" w="64" h="64" />
+							<frame x="640" y="0" w="64" h="64" />
+							<frame x="704" y="0" w="64" h="64" />
+						</idle>
+						<walk loop="true" speed="0.2f">
+							<frame x="0" y="64" w="64" h="64" />
+							<frame x="64" y="64" w="64" h="64" />
+							<frame x="128" y="64" w="64" h="64" />
+							<frame x="192" y="64" w="64" h="64" />
+							<frame x="256" y="64" w="64" h="64" />
+							<frame x="320" y="64" w="64" h="64" />
+							<frame x="384" y="64" w="64" h="64" />
+						</walk>
+					</animations>
+				</merchant>
+			</allies>
 			<currencyOrb>
 				<orbSmall x="0" y="0" w="64" h="64" texture="Assets/Textures/Objects/soulOrb.png">
 					<animations>
