@@ -244,8 +244,6 @@ bool Player::Update(float dt)
 			stateTimer.Start();
 			playerState = CHOP;
 
-
-			LOG("%i", damageAdded);
 			if (meleeTimerOn) deleteCharged = true;
 			charging = true;
 			meleeTimer.Start();
@@ -266,7 +264,7 @@ bool Player::Update(float dt)
 			stateTimer.Start();
 			playerState = THROW;
 		}
-		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN && stateFlow[playerState][DASH] && canDash == true) {
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN && stateFlow[playerState][DASH] && canDash == true && unlockedDash == true) {
 			pbody->body->SetLinearVelocity(b2Vec2_zero);
 			if (dir == RIGHT) pbody->body->ApplyLinearImpulseToCenter(b2Vec2(dashForce, 0), true);
 			else if (dir == LEFT) pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-dashForce, 0), true);
@@ -438,7 +436,7 @@ bool Player::Update(float dt)
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_UP) charging = false;
 			if (stateTimer.ReadSec() >= pickaxeTimerAnimation)
 			{
-				if (charging == true && chargedCooldown == false) {
+				if (charging == true && chargedCooldown == false && unlockedCharged == true) {
 					playerState = CHARGED;
 					chargeAttackTimer.Start();
 					break;

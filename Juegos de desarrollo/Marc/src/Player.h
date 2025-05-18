@@ -187,6 +187,9 @@ public:
 	std::vector <int> upgrades;
 	int maxUpgrades = 2;
 
+	bool unlockedDash = true;
+	bool unlockedCharged = true;
+
 	PhysBody* meleeArea;
 	Timer meleeTimer;
 	bool meleeTimerOn = false;
