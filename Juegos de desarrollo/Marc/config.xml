@@ -68,17 +68,18 @@
 				</startPositions>
 				<propierties gJumpForce="6.5f" pJumpForce="6.5f" pushForce="7.0f" moveSpeed="0.7f" friction="0.0f" gravity="9.0f" attack1Time="0.8f" attack2Time="1.0f" hurtTime="1.0f" respawnTime=" 2.0f" playerState="0" direction="1" shootCooldown="5" />
 				<statesFlow>
-					<idle idle="false" run="true" jump="true" fall="true" punch="true" throw="true" mele="true" dash="true" hurt="true" dead="true" talk="true" />
-					<run idle="true" run="false" jump="true" fall="true" punch="true" throw="true" mele="true" dash="true" hurt="true" dead="true" talk="false"/>
-					<jump idle="true" run="false" jump="false" fall="true" punch="true" throw="true" mele="true" dash="true" hurt="true" dead="true" talk="false"/>
-					<fall idle="true" run="false" jump="false" fall="false" punch="true" throw="true" mele="true" dash="true" hurt="true" dead="true" talk="false"/>
-					<punch idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" hurt="true" dead="true" talk="false"/>
-					<throw idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" hurt="true" dead="true" talk="false"/>
-					<melee idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" hurt="true" dead="true" talk="false"/>
-					<dash idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" hurt="true" dead="true" talk="false"/>
-					<hurt idle="false" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" hurt="false" dead="false" talk="false"/>
-					<dead idle="false" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" hurt="false" dead="false" talk="false"/>
-					<talk idle="false" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" hurt="false" dead="false" talk="false"/>
+					<idle idle="false" run="true" jump="true" fall="true" punch="true" throw="true" mele="true" dash="true" charged="true" hurt="true" dead="true" talk="true" />
+					<run idle="true" run="false" jump="true" fall="true" punch="true" throw="true" mele="true" dash="true" charged="true" hurt="true" dead="true" talk="false"/>
+					<jump idle="true" run="false" jump="false" fall="true" punch="true" throw="true" mele="true" dash="true" charged="true" hurt="true" dead="true" talk="false"/>
+					<fall idle="true" run="false" jump="false" fall="false" punch="true" throw="true" mele="true" dash="true" charged="true" hurt="true" dead="true" talk="false"/>
+					<punch idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="true" dead="true" talk="false"/>
+					<throw idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="true" dead="true" talk="false"/>
+					<melee idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="true" dead="true" talk="false"/>
+					<dash idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="true" dead="true" talk="false"/>
+					<charged idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="true" dead="true" talk="false"/>
+					<hurt idle="false" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="false" dead="false" talk="false"/>
+					<dead idle="false" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="false" dead="false" talk="false"/>
+					<talk idle="false" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="false" dead="false" talk="false"/>
 				</statesFlow>
 				<animations>
 					<idle loop="true" speed="0.05f">
