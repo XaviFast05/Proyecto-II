@@ -21,7 +21,7 @@ public:
     ~TextManager();
 
     bool Awake();
-    bool Update();
+    bool Update(float dt);
 
     void ChangeIdiom(int idiom);
     std::string GetText(std::string id);

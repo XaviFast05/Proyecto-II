@@ -16,6 +16,7 @@
 #include "Bullet.h"
 #include "PickaxeManager.h"
 #include "CurrencyManager.h"
+#include "DialoguesManager.h"
 
  
 
@@ -133,6 +134,8 @@ bool Player::Start() {
 	pickaxeManager->Start();
 	currencyManager = new CurrencyManager();
 	currencyManager->Start();
+	dialoguesManager = new DialoguesManager();
+	dialoguesManager->Start();
 
 	return true;
 }
@@ -152,6 +155,11 @@ void Player::Restart()
 
 bool Player::Update(float dt)
 {
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
+	{
+		dialoguesManager->StartDialogue("DIALOG01");
+	}
+
 	//FRUSTRUM
 	if (!Engine::GetInstance().render.get()->InCameraView(pbody->GetPosition().getX() - texW, pbody->GetPosition().getY() - texH, texW, texH))
 	{
@@ -176,6 +184,7 @@ bool Player::Update(float dt)
 
 		//UPDATE SUBMODULES
 		pickaxeManager->Update(dt);
+		dialoguesManager->Update(dt);
 
 		//GODMODE
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
@@ -286,6 +295,8 @@ bool Player::Update(float dt)
 			}
 			if (plusJumpTimer.ReadSec() >= plusJumpTimerMax) plusJumpTimerOn = false;
 		}
+
+
 
 		//MELEE ATTACKS LOGIC
 		if (meleeTimerOn) {

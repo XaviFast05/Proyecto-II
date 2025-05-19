@@ -32,7 +32,7 @@ bool TextManager::Awake()
     return true;
 }
 
-bool TextManager::Update()
+bool TextManager::Update(float dt)
 {
     if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
     {
@@ -52,5 +52,7 @@ void TextManager::ChangeIdiom(int idiom)
 
 std::string TextManager::GetText(std::string id)
 {
+    if (idToText[id].empty())
+        return "";
     return idToText[id][languageIndex];
 }

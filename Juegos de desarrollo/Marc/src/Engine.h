@@ -5,7 +5,7 @@
 #include "Module.h"
 #include "Timer.h"
 #include "PerfTimer.h"
-//#include "pugixml.hpp"
+#include "pugixml.hpp"
 
 #define VALUE_NEAR_TO_0(x) (fabs(x) < 0.001f)
 

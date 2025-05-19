@@ -149,6 +149,7 @@
     <None Include="vcpkg.json" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\DialoguesManager.cpp" />
     <ClCompile Include="src\CurrencyOrb.cpp" />
     <ClCompile Include="src\CurrencyManager.cpp" />
     <ClCompile Include="src\PickaxeManager.cpp" />
@@ -191,6 +192,7 @@
     <ClCompile Include="src\WinMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\DialoguesManager.h" />
     <ClInclude Include="src\CurrencyOrb.h" />
     <ClInclude Include="src\CurrencyManager.h" />
     <ClInclude Include="src\PickaxeManager.h" />
