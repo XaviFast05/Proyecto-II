@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Texts>
+    <Text id="DIALOG01_01">
+        <ES>HOLA DON PEPITO</ES>
+        <CA>HELLO DON PEPIT</CA>
+        <EN>Welcome traveler!</EN>
+    </Text>
+    <Text id="DIALOG01_02">
+        <ES>HOLA DON JOSE</ES>
+        <CA>He vist com Gnorck s'emportava la teva barca.</CA>
+        <EN>I have seen how gnorkc took your boat.</EN>
+    </Text>
+    <Text id="DIALOG01_03">
+        <ES>PASO USTED YA POR CASA</ES>
+        <CA>Crec que Topete pot ajudar-te a reparar-la.</CA>
+        <EN>I think Topete can help you repairing it.</EN>
+    </Text>
+    <Text id="DIALOG01_04">
+        <ES>POR SU CASA YO PASE</ES>
+        <CA>Però un arbre va caure al pont i no podem passar.</CA>
+        <EN>But a tree fell on the bridge and we can't get through.</EN>
+    </Text>
+</Texts>

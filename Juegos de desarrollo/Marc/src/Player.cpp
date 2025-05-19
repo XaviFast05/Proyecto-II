@@ -16,6 +16,7 @@
 #include "Bullet.h"
 #include "PickaxeManager.h"
 #include "CurrencyManager.h"
+#include "DialoguesManager.h"
 
  
 
@@ -132,6 +133,8 @@ bool Player::Start() {
 	pickaxeManager = new PickaxeManager();
 	currencyManager = new CurrencyManager();
 	currencyManager->Start();
+	dialoguesManager = new DialoguesManager();
+	dialoguesManager->Start();
 
 	LoadDefaults();
 	pickaxeManager->Start();
@@ -162,6 +165,11 @@ void Player::Restart()
 
 bool Player::Update(float dt)
 {
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
+	{
+		dialoguesManager->StartDialogue("DIALOG01");
+	}
+
 	//FRUSTRUM
 	if (!Engine::GetInstance().render.get()->InCameraView(pbody->GetPosition().getX() - texW, pbody->GetPosition().getY() - texH, texW, texH))
 	{
@@ -186,6 +194,7 @@ bool Player::Update(float dt)
 
 		//UPDATE SUBMODULES
 		pickaxeManager->Update(dt);
+		dialoguesManager->Update(dt);
 
 		//GODMODE
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
@@ -386,7 +395,7 @@ bool Player::Update(float dt)
 				break;
 			}
 
-			// MOVIMIENTO HORIZONTAL si está en suelo y no hay colisión lateral
+			// MOVIMIENTO HORIZONTAL si estï¿½ en suelo y no hay colisiï¿½n lateral
 			if (grounded) {
 				if (CheckMoveX()) {
 					playerState = RUN;
@@ -553,14 +562,14 @@ bool Player::Update(float dt)
 		break;
 
 	case DASH:
-		//aquí poner animación dash
+		//aquï¿½ poner animaciï¿½n dash
 		currentAnim = &idle;
 		if (resetAnimation == true) {
 			currentAnim->Reset();
 			resetAnimation = false;
 		}
 	case CHARGED:
-		//aquí poner animación ataque cargado
+		//aquï¿½ poner animaciï¿½n ataque cargado
 		currentAnim = &idle;
 		if (resetAnimation == true) {
 			currentAnim->Reset();
@@ -627,7 +636,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		rightBlocked = true;
 	}
 
-	//Colisión del cuerpo principal
+	//Colisiï¿½n del cuerpo principal
 	switch (physB->ctype)
 	{
 	case ColliderType::PLATFORM:
@@ -724,7 +733,7 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 		rightBlocked = false;
 	}
 	
-	//Colisión del cuerpo principal
+	//Colisiï¿½n del cuerpo principal
 	switch (physB->ctype)
 	{
 	case ColliderType::PICKAXE:
@@ -860,7 +869,7 @@ void Player::MoveX() {
 void Player::CheckJump() {
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && grounded) {
 		pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
-		grounded = false; // ya no está en el suelo hasta que colisione de nuevo
+		grounded = false; // ya no estï¿½ en el suelo hasta que colisione de nuevo
 	}
 }
 
@@ -877,12 +886,12 @@ void Player::LoadDefaults() {
 	chargedCooldownTimerMax = 5; // tiempo entre ataque cargado
 	pickaxeManager->pickaxeRecollectCount = 2.5; // tiempo entre piqueta y piqueta
 	moveSpeed = 0.7; // velocidad del player
-	damageAdded = 0; // añadido de daño al base
-	maxPickaxes = 3; // piquetas máximas
+	damageAdded = 0; // aï¿½adido de daï¿½o al base
+	maxPickaxes = 3; // piquetas mï¿½ximas
 	pickaxeManager->maxPickaxes = maxPickaxes;
 	damageSmallBoost = false;
-	damageBoost = false; // hacer mas daño cuando tienes un corazón
-	damageBoostAdded = 5; // el daño que haces cuando tienes un corazón y el boost
+	damageBoost = false; // hacer mas daï¿½o cuando tienes un corazï¿½n
+	damageBoostAdded = 5; // el daï¿½o que haces cuando tienes un corazï¿½n y el boost
 }
 
 void Player::LoadUpgrades() {
@@ -946,12 +955,12 @@ void Player::AddUpgrade(int num) {
 				if (upgrades[i] == num) canAdd = false;
 			}
 			if (canAdd == false) {
-			}//aquí poner que esa mejora ya la tienes
+			}//aquï¿½ poner que esa mejora ya la tienes
 			else upgrades.push_back(num);
 		}
-		//else aquí poner algo en plan que tienes demasiadas mejoras
+		//else aquï¿½ poner algo en plan que tienes demasiadas mejoras
 	}
-	//else poner aquí que la update no la tienes colegon
+	//else poner aquï¿½ que la update no la tienes colegon
 	LoadUpgrades();
 }
 
@@ -961,6 +970,6 @@ void Player::RemoveUpgrade(int num) {
 		if (upgrades[i] == num) index = i;
 	}
 	if (index >= 0) upgrades.erase(upgrades.begin() + index);
-	//else aquí poner algo rollo esta mejora no la tienes activa
+	//else aquï¿½ poner algo rollo esta mejora no la tienes activa
 	LoadUpgrades();
 }
