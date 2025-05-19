@@ -17,7 +17,9 @@ enum class EntityType
 	SOUL_ROCK,
 	ALLY,
 	MERCHANT,
+	BREAKWALL,
 	UNKNOWN
+	
 };
 
 class PhysBody;
