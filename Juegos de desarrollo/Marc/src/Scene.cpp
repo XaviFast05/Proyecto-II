@@ -371,8 +371,12 @@ bool Scene::PostUpdate()
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {
 		help = !help;
 	}
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_START) == KEY_DOWN) {
 		paused = !paused;
+	}
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_BACK) == KEY_DOWN)
+	{
+		drawnMap = !drawnMap;
 	}
 
 	Render* render = Engine::GetInstance().render.get();
@@ -382,7 +386,7 @@ bool Scene::PostUpdate()
 
 	//UI
 	if (!Engine::GetInstance().settings.get()->settingsOpen) {
-		LOG("%f %f", player->pbody->body->GetPosition().x, player->pbody->body->GetPosition().y);
+	/*	LOG("%f %f", player->pbody->body->GetPosition().x, player->pbody->body->GetPosition().y);*/
 
 		DrawPlayerHitsUI();
 
@@ -390,7 +394,7 @@ bool Scene::PostUpdate()
 
 		DrawCurrencyUI();
 
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_TAB)) DrawMap();
+
 
 		if (paused && !Engine::GetInstance().settings.get()->settingsOpen) {
 			
@@ -422,10 +426,9 @@ bool Scene::PostUpdate()
 				bt.second->active = false;
 		}
 
-		if (help)
-			render->DrawTexture(helpMenu, -render->camera.x / window->scale + helpPos.getX(), -render->camera.y / window->scale + helpPos.getY());
+		if (help) render->DrawTexture(helpMenu, -render->camera.x / window->scale + helpPos.getX(), -render->camera.y / window->scale + helpPos.getY());
 			
-			
+		if (drawnMap) DrawMap();
 
 		if (quit) return false;
 
@@ -442,11 +445,12 @@ bool Scene::CleanUp()
 	Engine::GetInstance().map.get()->CleanUp();
 	Engine::GetInstance().physics.get()->DeleteAllPhysBody();
 	Engine::GetInstance().entityManager.get()->Disable();
-	
+
 
 	enemies.clear();
 	checkPoints.clear();
 	soulRocks.clear();
+	allies.clear();
 
 	
 	

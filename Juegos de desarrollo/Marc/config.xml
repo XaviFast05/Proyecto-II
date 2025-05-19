@@ -66,7 +66,7 @@
 					<lvl1 x="150" y="3400" />
 					<lvl2 x="150" y="1040" />
 				</startPositions>
-				<propierties gJumpForce="6.5f" pJumpForce="6.5f" pushForce="7.0f" moveSpeed="0.7f" friction="0.0f" gravity="9.0f" attack1Time="0.8f" attack2Time="1.0f" hurtTime="1.0f" respawnTime=" 2.0f" playerState="0" direction="1" shootCooldown="5" />
+				<propierties gJumpForce="7.5f" pJumpForce="7.5f" pushForce="7.0f" moveSpeed="0.7f" friction="0.0f" gravity="9.0f" attack1Time="0.8f" attack2Time="1.0f" hurtTime="1.0f" respawnTime=" 2.0f" playerState="0" direction="1" shootCooldown="5" />
 				<statesFlow>
 					<idle idle="false" run="true" jump="true" fall="true" punch="true" throw="true" mele="true" dash="true" hurt="true" dead="true" />
 					<run idle="true" run="false" jump="true" fall="true" punch="true" throw="true" mele="true" dash="true" hurt="true" dead="true" />

@@ -115,6 +115,7 @@ public:
 	std::string GetLevelString(Levels level);
 
 public:
+
 	Levels level;
 	bool paused = false;
 	bool help = false;
@@ -162,6 +163,7 @@ private:
 	std::map<std::string, GuiControlButton*> pauseButtons;
 	
 	bool loadScene = false;
+	bool drawnMap = false;
 	bool changeLevel = false;
 	bool startBossFight = false;
 	bool bossMusPlaying = false;
