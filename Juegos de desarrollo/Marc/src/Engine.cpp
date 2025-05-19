@@ -21,7 +21,6 @@
 #include "DeathMenu.h"
 #include "WinMenu.h"
 #include "Settings.h"
-#include "TextManager.h"
 
 // Constructor
 Engine::Engine() {
@@ -34,6 +33,8 @@ Engine::Engine() {
     frameTime = PerfTimer();
     lastSecFrameTime = PerfTimer();
     frames = 0;
+
+    // L4: TODO 1: Add the EntityManager Module to the Engine
     
     // Modules
     window = std::make_shared<Window>(true);
@@ -45,7 +46,6 @@ Engine::Engine() {
     mainMenu = std::make_shared<MainMenu>(true);
     scene = std::make_shared<Scene>(false);
     entityManager = std::make_shared<EntityManager>(false);
-    textManager = std::make_shared<TextManager>(true);
     map = std::make_shared<Map>(true);
     guiManager = std::make_shared<GuiManager>(true);
     fade = std::make_shared<FadeToBlack>(true);
@@ -66,7 +66,6 @@ Engine::Engine() {
     AddModule(std::static_pointer_cast<Module>(scene));
     AddModule(std::static_pointer_cast<Module>(physics));
     AddModule(std::static_pointer_cast<Module>(entityManager));
-    AddModule(std::static_pointer_cast<Module>(textManager));
     AddModule(std::static_pointer_cast<Module>(intro));
     AddModule(std::static_pointer_cast<Module>(guiManager));
     AddModule(std::static_pointer_cast<Module>(death));

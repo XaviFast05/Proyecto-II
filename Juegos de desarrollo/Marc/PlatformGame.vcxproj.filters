@@ -185,8 +185,6 @@
     </ClCompile>
     <ClCompile Include="src\Ally.cpp">
       <Filter>Source Files\Game\Allies</Filter>
-    <ClCompile Include="src\TextManager.cpp">
-      <Filter>Source Files\Engine</Filter>
     </ClCompile>
     <ClCompile Include="src\Intro.cpp">
       <Filter>Source Files</Filter>
@@ -329,10 +327,6 @@
     <ClInclude Include="src\Merchant.h">
       <Filter>Source Files\Game\Allies</Filter>
     </ClInclude>
-    <ClInclude Include="src\TextManager.h">
-      <Filter>Source Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Intro.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="config.xml">
@@ -341,6 +335,5 @@
     <Xml Include="savedData.xml">
       <Filter>Configuration FIles</Filter>
     </Xml>
-    <Xml Include="texts.xml" />
   </ItemGroup>
 </Project>
