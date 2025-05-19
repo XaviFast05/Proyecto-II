@@ -31,7 +31,6 @@
 #include "WinMenu.h"
 #include "PickaxeManager.h"
 #include "CurrencyManager.h"
-#include "TextManager.h"
 
 #include "Intro.h"
 
@@ -244,7 +243,6 @@ bool Scene::Update(float dt)
 	//	return true;
 	//}
 
-	
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 	{
 		player->KillPlayer();
