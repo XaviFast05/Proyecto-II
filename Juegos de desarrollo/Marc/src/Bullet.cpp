@@ -83,17 +83,17 @@ bool Bullet::Update(float dt) {
         destroyPickaxe = false;
     }
 
-    //if (onPlayer && player->onPickaxe && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) && active) {
-    //    inactiveTimer.Start();
-    //    fixture = pbody->body->GetFixtureList();
-    //    if (fixture) {
-    //        b2Filter filter = fixture->GetFilterData();
-    //        filter.categoryBits = CATEGORY_PICKAXE;
-    //        filter.maskBits = 0xFFFF & ~CATEGORY_PLAYER;
-    //        fixture->SetFilterData(filter);
-    //    }
-    //    active = false;
-    //}
+    if (onPlayer && player->onPickaxe && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) && isActive) {
+        inactiveTimer.Start();
+        fixture = pbody->body->GetFixtureList();
+        if (fixture) {
+            b2Filter filter = fixture->GetFilterData();
+            filter.categoryBits = CATEGORY_PICKAXE;
+            filter.maskBits = 0xFFFF & ~CATEGORY_PLAYER;
+            fixture->SetFilterData(filter);
+        }
+        isActive = false;
+    }
 
     if (!stuckOnWall) {
         b2Vec2 velocity = pbody->body->GetLinearVelocity();
@@ -122,7 +122,7 @@ bool Bullet::Update(float dt) {
         Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()),0,1.0f,270);
     }
 
-    if ((pbody->body->GetPosition().y - 0.5) > (player->pbody->body->GetPosition().y) && active) {
+    if ((pbody->body->GetPosition().y - 0.5) > (player->pbody->body->GetPosition().y) && isActive) {
         b2Filter filter = fixture->GetFilterData();
         filter.categoryBits = CATEGORY_DEFAULT;
         filter.maskBits = 0xFFFF;
@@ -135,9 +135,15 @@ bool Bullet::Update(float dt) {
         fixture->SetFilterData(filter);
     }
 
-    //if (active) {
-    //    if (inactiveTimer.ReadSec() > inactiveTimerMax) active = true;
-    //}
+    if (!isActive) {
+        if (inactiveTimer.ReadSec() > inactiveTimerMax) {
+            isActive = true;
+            b2Filter filter = fixture->GetFilterData();
+            filter.categoryBits = CATEGORY_PICKAXE;
+            filter.maskBits = 0xFFFF & ~CATEGORY_PLAYER;
+            fixture->SetFilterData(filter);
+        }
+    }
 
     return true;
 }
@@ -181,6 +187,10 @@ void Bullet::OnCollision(PhysBody* physA, PhysBody* physB) {
         onPlayer = true;
         break;
     case ColliderType::PLATFORM:
+        LOG("Collided - DESTROY");
+        destroyPickaxe = true;
+        break;
+    case ColliderType::PICKAXE:
         LOG("Collided - DESTROY");
         destroyPickaxe = true;
         break;

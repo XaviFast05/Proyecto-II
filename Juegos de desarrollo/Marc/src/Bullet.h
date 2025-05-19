@@ -71,7 +71,7 @@ private:
     b2Fixture* fixture;
 
     bool onPlayer = false;
-    bool active = true;
+    bool isActive = true;
 
     Timer inactiveTimer;
     float inactiveTimerMax = 0.5;
