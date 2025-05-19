@@ -327,6 +327,33 @@
 						</death>
 					</animations>
 				</runner>
+				<finalboss x="2240" y="4620" w="64" h="64" texture="Assets/Textures/Enemies/BossFinal/final.png">
+					<properties speed="8" chaseArea="700" deathTime="1.0f" lives="10" pushForce="1" pushFriction="5" lootAmount="5" canPush="false" />
+					<animations>
+						<idle loop="true" speed="0.1f">
+							<frame x="0" y="0" w="64" h="64" />
+							<frame x="64" y="0" w="64" h="64" />
+						</idle>
+						<run loop="true" speed="0.1f">
+							<frame x="0" y="64" w="64" h="64" />
+							<frame x="64" y="64" w="64" h="64" />
+						</run>
+						<jump loop="false" speed="0.2f">
+							<frame x="0" y="128" w="64" h="64" />
+							<frame x="64" y="128" w="64" h="64" />
+						</jump>
+						<tired loop="true" speed="0.2f">
+							<frame x="0" y="196" w="64" h="64" />
+							<frame x="64" y="196" w="64" h="64" />
+						</tired>
+						<hurt loop=" false" speed="0.2f">
+							<frame x="0" y="64" w="64" h="64" />
+						</hurt>
+						<death loop=" false" speed="0.1f">
+							<frame x="0" y="192" w="64" h="64" />
+						</death>
+					</animations>
+				</finalboss>
 				<instances>
 					<lvl1>
 						<instance enemyType="skeleton" entityType="5">
@@ -370,6 +397,10 @@
 						<instance enemyType="runner" entityType="11">
 							<point x="4225" y="4220" />
 							<point x="4225" y="4220" />
+						</instance>
+						<instance enemyType="finalboss" entityType="13">
+							<point x="2050" y="4620" />
+							<point x="2050" y="4620" />
 						</instance>
 					</lvl2>
 				</instances>

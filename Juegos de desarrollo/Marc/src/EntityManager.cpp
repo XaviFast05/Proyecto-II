@@ -10,6 +10,7 @@
 #include "ChildEnemy.h"
 #include "JumpingEnemy.h"
 #include "RunningEnemy.h"
+#include "FinalBoss.h"
 #include "Particle.h"
 #include "SoulRock.h"
 #include "Bullet.h"
@@ -113,8 +114,8 @@ Entity* EntityManager::CreateEntity(EntityType bullet_direction)
 	case EntityType::JUMPSHOT:
 		entity = new Bullet(BulletType::BOSSJUMP, BulletDirection::HORIZONTAL);
 		break;
-	case EntityType::FINALBOSSSHOT:
-		entity = new Bullet(BulletType::FINALBOSS, BulletDirection::HORIZONTAL);
+	case EntityType::FINALBOSS:
+		entity = new FinalBoss();
 		break;
 	case EntityType::CURRENCY_ORB:
 		entity = new CurrencyOrb();
@@ -171,8 +172,9 @@ std::list<Entity*> EntityManager::CreatePooledEntities(EntityType bullet_directi
 		case EntityType::JUMPSHOT:
 			entity = new Bullet(BulletType::BOSSJUMP, BulletDirection::HORIZONTAL);
 			break;
-		case EntityType::FINALBOSSSHOT:
-			entity = new Bullet(BulletType::FINALBOSS, BulletDirection::HORIZONTAL);
+		case EntityType::FINALBOSS:
+			entity = new FinalBoss();
+			break;
 		case EntityType::CURRENCY_ORB:
 			entity = new CurrencyOrb();
 			break;
@@ -230,8 +232,9 @@ Entity* EntityManager::CreatePooledEntities(EntityType bullet_direction)
 	case EntityType::JUMPSHOT:
 		entity = new Bullet(BulletType::BOSSJUMP, BulletDirection::HORIZONTAL);
 		break;
-	case EntityType::FINALBOSSSHOT:
-		entity = new Bullet(BulletType::FINALBOSS, BulletDirection::HORIZONTAL);
+	case EntityType::FINALBOSS:
+		entity = new FinalBoss();
+		break;
 	case EntityType::CURRENCY_ORB:
 		entity = new CurrencyOrb();
 		break;

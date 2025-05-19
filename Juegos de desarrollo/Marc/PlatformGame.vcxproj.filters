@@ -189,6 +189,15 @@
     <ClCompile Include="src\RunningEnemy.cpp">
       <Filter>Source Files\Game\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="src\Intro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Intro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FinalBoss.cpp">
+      <Filter>Source Files\Game\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Audio.h">
@@ -322,6 +331,11 @@
     </ClInclude>
     <ClInclude Include="src\Intro.h" />
     <ClInclude Include="src\RunningEnemy.h">
+      <Filter>Source Files\Game\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Intro.h" />
+    <ClInclude Include="src\Intro.h" />
+    <ClInclude Include="src\FinalBoss.h">
       <Filter>Source Files\Game\Enemies</Filter>
     </ClInclude>
   </ItemGroup>

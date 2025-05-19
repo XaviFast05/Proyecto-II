@@ -152,6 +152,7 @@
     <ClCompile Include="src\ChildEnemy.cpp" />
     <ClCompile Include="src\CurrencyOrb.cpp" />
     <ClCompile Include="src\CurrencyManager.cpp" />
+    <ClCompile Include="src\FinalBoss.cpp" />
     <ClCompile Include="src\JumpingEnemy.cpp" />
     <ClCompile Include="src\PickaxeManager.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="src\ChildEnemy.h" />
     <ClInclude Include="src\CurrencyOrb.h" />
     <ClInclude Include="src\CurrencyManager.h" />
+    <ClInclude Include="src\FinalBoss.h" />
     <ClInclude Include="src\JumpingEnemy.h" />
     <ClInclude Include="src\PickaxeManager.h" />
     <ClInclude Include="src\Bullet.h" />
