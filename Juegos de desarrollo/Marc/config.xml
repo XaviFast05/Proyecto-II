@@ -527,6 +527,21 @@
 				<exitBt id="5" x="379" y="236" w="233" h="39" texture="Assets/Textures/Menus/Win-Lose/exit centered.png" />
 			</buttons>
 		</winMenu>
+		<dialogues>
+			<dialoguePanel path="Assets/Textures/Menus/Dialogues/Recuadro.png" w="833" h="202" x="224" y="450">
+				<text maxW="620" maxH="167" offsetX="197" offsetY="18" font="Assets/Fonts/ttf_pixolde_bold.ttf" pointSize="30" />
+				<images w="160" h="160" offsetX="23" offsetY="21">
+					<image name = "kim" path="Assets/Textures/Menus/Dialogues/Kim.png"/>
+					<image name = "pepe" path="Assets/Textures/Menus/Dialogues/pepe.png"/>
+				</images>
+			</dialoguePanel>
+			<DIALOG01>
+				<text textId = "DIALOG01_01" talker="kim"/>
+				<text textId = "DIALOG01_02" talker="pepe"/>
+				<text textId = "DIALOG01_03" talker="kim"/>
+				<text textId = "DIALOG01_04" talker="pepe"/>
+			</DIALOG01>
+		</dialogues>
 	</scene>
 	<audio>
 		<music>

@@ -150,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ally.cpp" />
+    <ClCompile Include="src\DialoguesManager.cpp" />
     <ClCompile Include="src\CurrencyOrb.cpp" />
     <ClCompile Include="src\CurrencyManager.cpp" />
     <ClCompile Include="src\Merchant.cpp" />
@@ -184,6 +185,7 @@
     <ClCompile Include="src\Render.cpp" />
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\SoulRock.cpp" />
+    <ClCompile Include="src\TextManager.cpp" />
     <ClCompile Include="src\Textures.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\Vector2D.cpp" />
@@ -193,6 +195,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Ally.h" />
+    <ClInclude Include="src\DialoguesManager.h" />
     <ClInclude Include="src\CurrencyOrb.h" />
     <ClInclude Include="src\CurrencyManager.h" />
     <ClInclude Include="src\Merchant.h" />
@@ -230,6 +233,7 @@
     <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\Settings.h" />
     <ClInclude Include="src\SoulRock.h" />
+    <ClInclude Include="src\TextManager.h" />
     <ClInclude Include="src\Textures.h" />
     <ClInclude Include="src\Timer.h" />
     <ClInclude Include="src\Vector2D.h" />
@@ -240,6 +244,7 @@
   <ItemGroup>
     <Xml Include="config.xml" />
     <Xml Include="savedData.xml" />
+    <Xml Include="texts.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
