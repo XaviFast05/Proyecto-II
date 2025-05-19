@@ -63,9 +63,9 @@ public:
 
 	void SetPosition(Vector2D pos);
 
-	void SaveData(pugi::xml_node playerNode);
+	void SaveData(pugi::xml_node playerNode, pugi::xml_node upgradesNode);
 
-	void LoadData(pugi::xml_node playerNode);
+	void LoadData(pugi::xml_node playerNode, pugi::xml_node upgradesNode);
 
 	void Restart();
 
@@ -82,6 +82,8 @@ public:
 	void LoadDefaults();
 
 	void LoadUpgrades();
+
+	void UnlockUpgrade(int num);
 
 	void AddUpgrade(int num);
 
@@ -185,10 +187,11 @@ public:
 	bool damageSmallBoost = false;
 
 	std::vector <int> upgrades;
+	std::vector <int> unlockedUpgrades;
 	int maxUpgrades = 2;
 
-	bool unlockedDash = true;
-	bool unlockedCharged = true;
+	bool unlockedDash = false;
+	bool unlockedCharged = false;
 
 	PhysBody* meleeArea;
 	Timer meleeTimer;

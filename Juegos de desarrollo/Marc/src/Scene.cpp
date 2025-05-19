@@ -472,6 +472,7 @@ void Scene::SaveState()
 
 
 	pugi::xml_node savedDataNode = saveFile.child("savedData").child(GetCurrentLevelString().c_str());
+	pugi::xml_node upgradesNode = saveFile.child("savedData").child("upgrades");
 
 	savedDataNode.attribute("saved").set_value(true);
 	savedDataNode.attribute("level").set_value((int)level);
@@ -489,7 +490,7 @@ void Scene::SaveState()
 
 	//Save info to XML 
 	//Player 
-	player->SaveData(savedDataNode.child("player"));
+	player->SaveData(savedDataNode.child("player"), upgradesNode);
 
 	//Enemies
 	for (int i = 0; i < enemies.size(); i++)
@@ -554,12 +555,13 @@ void Scene::LoadState() {
 	}
 
 	pugi::xml_node savedDataNode = loadFile.child("savedData").child(GetCurrentLevelString().c_str());
+	pugi::xml_node upgradesNode = loadFile.child("savedData").child("upgrades");
 
 	currentTime = savedDataNode.attribute("time").as_float();
 	startBossFight = savedDataNode.attribute("startBossFight").as_bool();
 	bossKilled = savedDataNode.attribute("bossKilled").as_bool();
 
-	player->LoadData(savedDataNode.child("player"));
+	player->LoadData(savedDataNode.child("player"), upgradesNode);
 
 	//TODO: add an attribute to tell enemies from first and second level apart
 	for (int i = 0; i < enemies.size(); i++)

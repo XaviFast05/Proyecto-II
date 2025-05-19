@@ -84,6 +84,7 @@ bool Player::Start() {
 	}
 
 	upgrades.empty();
+	unlockedUpgrades.empty();
 	godMode = false;
 	canClimb = false;
 	reachedCheckPoint = false;
@@ -763,18 +764,63 @@ Vector2D Player::GetDirection() const {
 	}
 }
 
-void Player::SaveData(pugi::xml_node playerNode) {
+void Player::SaveData(pugi::xml_node playerNode, pugi::xml_node upgradesNode) {
 	if (active) {
 		playerNode.attribute("x").set_value(pbody->GetPhysBodyWorldPosition().getX());
 		playerNode.attribute("y").set_value(pbody->GetPhysBodyWorldPosition().getY());
+		upgradesNode.attribute("dash").set_value(unlockedDash);
+		upgradesNode.attribute("charged").set_value(unlockedCharged);
+
+		bool up0 = false, up1 = false, up2 = false, up3 = false, up4 = false, up5 = false, up6 = false, up7 = false;
+		for (int i = 0; i < unlockedUpgrades.size(); i++) {
+			switch (unlockedUpgrades[i]) {
+			default:
+				break;
+			case 0: up0 = true;
+				break;
+			case 1: up1 = true;
+				break;
+			case 2: up2 = true;
+				break;
+			case 3: up3 = true;
+				break;
+			case 4: up4 = true;
+				break;
+			case 5: up5 = true;
+				break;
+			case 6: up6 = true;
+				break;
+			case 7: up7 = true;
+				break;
+			}
+		}
+		upgradesNode.attribute("up0").set_value(up0);
+		upgradesNode.attribute("up1").set_value(up1);
+		upgradesNode.attribute("up2").set_value(up2);
+		upgradesNode.attribute("up3").set_value(up3);
+		upgradesNode.attribute("up4").set_value(up4);
+		upgradesNode.attribute("up5").set_value(up5);
+		upgradesNode.attribute("up6").set_value(up6);
+		upgradesNode.attribute("up7").set_value(up7);
 	}
 }
 
-void Player::LoadData(pugi::xml_node playerNode)
+void Player::LoadData(pugi::xml_node playerNode, pugi::xml_node upgradesNode)
 {
 	position.setX(playerNode.attribute("x").as_int());
 	position.setY(playerNode.attribute("y").as_int());
 	SetPosition(position);
+	unlockedDash = upgradesNode.attribute("dash").as_bool();
+	unlockedCharged = upgradesNode.attribute("charged").as_bool();
+
+	if (upgradesNode.attribute("up0").as_bool() == true) unlockedUpgrades.push_back(0);
+	if (upgradesNode.attribute("up1").as_bool() == true) unlockedUpgrades.push_back(1);
+	if (upgradesNode.attribute("up2").as_bool() == true) unlockedUpgrades.push_back(2);
+	if (upgradesNode.attribute("up3").as_bool() == true) unlockedUpgrades.push_back(3);
+	if (upgradesNode.attribute("up4").as_bool() == true) unlockedUpgrades.push_back(4);
+	if (upgradesNode.attribute("up5").as_bool() == true) unlockedUpgrades.push_back(5);
+	if (upgradesNode.attribute("up6").as_bool() == true) unlockedUpgrades.push_back(6);
+	if (upgradesNode.attribute("up7").as_bool() == true) unlockedUpgrades.push_back(7);
 }
 
 void Player::KillPlayer() {
@@ -880,17 +926,32 @@ void Player::LoadUpgrades() {
 	}
 }
 
-void Player::AddUpgrade(int num) {
+void Player::UnlockUpgrade(int num) {
 	bool canAdd = true;
-	if (upgrades.size() <= maxUpgrades && num >= 0 && num <= 9) {
-		for (int i = 0; i < upgrades.size(); i++) {
-			if (upgrades[i] == num) canAdd = false;
-		}
-		if (canAdd == false) {
-		}//aquí poner que esa mejora ya la tienes
-		else upgrades.push_back(num);
+	for (int i = 0; i < unlockedUpgrades.size(); i++) {
+		if (num == unlockedUpgrades[i]) canAdd = false; //ya tienes la mejora
 	}
-	//else aquí poner algo en plan que tienes demasiadas mejoras
+	if (canAdd) unlockedUpgrades.push_back(num);
+}
+
+void Player::AddUpgrade(int num) {
+	bool haveUpgrade = false;
+	for (int i = 0; i < unlockedUpgrades.size(); i++) {
+		if (num == unlockedUpgrades[i]) haveUpgrade = true;
+	}
+	if (haveUpgrade) {
+		bool canAdd = true;
+		if (upgrades.size() <= maxUpgrades && num >= 0 && num <= 9) {
+			for (int i = 0; i < upgrades.size(); i++) {
+				if (upgrades[i] == num) canAdd = false;
+			}
+			if (canAdd == false) {
+			}//aquí poner que esa mejora ya la tienes
+			else upgrades.push_back(num);
+		}
+		//else aquí poner algo en plan que tienes demasiadas mejoras
+	}
+	//else poner aquí que la update no la tienes colegon
 	LoadUpgrades();
 }
 
