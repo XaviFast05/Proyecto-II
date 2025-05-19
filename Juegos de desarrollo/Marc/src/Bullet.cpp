@@ -83,6 +83,19 @@ bool Bullet::Update(float dt) {
         destroyPickaxe = false;
     }
 
+    if (onPlayer && player->onPickaxe && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) && active) {
+        inactiveTimer.Start();
+        active = false;
+
+        fixture = pbody->body->GetFixtureList();
+        if (fixture) {
+            b2Filter filter = fixture->GetFilterData();
+            filter.categoryBits = CATEGORY_PICKAXE;
+            filter.maskBits = 0xFFFF & ~CATEGORY_PLAYER;
+            fixture->SetFilterData(filter);
+        }
+    }
+
     if (!stuckOnWall) {
         b2Vec2 velocity = pbody->body->GetLinearVelocity();
         velocity.x = direction.getX() * (type == BulletType::HORIZONTAL ? 12.5f : 0); 
@@ -162,7 +175,9 @@ void Bullet::ChangeType(BulletType t) {
 
 void Bullet::OnCollision(PhysBody* physA, PhysBody* physB) {
     switch (physB->ctype) {
-    case ColliderType::PICKAXE:
+    case ColliderType::PLAYER:
+        onPlayer = true;
+        break;
     case ColliderType::PLATFORM:
         LOG("Collided - DESTROY");
         destroyPickaxe = true;
@@ -176,25 +191,13 @@ void Bullet::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collided - DESTROY");
 		destroyPickaxe = true;
 		break;
-    //case ColliderType::MELEE_AREA:
-    //    LOG("Collided - DESTROY");
-    //    variableMarc = true;
-    //    break;
     }
-
-    
-
 }
 
-//void Bullet::OnCollisionEnd(PhysBody* physA, PhysBody* physB) {
-//    switch (physB->ctype) {
-//    case ColliderType::PLATFORM:
-//    case ColliderType::HAZARD:
-//    case ColliderType::CHECKPOINT:
-//    case ColliderType::ITEM:
-//    case ColliderType::ENEMYBULLET:
-//    case ColliderType::BULLET:
-//        LOG("Collided with hazard - DESTROY");
-//        break;
-//    }
-//}
+void Bullet::OnCollisionEnd(PhysBody* physA, PhysBody* physB) {
+    switch (physB->ctype) {
+    case ColliderType::PLAYER:
+        onPlayer = false;
+        break;
+    }
+}

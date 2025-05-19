@@ -633,6 +633,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision PLATFORM");
 		break;
 	case ColliderType::PICKAXE:
+		onPickaxe = true;
 		LOG("Collision PICKAXE");
 		break;
 	case ColliderType::SPYKE:
@@ -725,6 +726,9 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 	//Colisión del cuerpo principal
 	switch (physB->ctype)
 	{
+	case ColliderType::PICKAXE:
+		onPickaxe = false;
+		break;
 	case ColliderType::PLATFORM:
 		LOG("End Collision PLATFORM");
 		break;

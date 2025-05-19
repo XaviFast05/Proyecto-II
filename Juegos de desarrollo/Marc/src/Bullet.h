@@ -35,6 +35,8 @@ public:
 
     void OnCollision(PhysBody* physA, PhysBody* physB);
 
+    void OnCollisionEnd(PhysBody* physA, PhysBody* physB);
+
     bool isAlive = true;
     int distCounter = 0;
 
@@ -67,4 +69,10 @@ private:
     int hitboxWidth = 48;
     int hitboxHeight = 12;
     b2Fixture* fixture;
+
+    bool onPlayer = false;
+    bool active = true;
+
+    Timer inactiveTimer;
+    float inactiveTimerMax = 0.5;
 };

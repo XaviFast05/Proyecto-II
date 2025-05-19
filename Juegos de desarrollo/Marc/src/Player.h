@@ -196,6 +196,8 @@ public:
 	float meleeTimerMax = 0.15;
 	float meleeDisplace = 0.0;
 
+	bool onPickaxe = false;
+
 	//STATES FLOW
 	state playerState; 
 	std::vector<std::vector<bool>> stateFlow;
