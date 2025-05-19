@@ -125,7 +125,7 @@ bool Merchant::Update(float dt) {
 		Vector2D playerPos = player->pbody->GetPhysBodyWorldPosition();
 		Vector2D playerPosCenteredOnTile = Engine::GetInstance().map.get()->WorldToWorldCenteredOnTile(playerPos.getX(), playerPos.getY());
 
-		//LOGIC CONTROLER
+		//LOGIC CONTROLLER
 
 		if (state == PATROL) {
 

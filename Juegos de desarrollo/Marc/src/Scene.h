@@ -113,6 +113,11 @@ public:
 	std::string GetLevelString(Levels level);
 
 public:
+
+	int lastFrameCamY;
+	int fixedCamY;
+	bool lockCamY;
+
 	Levels level;
 	bool paused = false;
 	bool help = false;

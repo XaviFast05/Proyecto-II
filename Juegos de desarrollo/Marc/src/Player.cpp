@@ -539,6 +539,9 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	{
 	case ColliderType::PLATFORM:
 		LOG("Collision PLATFORM");
+		if (pbody->body->GetLinearVelocity().y >= -0.1f) {
+			grounded = true;
+		}
 		break;
 	case ColliderType::PICKAXE:
 		LOG("Collision PICKAXE");
@@ -635,6 +638,7 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 	{
 	case ColliderType::PLATFORM:
 		LOG("End Collision PLATFORM");
+		grounded = false;
 		break;
 	case ColliderType::CHECKPOINT:
 		LOG("End Collision Checkpoint");

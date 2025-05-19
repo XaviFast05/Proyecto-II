@@ -136,7 +136,13 @@ bool Scene::Start()
 	finalCandyNum = 0;
 	currentTime = 0;
 
+
+
 	transitionDisplace = 0;
+
+	lastFrameCamY = 0;
+	fixedCamY = 0;
+	lockCamY = false;
 	
 
 	if (!loadScene)
@@ -294,12 +300,32 @@ bool Scene::Update(float dt)
 	
 	if (!paused) {
 		currentTime += dt / 1000.0f;
-		
+
 		//CAMERA X
 		ChangeDirectionCameraX();
 
+
 		//CAMERA Y
-		Engine::GetInstance().render.get()->camera.y = (METERS_TO_PIXELS(player->pbody->body->GetPosition().y) + CAM_EXTRA_DISPLACEMENT_Y) * -Engine::GetInstance().window.get()->scale;
+		if (!player->grounded ) {
+			if (!lockCamY) {
+
+				fixedCamY = (METERS_TO_PIXELS(player->pbody->body->GetPosition().y) + CAM_EXTRA_DISPLACEMENT_Y + 9) * -Engine::GetInstance().window.get()->scale;
+				lockCamY = true;
+			}
+		}
+		else {
+
+			lockCamY = false;
+		}
+		//CAM_EXTRA_DISPLACEMENT_Y
+
+		if (lockCamY && METERS_TO_PIXELS(player->pbody->body->GetPosition().y) < -fixedCamY - CAM_EXTRA_DISPLACEMENT_Y) {
+			Engine::GetInstance().render.get()->camera.y = fixedCamY;
+		}
+		else {
+			Engine::GetInstance().render.get()->camera.y = (METERS_TO_PIXELS(player->pbody->body->GetPosition().y) + CAM_EXTRA_DISPLACEMENT_Y) * -Engine::GetInstance().window.get()->scale;
+		}
+
 
 		//CAMERA LIMITS X
 		if (Engine::GetInstance().render.get()->camera.x < -9980) Engine::GetInstance().render.get()->camera.x = -9980;
