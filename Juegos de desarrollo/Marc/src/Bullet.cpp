@@ -83,18 +83,17 @@ bool Bullet::Update(float dt) {
         destroyPickaxe = false;
     }
 
-    if (onPlayer && player->onPickaxe && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) && active) {
-        inactiveTimer.Start();
-        active = false;
-
-        fixture = pbody->body->GetFixtureList();
-        if (fixture) {
-            b2Filter filter = fixture->GetFilterData();
-            filter.categoryBits = CATEGORY_PICKAXE;
-            filter.maskBits = 0xFFFF & ~CATEGORY_PLAYER;
-            fixture->SetFilterData(filter);
-        }
-    }
+    //if (onPlayer && player->onPickaxe && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) && active) {
+    //    inactiveTimer.Start();
+    //    fixture = pbody->body->GetFixtureList();
+    //    if (fixture) {
+    //        b2Filter filter = fixture->GetFilterData();
+    //        filter.categoryBits = CATEGORY_PICKAXE;
+    //        filter.maskBits = 0xFFFF & ~CATEGORY_PLAYER;
+    //        fixture->SetFilterData(filter);
+    //    }
+    //    active = false;
+    //}
 
     if (!stuckOnWall) {
         b2Vec2 velocity = pbody->body->GetLinearVelocity();
@@ -123,8 +122,7 @@ bool Bullet::Update(float dt) {
         Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()),0,1.0f,270);
     }
 
-    //LOG("Pickaxe: %f, Player: %f", pbody->body->GetPosition().y, player->pbody->body->GetPosition().y);
-    if ((pbody->body->GetPosition().y - 0.5) > (player->pbody->body->GetPosition().y)) {
+    if ((pbody->body->GetPosition().y - 0.5) > (player->pbody->body->GetPosition().y) && active) {
         b2Filter filter = fixture->GetFilterData();
         filter.categoryBits = CATEGORY_DEFAULT;
         filter.maskBits = 0xFFFF;
@@ -136,6 +134,10 @@ bool Bullet::Update(float dt) {
         filter.maskBits = 0xFFFF & ~CATEGORY_PLAYER;
         fixture->SetFilterData(filter);
     }
+
+    //if (active) {
+    //    if (inactiveTimer.ReadSec() > inactiveTimerMax) active = true;
+    //}
 
     return true;
 }

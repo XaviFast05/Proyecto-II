@@ -382,7 +382,6 @@ bool Scene::PostUpdate()
 
 	//UI
 	if (!Engine::GetInstance().settings.get()->settingsOpen) {
-		LOG("%f %f", player->pbody->body->GetPosition().x, player->pbody->body->GetPosition().y);
 
 		DrawPlayerHitsUI();
 
