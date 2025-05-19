@@ -165,11 +165,6 @@ void Player::Restart()
 
 bool Player::Update(float dt)
 {
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_K) == KEY_REPEAT)
-	{
-		dialoguesManager->StartDialogue("DIALOG01");
-	}
-
 	//FRUSTRUM
 	if (!Engine::GetInstance().render.get()->InCameraView(pbody->GetPosition().getX() - texW, pbody->GetPosition().getY() - texH, texW, texH))
 	{
@@ -296,6 +291,11 @@ bool Player::Update(float dt)
 			dashTimer.Start();
 			dashTimerOn = true;
 			playerState = DASH;
+		}
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && stateFlow[playerState][TALK] && !dialoguesManager->GetOnDialogue()) {
+			
+			dialoguesManager->StartDialogue("DIALOG01");
+			playerState = TALK;
 		}
 
 		//COYOTE TIME LOGIC
@@ -494,6 +494,12 @@ bool Player::Update(float dt)
 				playerState = IDLE;
 			}
 			break;
+		case TALK:
+			
+			if (!dialoguesManager->GetOnDialogue()) {
+				playerState = IDLE;
+			}
+			break;
 		default:
 			break;
 		}
@@ -588,6 +594,13 @@ bool Player::Update(float dt)
 			currentAnim->Reset();
 			resetAnimation = false;
 		}
+		break;
+	case TALK:
+		if (resetAnimation == false) {
+			currentAnim->Reset();
+			resetAnimation = true;
+		}
+		currentAnim = &idle;
 		break;
 	}
 

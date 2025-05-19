@@ -185,6 +185,7 @@
     </ClCompile>
     <ClCompile Include="src\Ally.cpp">
       <Filter>Source Files\Game\Allies</Filter>
+	</ClCompile>
     <ClCompile Include="src\TextManager.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>

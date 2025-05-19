@@ -56,7 +56,7 @@ bool DialoguesManager::Update(float dt)
             letterNum = textToShow.size();
         }
     
-        if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+        if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
         {
             if (!skipLetterByLetter && letterNum < textToShow.size())
             {

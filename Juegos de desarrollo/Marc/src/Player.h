@@ -30,7 +30,8 @@ enum state {
 	DASH,
 	CHARGED,
 	HURT,
-	DEAD
+	DEAD,
+	TALK
 };
 
 enum Direction {
