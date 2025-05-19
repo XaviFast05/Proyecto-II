@@ -81,10 +81,10 @@ bool Player::Start() {
 			flow.push_back(stateAttribute.as_bool());
 		}
 		stateFlow.push_back(flow);
-
-		
 	}
 
+	upgrades.empty();
+	unlockedUpgrades.empty();
 	godMode = false;
 	canClimb = false;
 	reachedCheckPoint = false;
@@ -130,9 +130,19 @@ bool Player::Start() {
 	respawnTimer = Timer();
 
 	pickaxeManager = new PickaxeManager();
-	pickaxeManager->Start();
 	currencyManager = new CurrencyManager();
 	currencyManager->Start();
+
+	LoadDefaults();
+	pickaxeManager->Start();
+
+	b2Fixture* fixture = pbody->body->GetFixtureList();
+	if (fixture) {
+		b2Filter filter = fixture->GetFilterData();
+		filter.categoryBits = CATEGORY_PLAYER;
+		filter.maskBits = 0xFFFF & ~CATEGORY_PICKAXE;
+		fixture->SetFilterData(filter);
+	}
 
 	return true;
 }
@@ -210,15 +220,13 @@ bool Player::Update(float dt)
 			return true;
 		}
 
-		//printf("POSITION X: %f\n", position.getX());
-		//printf("POSITION Y: %f\n", position.getY());
-		// POSITION X: 4235.000000
-		// POSITION Y : 832.000000
-		// 
-		// POSITION X: 8931.000000
-		// POSITION Y : 4480.000000
+		//DAMAGE BOOST
+		if (damageBoost && hits == 1) damageAdded = damageBoostAdded;
+		else if (damageBoost && hits != 1 && damageSmallBoost) damageAdded = 2;
+		else if (damageBoost && hits != 1 && !damageSmallBoost) damageAdded = 0;
+
 		//CHANGERS
-		if (playerState == DEAD) {
+		if (playerState == DEAD || playerState == CHARGED) {
 		}
 		else if (playerState == HURT) {
 			if (hurtTimer.ReadSec() >= hurtTime) playerState = IDLE;
@@ -232,7 +240,6 @@ bool Player::Update(float dt)
 			grounded = false;
 			plusJumpTimer.Start();
 			plusJumpTimerOn = true;
-
 		}
 		else if (pbody->body->GetLinearVelocity().y > 0.001 && stateFlow[playerState][FALL]) {
 			if (playerState == RUN) {
@@ -246,6 +253,8 @@ bool Player::Update(float dt)
 			stateTimer.Start();
 			playerState = CHOP;
 
+			if (meleeTimerOn) deleteCharged = true;
+			charging = true;
 			meleeTimer.Start();
 			meleeTimerOn = true;
 		}
@@ -264,6 +273,21 @@ bool Player::Update(float dt)
 			stateTimer.Start();
 			playerState = THROW;
 		}
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN && stateFlow[playerState][DASH] && canDash == true && unlockedDash == true) {
+			pbody->body->SetLinearVelocity(b2Vec2_zero);
+			if (dir == RIGHT) pbody->body->ApplyLinearImpulseToCenter(b2Vec2(dashForce, 0), true);
+			else if (dir == LEFT) pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-dashForce, 0), true);
+
+			if (grounded && (playerState == IDLE || playerState == RUN)) {
+				dashCooldownTimerOn = true;
+				dashCooldownTimer.Start();
+			}
+
+			canDash = false;
+			dashTimer.Start();
+			dashTimerOn = true;
+			playerState = DASH;
+		}
 
 		//COYOTE TIME LOGIC
 		if (coyoteTimerOn) {
@@ -278,6 +302,23 @@ bool Player::Update(float dt)
 			if (coyoteTimer.ReadSec() >= coyoteTimerMax) coyoteTimerOn = false;
 		}
 
+		//DASH LOGIC
+		if (dashTimerOn) {
+			if (dashTimer.ReadSec() > dashTimerMax) {
+				playerState = IDLE;
+				dashTimerOn = false;
+			}
+		}
+
+		//DASH PREVENT SPAMMING LOGIC
+		if (dashCooldownTimerOn) {
+			if (dashCooldownTimer.ReadSec() > dashCooldownTimerMax) {
+				dashCooldownTimerOn = false;
+				canDash = true;
+			}
+		}
+		else if (grounded && (playerState == IDLE || playerState == RUN)) canDash = true;
+
 		//PLUS JUMP LOGIC
 		if (plusJumpTimerOn) {
 			if (!grounded && playerState == JUMP && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && plusJumpTimer.ReadSec() < plusJumpTimerMax) {
@@ -287,12 +328,32 @@ bool Player::Update(float dt)
 			if (plusJumpTimer.ReadSec() >= plusJumpTimerMax) plusJumpTimerOn = false;
 		}
 
+		//CHARGED ATTACK LOGIC
+		if (chargedCooldown) {
+			if (chargedCooldownTimer.ReadSec() > chargedCooldownTimerMax) chargedCooldown = false;
+		}
+		if (playerState == CHARGED && (meleeTimerOn == false && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_UP || chargeAttackTimer.ReadSec() > chargeAttackTimerMax)) {
+			meleeTimer.Start();
+			meleeTimerOn = true;
+		}
+
 		//MELEE ATTACKS LOGIC
 		if (meleeTimerOn) {
+			if (deleteCharged) {
+				meleeArea->body->SetEnabled(false);
+				deleteCharged = false;
+			}
 			if (meleeTimer.ReadSec() == 0.0) {
-				meleeDisplace = (dir == RIGHT) ? (2 * texW / 3 + MELEE_AREA_WIDTH / 2) : (texW / 3 - MELEE_AREA_WIDTH / 2);
-				meleeArea = Engine::GetInstance().physics.get()->CreateRectangleSensor((position.getX() + meleeDisplace), position.getY() + texH / 2, MELEE_AREA_WIDTH, texH, DYNAMIC);
-				meleeArea->ctype = ColliderType::MELEE_AREA;
+				if (playerState == CHARGED) {
+					meleeDisplace = (dir == RIGHT) ? (2 * texW / 3 + MELEE_AREA_WIDTH) : (texW / 3 - MELEE_AREA_WIDTH);
+					meleeArea = Engine::GetInstance().physics.get()->CreateRectangleSensor((position.getX() + meleeDisplace), position.getY() + texH / 2, MELEE_AREA_WIDTH * 2, texH * 1.5, DYNAMIC);
+					meleeArea->ctype = ColliderType::MELEE_AREA_CHARGED;
+				}
+				else {
+					meleeDisplace = (dir == RIGHT) ? (2 * texW / 3 + MELEE_AREA_WIDTH / 2) : (texW / 3 - MELEE_AREA_WIDTH / 2);
+					meleeArea = Engine::GetInstance().physics.get()->CreateRectangleSensor((position.getX() + meleeDisplace), position.getY() + texH / 2, MELEE_AREA_WIDTH, texH, DYNAMIC);
+					meleeArea->ctype = ColliderType::MELEE_AREA;
+				}
 			}
 			if (meleeTimer.ReadSec() < meleeTimerMax) {
 				b2Vec2 meleeAreaMovePos = b2Vec2(pbody->body->GetPosition().x + PIXEL_TO_METERS(meleeDisplace) - PIXEL_TO_METERS(texW/2), pbody->body->GetPosition().y);
@@ -303,7 +364,6 @@ bool Player::Update(float dt)
 				meleeTimerOn = false;
 			}
 		}
-
 		if (respawnHeal == true) respawnHeal = false;
 
 		//LOGIC & SFX
@@ -381,9 +441,16 @@ bool Player::Update(float dt)
 				playSound = false;
 			}
 			if (CheckMoveX() && !grounded) MoveX();
+
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_UP) charging = false;
 			if (stateTimer.ReadSec() >= pickaxeTimerAnimation)
 			{
-				playerState = IDLE;
+				if (charging == true && chargedCooldown == false && unlockedCharged == true) {
+					playerState = CHARGED;
+					chargeAttackTimer.Start();
+					break;
+				}
+				else playerState = IDLE;
 				if (playSound == false) {
 					playSound = true;
 				}
@@ -404,20 +471,27 @@ bool Player::Update(float dt)
 			}
 			break;
 		case DEAD:
-		{
 			pbody->body->SetLinearVelocity(b2Vec2(0, 0));
 			if (respawnTimer.ReadSec() >= respawnTime) {
 				Engine::GetInstance().scene.get()->LoadState();
 				playerState = IDLE;
 				hits = 3;
 			}
-
-		}
+			break;
+		case CHARGED:
+			if (chargeAttackTimer.ReadSec() > chargeAttackTimerMax || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_UP) {
+				chargedCooldownTimer.Start();
+				chargedCooldown = true;
+				playerState = IDLE;
+			}
+			break;
 		default:
 			break;
 		}
 
-		velocity = { velocity.x, pbody->body->GetLinearVelocity().y };
+		if (playerState == DASH) velocity = { pbody->body->GetLinearVelocity().x, 0 };
+		else velocity = { velocity.x, pbody->body->GetLinearVelocity().y };
+
 		pbody->body->SetLinearVelocity(velocity);
 	}
 
@@ -478,7 +552,20 @@ bool Player::Update(float dt)
 		}
 		break;
 
-
+	case DASH:
+		//aquí poner animación dash
+		currentAnim = &idle;
+		if (resetAnimation == true) {
+			currentAnim->Reset();
+			resetAnimation = false;
+		}
+	case CHARGED:
+		//aquí poner animación ataque cargado
+		currentAnim = &idle;
+		if (resetAnimation == true) {
+			currentAnim->Reset();
+			resetAnimation = false;
+		}
 	case HURT:
 		currentAnim = &hurt;
 		if (resetAnimation == true) {
@@ -494,7 +581,6 @@ bool Player::Update(float dt)
 		}
 		break;
 	}
-
 
 	b2Transform pbodyPos = pbody->body->GetTransform();
 
@@ -548,6 +634,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision PLATFORM");
 		break;
 	case ColliderType::PICKAXE:
+		onPickaxe = true;
 		LOG("Collision PICKAXE");
 		break;
 	case ColliderType::SPYKE:
@@ -555,7 +642,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::ENEMY:
 		LOG("Collision ENEMY");
-		if (!godMode) {
+		if (!godMode || !canHurt) {
 			if (playerState != DEAD) {
 				//HURT LOGIC
 				if (hits >= 1 && playerState != HURT) DamagePlayer();
@@ -640,6 +727,9 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 	//Colisión del cuerpo principal
 	switch (physB->ctype)
 	{
+	case ColliderType::PICKAXE:
+		onPickaxe = false;
+		break;
 	case ColliderType::PLATFORM:
 		LOG("End Collision PLATFORM");
 		break;
@@ -674,18 +764,63 @@ Vector2D Player::GetDirection() const {
 	}
 }
 
-void Player::SaveData(pugi::xml_node playerNode) {
+void Player::SaveData(pugi::xml_node playerNode, pugi::xml_node upgradesNode) {
 	if (active) {
 		playerNode.attribute("x").set_value(pbody->GetPhysBodyWorldPosition().getX());
 		playerNode.attribute("y").set_value(pbody->GetPhysBodyWorldPosition().getY());
+		upgradesNode.attribute("dash").set_value(unlockedDash);
+		upgradesNode.attribute("charged").set_value(unlockedCharged);
+
+		bool up0 = false, up1 = false, up2 = false, up3 = false, up4 = false, up5 = false, up6 = false, up7 = false;
+		for (int i = 0; i < unlockedUpgrades.size(); i++) {
+			switch (unlockedUpgrades[i]) {
+			default:
+				break;
+			case 0: up0 = true;
+				break;
+			case 1: up1 = true;
+				break;
+			case 2: up2 = true;
+				break;
+			case 3: up3 = true;
+				break;
+			case 4: up4 = true;
+				break;
+			case 5: up5 = true;
+				break;
+			case 6: up6 = true;
+				break;
+			case 7: up7 = true;
+				break;
+			}
+		}
+		upgradesNode.attribute("up0").set_value(up0);
+		upgradesNode.attribute("up1").set_value(up1);
+		upgradesNode.attribute("up2").set_value(up2);
+		upgradesNode.attribute("up3").set_value(up3);
+		upgradesNode.attribute("up4").set_value(up4);
+		upgradesNode.attribute("up5").set_value(up5);
+		upgradesNode.attribute("up6").set_value(up6);
+		upgradesNode.attribute("up7").set_value(up7);
 	}
 }
 
-void Player::LoadData(pugi::xml_node playerNode)
+void Player::LoadData(pugi::xml_node playerNode, pugi::xml_node upgradesNode)
 {
 	position.setX(playerNode.attribute("x").as_int());
 	position.setY(playerNode.attribute("y").as_int());
 	SetPosition(position);
+	unlockedDash = upgradesNode.attribute("dash").as_bool();
+	unlockedCharged = upgradesNode.attribute("charged").as_bool();
+
+	if (upgradesNode.attribute("up0").as_bool() == true) unlockedUpgrades.push_back(0);
+	if (upgradesNode.attribute("up1").as_bool() == true) unlockedUpgrades.push_back(1);
+	if (upgradesNode.attribute("up2").as_bool() == true) unlockedUpgrades.push_back(2);
+	if (upgradesNode.attribute("up3").as_bool() == true) unlockedUpgrades.push_back(3);
+	if (upgradesNode.attribute("up4").as_bool() == true) unlockedUpgrades.push_back(4);
+	if (upgradesNode.attribute("up5").as_bool() == true) unlockedUpgrades.push_back(5);
+	if (upgradesNode.attribute("up6").as_bool() == true) unlockedUpgrades.push_back(6);
+	if (upgradesNode.attribute("up7").as_bool() == true) unlockedUpgrades.push_back(7);
 }
 
 void Player::KillPlayer() {
@@ -734,4 +869,98 @@ void Player::DamagePlayer() {
 	hits--;
 	playerState = HURT;
 	hurtTimer.Start();
+}
+
+void Player::LoadDefaults() {
+	plusJumpTimerMax = 0.2; // salto extra del salto
+	dashForce = 8; // impulso de dash
+	chargedCooldownTimerMax = 5; // tiempo entre ataque cargado
+	pickaxeManager->pickaxeRecollectCount = 2.5; // tiempo entre piqueta y piqueta
+	moveSpeed = 0.7; // velocidad del player
+	damageAdded = 0; // añadido de daño al base
+	maxPickaxes = 3; // piquetas máximas
+	pickaxeManager->maxPickaxes = maxPickaxes;
+	damageSmallBoost = false;
+	damageBoost = false; // hacer mas daño cuando tienes un corazón
+	damageBoostAdded = 5; // el daño que haces cuando tienes un corazón y el boost
+}
+
+void Player::LoadUpgrades() {
+	LoadDefaults();
+	for (int i = 0; i < upgrades.size(); i++) {
+		switch (upgrades[i]) {
+		case 0:
+			plusJumpTimerMax = 0.25;
+			break;
+		case 1:
+			dashForce = 12;
+			break;
+		case 2:
+			chargedCooldownTimerMax = 3;
+			break;
+		case 3:
+			pickaxeManager->pickaxeRecollectCount = 1.25;
+			break;
+		case 4:
+			moveSpeed = 0.9;
+			break;
+		case 5:
+			damageSmallBoost = true;
+			damageAdded = 2;
+			break;
+		case 6:
+			maxPickaxes = 4;
+			pickaxeManager->pickaxeCount = maxPickaxes;
+			pickaxeManager->maxPickaxes = maxPickaxes;
+			break;
+		case 7:
+			damageBoost = true;
+			break;
+		case 8:
+			break;
+		case 9:
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+void Player::UnlockUpgrade(int num) {
+	bool canAdd = true;
+	for (int i = 0; i < unlockedUpgrades.size(); i++) {
+		if (num == unlockedUpgrades[i]) canAdd = false; //ya tienes la mejora
+	}
+	if (canAdd) unlockedUpgrades.push_back(num);
+}
+
+void Player::AddUpgrade(int num) {
+	bool haveUpgrade = false;
+	for (int i = 0; i < unlockedUpgrades.size(); i++) {
+		if (num == unlockedUpgrades[i]) haveUpgrade = true;
+	}
+	if (haveUpgrade) {
+		bool canAdd = true;
+		if (upgrades.size() <= maxUpgrades && num >= 0 && num <= 9) {
+			for (int i = 0; i < upgrades.size(); i++) {
+				if (upgrades[i] == num) canAdd = false;
+			}
+			if (canAdd == false) {
+			}//aquí poner que esa mejora ya la tienes
+			else upgrades.push_back(num);
+		}
+		//else aquí poner algo en plan que tienes demasiadas mejoras
+	}
+	//else poner aquí que la update no la tienes colegon
+	LoadUpgrades();
+}
+
+void Player::RemoveUpgrade(int num) {
+	int index = -1;
+	for (int i = 0; i < upgrades.size(); i++) {
+		if (upgrades[i] == num) index = i;
+	}
+	if (index >= 0) upgrades.erase(upgrades.begin() + index);
+	//else aquí poner algo rollo esta mejora no la tienes activa
+	LoadUpgrades();
 }

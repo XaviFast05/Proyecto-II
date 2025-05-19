@@ -28,6 +28,7 @@ enum class ColliderType {
 	PLAYER_SENSOR,
 	WEAPON,
 	MELEE_AREA,
+	MELEE_AREA_CHARGED,
 	SHOT,
 	PICKAXE,
 	PLATFORM,
@@ -44,7 +45,14 @@ enum class ColliderType {
 	CLIMBINGWALL,
 	ORB,
 	SOUL_ROCK,
+	ALLY,
 	UNKNOWN
+};
+
+enum CollisionCategory {
+	CATEGORY_PLAYER = 0x0001,
+	CATEGORY_PICKAXE = 0x0002,
+	CATEGORY_DEFAULT = 0x0004
 };
 
 // Small class to return to other modules to track position and rotation of physics bodies

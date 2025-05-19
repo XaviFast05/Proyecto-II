@@ -8,25 +8,17 @@
 #include "Timer.h"
 
 class Player;
-class CurrencyManager;
 
 struct SDL_Texture;
 
-class Enemy : public Entity
+class Ally : public Entity
 {
 public:
-	enum Type {
-		FLY,
-		GROUND
-	};
 
 	enum State {
 		PATROL,
-		CHASING,
-		ATTACK,
-		JUMP,
-		DEAD,
-		HURT
+		DETECTION,
+		INTERACTION
 	};
 
 	enum Dir {
@@ -34,8 +26,8 @@ public:
 		RIGHT
 	};
 
-	Enemy();
-	virtual ~Enemy();
+	Ally();
+	virtual ~Ally();
 
 	bool Awake();
 
@@ -60,7 +52,7 @@ public:
 	bool CheckIfTwoPointsNear(Vector2D point1, Vector2D point2, float nearDistance);
 
 	void SetPlayer(Player* player);
-	
+
 	void SetPath(pugi::xml_node pathNode);
 
 	virtual void SaveData(pugi::xml_node enemyNode);
@@ -69,18 +61,14 @@ public:
 
 	virtual void Restart();
 
-	virtual void DMGEnemy(int damage);
-
-	void DropLoot();
-
 public:
 
-//protected:
+	//protected:
 	SDL_Texture* texture;
 	const char* texturePath;
 	int texW, texH;
 	pugi::xml_node audioNode;
-	
+
 	PhysBody* pbody;
 	Player* player;
 
@@ -90,9 +78,6 @@ public:
 
 	Animation* currentAnimation = nullptr;
 	Animation idle;
-	Animation attack;
-	Animation hurt;
-	Animation death;
 	Animation jump;
 	Animation fall;
 	Animation walk;
@@ -104,22 +89,10 @@ public:
 	Vector2D destinationPoint;
 
 	//PROPERTIES
-	int speed;
-	int lives;
+	float speed;
 	int chaseArea;
-	int attackArea;
 	int noSound;
 
-	Timer deathTimer;
-	float deathTime;
-	bool dead;
 	bool playingSound;
 
-	float pushForce; //rango óptimo alrededor de 1
-	float pushFriction; //rango óptimo alrededor de 5
-	int lootAmount; //entre 0 y 5
-
-	CurrencyManager* currencyManager;
-	bool canPush;
-	bool droppedLoot = false;
 };

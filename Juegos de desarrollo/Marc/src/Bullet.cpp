@@ -41,7 +41,7 @@ bool Bullet::Start() {
     texH = parameters.attribute("h").as_int();
 
 
-    if (!pbody) pbody = Engine::GetInstance().physics.get()->CreateRectangle(static_cast<int>(position.getX()), static_cast<int>(position.getY()), 48, 12, bodyType::DYNAMIC);
+    if (!pbody) pbody = Engine::GetInstance().physics.get()->CreateRectangle(static_cast<int>(position.getX()), static_cast<int>(position.getY()), hitboxWidth, hitboxHeight, bodyType::DYNAMIC);
     if (pbody == nullptr) {
         LOG("Error: PhysBody creation failed!");
         return false;
@@ -58,6 +58,16 @@ bool Bullet::Start() {
     stuckOnWall = false;
     destroyPickaxe = false;
 
+    fixture = pbody->body->GetFixtureList();
+    if (fixture) {
+        b2Filter filter = fixture->GetFilterData();
+        filter.categoryBits = CATEGORY_PICKAXE;
+        filter.maskBits = 0xFFFF & ~CATEGORY_PLAYER;
+        fixture->SetFilterData(filter);
+    }
+
+    player = Engine::GetInstance().scene.get()->player;
+
     return true;
 }
 
@@ -71,6 +81,18 @@ bool Bullet::Update(float dt) {
         pbody->body->SetEnabled(false);
         active = false;
         destroyPickaxe = false;
+    }
+
+    if (onPlayer && player->onPickaxe && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) && isActive) {
+        inactiveTimer.Start();
+        fixture = pbody->body->GetFixtureList();
+        if (fixture) {
+            b2Filter filter = fixture->GetFilterData();
+            filter.categoryBits = CATEGORY_PICKAXE;
+            filter.maskBits = 0xFFFF & ~CATEGORY_PLAYER;
+            fixture->SetFilterData(filter);
+        }
+        isActive = false;
     }
 
     if (!stuckOnWall) {
@@ -99,7 +121,29 @@ bool Bullet::Update(float dt) {
     {
         Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()),0,1.0f,270);
     }
-    
+
+    if ((pbody->body->GetPosition().y - 0.5) > (player->pbody->body->GetPosition().y) && isActive) {
+        b2Filter filter = fixture->GetFilterData();
+        filter.categoryBits = CATEGORY_DEFAULT;
+        filter.maskBits = 0xFFFF;
+        fixture->SetFilterData(filter);
+    }
+    else {
+        b2Filter filter = fixture->GetFilterData();
+        filter.categoryBits = CATEGORY_PICKAXE;
+        filter.maskBits = 0xFFFF & ~CATEGORY_PLAYER;
+        fixture->SetFilterData(filter);
+    }
+
+    if (!isActive) {
+        if (inactiveTimer.ReadSec() > inactiveTimerMax) {
+            isActive = true;
+            b2Filter filter = fixture->GetFilterData();
+            filter.categoryBits = CATEGORY_PICKAXE;
+            filter.maskBits = 0xFFFF & ~CATEGORY_PLAYER;
+            fixture->SetFilterData(filter);
+        }
+    }
 
     return true;
 }
@@ -139,8 +183,14 @@ void Bullet::ChangeType(BulletType t) {
 
 void Bullet::OnCollision(PhysBody* physA, PhysBody* physB) {
     switch (physB->ctype) {
-    case ColliderType::PICKAXE:
+    case ColliderType::PLAYER:
+        onPlayer = true;
+        break;
     case ColliderType::PLATFORM:
+        LOG("Collided - DESTROY");
+        destroyPickaxe = true;
+        break;
+    case ColliderType::PICKAXE:
         LOG("Collided - DESTROY");
         destroyPickaxe = true;
         break;
@@ -153,25 +203,13 @@ void Bullet::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collided - DESTROY");
 		destroyPickaxe = true;
 		break;
-    //case ColliderType::MELEE_AREA:
-    //    LOG("Collided - DESTROY");
-    //    variableMarc = true;
-    //    break;
     }
-
-    
-
 }
 
-//void Bullet::OnCollisionEnd(PhysBody* physA, PhysBody* physB) {
-//    switch (physB->ctype) {
-//    case ColliderType::PLATFORM:
-//    case ColliderType::HAZARD:
-//    case ColliderType::CHECKPOINT:
-//    case ColliderType::ITEM:
-//    case ColliderType::ENEMYBULLET:
-//    case ColliderType::BULLET:
-//        LOG("Collided with hazard - DESTROY");
-//        break;
-//    }
-//}
+void Bullet::OnCollisionEnd(PhysBody* physA, PhysBody* physB) {
+    switch (physB->ctype) {
+    case ColliderType::PLAYER:
+        onPlayer = false;
+        break;
+    }
+}

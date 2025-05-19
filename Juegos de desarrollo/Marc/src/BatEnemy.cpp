@@ -268,12 +268,18 @@ void BatEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::WEAPON:
 		break;
 	case ColliderType::PICKAXE:
-		if (state != DEAD) 	DMGEnemy();
+		if (state != DEAD) 	DMGEnemy(1);
 		break;
 	case ColliderType::MELEE_AREA:
 		if (state != DEAD) {
 			if (canPush) push = true;
-			DMGEnemy();
+			DMGEnemy(3);
+		}
+		break;
+	case ColliderType::MELEE_AREA_CHARGED:
+		if (state != DEAD) {
+			if (canPush) push = true;
+			DMGEnemy(5);
 		}
 		break;
 	case ColliderType::SPYKE:
