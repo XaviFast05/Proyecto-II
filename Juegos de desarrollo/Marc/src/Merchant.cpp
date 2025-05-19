@@ -134,7 +134,7 @@ bool Merchant::Update(float dt) {
 			if (lookTimerOn) {
 				if (lookTimer.ReadSec() >= lookTime) {
 					lookTimerOn = false;
-					dir = (dir == RIGHT) ? LEFT : RIGHT;
+					dir = (position.getX() >= initialPosX) ? LEFT : RIGHT;
 					justTurned = true; 
 				}
 				else {
