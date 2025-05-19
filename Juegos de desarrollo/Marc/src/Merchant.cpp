@@ -134,7 +134,8 @@ bool Merchant::Update(float dt) {
 			if (lookTimerOn) {
 				if (lookTimer.ReadSec() >= lookTime) {
 					lookTimerOn = false;
-					dir = (dir == RIGHT) ? LEFT : RIGHT;
+					dir = (position.getX() >= initialPosX)? LEFT : RIGHT;
+
 					justTurned = true; 
 				}
 				else {
@@ -167,7 +168,6 @@ bool Merchant::Update(float dt) {
 
 			dir = (playerPos.getX() > position.getX()) ? RIGHT : LEFT;
 
-			
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_J) == KEY_DOWN) {
 				state = INTERACTION;
 				player->pbody->body->SetEnabled(false);
@@ -178,6 +178,7 @@ bool Merchant::Update(float dt) {
 
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_J) == KEY_DOWN) {
 				state = DETECTION;
+
 				player->pbody->body->SetEnabled(true) ;
 			}
 		}
