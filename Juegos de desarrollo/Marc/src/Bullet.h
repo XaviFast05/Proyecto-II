@@ -8,15 +8,21 @@
 
 struct SDL_Texture;
 
-enum class BulletType {
+enum class BulletDirection {
     HORIZONTAL,
     VERTICAL
+};
+
+enum class BulletType {
+	BOSSJUMP,
+	FINALBOSS,
+	PICKAXE
 };
 
 class Bullet : public Entity
 {
 public:
-    Bullet(BulletType type = BulletType::HORIZONTAL);  // Modificar el constructor para aceptar BulletType
+    Bullet(BulletType bulletType, BulletDirection direction);
     virtual ~Bullet();
 
     bool Awake();
@@ -31,7 +37,7 @@ public:
     void SetPosition(Vector2D pos);
     Vector2D GetPosition();
     void SetDirection(const Vector2D& dir) { direction = dir; }
-    void ChangeType(BulletType type);
+    void ChangeDirection(BulletDirection bullet_direction);
 
     void OnCollision(PhysBody* physA, PhysBody* physB);
 
@@ -44,7 +50,8 @@ public:
 
 public:
     SDL_Texture* texture;
-    BulletType type;
+    BulletDirection bullet_direction;
+    BulletType bullet_type;
 
 private:
 

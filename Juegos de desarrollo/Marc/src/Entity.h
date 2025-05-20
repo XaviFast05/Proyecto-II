@@ -15,8 +15,11 @@ enum class EntityType
 	BOSS,
 	CURRENCY_ORB,
 	SOUL_ROCK,
-	ALLY,
-	MERCHANT,
+	CHILD_ENEMY,
+	JUMPING_ENEMY,
+	RUNNING_ENEMY,
+	JUMPSHOT,
+	FINALBOSS,
 	UNKNOWN
 };
 
@@ -26,7 +29,7 @@ class Entity
 {
 public:
 
-	Entity(EntityType type) : type(type), active(false) {}
+	Entity(EntityType bullet_direction) : bullet_direction(bullet_direction), active(false) {}
 	virtual ~Entity() {}
 
 	virtual bool Awake()
@@ -89,7 +92,7 @@ public:
 public:
 
 	std::string name;
-	EntityType type;
+	EntityType bullet_direction;
 	bool active = false;
 
 	// Possible properties, it depends on how generic we

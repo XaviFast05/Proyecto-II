@@ -55,12 +55,12 @@ class GuiControl
 public:
 
 	// Constructor
-	GuiControl(GuiControlType type, GuiControlId id = GuiControlId::DEFAULT, const char* name= "") : type(type), id(id), name(name), state(GuiControlState::NORMAL) {}
+	GuiControl(GuiControlType bullet_direction, GuiControlId id = GuiControlId::DEFAULT, const char* name= "") : bullet_direction(bullet_direction), id(id), name(name), state(GuiControlState::NORMAL) {}
 
 	// Constructor
-	GuiControl(GuiControlType type, const char* name, SDL_Rect bounds, SDL_Rect sliderBounds, const char* text, SDL_Texture* tex) :
+	GuiControl(GuiControlType bullet_direction, const char* name, SDL_Rect bounds, SDL_Rect sliderBounds, const char* text, SDL_Texture* tex) :
 		name(name),
-		type(type),
+		bullet_direction(bullet_direction),
 		state(GuiControlState::NORMAL),
 		bounds(bounds),
 		sliderBounds(sliderBounds),
@@ -107,7 +107,7 @@ public:
 	
 	GuiControlId id;
 	std::string name;
-	GuiControlType type;
+	GuiControlType bullet_direction;
 	GuiControlState state;
 
 	std::string text;           // Control text (if required)

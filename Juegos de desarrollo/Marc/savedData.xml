@@ -9,6 +9,9 @@
 		<enemy4 dead="false" x="9632" y="1375" />
 		<checkPoint0 alight="true" x="" y="" />
 		<checkPoint1 alight="true" x="" y="" />
+		<enemy5 dead="false" x="5344" y="2528" />
+		<enemy6 dead="false" x="1120" y="3232" />
+		<enemy7 dead="false" x="1120" y="3232" />
 	</lvl1>
 	<upgrades dash="false" charged="false" up0="false" up1="false" up2="false" up3="false" up4="false" up5="false" up6="false" up7="false" />
 	<playerPrefs>

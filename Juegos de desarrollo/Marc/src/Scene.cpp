@@ -14,9 +14,9 @@
 #include "Physics.h"
 #include "BatEnemy.h"
 #include "GroundEnemy.h"
+#include "ChildEnemy.h"
+#include "JumpingEnemy.h"
 #include "SoulRock.h"
-#include "Ally.h"
-#include "Merchant.h"
 #include <string>
 #include "Particle.h"
 #include "tracy/Tracy.hpp"
@@ -26,12 +26,10 @@
 #include "MainMenu.h"
 #include "FadeToBlack.h"
 #include "Settings.h"
-#include "Santa.h"
 #include "DeathMenu.h"
 #include "WinMenu.h"
 #include "PickaxeManager.h"
 #include "CurrencyManager.h"
-#include "TextManager.h"
 
 #include "Intro.h"
 
@@ -103,12 +101,6 @@ bool Scene::Start()
 		LoadSoulRock(soulRock, soulRockNode);
 	}
 
-	for (pugi::xml_node alliesNode : configParameters.child("entities").child("allies").child("merchant").child("instances").child(GetCurrentLevelString().c_str()).children())
-	{
-		Merchant* ally = (Merchant*)Engine::GetInstance().entityManager->CreateEntity((EntityType)alliesNode.attribute("entityType").as_int());;
-		LoadAlly(ally, alliesNode);
-	}
-
 	std::list<Entity*> entities = Engine::GetInstance().entityManager.get()->entities;
 	for (const auto& entity : entities) {
 		entity->Enable();
@@ -172,8 +164,6 @@ bool Scene::Start()
 	barraPiqueta = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("barraPiqueta").attribute("path").as_string());
 	barraRoja = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("barraRoja").attribute("path").as_string());
 	orbSoul = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("orbSoul").attribute("path").as_string());
-	bgTutorial = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("bgTut").attribute("path").as_string());
-	kimHead = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("kimHead").attribute("path").as_string());
 
 	return true;
 }
@@ -201,15 +191,6 @@ void Scene::LoadItem(CheckPoint* checkPoint, pugi::xml_node instanceNode) {
 	checkPoint->SetParameters(configParameters.child("entities").child("items").child("checkPoints"));
 	checkPoint->SetInstanceParameters(instanceNode);
 	checkPoints.push_back(checkPoint);
-}
-
-void Scene::LoadAlly(Merchant* merchant, pugi::xml_node instanceNode) {
-
-	merchant->SetPlayer(player);
-	merchant->SetParameters(configParameters.child("entities").child("allies").child("merchant"));
-	merchant->SetInstanceParameters(instanceNode);
-	allies.push_back(merchant);
-
 }
 
 
@@ -244,7 +225,6 @@ bool Scene::Update(float dt)
 	//	return true;
 	//}
 
-	
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 	{
 		player->KillPlayer();
@@ -338,8 +318,8 @@ bool Scene::Update(float dt)
 	//pickaxeText = std::to_string((int)player->pickaxeManager->GetNumPickaxes()) + " pickaxes";
 	//Engine::GetInstance().render.get()->DrawText(pickaxeText.c_str(), 800, 50, 200, 18);
 
-	if (player->pickaxeManager->GetNumPickaxes() < player->maxPickaxes) {
-		std::string number = std::to_string(player->pickaxeManager->pickaxeRecollectCount - player->pickaxeManager->pickaxeRecollectTimer.ReadSec());
+	if (player->projectileManager->GetNumPickaxes() < MAX_PICKAXES) {
+		std::string number = std::to_string(player->projectileManager->pickaxeRecollectCount - player->projectileManager->pickaxeRecollectTimer.ReadSec());
 		number.resize(3);
 		//timeTilPickaxeText = "time until next pickage: " + number + "s";
 		//Engine::GetInstance().render.get()->DrawText(timeTilPickaxeText.c_str(), 800, 70, 400, 18);
@@ -390,8 +370,6 @@ bool Scene::PostUpdate()
 		DrawPickaxesUI();
 
 		DrawCurrencyUI();
-
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_TAB)) DrawMap();
 
 		if (paused && !Engine::GetInstance().settings.get()->settingsOpen) {
 			
@@ -474,7 +452,6 @@ void Scene::SaveState()
 
 
 	pugi::xml_node savedDataNode = saveFile.child("savedData").child(GetCurrentLevelString().c_str());
-	pugi::xml_node upgradesNode = saveFile.child("savedData").child("upgrades");
 
 	savedDataNode.attribute("saved").set_value(true);
 	savedDataNode.attribute("level").set_value((int)level);
@@ -492,7 +469,7 @@ void Scene::SaveState()
 
 	//Save info to XML 
 	//Player 
-	player->SaveData(savedDataNode.child("player"), upgradesNode);
+	player->SaveData(savedDataNode.child("player"));
 
 	//Enemies
 	for (int i = 0; i < enemies.size(); i++)
@@ -557,13 +534,12 @@ void Scene::LoadState() {
 	}
 
 	pugi::xml_node savedDataNode = loadFile.child("savedData").child(GetCurrentLevelString().c_str());
-	pugi::xml_node upgradesNode = loadFile.child("savedData").child("upgrades");
 
 	currentTime = savedDataNode.attribute("time").as_float();
 	startBossFight = savedDataNode.attribute("startBossFight").as_bool();
 	bossKilled = savedDataNode.attribute("bossKilled").as_bool();
 
-	player->LoadData(savedDataNode.child("player"), upgradesNode);
+	player->LoadData(savedDataNode.child("player"));
 
 	//TODO: add an attribute to tell enemies from first and second level apart
 	for (int i = 0; i < enemies.size(); i++)
@@ -758,7 +734,7 @@ void Scene::DrawPlayerHitsUI()
 
 void Scene::DrawPickaxesUI()
 {
-	int numPickaxes = player->pickaxeManager->GetNumPickaxes(); // Piquetas disponibles
+	int numPickaxes = player->projectileManager->GetNumPickaxes(); // Piquetas disponibles
 	int scale = Engine::GetInstance().window.get()->GetScale(); // Escala de la ventana
 
 	// Posición inicial para dibujar las piquetas
@@ -767,7 +743,7 @@ void Scene::DrawPickaxesUI()
 	int spacing = 50; // Espaciado entre las piquetas
 	int spacingRed = 8; // Espaciado entre las piquetas
 
-	for (int i = 0; i < player->maxPickaxes; ++i) {
+	for (int i = 0; i < MAX_PICKAXES; ++i) {
 		// Si el índice es menor que el número de piquetas disponibles, dibuja una piqueta normal
 		if (i < numPickaxes) {
 			Engine::GetInstance().render.get()->DrawTexture(
@@ -788,7 +764,7 @@ void Scene::DrawPickaxesUI()
 				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (numPickaxes * spacing), // Posición X
 				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 80    // Posición Y
 			);
-			int redBars = player->pickaxeManager->GetNumRed();
+			int redBars = player->projectileManager->GetNumRed();
 			int drawRedSpacing = 0;
 			for (int i = 0; i < redBars; i++) {
 				Engine::GetInstance().render.get()->DrawTexture(
@@ -820,24 +796,4 @@ void Scene::DrawCurrencyUI()
 	// Dibujar el texto del número de monedas
 	Engine::GetInstance().render.get()->DrawText(
 		currencyText.c_str(), 1200, 32, 48, 32);
-}
-
-void Scene::DrawMap()
-{
-	// 3 x 68.465
-
-	float posX = player->pbody->body->GetPosition().x;
-	float posY = player->pbody->body->GetPosition().y;
-	int centerX = -Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + (Engine::GetInstance().window.get()->width / 2) - 360;
-	int centerY = -Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + (Engine::GetInstance().window.get()->height / 2) - 180;
-	switch (level) {
-	case LVL1:				
-		Engine::GetInstance().render.get()->DrawTexture(bgTutorial, centerX, centerY);
-		Engine::GetInstance().render.get()->DrawTexture(kimHead, centerX + (posX * 720 / 225 - 10), centerY + (posY * 360 / 96 - 25));
-		break;
-	case LVL2:
-		break;
-	default:
-		break;
-	}
 }
