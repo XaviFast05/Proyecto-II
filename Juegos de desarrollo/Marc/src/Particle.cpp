@@ -58,8 +58,8 @@ bool Particle::Update(float dt)
 			position.setX(pbody->GetPhysBodyWorldPosition().getX() - texW / 2);
 			position.setY(pbody->GetPhysBodyWorldPosition().getY() - texH / 2);
 
-			if (direction.getX() > 0)Engine::GetInstance().render.get()->DrawTexture(texture, position.getX(), position.getY(), &anim.GetCurrentFrame());
-			else Engine::GetInstance().render.get()->DrawTexture(texture, position.getX(), position.getY(), &anim.GetCurrentFrame(), true);
+			if (direction.getX() > 0)Engine::GetInstance().render.get()->DrawTextureBuffer(texture, position.getX(), position.getY(), true, ENTITIES, &anim.GetCurrentFrame());
+			else Engine::GetInstance().render.get()->DrawTextureBuffer(texture, position.getX(), position.getY(),true, ENTITIES, &anim.GetCurrentFrame());
 			
 		}
 		else if (isAlive && aliveTimer.ReadSec() >= lifeTime)

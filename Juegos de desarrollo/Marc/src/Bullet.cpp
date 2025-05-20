@@ -89,17 +89,16 @@ bool Bullet::Update(float dt) {
     if (type == BulletType::HORIZONTAL)
     {
         if (direction.getX() < 0) {
-            Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()), true);
+            Engine::GetInstance().render.get()->DrawTextureBuffer(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()), true, BETWEEN_MAP);
         }
         else {
-            Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()));
+            Engine::GetInstance().render.get()->DrawTextureBuffer(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()), false, BETWEEN_MAP);
         }
     }
     else
     {
-        Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()),false, 0,0,1.0f,270);
+        Engine::GetInstance().render.get()->DrawTextureBuffer(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()),false, BETWEEN_MAP, 0, 1.0f, 270);
     }
-    
 
     return true;
 }

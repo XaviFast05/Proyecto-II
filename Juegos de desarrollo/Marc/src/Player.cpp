@@ -200,8 +200,8 @@ bool Player::Update(float dt)
 				position.setX(METERS_TO_PIXELS((pbodyPos.p.x) - texW / 2) + drawOffsetX);
 				position.setY(METERS_TO_PIXELS((pbodyPos.p.y) - texH / 2) + drawOffsetY);
 
-				if (dir == RIGHT) Engine::GetInstance().render.get()->DrawTexture(texture, position.getX(), position.getY(), &currentFrame);
-				else if (dir == LEFT) Engine::GetInstance().render.get()->DrawTexture(texture, position.getX(), position.getY(), &currentFrame, true);
+				if (dir == RIGHT) Engine::GetInstance().render.get()->DrawTextureBuffer(texture, position.getX(), position.getY(), false, PLAYER,&currentFrame);
+				else if (dir == LEFT) Engine::GetInstance().render.get()->DrawTextureBuffer(texture, position.getX(), position.getY(), true, PLAYER, &currentFrame);
 			}
 			
 
@@ -502,8 +502,8 @@ bool Player::Update(float dt)
 		position.setX(METERS_TO_PIXELS((pbodyPos.p.x) - texW / 2 ) + drawOffsetX);
 		position.setY(METERS_TO_PIXELS((pbodyPos.p.y) - texH / 2) + drawOffsetY);
 
-		if (dir == RIGHT) Engine::GetInstance().render.get()->DrawTexture(texture, position.getX(), position.getY(), &currentFrame);
-		else if (dir == LEFT) Engine::GetInstance().render.get()->DrawTexture(texture, position.getX(), position.getY(), &currentFrame, true);
+		if (dir == RIGHT) Engine::GetInstance().render.get()->DrawTextureBuffer(texture, position.getX(), position.getY(), false, PLAYER, &currentFrame);
+		else if (dir == LEFT) Engine::GetInstance().render.get()->DrawTextureBuffer(texture, position.getX(), position.getY(), true,PLAYER, &currentFrame);
 	}
 
 	currentAnim->Update();

@@ -96,7 +96,7 @@ bool MainMenu::Update(float dt)
 {
 	_dt = dt;
 
-	Engine::GetInstance().render.get()->DrawTexture(bgTex, 0, 0, NULL);
+	Engine::GetInstance().render.get()->DrawTextureBuffer(bgTex, 0, 0, false, MENUS);
 	if (!Engine::GetInstance().settings.get()->settingsOpen && !creditsOpen)
 	{
 		for (const auto& bt : buttons)
@@ -124,7 +124,7 @@ bool MainMenu::PostUpdate()
 	}
 
 	if (creditsOpen) {
-		Engine::GetInstance().render.get()->DrawTexture(credits, 0, 0, NULL);
+		Engine::GetInstance().render.get()->DrawTextureBuffer(credits, 0, 0, false, MENUS);
 
 		buttons["backBt"]->active = true;
 		OnGuiMouseClickEvent(buttons["backBt"]);

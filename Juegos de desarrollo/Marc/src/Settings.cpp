@@ -96,7 +96,7 @@ bool Settings::Update(float dt)
 		int screenHeight = rootNode.child("window").child("resolution").attribute("height").as_int();
 		
 		Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
-		Engine::GetInstance().render.get()->DrawTexture(optPanel, -camera.x / windowScale + optPanelX, -camera.y / windowScale + optPanelY);
+		Engine::GetInstance().render.get()->DrawTextureBuffer(optPanel, -camera.x / windowScale + optPanelX, -camera.y / windowScale + optPanelY, false, MENUS);
 
 		
 		for (GuiControl* gui : settingsGUI) {
