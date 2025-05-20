@@ -142,7 +142,7 @@ Entity* ProjectileManager::CreateChild()
 	Bullet* bullet = (Bullet*)Engine::GetInstance().entityManager->CreatePooledEntities(EntityType::CHILD);
 	bullet->bullet_direction = BulletDirection::HORIZONTAL;
 	bullet->SetParameters(Engine::GetInstance().scene.get()->configParameters);
-	bullet->texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/balaEnemy.png");
+	bullet->texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/balaJumper.png");
 	bullet->Start();
 	return bullet;
 }

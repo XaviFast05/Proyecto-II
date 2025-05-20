@@ -260,21 +260,22 @@ bool ShootingEnemy::Update(float dt) {
 			}
 		}
 
+		if (shouldShoot) {
+			Vector2D spawnPosition = pbody->GetPhysBodyWorldPosition();
+
+			// Ajuste básico de dirección (según `dir`)
+			Vector2D directionVec;
+			if (dir == LEFT)
+				directionVec = { -1, 0 };
+			else
+				directionVec = { 1, 0 };
+
+			projectileManager->ThrowChild(spawnPosition, directionVec); // ? Usa el sistema que tengas
+
+			shouldShoot = false;
+		}
 	}
-	if (shouldShoot) {
-		Vector2D spawnPosition = pbody->GetPhysBodyWorldPosition();
-
-		// Ajuste básico de dirección (según `dir`)
-		Vector2D directionVec;
-		if (dir == LEFT)
-			directionVec = { -1, 0 };
-		else
-			directionVec = { 1, 0 };
-
-		projectileManager->ThrowChild(spawnPosition, directionVec); // ? Usa el sistema que tengas
-
-		shouldShoot = false;
-	}
+	
 
 
 
