@@ -73,7 +73,7 @@ bool UpgradesMenu::Update(float dt)
 		int screenHeight = rootNode.child("window").child("resolution").attribute("height").as_int();
 
 		Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
-		Engine::GetInstance().render.get()->DrawTexture(upgPanel, -camera.x / windowScale + upgPanelX, -camera.y / windowScale + upgPanelY);
+		Engine::GetInstance().render.get()->DrawTextureBuffer(upgPanel, -camera.x / windowScale + upgPanelX, -camera.y / windowScale + upgPanelY, false, MENUS);
 
 
 		for (GuiControl* gui : upgradesGUI) {
