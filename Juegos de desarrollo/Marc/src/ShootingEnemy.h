@@ -4,6 +4,7 @@
 #include "Animation.h"
 #include "Pathfinding.h"
 #include "PickaxeManager.h"
+#include "Player.h"
 #include <vector>
 
 

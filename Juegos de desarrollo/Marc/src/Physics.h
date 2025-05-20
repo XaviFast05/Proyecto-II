@@ -47,6 +47,7 @@ enum class ColliderType {
 	SOUL_ROCK,
 	ALLY,
 	BREAKWALL,
+	JUMP,
 	UNKNOWN
 };
 

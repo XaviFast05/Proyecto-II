@@ -359,6 +359,41 @@
 						</death>
 					</animations>
 				</finalboss>
+				<shootingenemy x="2240" y="4620" w="64" h="64" texture="Assets/Textures/Enemies/ShootingFirefly/spritesf.png">
+					<properties speed="5" chaseArea="600" deathTime="1.0f" lives="5" pushForce="1" pushFriction="5" lootAmount="3" canPush="false" />
+					<animations>
+						<idle loop="true" speed="0.1f">
+							<frame x="0" y="0" w="64" h="64" />
+							<frame x="64" y="0" w="64" h="64" />
+							<frame x="128" y="0" w="64" h="64" />
+							<frame x="192" y="0" w="64" h="64" />
+							<frame x="256" y="0" w="64" h="64" />
+							<frame x="320" y="0" w="64" h="64" />
+						</idle>
+						<move loop="true" speed="0.1f">
+							<frame x="0" y="64" w="64" h="64" />
+							<frame x="64" y="64" w="64" h="64" />
+							<frame x="128" y="64" w="64" h="64" />
+							<frame x="192" y="64" w="64" h="64" />
+							<frame x="256" y="64" w="64" h="64" />
+							<frame x="320" y="64" w="64" h="64" />
+						</move>
+						<hurt loop="false" speed="0.2f">
+							<frame x="0" y="128" w="64" h="64" />
+							<frame x="64" y="128" w="64" h="64" />
+							<frame x="128" y="128" w="64" h="64" />
+							<frame x="192" y="128" w="64" h="64" />
+							<frame x="256" y="128" w="64" h="64" />
+							<frame x="320" y="128" w="64" h="64" />
+						</hurt>
+						<attack loop="true" speed="0.2f">
+							<frame x="0" y="192" w="64" h="64" />
+							<frame x="64" y="192" w="64" h="64" />
+							<frame x="128" y="192" w="64" h="64" />
+							<frame x="192" y="192" w="64" h="64" />
+						</attack>
+					</animations>
+				</shootingenemy>
 				<instances>
 					<lvl1>
 						<instance enemyType="skeleton" entityType="5">
@@ -402,6 +437,10 @@
 						<instance enemyType="finalboss" entityType="13">
 							<point x="2050" y="4620" />
 							<point x="2050" y="4620" />
+						</instance>
+						<instance enemyType="shootingenemy" entityType="17">
+							<point x="1120" y="3233" />
+							<point x="1300" y="3233" />
 						</instance>
 					</lvl2>
 				</instances>
