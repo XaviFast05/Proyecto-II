@@ -37,6 +37,11 @@
 		<fullScreenBox id="9" x="605" y="490" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
 		<backBt id="6" x="448" y="587" w="384" h="64" texture="Assets/Textures/Menus/Options/back.png" />
 	</settings>
+	<upgradesMenu>
+		<upgPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/settings-panel.png" />
+		<fullScreenBox id="9" x="605" y="490" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
+		<backBt id="6" x="448" y="587" w="384" h="64" texture="Assets/Textures/Menus/Options/back.png" />
+	</upgradesMenu>
 	<scene>
 		<ui>
 			<heartContainers path="Assets/Textures/UI/lifeSimp.png" />

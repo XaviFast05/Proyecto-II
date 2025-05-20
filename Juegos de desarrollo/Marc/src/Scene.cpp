@@ -413,6 +413,7 @@ bool Scene::PostUpdate()
 	}
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
 		paused = !paused;
+		Engine::GetInstance().settings.get()->settingsOpen = false;
 	}
 
 	Render* render = Engine::GetInstance().render.get();
@@ -420,17 +421,18 @@ bool Scene::PostUpdate()
 
 	//UI
 	if (!Engine::GetInstance().settings.get()->settingsOpen) {
+		
+		if (!paused) {
+			DrawPlayerHitsUI();
 
-		DrawPlayerHitsUI();
+			DrawPickaxesUI();
 
-		DrawPickaxesUI();
+			DrawCurrencyUI();
 
-		DrawCurrencyUI();
-
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_TAB)) DrawMap();
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_TAB)) DrawMap();
+		}
 
 		if (paused && !Engine::GetInstance().settings.get()->settingsOpen) {
-
 
 			Engine::GetInstance().render.get()->DrawRectangle({ -render->camera.x / window->scale , - render->camera.y / window->scale, window->width, window->height}, 0, 0, 0, 200, true, true);
 			Engine::GetInstance().render.get()->DrawTextureBuffer(pausePanel, -render->camera.x / window->scale + pausePos.getX(), -render->camera.y / window->scale + pausePos.getY(), false, MENUS);
@@ -695,9 +697,18 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 			quit = true;
 		}
 		break;
+
+	case GuiControlId::CHANGE_MENU:
+		if (control->state == GuiControlState::PRESSED) {
+			if (!Engine::GetInstance().upgradesMenu.get()->upgradesOpen) {
+				Engine::GetInstance().upgradesMenu.get()->upgradesOpen = true;
+			}
+			else if (Engine::GetInstance().upgradesMenu.get()->upgradesOpen) {
+				Engine::GetInstance().upgradesMenu.get()->upgradesOpen = false;
+			}
+		}
+		break;
 	}
-
-
 
 	return true;
 }

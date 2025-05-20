@@ -299,7 +299,7 @@ bool Physics::PostUpdate()
 	
 	if (Engine::GetInstance().GetDebug())
 	{
-		
+
 		for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
 		{
 			for (b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())

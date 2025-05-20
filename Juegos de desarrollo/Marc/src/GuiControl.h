@@ -49,6 +49,8 @@ enum class GuiControlId
 
 	TEST_LEVEL,
 	FIRST_CAPE,
+
+	CHANGE_MENU,
 };
 
 class GuiControl
