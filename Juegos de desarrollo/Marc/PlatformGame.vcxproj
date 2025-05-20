@@ -150,9 +150,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ally.cpp" />
+    <ClCompile Include="src\ChildEnemy.cpp" />
     <ClCompile Include="src\DialoguesManager.cpp" />
     <ClCompile Include="src\CurrencyOrb.cpp" />
     <ClCompile Include="src\CurrencyManager.cpp" />
+    <ClCompile Include="src\FinalBoss.cpp" />
+    <ClCompile Include="src\JumpingEnemy.cpp" />
     <ClCompile Include="src\Merchant.cpp" />
     <ClCompile Include="src\PickaxeManager.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
@@ -171,7 +174,7 @@
     <ClCompile Include="src\Intro.cpp" />
     <ClCompile Include="src\MainMenu.cpp" />
     <ClCompile Include="src\FadeToBlack.cpp" />
-    <ClCompile Include="src\Santa.cpp" />
+    <ClCompile Include="src\RunningEnemy.cpp" />
     <ClCompile Include="src\Settings.cpp" />
     <ClCompile Include="src\CheckPoint.cpp" />
     <ClCompile Include="src\Log.cpp" />
@@ -194,9 +197,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Ally.h" />
+    <ClInclude Include="src\ChildEnemy.h" />
     <ClInclude Include="src\DialoguesManager.h" />
     <ClInclude Include="src\CurrencyOrb.h" />
     <ClInclude Include="src\CurrencyManager.h" />
+    <ClInclude Include="src\FinalBoss.h" />
+    <ClInclude Include="src\JumpingEnemy.h" />
     <ClInclude Include="src\Merchant.h" />
     <ClInclude Include="src\PickaxeManager.h" />
     <ClInclude Include="src\Bullet.h" />
@@ -228,7 +234,7 @@
     <ClInclude Include="src\Physics.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\Render.h" />
-    <ClInclude Include="src\Santa.h" />
+    <ClInclude Include="src\RunningEnemy.h" />
     <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\Settings.h" />
     <ClInclude Include="src\SoulRock.h" />

@@ -69,17 +69,17 @@
 				<propierties gJumpForce="4.0f" pJumpForce="4.0f" pushForce="7.0f" moveSpeed="0.5f" friction="0.0f" gravity="9.0f" attack1Time="0.8f" attack2Time="1.0f" hurtTime="1.0f" respawnTime=" 2.0f" playerState="0" direction="1" shootCooldown="5" />
 				<statesFlow>
 					<idle idle="false" run="true" jump="true" fall="true" punch="true" throw="true" mele="true" dash="true" charged="true" hurt="true" dead="true" talk="true" />
-					<run idle="true" run="false" jump="true" fall="true" punch="true" throw="true" mele="true" dash="true" charged="true" hurt="true" dead="true" talk="false"/>
-					<jump idle="true" run="false" jump="false" fall="true" punch="true" throw="true" mele="true" dash="true" charged="true" hurt="true" dead="true" talk="false"/>
-					<fall idle="true" run="false" jump="false" fall="false" punch="true" throw="true" mele="true" dash="true" charged="true" hurt="true" dead="true" talk="false"/>
-					<punch idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="true" dead="true" talk="false"/>
-					<throw idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="true" dead="true" talk="false"/>
-					<melee idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="true" dead="true" talk="false"/>
-					<dash idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="true" dead="true" talk="false"/>
-					<charged idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="true" dead="true" talk="false"/>
-					<hurt idle="false" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="false" dead="false" talk="false"/>
-					<dead idle="false" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="false" dead="false" talk="false"/>
-					<talk idle="false" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="false" dead="false" talk="false"/>
+					<run idle="true" run="false" jump="true" fall="true" punch="true" throw="true" mele="true" dash="true" charged="true" hurt="true" dead="true" talk="false" />
+					<jump idle="true" run="false" jump="false" fall="true" punch="true" throw="true" mele="true" dash="true" charged="true" hurt="true" dead="true" talk="false" />
+					<fall idle="true" run="false" jump="false" fall="false" punch="true" throw="true" mele="true" dash="true" charged="true" hurt="true" dead="true" talk="false" />
+					<punch idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="true" dead="true" talk="false" />
+					<throw idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="true" dead="true" talk="false" />
+					<melee idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="true" dead="true" talk="false" />
+					<dash idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="true" dead="true" talk="false" />
+					<charged idle="true" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="true" dead="true" talk="false" />
+					<hurt idle="false" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="false" dead="false" talk="false" />
+					<dead idle="false" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="false" dead="false" talk="false" />
+					<talk idle="false" run="false" jump="false" fall="false" punch="false" throw="false" mele="false" dash="false" charged="true" hurt="false" dead="false" talk="false" />
 				</statesFlow>
 				<animations>
 					<idle loop="true" speed="0.05f">
@@ -363,35 +363,31 @@
 					<lvl1>
 						<instance enemyType="skeleton" entityType="5">
 							<point x="5210" y=" 2530" />
-							<point x="5210" y=" 2530" />
+							<point x="5270" y=" 2530" />
 						</instance>
 						<instance enemyType="skeleton" entityType="5">
 							<point x="4642" y=" 920" />
-							<point x="4642" y=" 920" />
+							<point x="4242" y=" 920" />
 						</instance>
 						<instance enemyType="skeleton" entityType="5">
 							<point x="7530" y="3625" />
-							<point x="7530" y="3625" />
+							<point x="7630" y="3625" />
 						</instance>
 						<instance enemyType="skeleton" entityType="5">
-							<point x="7400" y="4500" />
-							<point x="7400" y="4500" />
+							<point x="7400" y="4490" />
+							<point x="8200" y="4490" />
 						</instance>
 						<instance enemyType="skeleton" entityType="5">
 							<point x="9630" y="1370" />
-							<point x="9630" y="1370" />
+							<point x="10330" y="1370" />
 						</instance>
 						<instance enemyType="bat" entityType="4">
-							<point x="5315" y="2500" />
-							<point x="5315" y="2500" />
+							<point x="5250" y="2300" />
+							<point x="5570" y="2300" />
 						</instance>
 						<instance enemyType="child" entityType="9">
 							<point x="1150" y="3200" />
-							<point x="1150" y="3200" />
-						</instance>
-						<instance enemyType="jumper" entityType="10">
-							<point x="1150" y="3200" />
-							<point x="1150" y="3200" />
+							<point x="1250" y="3200" />
 						</instance>
 					</lvl1>
 					<lvl2>
@@ -455,7 +451,7 @@
 					<properties speed="0.8" movementArea="300" detectionArea="200" />
 					<instances>
 						<lvl1>
-							<instance entityType="10" x="190" y="3400"/>
+							<instance entityType="14" x="190" y="3400" />
 						</lvl1>
 					</instances>
 					<animations>
@@ -601,15 +597,15 @@
 			<dialoguePanel path="Assets/Textures/Menus/Dialogues/Recuadro.png" w="833" h="202" x="224" y="450">
 				<text maxW="620" maxH="167" offsetX="197" offsetY="18" font="Assets/Fonts/ttf_pixolde_bold.ttf" pointSize="30" />
 				<images w="160" h="160" offsetX="23" offsetY="21">
-					<image name = "kim" path="Assets/Textures/Menus/Dialogues/Kim.png"/>
-					<image name = "pepe" path="Assets/Textures/Menus/Dialogues/pepe.png"/>
+					<image name="kim" path="Assets/Textures/Menus/Dialogues/Kim.png" />
+					<image name="pepe" path="Assets/Textures/Menus/Dialogues/pepe.png" />
 				</images>
 			</dialoguePanel>
 			<DIALOG01>
-				<text textId = "DIALOG01_01" talker="kim"/>
-				<text textId = "DIALOG01_02" talker="pepe"/>
-				<text textId = "DIALOG01_03" talker="kim"/>
-				<text textId = "DIALOG01_04" talker="pepe"/>
+				<text textId="DIALOG01_01" talker="kim" />
+				<text textId="DIALOG01_02" talker="pepe" />
+				<text textId="DIALOG01_03" talker="kim" />
+				<text textId="DIALOG01_04" talker="pepe" />
 			</DIALOG01>
 		</dialogues>
 	</scene>
@@ -643,8 +639,6 @@
 			<skeletonDeathSFX path="Assets/Audio/Fx/SkeletonDeath.ogg" />
 			<noSound path="Assets/Audio/Fx/NoSound.ogg" />
 			<punchSound path="Assets/Audio/Fx/Punch.ogg" />
-			<santaHurtSound path="Assets/Audio/Fx/SantaHurt.ogg" />
-			<santaJumpSound path="Assets/Audio/Fx/SantaJump.ogg" />
 			<testSound path="Assets/Audio/Fx/Fushigi.ogg" />
 		</fx>
 	</audio>

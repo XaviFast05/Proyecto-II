@@ -89,7 +89,6 @@ bool Player::Start() {
 	godMode = false;
 	canClimb = false;
 	reachedCheckPoint = false;
-
 	pugi::xml_document baseFile;
 	pugi::xml_parse_result result = baseFile.load_file("config.xml");
 
@@ -130,14 +129,14 @@ bool Player::Start() {
 	hurtTimer = Timer();
 	respawnTimer = Timer();
 
-	pickaxeManager = new PickaxeManager();
+	projectileManager = new ProjectileManager();
 	currencyManager = new CurrencyManager();
 	currencyManager->Start();
 	dialoguesManager = new DialoguesManager();
 	dialoguesManager->Start();
 
 	LoadDefaults();
-	pickaxeManager->Start();
+	projectileManager->Start();
 
 	b2Fixture* fixture = pbody->body->GetFixtureList();
 	if (fixture) {
@@ -188,7 +187,7 @@ bool Player::Update(float dt)
 		grounded = VALUE_NEAR_TO_0(pbody->body->GetLinearVelocity().y);
 
 		//UPDATE SUBMODULES
-		pickaxeManager->Update(dt);
+		projectileManager->Update(dt);
 		dialoguesManager->Update(dt);
 
 		//GODMODE
@@ -253,7 +252,7 @@ bool Player::Update(float dt)
 			playerState = FALL;
 			grounded = false;
 		}
-		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][CHOP] && pickaxeManager->GetNumPickaxes() > 0) {
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][CHOP] && projectileManager->GetNumPickaxes() > 0) {
 			stateTimer.Start();
 			playerState = CHOP;
 
@@ -262,17 +261,17 @@ bool Player::Update(float dt)
 			meleeTimer.Start();
 			meleeTimerOn = true;
 		}
-		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][PUNCH] && pickaxeManager->GetNumPickaxes() <= 0) {
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][PUNCH] && projectileManager->GetNumPickaxes() <= 0) {
 			stateTimer.Start();
 			playerState = PUNCH;
 
 			meleeTimer.Start();
 			meleeTimerOn = true;
 		}
-		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Q) && stateFlow[playerState][THROW] && pickaxeManager->GetNumPickaxes() > 0) {
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Q) && stateFlow[playerState][THROW] && projectileManager->GetNumPickaxes() > 0) {
 			
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W)) pickaxeManager->ThrowPickaxe({0,1}, pbody->GetPhysBodyWorldPosition());
-			else pickaxeManager->ThrowPickaxe(GetDirection(), pbody->GetPhysBodyWorldPosition());
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W)) projectileManager->ThrowPickaxe({0,1}, pbody->GetPhysBodyWorldPosition());
+			else projectileManager->ThrowPickaxe(GetDirection(), pbody->GetPhysBodyWorldPosition());
 
 			stateTimer.Start();
 			playerState = THROW;
@@ -897,11 +896,11 @@ void Player::LoadDefaults() {
 	plusJumpTimerMax = 0.2; // salto extra del salto
 	dashForce = 8; // impulso de dash
 	chargedCooldownTimerMax = 5; // tiempo entre ataque cargado
-	pickaxeManager->pickaxeRecollectCount = 2.5; // tiempo entre piqueta y piqueta
+	projectileManager->pickaxeRecollectCount = 2.5; // tiempo entre piqueta y piqueta
 	moveSpeed = 0.7; // velocidad del player
 	damageAdded = 0; // a�adido de da�o al base
 	maxPickaxes = 3; // piquetas m�ximas
-	pickaxeManager->maxPickaxes = maxPickaxes;
+	projectileManager->maxPickaxes = maxPickaxes;
 	damageSmallBoost = false;
 	damageBoost = false; // hacer mas da�o cuando tienes un coraz�n
 	damageBoostAdded = 5; // el da�o que haces cuando tienes un coraz�n y el boost
@@ -921,7 +920,7 @@ void Player::LoadUpgrades() {
 			chargedCooldownTimerMax = 3;
 			break;
 		case 3:
-			pickaxeManager->pickaxeRecollectCount = 1.25;
+			projectileManager->pickaxeRecollectCount = 1.25;
 			break;
 		case 4:
 			moveSpeed = 0.9;
@@ -932,8 +931,8 @@ void Player::LoadUpgrades() {
 			break;
 		case 6:
 			maxPickaxes = 4;
-			pickaxeManager->pickaxeCount = maxPickaxes;
-			pickaxeManager->maxPickaxes = maxPickaxes;
+			projectileManager->pickaxeCount = maxPickaxes;
+			projectileManager->maxPickaxes = maxPickaxes;
 			break;
 		case 7:
 			damageBoost = true;

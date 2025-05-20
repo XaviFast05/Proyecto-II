@@ -46,6 +46,8 @@ enum class ColliderType {
 	ORB,
 	SOUL_ROCK,
 	ALLY,
+	JUMP,
+	FINALBOSS,
 	UNKNOWN
 };
 

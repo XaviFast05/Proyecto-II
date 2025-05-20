@@ -105,9 +105,6 @@
     <ClCompile Include="src\FadeToBlack.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\Santa.cpp">
-      <Filter>Source Files\Game\Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="src\Settings.cpp">
       <Filter>Source Files\Game</Filter>
     </ClCompile>
@@ -185,7 +182,7 @@
     </ClCompile>
     <ClCompile Include="src\Ally.cpp">
       <Filter>Source Files\Game\Allies</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="src\TextManager.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
@@ -194,6 +191,21 @@
     </ClCompile>
     <ClCompile Include="src\Merchant.cpp">
       <Filter>Source Files\Game\Allies</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DialoguesManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\JumpingEnemy.cpp">
+      <Filter>Source Files\Game\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RunningEnemy.cpp">
+      <Filter>Source Files\Game\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FinalBoss.cpp">
+      <Filter>Source Files\Game\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ChildEnemy.cpp">
+      <Filter>Source Files\Game\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -266,9 +278,6 @@
     <ClInclude Include="src\FadeToBlack.h">
       <Filter>Source Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\Santa.h">
-      <Filter>Source Files\Game\Enemies</Filter>
-    </ClInclude>
     <ClInclude Include="src\Settings.h">
       <Filter>Source Files\Game</Filter>
     </ClInclude>
@@ -334,6 +343,19 @@
       <Filter>Source Files\Engine</Filter>
     </ClInclude>
     <ClInclude Include="src\Intro.h" />
+    <ClInclude Include="src\DialoguesManager.h" />
+    <ClInclude Include="src\JumpingEnemy.h">
+      <Filter>Source Files\Game\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RunningEnemy.h">
+      <Filter>Source Files\Game\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FinalBoss.h">
+      <Filter>Source Files\Game\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChildEnemy.h">
+      <Filter>Source Files\Game\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="config.xml">

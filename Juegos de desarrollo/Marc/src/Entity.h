@@ -20,6 +20,8 @@ enum class EntityType
 	RUNNING_ENEMY,
 	JUMPSHOT,
 	FINALBOSS,
+	MERCHANT,
+	ALLY,
 	UNKNOWN
 };
 

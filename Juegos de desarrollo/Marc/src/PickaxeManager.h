@@ -5,6 +5,7 @@
 #include "Engine.h"
 #include "Bullet.h"
 #include "Textures.h"
+#include "Player.h"
 #include "Scene.h"
 #include "Timer.h"
 
@@ -33,15 +34,13 @@ public:
 	int GetNumPickaxes();
 
 	int GetNumRed();
-
-
-
 public:
 
 	int startNumPickaxe;
 	int startNumJumpProjectiles;
 
 	int pickaxeCount;
+
 
 	Timer pickaxeRecollectTimer;
 	float pickaxeRecollectCount;

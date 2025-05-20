@@ -1,5 +1,6 @@
 #include "PickaxeManager.h"
 
+
 ProjectileManager::ProjectileManager()
 {
 
@@ -27,7 +28,7 @@ bool ProjectileManager::Start()
 bool ProjectileManager::Update(float dt)
 {
 	//PICKAXE LOGIC
-	if (pickaxeCount < MAX_PICKAXES && not recollectingPickaxes) {
+	if (pickaxeCount < maxPickaxes && not recollectingPickaxes) {
 		pickaxeRecollectTimer.Start();
 		recollectingPickaxes = true;
 	}
