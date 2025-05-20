@@ -61,11 +61,6 @@ bool WallBreaker::Start() {
 	state = IDLE;
 
 	//INIT CURRENCY MANAGEMENT
-	currencyManager = new CurrencyManager();
-	currencyManager->Start();
-	amount = 2;
-
-
 	//LOAD SFX
 	pugi::xml_document audioFile;
 	pugi::xml_parse_result result = audioFile.load_file("config.xml");
@@ -94,15 +89,12 @@ bool WallBreaker::Update(float dt) {
 	if (!Engine::GetInstance().scene.get()->paused) {
 
 		//STATES CONTROLER
-		BrakeSystem();
+		
 
 		switch (state) {
 			break;
 		case IDLE:
 			currentAnimation = &idle;
-			break;
-		case FRACTURED:
-			currentAnimation = &fractured;
 			break;
 		case BROKEN:
 			currentAnimation = &broken;
@@ -164,79 +156,5 @@ void WallBreaker::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	}
 
-}
-
-void WallBreaker::BrakeSystem() {
 
 
-	if (hit) {
-		hits--;
-
-		if (!droppedLoot) {
-			if (state == IDLE) {
-				amount = 2;
-				DropLoot();
-				droppedLoot = true;
-				dropTimer.Start();
-			}
-			else if (state == FRACTURED) {
-				amount = 3;
-				DropLoot();
-				droppedLoot = true;
-				dropTimer.Start();
-			}
-		}
-
-		if (hits == 1) state = FRACTURED;
-		else if (hits <= 0) state = BROKEN;
-
-		hit = false;
-	}
-
-
-	if (dropTimer.ReadSec() > dropTime) {
-		droppedLoot = false;
-	}
-
-
-
-}
-
-void WallBreaker::DropLoot() {
-
-	std::vector <int> sizes;
-
-	switch (amount) {
-	case 0:
-		amount = 0;
-		break;
-	case 1:
-		amount = rand() % 2 + 1;
-		sizes = { 2,1,1,1,1,1,1,1,1,1 };
-		break;
-	case 2:
-		amount = rand() % 2 + 2;
-		sizes = { 2,2,2,1,1,1,1,1,1,1 };
-		break;
-	case 3:
-		amount = rand() % 3 + 3;
-		sizes = { 3,2,2,2,2,2,1,1,1,1 };
-		break;
-	case 4:
-		amount = rand() % 3 + 5;
-		sizes = { 3,3,2,2,2,2,2,1,1,1 };
-		break;
-	case 5:
-		amount = rand() % 3 + 7;
-		sizes = { 3,3,3,2,2,2,2,2,2,1 };
-		break;
-	default:
-		break;
-	}
-	if (amount > 0) {
-		for (int i = 0; i < amount; i++) {
-			int num = rand() % 9;
-			currencyManager->EnableOrb(pbody->body->GetPosition().x, pbody->body->GetPosition().y, sizes[num]);
-		}
-	}
-}

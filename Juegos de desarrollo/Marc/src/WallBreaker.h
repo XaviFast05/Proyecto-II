@@ -17,7 +17,6 @@ public:
 
 	enum State {
 		IDLE,
-		FRACTURED,
 		BROKEN,
 		UNKNOWN
 	};
@@ -52,9 +51,6 @@ public:
 
 private:
 
-	void BrakeSystem();
-
-	void DropLoot();
 
 	//int drawOffsetX = 0;
 	//int drawOffsetY = 0;
@@ -93,8 +89,7 @@ private:
 	State state;
 	Dir dir;
 
-	CurrencyManager* currencyManager;
-	bool droppedLoot = false;
+	
 	int amount;
 
 };
