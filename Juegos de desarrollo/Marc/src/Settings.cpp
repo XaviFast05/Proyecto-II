@@ -196,7 +196,7 @@ bool Settings::OnGuiMouseClickEvent(GuiControl* control) {
 void Settings::SetGuiParameters(GuiControl* bt, std::string btName, pugi::xml_node parameters) {
 
 	bt->id = (GuiControlId)parameters.child(btName.c_str()).attribute("id").as_int();
-	if (bt->type == GuiControlType::SLIDER) {
+	if (bt->bullet_direction == GuiControlType::SLIDER) {
 		bt->sliderBounds.x = parameters.child(btName.c_str()).attribute("barX").as_int();
 		bt->sliderBounds.y = parameters.child(btName.c_str()).attribute("barY").as_int();
 		bt->sliderBounds.w = parameters.attribute("barW").as_int();
@@ -206,7 +206,7 @@ void Settings::SetGuiParameters(GuiControl* bt, std::string btName, pugi::xml_no
 		bt->bounds.w = parameters.attribute("circleW").as_int();
 		bt->bounds.h = parameters.attribute("circleH").as_int();
 	}
-	else if (bt->type == GuiControlType::BUTTON || bt->type == GuiControlType::CHECKBOX) {
+	else if (bt->bullet_direction == GuiControlType::BUTTON || bt->bullet_direction == GuiControlType::CHECKBOX) {
 		bt->bounds.x = parameters.child(btName.c_str()).attribute("x").as_int();
 		bt->bounds.y = parameters.child(btName.c_str()).attribute("y").as_int();
 		bt->bounds.w = parameters.child(btName.c_str()).attribute("w").as_int();

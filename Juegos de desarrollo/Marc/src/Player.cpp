@@ -16,6 +16,7 @@
 #include "Bullet.h"
 #include "PickaxeManager.h"
 #include "CurrencyManager.h"
+#include "DialoguesManager.h"
 
  
 
@@ -81,14 +82,13 @@ bool Player::Start() {
 			flow.push_back(stateAttribute.as_bool());
 		}
 		stateFlow.push_back(flow);
-
-		
 	}
 
+	upgrades.empty();
+	unlockedUpgrades.empty();
 	godMode = false;
 	canClimb = false;
 	reachedCheckPoint = false;
-
 	pugi::xml_document baseFile;
 	pugi::xml_parse_result result = baseFile.load_file("config.xml");
 
@@ -129,10 +129,22 @@ bool Player::Start() {
 	hurtTimer = Timer();
 	respawnTimer = Timer();
 
-	pickaxeManager = new PickaxeManager();
-	pickaxeManager->Start();
+	projectileManager = new ProjectileManager();
 	currencyManager = new CurrencyManager();
 	currencyManager->Start();
+	dialoguesManager = new DialoguesManager();
+	dialoguesManager->Start();
+
+	LoadDefaults();
+	projectileManager->Start();
+
+	b2Fixture* fixture = pbody->body->GetFixtureList();
+	if (fixture) {
+		b2Filter filter = fixture->GetFilterData();
+		filter.categoryBits = CATEGORY_PLAYER;
+		filter.maskBits = 0xFFFF & ~CATEGORY_PICKAXE;
+		fixture->SetFilterData(filter);
+	}
 
 	return true;
 }
@@ -175,7 +187,8 @@ bool Player::Update(float dt)
 		grounded = VALUE_NEAR_TO_0(pbody->body->GetLinearVelocity().y);
 
 		//UPDATE SUBMODULES
-		pickaxeManager->Update(dt);
+		projectileManager->Update(dt);
+		dialoguesManager->Update(dt);
 
 		//GODMODE
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
@@ -334,7 +347,7 @@ bool Player::Update(float dt)
 					break;
 				}
 
-				// MOVIMIENTO HORIZONTAL si está en suelo y no hay colisión lateral
+				// MOVIMIENTO HORIZONTAL si estï¿½ en suelo y no hay colisiï¿½n lateral
 				if (grounded) {
 					if (CheckMoveX()) {
 						playerState = RUN;
@@ -487,7 +500,20 @@ bool Player::Update(float dt)
 		}
 		break;
 
-
+	case DASH:
+		//aquï¿½ poner animaciï¿½n dash
+		currentAnim = &idle;
+		if (resetAnimation == true) {
+			currentAnim->Reset();
+			resetAnimation = false;
+		}
+	case CHARGED:
+		//aquï¿½ poner animaciï¿½n ataque cargado
+		currentAnim = &idle;
+		if (resetAnimation == true) {
+			currentAnim->Reset();
+			resetAnimation = false;
+		}
 	case HURT:
 		currentAnim = &hurt;
 		if (resetAnimation == true) {
@@ -502,8 +528,14 @@ bool Player::Update(float dt)
 			resetAnimation = false;
 		}
 		break;
+	case TALK:
+		if (resetAnimation == false) {
+			currentAnim->Reset();
+			resetAnimation = true;
+		}
+		currentAnim = &idle;
+		break;
 	}
-
 
 	b2Transform pbodyPos = pbody->body->GetTransform();
 
@@ -550,21 +582,42 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		rightBlocked = true;
 	}
 
-	//Colisión del cuerpo principal
+	//Colisiï¿½n del cuerpo principal
 	switch (physB->ctype)
 	{
 	case ColliderType::PLATFORM:
 		LOG("Collision PLATFORM");
 		break;
 	case ColliderType::PICKAXE:
+		onPickaxe = true;
 		LOG("Collision PICKAXE");
 		break;
 	case ColliderType::SPYKE:
 		LOG("Collision SPYKE");
 		break;
+	case ColliderType::JUMP:
+		LOG("Collision BULLET");
+		if (!godMode || !canHurt) {
+			if (playerState != DEAD) {
+				//HURT LOGIC
+				if (hits >= 1 && playerState != HURT) DamagePlayer();
+				if (hits == 0) KillPlayer();
+				//PUSHING THE PLAYER WHEN HURT
+				b2Vec2 pushVec((physA->body->GetPosition().x - physB->body->GetPosition().x),
+					(physA->body->GetPosition().y - physB->body->GetPosition().y));
+				pushVec.Normalize();
+				pushVec *= pushForce;
+				pushVec.x *= 6;
+
+				pbody->body->SetLinearVelocity(b2Vec2(0, 0));
+				pbody->body->ApplyLinearImpulseToCenter(pushVec, true);
+			}
+
+		}
+		break;
 	case ColliderType::ENEMY:
 		LOG("Collision ENEMY");
-		if (!godMode) {
+		if (!godMode || !canHurt) {
 			if (playerState != DEAD) {
 				//HURT LOGIC
 				if (hits >= 1 && playerState != HURT) DamagePlayer();
@@ -646,9 +699,12 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 		rightBlocked = false;
 	}
 	
-	//Colisión del cuerpo principal
+	//Colisiï¿½n del cuerpo principal
 	switch (physB->ctype)
 	{
+	case ColliderType::PICKAXE:
+		onPickaxe = false;
+		break;
 	case ColliderType::PLATFORM:
 		LOG("End Collision PLATFORM");
 		break;
@@ -683,18 +739,63 @@ Vector2D Player::GetDirection() const {
 	}
 }
 
-void Player::SaveData(pugi::xml_node playerNode) {
+void Player::SaveData(pugi::xml_node playerNode, pugi::xml_node upgradesNode) {
 	if (active) {
 		playerNode.attribute("x").set_value(pbody->GetPhysBodyWorldPosition().getX());
 		playerNode.attribute("y").set_value(pbody->GetPhysBodyWorldPosition().getY());
+		upgradesNode.attribute("dash").set_value(unlockedDash);
+		upgradesNode.attribute("charged").set_value(unlockedCharged);
+
+		bool up0 = false, up1 = false, up2 = false, up3 = false, up4 = false, up5 = false, up6 = false, up7 = false;
+		for (int i = 0; i < unlockedUpgrades.size(); i++) {
+			switch (unlockedUpgrades[i]) {
+			default:
+				break;
+			case 0: up0 = true;
+				break;
+			case 1: up1 = true;
+				break;
+			case 2: up2 = true;
+				break;
+			case 3: up3 = true;
+				break;
+			case 4: up4 = true;
+				break;
+			case 5: up5 = true;
+				break;
+			case 6: up6 = true;
+				break;
+			case 7: up7 = true;
+				break;
+			}
+		}
+		upgradesNode.attribute("up0").set_value(up0);
+		upgradesNode.attribute("up1").set_value(up1);
+		upgradesNode.attribute("up2").set_value(up2);
+		upgradesNode.attribute("up3").set_value(up3);
+		upgradesNode.attribute("up4").set_value(up4);
+		upgradesNode.attribute("up5").set_value(up5);
+		upgradesNode.attribute("up6").set_value(up6);
+		upgradesNode.attribute("up7").set_value(up7);
 	}
 }
 
-void Player::LoadData(pugi::xml_node playerNode)
+void Player::LoadData(pugi::xml_node playerNode, pugi::xml_node upgradesNode)
 {
 	position.setX(playerNode.attribute("x").as_int());
 	position.setY(playerNode.attribute("y").as_int());
 	SetPosition(position);
+	unlockedDash = upgradesNode.attribute("dash").as_bool();
+	unlockedCharged = upgradesNode.attribute("charged").as_bool();
+
+	if (upgradesNode.attribute("up0").as_bool() == true) unlockedUpgrades.push_back(0);
+	if (upgradesNode.attribute("up1").as_bool() == true) unlockedUpgrades.push_back(1);
+	if (upgradesNode.attribute("up2").as_bool() == true) unlockedUpgrades.push_back(2);
+	if (upgradesNode.attribute("up3").as_bool() == true) unlockedUpgrades.push_back(3);
+	if (upgradesNode.attribute("up4").as_bool() == true) unlockedUpgrades.push_back(4);
+	if (upgradesNode.attribute("up5").as_bool() == true) unlockedUpgrades.push_back(5);
+	if (upgradesNode.attribute("up6").as_bool() == true) unlockedUpgrades.push_back(6);
+	if (upgradesNode.attribute("up7").as_bool() == true) unlockedUpgrades.push_back(7);
 }
 
 void Player::KillPlayer() {
@@ -734,7 +835,7 @@ void Player::MoveX() {
 void Player::CheckJump() {
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && grounded) {
 		pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
-		grounded = false; // ya no está en el suelo hasta que colisione de nuevo
+		grounded = false; // ya no estï¿½ en el suelo hasta que colisione de nuevo
 	}
 }
 
@@ -743,4 +844,98 @@ void Player::DamagePlayer() {
 	hits--;
 	playerState = HURT;
 	hurtTimer.Start();
+}
+
+void Player::LoadDefaults() {
+	plusJumpTimerMax = 0.2; // salto extra del salto
+	dashForce = 8; // impulso de dash
+	chargedCooldownTimerMax = 5; // tiempo entre ataque cargado
+	projectileManager->pickaxeRecollectCount = 2.5; // tiempo entre piqueta y piqueta
+	moveSpeed = 0.7; // velocidad del player
+	damageAdded = 0; // aï¿½adido de daï¿½o al base
+	maxPickaxes = 3; // piquetas mï¿½ximas
+	projectileManager->maxPickaxes = maxPickaxes;
+	damageSmallBoost = false;
+	damageBoost = false; // hacer mas daï¿½o cuando tienes un corazï¿½n
+	damageBoostAdded = 5; // el daï¿½o que haces cuando tienes un corazï¿½n y el boost
+}
+
+void Player::LoadUpgrades() {
+	LoadDefaults();
+	for (int i = 0; i < upgrades.size(); i++) {
+		switch (upgrades[i]) {
+		case 0:
+			plusJumpTimerMax = 0.25;
+			break;
+		case 1:
+			dashForce = 12;
+			break;
+		case 2:
+			chargedCooldownTimerMax = 3;
+			break;
+		case 3:
+			projectileManager->pickaxeRecollectCount = 1.25;
+			break;
+		case 4:
+			moveSpeed = 0.9;
+			break;
+		case 5:
+			damageSmallBoost = true;
+			damageAdded = 2;
+			break;
+		case 6:
+			maxPickaxes = 4;
+			projectileManager->pickaxeCount = maxPickaxes;
+			projectileManager->maxPickaxes = maxPickaxes;
+			break;
+		case 7:
+			damageBoost = true;
+			break;
+		case 8:
+			break;
+		case 9:
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+void Player::UnlockUpgrade(int num) {
+	bool canAdd = true;
+	for (int i = 0; i < unlockedUpgrades.size(); i++) {
+		if (num == unlockedUpgrades[i]) canAdd = false; //ya tienes la mejora
+	}
+	if (canAdd) unlockedUpgrades.push_back(num);
+}
+
+void Player::AddUpgrade(int num) {
+	bool haveUpgrade = false;
+	for (int i = 0; i < unlockedUpgrades.size(); i++) {
+		if (num == unlockedUpgrades[i]) haveUpgrade = true;
+	}
+	if (haveUpgrade) {
+		bool canAdd = true;
+		if (upgrades.size() <= maxUpgrades && num >= 0 && num <= 9) {
+			for (int i = 0; i < upgrades.size(); i++) {
+				if (upgrades[i] == num) canAdd = false;
+			}
+			if (canAdd == false) {
+			}//aquï¿½ poner que esa mejora ya la tienes
+			else upgrades.push_back(num);
+		}
+		//else aquï¿½ poner algo en plan que tienes demasiadas mejoras
+	}
+	//else poner aquï¿½ que la update no la tienes colegon
+	LoadUpgrades();
+}
+
+void Player::RemoveUpgrade(int num) {
+	int index = -1;
+	for (int i = 0; i < upgrades.size(); i++) {
+		if (upgrades[i] == num) index = i;
+	}
+	if (index >= 0) upgrades.erase(upgrades.begin() + index);
+	//else aquï¿½ poner algo rollo esta mejora no la tienes activa
+	LoadUpgrades();
 }

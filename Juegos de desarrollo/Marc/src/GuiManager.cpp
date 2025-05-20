@@ -22,13 +22,13 @@ bool GuiManager::Start()
 
 
 // L16: TODO 1: Implement CreateGuiControl function that instantiates a new GUI control and add it to the list of controls
-GuiControl* GuiManager::CreateGuiControl(GuiControlType type, const char* name, const char* text, SDL_Rect bounds, Module* _observer, SDL_Rect sliderBounds, SDL_Texture* tex, SDL_Texture* sliderTex)
+GuiControl* GuiManager::CreateGuiControl(GuiControlType bullet_direction, const char* name, const char* text, SDL_Rect bounds, Module* _observer, SDL_Rect sliderBounds, SDL_Texture* tex, SDL_Texture* sliderTex)
 
 {
 	GuiControl* guiControl = nullptr;
 
 	//Call the constructor according to the GuiControlType
-	switch (type)
+	switch (bullet_direction)
 	{
 	case GuiControlType::BUTTON:
 		//bounds = buttonBounds

@@ -28,6 +28,8 @@ bool GroundEnemy::Start() {
 	drawOffsetX = 0;
 	drawOffsetY = 0;
 
+	lives = 5;
+
 	//INIT ANIMS
 	AddAnimation(idle, 0, texW, 1);
 	idle.speed = 0.2f;
@@ -312,12 +314,12 @@ void GroundEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::WEAPON:
 		break;
 	case ColliderType::PICKAXE:
-		if (state != DEAD) 	DMGEnemy();
+		if (state != DEAD) 	DMGEnemyPickaxe();
 		break;
 	case ColliderType::MELEE_AREA:
 		if (state != DEAD) {
 			if (canPush) push = true;
-			DMGEnemy();
+			DMGEnemyMelee();
 		}
 		break;
 	case ColliderType::SPYKE:

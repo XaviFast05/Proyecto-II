@@ -7,14 +7,14 @@
 #include "Timer.h"
 #include "Particle.h"
 
-
 #define GHOST_W 32
-#define MAX_PICKAXES 3
+//#define MAX_PICKAXES 4
 #define MELEE_AREA_WIDTH 30
 
 //FORWARD DECLARATION
-class PickaxeManager;
+class ProjectileManager;
 class CurrencyManager;
+class DialoguesManager;
 
 struct SDL_Texture;
 
@@ -26,8 +26,11 @@ enum state {
 	PUNCH,
 	THROW,
 	CHOP,
+	DASH,
+	CHARGED,
 	HURT,
-	DEAD
+	DEAD,
+	TALK
 };
 
 enum Direction {
@@ -61,9 +64,9 @@ public:
 
 	void SetPosition(Vector2D pos);
 
-	void SaveData(pugi::xml_node playerNode);
+	void SaveData(pugi::xml_node playerNode, pugi::xml_node upgradesNode);
 
-	void LoadData(pugi::xml_node playerNode);
+	void LoadData(pugi::xml_node playerNode, pugi::xml_node upgradesNode);
 
 	void Restart();
 
@@ -77,9 +80,20 @@ public:
 
 	void DamagePlayer();
 
+	void LoadDefaults();
+
+	void LoadUpgrades();
+
+	void UnlockUpgrade(int num);
+
+	void AddUpgrade(int num);
+
+	void RemoveUpgrade(int num);
+
 	Vector2D GetDirection() const;
 
 public:
+	int maxPickaxes; // piquetas máximas
 	int hits = 3;
 	Timer hurtTimer;
 	float hurtTime = 0.5;
@@ -111,6 +125,7 @@ public:
 	bool godMode;
 	bool canClimb;
 	bool reachedCheckPoint;
+	bool canHurt = true;
 	
 	Timer respawnTimer;
 	float respawnTime;
@@ -137,22 +152,56 @@ public:
 	bool resetAnimation = false;
 
 	//MANAGERS
-	PickaxeManager* pickaxeManager;
+	ProjectileManager* projectileManager;
 	CurrencyManager* currencyManager;
+	DialoguesManager* dialoguesManager;
 
 	Timer coyoteTimer;
 	bool coyoteTimerOn = false;
-	float coyoteTimerMax = 0.15;
+	float coyoteTimerMax = 0.1; // margen de coyote time
 
 	Timer plusJumpTimer;
 	bool plusJumpTimerOn = false;
-	float plusJumpTimerMax = 0.2; // 0.15 - 0.2 to adjust
+	float plusJumpTimerMax; // salto extra del salto
+
+	Timer dashTimer;
+	float dashTimerMax = 0.2; // lo que dura el dash
+	bool dashTimerOn = false;
+	float dashForce; // impulso de dash
+	bool canDash = true;
+
+	Timer dashCooldownTimer;
+	float dashCooldownTimerMax = 0.5; // cooldown entre dashes
+	bool dashCooldownTimerOn = false;
+
+	bool charging = false;
+	Timer chargeAttackTimer;
+	float chargeAttackTimerMax = 1; // lo que dura el ataque cargado de máximo
+
+	bool chargedCooldown = false;
+	Timer chargedCooldownTimer;
+	float chargedCooldownTimerMax; // tiempo entre ataque cargado
+	bool deleteCharged = false;
+
+	int damageAdded; // añadido de daño al base
+	int damageBoostAdded; // añadido de daño al base cargado
+	bool damageBoost = false;
+	bool damageSmallBoost = false;
+
+	std::vector <int> upgrades;
+	std::vector <int> unlockedUpgrades;
+	int maxUpgrades = 2;
+
+	bool unlockedDash = false;
+	bool unlockedCharged = false;
 
 	PhysBody* meleeArea;
 	Timer meleeTimer;
 	bool meleeTimerOn = false;
 	float meleeTimerMax = 0.15;
 	float meleeDisplace = 0.0;
+
+	bool onPickaxe = false;
 
 	//STATES FLOW
 	state playerState; 
@@ -172,6 +221,5 @@ public:
 	bool playSound = true;
 
 	bool respawnHeal = false;
-
 	Direction dir;
 };
