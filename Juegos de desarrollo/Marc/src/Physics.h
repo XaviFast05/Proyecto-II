@@ -28,6 +28,7 @@ enum class ColliderType {
 	PLAYER_SENSOR,
 	WEAPON,
 	MELEE_AREA,
+	MELEE_AREA_CHARGED,
 	SHOT,
 	PICKAXE,
 	PLATFORM,
@@ -44,9 +45,16 @@ enum class ColliderType {
 	CLIMBINGWALL,
 	ORB,
 	SOUL_ROCK,
+	ALLY,
 	JUMP,
 	FINALBOSS,
 	UNKNOWN
+};
+
+enum CollisionCategory {
+	CATEGORY_PLAYER = 0x0001,
+	CATEGORY_PICKAXE = 0x0002,
+	CATEGORY_DEFAULT = 0x0004
 };
 
 // Small class to return to other modules to track position and rotation of physics bodies
@@ -93,11 +101,11 @@ public:
 	bool CleanUp();
 
 	// Create basic physics objects
-	PhysBody* CreateRectangle(int x, int y, int width, int height, bodyType bullet_direction);
-	PhysBody* CreateCircle(int x, int y, int radious, bodyType bullet_direction);
-	PhysBody* CreateCircleSensor(int x, int y, int radious, bodyType bullet_direction);
-	PhysBody* CreateRectangleSensor(int x, int y, int width, int height, bodyType bullet_direction);
-	PhysBody* CreateChain(int x, int y, int* points, int size, bodyType bullet_direction);
+	PhysBody* CreateRectangle(int x, int y, int width, int height, bodyType type);
+	PhysBody* CreateCircle(int x, int y, int radious, bodyType type);
+	PhysBody* CreateCircleSensor(int x, int y, int radious, bodyType type);
+	PhysBody* CreateRectangleSensor(int x, int y, int width, int height, bodyType type);
+	PhysBody* CreateChain(int x, int y, int* points, int size, bodyType type);
 	
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);

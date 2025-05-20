@@ -5,6 +5,7 @@
 #include "Engine.h"
 #include "Bullet.h"
 #include "Textures.h"
+#include "Player.h"
 #include "Scene.h"
 #include "Timer.h"
 
@@ -33,9 +34,6 @@ public:
 	int GetNumPickaxes();
 
 	int GetNumRed();
-
-
-
 public:
 
 	int startNumPickaxe;
@@ -43,7 +41,9 @@ public:
 
 	int pickaxeCount;
 
+
 	Timer pickaxeRecollectTimer;
-	float pickaxeRecollectCount = 2.5;
+	float pickaxeRecollectCount;
 	bool recollectingPickaxes = false;
+	int maxPickaxes;
 }; 

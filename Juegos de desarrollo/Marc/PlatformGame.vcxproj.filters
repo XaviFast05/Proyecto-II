@@ -26,6 +26,9 @@
     <Filter Include="Source Files\Engine\Gui">
       <UniqueIdentifier>{6e718664-2e86-4e3b-8f74-57001b7d3940}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game\Allies">
+      <UniqueIdentifier>{18bf42a8-a64b-425b-bf46-4f59773b6fe8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json">
@@ -174,19 +177,34 @@
     <ClCompile Include="src\Intro.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ChildEnemy.cpp">
-      <Filter>Source Files\Game\Enemies</Filter>
+    <ClCompile Include="src\Intro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ally.cpp">
+      <Filter>Source Files\Game\Allies</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextManager.cpp">
+      <Filter>Source Files\Engine</Filter>
     </ClCompile>
     <ClCompile Include="src\Intro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Merchant.cpp">
+      <Filter>Source Files\Game\Allies</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DialoguesManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\JumpingEnemy.cpp">
       <Filter>Source Files\Game\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="src\Intro.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\RunningEnemy.cpp">
+      <Filter>Source Files\Game\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FinalBoss.cpp">
+      <Filter>Source Files\Game\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ChildEnemy.cpp">
       <Filter>Source Files\Game\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
@@ -313,15 +331,29 @@
     <ClInclude Include="src\CheckPoint.h" />
     <ClInclude Include="src\SoulRock.h" />
     <ClInclude Include="src\Intro.h" />
-    <ClInclude Include="src\ChildEnemy.h">
-      <Filter>Source Files\Game\Enemies</Filter>
+    <ClInclude Include="src\Intro.h" />
+    <ClInclude Include="src\Ally.h">
+      <Filter>Source Files\Game\Allies</Filter>
     </ClInclude>
     <ClInclude Include="src\Intro.h" />
+    <ClInclude Include="src\Merchant.h">
+      <Filter>Source Files\Game\Allies</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TextManager.h">
+      <Filter>Source Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Intro.h" />
+    <ClInclude Include="src\DialoguesManager.h" />
     <ClInclude Include="src\JumpingEnemy.h">
       <Filter>Source Files\Game\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="src\Intro.h" />
     <ClInclude Include="src\RunningEnemy.h">
+      <Filter>Source Files\Game\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FinalBoss.h">
+      <Filter>Source Files\Game\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ChildEnemy.h">
       <Filter>Source Files\Game\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
@@ -332,5 +364,6 @@
     <Xml Include="savedData.xml">
       <Filter>Configuration FIles</Filter>
     </Xml>
+    <Xml Include="texts.xml" />
   </ItemGroup>
 </Project>

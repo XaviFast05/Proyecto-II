@@ -28,6 +28,8 @@ class GuiControlButton;
 class GuiControlSlider;
 class GuiControlCheckBox;
 class SoulRock;
+class Ally;
+class Merchant;
 
 
 enum Levels {
@@ -74,6 +76,8 @@ public:
 
 	void LoadSoulRock(SoulRock* soulRocks, pugi::xml_node instanceNode);
 
+	void LoadAlly(Merchant* merchant, pugi::xml_node instanceNode);
+
 	void LoadState();
 
 	void LoadTimeLivesCandies();
@@ -104,6 +108,8 @@ public:
 	void DrawPickaxesUI();
 
 	void DrawCurrencyUI();
+
+	void DrawMap();
 	
 	std::string GetCurrentLevelString();
 	
@@ -126,7 +132,7 @@ public:
 	GuiControlCheckBox* fullScreenCheckBox;
 	SDL_Texture* pausePanel;
 	
-	SDL_Texture* heartsTexture, * piquetaNormal, * piquetaGastada, * barraPiqueta, * barraRoja, * orbSoul;
+	SDL_Texture* heartsTexture, * piquetaNormal, * piquetaGastada, * barraPiqueta, * barraRoja, * orbSoul, *bgTutorial, *bgLvl1, *kimHead;
 	
 	Vector2D pausePos;
 
@@ -151,6 +157,7 @@ private:
 	std::vector<Enemy*> enemies;
 	std::vector<CheckPoint*> checkPoints;
 	std::vector<SoulRock*> soulRocks;
+	std::vector<Merchant*> allies;
 	pugi::xml_node musicNode;
 
 	std::map<std::string, GuiControlButton*> pauseButtons;

@@ -99,6 +99,14 @@ PhysBody* Physics::CreateRectangle(int x, int y, int width, int height, bodyType
 
 	list_physBodies.push_back(pbody);
 
+	b2Fixture* fixture_ = pbody->body->GetFixtureList();
+	if (fixture_) {
+		b2Filter filter = fixture_->GetFilterData();
+		filter.categoryBits = CATEGORY_DEFAULT;
+		filter.maskBits = 0xFFFF;
+		fixture_->SetFilterData(filter);
+	}
+
 	return pbody;
 }
 
@@ -137,6 +145,15 @@ PhysBody* Physics::CreateCircle(int x, int y, int radious, bodyType bullet_direc
 	pbody->height = radious * 0.5f;
 
 	list_physBodies.push_back(pbody);
+
+	b2Fixture* fixture_ = pbody->body->GetFixtureList();
+	if (fixture_) {
+		b2Filter filter = fixture_->GetFilterData();
+		filter.categoryBits = CATEGORY_DEFAULT;
+		filter.maskBits = 0xFFFF;
+		fixture_->SetFilterData(filter);
+	}
+
 
 	// Return our PhysBody class
 	return pbody;
