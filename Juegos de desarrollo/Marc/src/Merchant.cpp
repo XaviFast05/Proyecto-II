@@ -299,10 +299,10 @@ bool Merchant::Update(float dt) {
 
 
 		if (dir == LEFT) {
-			Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY() + texH / 2 + 10, &currentAnimation->GetCurrentFrame());
+			Engine::GetInstance().render.get()->DrawTextureBuffer(texture, (int)position.getX(), (int)position.getY() + texH / 2 + 10, false, ENTITIES, &currentAnimation->GetCurrentFrame());
 		}
 		else if (dir == RIGHT) {
-			Engine::GetInstance().render.get()->DrawTextureFlipped(texture, (int)position.getX(), (int)position.getY() + texH / 2 + 10, &currentAnimation->GetCurrentFrame());
+			Engine::GetInstance().render.get()->DrawTextureBuffer(texture, (int)position.getX(), (int)position.getY() + texH / 2 + 10, true, ENTITIES, &currentAnimation->GetCurrentFrame());
 		}
 	}
 

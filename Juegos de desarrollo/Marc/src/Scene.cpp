@@ -359,8 +359,6 @@ bool Scene::Update(float dt)
 // Called each loop iteration
 bool Scene::PostUpdate()
 {
-
-
 	bool ret = true;
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
@@ -382,8 +380,6 @@ bool Scene::PostUpdate()
 	Render* render = Engine::GetInstance().render.get();
 	Window* window = Engine::GetInstance().window.get();
 
-
-
 	//UI
 	if (!Engine::GetInstance().settings.get()->settingsOpen) {
 
@@ -394,6 +390,9 @@ bool Scene::PostUpdate()
 		DrawCurrencyUI();
 
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_TAB)) DrawMap();
+
+		if (paused && !Engine::GetInstance().settings.get()->settingsOpen) {
+
 
 			Engine::GetInstance().render.get()->DrawRectangle({ -render->camera.x / window->scale , - render->camera.y / window->scale, window->width, window->height}, 0, 0, 0, 200, true, true);
 			Engine::GetInstance().render.get()->DrawTextureBuffer(pausePanel, -render->camera.x / window->scale + pausePos.getX(), -render->camera.y / window->scale + pausePos.getY(), false, MENUS);
@@ -432,6 +431,8 @@ bool Scene::PostUpdate()
 		return ret;
 	}
 }
+
+
 
 // Called before quitting
 bool Scene::CleanUp()
@@ -831,8 +832,8 @@ void Scene::DrawMap()
 	int centerY = -Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + (Engine::GetInstance().window.get()->height / 2) - 180;
 	switch (level) {
 	case LVL1:
-		Engine::GetInstance().render.get()->DrawTexture(bgTutorial, centerX, centerY);
-		Engine::GetInstance().render.get()->DrawTexture(kimHead, centerX + (posX * 720 / 225 - 10), centerY + (posY * 360 / 96 - 25));
+		Engine::GetInstance().render.get()->DrawTextureBuffer(bgTutorial, centerX, centerY, false, MENUS);
+		Engine::GetInstance().render.get()->DrawTextureBuffer(kimHead, centerX + (posX * 720 / 225 - 10), centerY + (posY * 360 / 96 - 25), false, MENUS);
 		break;
 	case LVL2:
 		break;

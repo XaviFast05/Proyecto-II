@@ -86,13 +86,13 @@ bool RunningEnemy::Update(float dt) {
         if (pbody->body->IsEnabled() &&
             Engine::GetInstance().render->InCameraView(position.getX(), position.getY(), texW, texH)) {
             if (dir == LEFT) {
-                Engine::GetInstance().render->DrawTexture(texture,
-                    (int)position.getX(), (int)position.getY() + 10,
+                Engine::GetInstance().render->DrawTextureBuffer(texture,
+                    (int)position.getX(), (int)position.getY() + 10, false, ENTITIES,
                     &currentAnimation->GetCurrentFrame());
             }
             else {
-                Engine::GetInstance().render->DrawTextureFlipped(texture,
-                    (int)position.getX(), (int)position.getY() + 10,
+                Engine::GetInstance().render->DrawTextureBuffer(texture,
+                    (int)position.getX(), (int)position.getY() + 10, true, ENTITIES,
                     &currentAnimation->GetCurrentFrame());
             }
         }
@@ -168,13 +168,13 @@ bool RunningEnemy::Update(float dt) {
     if (pbody->body->IsEnabled() &&
         Engine::GetInstance().render->InCameraView(position.getX(), position.getY(), texW, texH)) {
         if (dir == LEFT) {
-            Engine::GetInstance().render->DrawTexture(texture,
-                (int)position.getX(), (int)position.getY() + 10,
+            Engine::GetInstance().render->DrawTextureBuffer(texture,
+                (int)position.getX(), (int)position.getY() + 10, false, ENTITIES,
                 &currentAnimation->GetCurrentFrame());
         }
         else {
-            Engine::GetInstance().render->DrawTextureFlipped(texture,
-                (int)position.getX(), (int)position.getY() + 10,
+            Engine::GetInstance().render->DrawTextureBuffer(texture,
+                (int)position.getX(), (int)position.getY() + 10, true, ENTITIES,
                 &currentAnimation->GetCurrentFrame());
         }
     }

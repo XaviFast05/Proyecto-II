@@ -112,12 +112,12 @@ bool JumpingEnemy::Update(float dt) {
         Engine::GetInstance().render->InCameraView(position.getX(), position.getY(), texW, texH))
     {
         if (bossDirection < 0)
-            Engine::GetInstance().render->DrawTexture(texture,
-                (int)position.getX(), (int)position.getY() + 10,
+            Engine::GetInstance().render->DrawTextureBuffer(texture,
+                (int)position.getX(), (int)position.getY() + 10, false, ENTITIES,
                 &currentAnimation->GetCurrentFrame());
         else
-            Engine::GetInstance().render->DrawTextureFlipped(texture,
-                (int)position.getX(), (int)position.getY() + 10,
+            Engine::GetInstance().render->DrawTextureBuffer(texture,
+                (int)position.getX(), (int)position.getY() + 10, true, ENTITIES,
                 &currentAnimation->GetCurrentFrame());
     }
 
