@@ -21,6 +21,7 @@
 #include "DeathMenu.h"
 #include "WinMenu.h"
 #include "Settings.h"
+#include "UpgradesMenu.h"
 #include "TextManager.h"
 
 // Constructor
@@ -51,6 +52,7 @@ Engine::Engine() {
     fade = std::make_shared<FadeToBlack>(true);
     intro = std::make_shared<Intro>(false);
     settings = std::make_shared<Settings>(true);
+	upgradesMenu = std::make_shared<UpgradesMenu>(true);
     death = std::make_shared<DeathMenu>(false);
     win = std::make_shared<WinMenu>(false);
 
@@ -72,6 +74,7 @@ Engine::Engine() {
     AddModule(std::static_pointer_cast<Module>(death));
     AddModule(std::static_pointer_cast<Module>(win));
     AddModule(std::static_pointer_cast<Module>(settings));
+    AddModule(std::static_pointer_cast<Module>(upgradesMenu));
     AddModule(std::static_pointer_cast<Module>(fade));
     AddModule(std::static_pointer_cast<Module>(render));
 

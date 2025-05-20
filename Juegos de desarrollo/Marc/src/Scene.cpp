@@ -434,27 +434,28 @@ bool Scene::PostUpdate()
 
 		if (paused && !Engine::GetInstance().settings.get()->settingsOpen) {
 
-			Engine::GetInstance().render.get()->DrawRectangle({ -render->camera.x / window->scale , - render->camera.y / window->scale, window->width, window->height}, 0, 0, 0, 200, true, true);
-			Engine::GetInstance().render.get()->DrawTextureBuffer(pausePanel, -render->camera.x / window->scale + pausePos.getX(), -render->camera.y / window->scale + pausePos.getY(), false, MENUS);
+			if (!Engine::GetInstance().upgradesMenu.get()->upgradesOpen) {
+				Engine::GetInstance().render.get()->DrawRectangle({ -render->camera.x / window->scale , -render->camera.y / window->scale, window->width, window->height }, 0, 0, 0, 200, true, true);
+				Engine::GetInstance().render.get()->DrawTextureBuffer(pausePanel, -render->camera.x / window->scale + pausePos.getX(), -render->camera.y / window->scale + pausePos.getY(), false, MENUS);
 
-			for (const auto& bt : pauseButtons) {
-				if (bt.second->active == false) {
-					bt.second->active = true;
+				for (const auto& bt : pauseButtons) {
+					if (bt.second->active == false) {
+						bt.second->active = true;
+					}
+					else {
+						bt.second->Update(_dt);
+						OnGuiMouseClickEvent(bt.second);
+
+					}
 				}
-				else {
-					bt.second->Update(_dt);
-					OnGuiMouseClickEvent(bt.second);
 
-				}
-
+				if (Engine::GetInstance().settings.get()->settingsOpen)
+					for (const auto& bt : pauseButtons)
+						bt.second->state = GuiControlState::DISABLED;
+				else
+					for (const auto& bt : pauseButtons)
+						bt.second->state = GuiControlState::NORMAL;
 			}
-
-			if (Engine::GetInstance().settings.get()->settingsOpen)
-				for (const auto& bt : pauseButtons)
-					bt.second->state = GuiControlState::DISABLED;
-			else
-				for (const auto& bt : pauseButtons)
-					bt.second->state = GuiControlState::NORMAL;
 		}
 		else {
 			for (const auto& bt : pauseButtons)
@@ -702,9 +703,9 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 		if (control->state == GuiControlState::PRESSED) {
 			if (!Engine::GetInstance().upgradesMenu.get()->upgradesOpen) {
 				Engine::GetInstance().upgradesMenu.get()->upgradesOpen = true;
-			}
-			else if (Engine::GetInstance().upgradesMenu.get()->upgradesOpen) {
-				Engine::GetInstance().upgradesMenu.get()->upgradesOpen = false;
+				if (Engine::GetInstance().settings.get()->settingsOpen) {
+					Engine::GetInstance().settings.get()->settingsOpen = false;
+				}
 			}
 		}
 		break;

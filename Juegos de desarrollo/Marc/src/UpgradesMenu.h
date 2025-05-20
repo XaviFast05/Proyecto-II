@@ -53,6 +53,7 @@ public:
 	float _dt;
 
 	GuiControlButton* backBt;
+	GuiControlButton* changeMenuBt;
 
 	std::list<GuiControl*> upgradesGUI;
 };
