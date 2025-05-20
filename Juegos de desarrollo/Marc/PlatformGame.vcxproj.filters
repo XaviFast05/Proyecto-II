@@ -207,6 +207,9 @@
     <ClCompile Include="src\ChildEnemy.cpp">
       <Filter>Source Files\Game\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="src\UpgradesMenu.cpp">
+      <Filter>Source Files\Game\Menus</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Audio.h">
@@ -355,6 +358,9 @@
     </ClInclude>
     <ClInclude Include="src\ChildEnemy.h">
       <Filter>Source Files\Game\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UpgradesMenu.h">
+      <Filter>Source Files\Game\Menus</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
