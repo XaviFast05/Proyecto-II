@@ -108,7 +108,7 @@ bool GuiControlCheckBox::Update(float dt)
 	if (active) {
 		if (texture != nullptr) {
 				
-			Engine::GetInstance().render.get()->DrawTexture(texture, -camera.x / windowScale + bounds.x, -camera.y / windowScale + bounds.y, &section);
+			Engine::GetInstance().render.get()->DrawTextureBuffer(texture, -camera.x / windowScale + bounds.x, -camera.y / windowScale + bounds.y, false, MENUS, &section);
 			
 		}
 

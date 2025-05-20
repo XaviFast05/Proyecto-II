@@ -67,7 +67,7 @@ void Pathfinding::DrawPath() {
     for (const auto& pathTile : visited) {
         Vector2D pathTileWorld = Engine::GetInstance().map.get()->MapToWorld(pathTile.getX(), pathTile.getY());
         SDL_Rect rect = { 0,0,64,64 };
-        Engine::GetInstance().render.get()->DrawTexture(pathTex, pathTileWorld.getX(), pathTileWorld.getY(), &rect);
+        Engine::GetInstance().render.get()->DrawTextureBuffer(pathTex, pathTileWorld.getX(), pathTileWorld.getY(), false , DEFAULT ,&rect);
     }
 
     // ---------------- Draw frontier BFS
@@ -84,7 +84,7 @@ void Pathfinding::DrawPath() {
         Vector2D pos = Engine::GetInstance().map.get()->MapToWorld(frontierTile.getX(), frontierTile.getY());
         //Draw the frontier tile
         SDL_Rect rect = { 0,0,64,64 };
-        Engine::GetInstance().render.get()->DrawTexture(pathTex, pos.getX(), pos.getY(), &rect);
+        Engine::GetInstance().render.get()->DrawTextureBuffer(pathTex, pos.getX(), pos.getY(), false, DEFAULT, &rect);
         //Remove the front element from the queue
         frontierCopy.pop();
     }
@@ -103,7 +103,7 @@ void Pathfinding::DrawPath() {
         Vector2D pos = Engine::GetInstance().map.get()->MapToWorld(frontierTile.getX(), frontierTile.getY());
         //Draw the frontier tile
         SDL_Rect rect = { 0,0,64,64 };
-        Engine::GetInstance().render.get()->DrawTexture(pathTex, pos.getX(), pos.getY(), &rect);
+        Engine::GetInstance().render.get()->DrawTextureBuffer(pathTex, pos.getX(), pos.getY(), false , DEFAULT,&rect);
         //Remove the front element from the queue
         frontierDijkstraCopy.pop();
     }
@@ -122,7 +122,7 @@ void Pathfinding::DrawPath() {
         Vector2D pos = Engine::GetInstance().map.get()->MapToWorld(frontierTile.getX(), frontierTile.getY());
         //Draw the frontier tile
         SDL_Rect rect = { 68,0,64,64 };
-        Engine::GetInstance().render.get()->DrawTexture(pathTex, pos.getX(), pos.getY(), &rect);
+        Engine::GetInstance().render.get()->DrawTextureBuffer(pathTex, pos.getX(), pos.getY(), false, DEFAULT, &rect);
         //Remove the front element from the queue
         frontierAStarCopy.pop();
     }
@@ -131,7 +131,7 @@ void Pathfinding::DrawPath() {
     // Draw path
     for (const auto& pathTile : pathTiles) {
         Vector2D pathTileWorld = map->MapToWorld(pathTile.getX(), pathTile.getY());
-        Engine::GetInstance().render.get()->DrawTexture(tileX, pathTileWorld.getX()+2, pathTileWorld.getY()+2);
+        Engine::GetInstance().render.get()->DrawTextureBuffer(tileX, pathTileWorld.getX()+2, pathTileWorld.getY()+2, false, DEFAULT);
     }
 }
 

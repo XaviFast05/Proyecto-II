@@ -66,7 +66,7 @@ bool Bullet::Start() {
     pbody->body->SetType(b2_dynamicBody);
     pbody->body->SetEnabled(true);
 
-    // Establecer el tipo de colisión según el BulletType
+    // Establecer el tipo de colisiï¿½n segï¿½n el BulletType
     switch (bullet_type) {
     case BulletType::BOSSJUMP:
         pbody->ctype = ColliderType::JUMP;
@@ -115,14 +115,15 @@ bool Bullet::Update(float dt) {
 
     if (bullet_direction == BulletDirection::HORIZONTAL) {
         if (direction.getX() < 0) {
-            Engine::GetInstance().render.get()->DrawTextureFlipped(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()));
+            Engine::GetInstance().render.get()->DrawTextureBuffer(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()), true, BETWEEN_MAP);
         }
         else {
-            Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()));
+            Engine::GetInstance().render.get()->DrawTextureBuffer(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()), false, BETWEEN_MAP);
         }
     }
-    else {
-        Engine::GetInstance().render.get()->DrawTexture(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()), 0, 1.0f, 270);
+    else
+    {
+        Engine::GetInstance().render.get()->DrawTextureBuffer(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()),false, BETWEEN_MAP, 0, 1.0f, 270);
     }
 
     return true;

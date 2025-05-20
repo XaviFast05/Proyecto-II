@@ -83,8 +83,8 @@ bool DeathMenu::Start()
 bool DeathMenu::Update(float dt)
 {
 	
-	Engine::GetInstance().render.get()->DrawTexture(screenTex, 0, 0, NULL);
-	Engine::GetInstance().render.get()->DrawTexture(candyIcon, candyRect.x, candyRect.y, NULL);
+	Engine::GetInstance().render.get()->DrawTextureBuffer(screenTex, 0, 0, false, MENUS);
+	Engine::GetInstance().render.get()->DrawTextureBuffer(candyIcon, candyRect.x, candyRect.y, false, MENUS);
 
 	candyCount = std::to_string(finalCandyNum);
 

@@ -6,6 +6,8 @@
 
 #define VSYNC true
 
+
+
 Render::Render(bool startEnabled) : Module(startEnabled)
 {
 	name = "render";
@@ -76,15 +78,126 @@ bool Render::PreUpdate()
 
 bool Render::Update(float dt)
 {
-	//if (Engine::GetInstance().GetDebug()) {
-	//	DrawRectangle(camera, 0, 0, 255, 255, false, false);
-	//}
+	
+
 	return true;
 }
 
 bool Render::PostUpdate()
 {
 	ZoneScoped;
+
+	for (int i = 0; i < MAX_RENDER_LAYERS; i++)
+	{
+		for (RenderOrder order : zBufferQuery[i])
+		{
+			int scale = Engine::GetInstance().window.get()->GetScale();
+
+			int drawX = (int)(camera.x * order.speed) + order.x * scale;
+			int drawY = (int)(camera.y * order.speed) + order.y * scale;
+
+			switch (order.type) {
+				case RenderType::Texture: {
+				
+					SDL_Rect rect;
+					rect.x = (int)(camera.x * order.speed) + order.x * scale;
+					rect.y = (int)(camera.y * order.speed) + order.y * scale;
+
+					if (order.section.w != 0 && order.section.h != 0)
+					{
+						rect.w = order.section.w;
+						rect.h = order.section.h;
+					}
+					else
+					{
+						SDL_QueryTexture(order.texture, NULL, NULL, &rect.w, &rect.h);
+					}
+
+					rect.w *= scale;
+					rect.h *= scale;
+
+					SDL_Point* p = NULL;
+					SDL_Point pivot;
+
+					if (order.pivotX != INT_MAX && order.pivotY != INT_MAX)
+					{
+						pivot.x = order.pivotX;
+						pivot.y = order.pivotY;
+						p = &pivot;
+					}
+
+					// Usamos srcRect para controlar si pasar nullptr o &order.section
+					const SDL_Rect* srcRect = nullptr;
+					if (order.section.w != 0 && order.section.h != 0)
+					{
+						srcRect = &order.section;
+					}
+
+					if (!order.flipped)
+					{
+						if (SDL_RenderCopyEx(renderer, order.texture, srcRect, &rect, order.angle, p, SDL_FLIP_NONE) != 0)
+						{
+							LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+						}
+					}
+					else
+					{
+						if (SDL_RenderCopyEx(renderer, order.texture, srcRect, &rect, order.angle, p, SDL_FLIP_HORIZONTAL) != 0)
+						{
+							LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+						}
+					}
+					break;
+				}
+
+				case RenderType::Text: {
+
+					SDL_Surface* surface = TTF_RenderText_Solid(order.font, order.text.c_str(), order.color);
+					SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+					int texW, texH;
+					/*texW *= scale;
+					texH *= scale;*/
+					SDL_QueryTexture(texture, NULL, NULL, &texW, &texH);
+					SDL_Rect dstrect = { order.x * scale, order.y * scale, order.width * scale, order.height * scale };
+
+					SDL_RenderCopy(renderer, texture, NULL, &dstrect);
+
+					SDL_DestroyTexture(texture);
+					SDL_FreeSurface(surface);
+
+					break;
+				}
+				case RenderType::Rectangle: {
+
+					int scale = Engine::GetInstance().window.get()->GetScale();
+
+					SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+					SDL_SetRenderDrawColor(renderer, order.r, order.g, order.b, order.a);
+
+					SDL_Rect rec(order.rect);
+					if (order.use_camera)
+					{
+						rec.x = (int)(camera.x + order.rect.x * scale);
+						rec.y = (int)(camera.y + order.rect.y * scale);
+						rec.w *= scale;
+						rec.h *= scale;
+					}
+
+					int result = (order.filled) ? SDL_RenderFillRect(renderer, &rec) : SDL_RenderDrawRect(renderer, &rec);
+
+					if (result != 0)
+					{
+						LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
+					}
+					break;
+
+				}
+			}
+		}
+		zBufferQuery[i].clear();
+	}
+
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
 	return true;
@@ -105,6 +218,7 @@ void Render::SetBackgroundColor(SDL_Color color)
 
 void Render::SetViewPort(const SDL_Rect& rect)
 {
+
 	SDL_RenderSetViewport(renderer, &rect);
 }
 
@@ -113,86 +227,53 @@ void Render::ResetViewPort()
 	SDL_RenderSetViewport(renderer, &viewport);
 }
 
-// Blit to screen
-bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivotX, int pivotY) const
+bool Render::DrawTextureBuffer(SDL_Texture* _texture, int _x, int _y, bool _flipped, RenderLayers _zbuffer, const SDL_Rect* _section, float _speed, double _angle, int _pivotX, int _pivotY)
 {
 	bool ret = true;
-	int scale = Engine::GetInstance().window.get()->GetScale();
 
-	SDL_Rect rect;
-	rect.x = (int)(camera.x * speed) + x * scale;
-	rect.y = (int)(camera.y * speed) + y * scale;
+	RenderOrder renderOrder;
+	renderOrder.type = RenderType::Texture;
+	renderOrder.texture = _texture;
+	renderOrder.x = _x;
+	renderOrder.y = _y;
+	renderOrder.flipped = _flipped;
+	renderOrder.zbuffer = (int)_zbuffer;
+	renderOrder.speed = _speed;
+	renderOrder.angle = _angle;
+	renderOrder.pivotX = _pivotX;
+	renderOrder.pivotY = _pivotY;
 
-	if(section != NULL)
-	{
-		rect.w = section->w;
-		rect.h = section->h;
+	if (_section != nullptr) {
+		
+		renderOrder.section = *_section;
 	}
-	else
-	{
-		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
-	}
-
-	rect.w *= scale;
-	rect.h *= scale;
-
-	SDL_Point* p = NULL;
-	SDL_Point pivot;
-
-	if(pivotX != INT_MAX && pivotY != INT_MAX)
-	{
-		pivot.x = pivotX;
-		pivot.y = pivotY;
-		p = &pivot;
+	else {
+		renderOrder.section = { 0, 0, 0, 0 };
 	}
 
-	if(SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, SDL_FLIP_NONE) != 0)
-	{
-		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
-		ret = false;
-	}
+	zBufferQuery[_zbuffer].push_back(renderOrder);
 
 	return ret;
 }
 
-bool Render::DrawTextureFlipped(SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivotX, int pivotY) const
+bool Render::DrawRectangleBuffer(const SDL_Rect& _rect, Uint8 _r, Uint8 _g, Uint8 _b, Uint8 _a, RenderLayers _zbuffer,bool _filled, bool _use_camera)
 {
 	bool ret = true;
-	int scale = Engine::GetInstance().window.get()->GetScale();
+	RenderOrder renderOrder;
+	renderOrder.type = RenderType::Rectangle;
+	renderOrder.rect = _rect;
+	renderOrder.r = _r;
+	renderOrder.g = _g;
+	renderOrder.b = _b;
+	renderOrder.a = _a;
+	renderOrder.zbuffer = (int)_zbuffer;
+	renderOrder.filled = _filled;
+	renderOrder.use_camera = _use_camera;
 
-	SDL_Rect rect;
-	rect.x = (int)(camera.x * speed) + x * scale;
-	rect.y = (int)(camera.y * speed) + y * scale;
+	zBufferQuery[_zbuffer].push_back(renderOrder);
 
-	if (section != NULL)
-	{
-		rect.w = section->w;
-		rect.h = section->h;
-	}
-	else
-	{
-		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
-	}
-
-	rect.w *= scale;
-	rect.h *= scale;
-
-	SDL_Point* p = NULL;
-	SDL_Point pivot;
-
-	if (pivotX != INT_MAX && pivotY != INT_MAX)
-	{
-		pivot.x = pivotX;
-		pivot.y = pivotY;
-		p = &pivot;
-	}
-
-	if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, SDL_FLIP_HORIZONTAL) != 0)
-	{
-		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
-		ret = false;
-	}
-
+	
+	
 	return ret;
 }
 
@@ -291,9 +372,9 @@ bool Render::InCameraView(int x, int y, int w, int h)
 	cameraConvertedX -= w;
 	cameraConvertedY -= h;
 
-	if (x > cameraConvertedX && x < limitX)
+	if (x > cameraConvertedX - IN_CAMERA_VIEW_MARGIN && x < limitX + IN_CAMERA_VIEW_MARGIN)
 	{
-		if (y > cameraConvertedY && y < limitY)
+		if (y > cameraConvertedY - IN_CAMERA_VIEW_MARGIN && y < limitY + IN_CAMERA_VIEW_MARGIN)
 		{
 			inView = true;
 		}
@@ -340,5 +421,23 @@ bool Render::DrawTextEx(const char* text, int posx, int posy, int w, int h, TTF_
 	SDL_DestroyTexture(texture);
 	SDL_FreeSurface(surface);
 
+	return true;
+}
+
+bool Render::DrawTextToBuffer(const std::string& text, int x, int y, int w, int h, TTF_Font* font, SDL_Color color, RenderLayers layer, float speed) {
+	
+	RenderOrder order;
+	order.type = RenderType::Text;
+	order.text = text;
+	order.x = x;
+	order.y = y;
+	order.width = w;
+	order.height = h;
+	order.font = font;
+	order.color = color;
+	order.speed = speed;
+	order.zbuffer = (int)layer;
+
+	zBufferQuery[layer].push_back(order);
 	return true;
 }

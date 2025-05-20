@@ -14103,9 +14103,9 @@
    <tile gid="3"/>
   </data>
  </layer>
- <layer id="1" name="Layer 1" width="176" height="80" visible="0">
+ <layer id="1" name="Layer 1" width="176" height="80">
   <properties>
-   <property name="Draw" type="bool" value="false"/>
+   <property name="PreDraw" type="bool" value="false"/>
   </properties>
   <data>
    <tile gid="1"/>
@@ -28192,7 +28192,7 @@
  </layer>
  <layer id="12" name="Props2" width="176" height="80">
   <properties>
-   <property name="Draw" type="bool" value="true"/>
+   <property name="PreDraw" type="bool" value="true"/>
   </properties>
   <data>
    <tile/>
@@ -42279,7 +42279,7 @@
  </layer>
  <layer id="11" name="Props1" width="176" height="80">
   <properties>
-   <property name="Draw" type="bool" value="true"/>
+   <property name="PreDraw" type="bool" value="true"/>
   </properties>
   <data>
    <tile/>
