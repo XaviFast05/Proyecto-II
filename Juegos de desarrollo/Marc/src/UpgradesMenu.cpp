@@ -64,6 +64,7 @@ bool UpgradesMenu::Start()
 	upg8 = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "upg8", "", { 0,0,0,0 }, this, { 0,0,0,0 });
 	SetGuiParameters(upg8, "upg8", configParameters);
 
+	player = Engine::GetInstance().scene.get()->player;
 
 	upgradesGUI.push_back(backBt);
 
@@ -174,10 +175,21 @@ bool UpgradesMenu::OnGuiMouseClickEvent(GuiControl* control) {
 		break;
 		case GuiControlId::UPG1:
 			if (upg1->isChecked) {
-				LOG("UPG1 CHECKED");
+				LOG("UPG1 CHECKED"); 
+				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(0)) {
+					Engine::GetInstance().scene.get()->player->AddUpgrade(0);
+				}
+				else {
+					upg1->state = GuiControlState::DISABLED;
+				}
 			}
 			else {
-
+				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(0)) {
+					Engine::GetInstance().scene.get()->player->RemoveUpgrade(0);
+				}
+				else {
+					upg1->state = GuiControlState::DISABLED;
+				}
 			}
 			break;
 		case GuiControlId::UPG2:

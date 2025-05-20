@@ -92,6 +92,12 @@ public:
 
 	Vector2D GetDirection() const;
 
+	int GetCurrency();
+	
+	void LowerCurrency(int count);
+
+	bool HaveUpgrade(int index);
+
 public:
 	int maxPickaxes; // piquetas máximas
 	int hits = 3;

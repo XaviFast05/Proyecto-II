@@ -84,8 +84,8 @@ bool Player::Start() {
 		stateFlow.push_back(flow);
 	}
 
-	upgrades.empty();
-	unlockedUpgrades.empty();
+	upgrades.clear();
+	unlockedUpgrades.clear();
 	godMode = false;
 	canClimb = false;
 	reachedCheckPoint = false;
@@ -816,6 +816,24 @@ Vector2D Player::GetDirection() const {
 	}
 }
 
+int Player::GetCurrency() {
+	return currencyManager->GetCurrency();
+}
+
+void Player::LowerCurrency(int count) {
+	currencyManager->orbNum -= count;
+}
+
+bool Player::HaveUpgrade(int index) {
+	bool haveUnlocked = false;
+	if (!unlockedUpgrades.empty()) {
+		for (int i = 0; i < unlockedUpgrades.size(); i++) {
+			if (unlockedUpgrades[i] == index) haveUnlocked = true;
+		}
+	}
+	return haveUnlocked;
+}
+
 void Player::SaveData(pugi::xml_node playerNode, pugi::xml_node upgradesNode) {
 	if (active) {
 		playerNode.attribute("x").set_value(pbody->GetPhysBodyWorldPosition().getX());
@@ -824,26 +842,28 @@ void Player::SaveData(pugi::xml_node playerNode, pugi::xml_node upgradesNode) {
 		upgradesNode.attribute("charged").set_value(unlockedCharged);
 
 		bool up0 = false, up1 = false, up2 = false, up3 = false, up4 = false, up5 = false, up6 = false, up7 = false;
-		for (int i = 0; i < unlockedUpgrades.size(); i++) {
-			switch (unlockedUpgrades[i]) {
-			default:
-				break;
-			case 0: up0 = true;
-				break;
-			case 1: up1 = true;
-				break;
-			case 2: up2 = true;
-				break;
-			case 3: up3 = true;
-				break;
-			case 4: up4 = true;
-				break;
-			case 5: up5 = true;
-				break;
-			case 6: up6 = true;
-				break;
-			case 7: up7 = true;
-				break;
+		if (!unlockedUpgrades.empty()) {
+			for (int i = 0; i < unlockedUpgrades.size(); i++) {
+				switch (unlockedUpgrades[i]) {
+				default:
+					break;
+				case 0: up0 = true;
+					break;
+				case 1: up1 = true;
+					break;
+				case 2: up2 = true;
+					break;
+				case 3: up3 = true;
+					break;
+				case 4: up4 = true;
+					break;
+				case 5: up5 = true;
+					break;
+				case 6: up6 = true;
+					break;
+				case 7: up7 = true;
+					break;
+				}
 			}
 		}
 		upgradesNode.attribute("up0").set_value(up0);
@@ -939,80 +959,86 @@ void Player::LoadDefaults() {
 
 void Player::LoadUpgrades() {
 	LoadDefaults();
-	for (int i = 0; i < upgrades.size(); i++) {
-		switch (upgrades[i]) {
-		case 0:
-			plusJumpTimerMax = 0.25;
-			break;
-		case 1:
-			dashForce = 12;
-			break;
-		case 2:
-			chargedCooldownTimerMax = 3;
-			break;
-		case 3:
-			projectileManager->pickaxeRecollectCount = 1.25;
-			break;
-		case 4:
-			moveSpeed = 0.9;
-			break;
-		case 5:
-			damageSmallBoost = true;
-			damageAdded = 2;
-			break;
-		case 6:
-			maxPickaxes = 4;
-			projectileManager->pickaxeCount = maxPickaxes;
-			projectileManager->maxPickaxes = maxPickaxes;
-			break;
-		case 7:
-			damageBoost = true;
-			break;
-		case 8:
-			break;
-		case 9:
-			break;
-		default:
-			break;
+	if (!upgrades.empty()) {
+		for (int i = 0; i < upgrades.size(); i++) {
+			switch (upgrades[i]) {
+			case 0:
+				plusJumpTimerMax = 0.25;
+				break;
+			case 1:
+				dashForce = 12;
+				break;
+			case 2:
+				chargedCooldownTimerMax = 3;
+				break;
+			case 3:
+				projectileManager->pickaxeRecollectCount = 1.25;
+				break;
+			case 4:
+				moveSpeed = 0.9;
+				break;
+			case 5:
+				damageSmallBoost = true;
+				damageAdded = 2;
+				break;
+			case 6:
+				maxPickaxes = 4;
+				projectileManager->pickaxeCount = maxPickaxes;
+				projectileManager->maxPickaxes = maxPickaxes;
+				break;
+			case 7:
+				damageBoost = true;
+				break;
+			case 8:
+				break;
+			case 9:
+				break;
+			default:
+				break;
+			}
 		}
 	}
 }
 
 void Player::UnlockUpgrade(int num) {
 	bool canAdd = true;
-	for (int i = 0; i < unlockedUpgrades.size(); i++) {
-		if (num == unlockedUpgrades[i]) canAdd = false; //ya tienes la mejora
+	if (!upgrades.empty()) {
+		for (int i = 0; i < unlockedUpgrades.size(); i++) {
+			if (num == unlockedUpgrades[i]) canAdd = false; //ya tienes la mejora
+		}
 	}
 	if (canAdd) unlockedUpgrades.push_back(num);
 }
 
 void Player::AddUpgrade(int num) {
 	bool haveUpgrade = false;
-	for (int i = 0; i < unlockedUpgrades.size(); i++) {
-		if (num == unlockedUpgrades[i]) haveUpgrade = true;
+	if (!unlockedUpgrades.empty()) {
+		for (int i = 0; i < unlockedUpgrades.size(); i++) {
+			if (num == unlockedUpgrades[i]) haveUpgrade = true;
+		}
 	}
 	if (haveUpgrade) {
 		bool canAdd = true;
-		if (upgrades.size() <= maxUpgrades && num >= 0 && num <= 9) {
+		if (upgrades.empty()) upgrades.push_back(num);
+		else if (upgrades.size() <= maxUpgrades && num >= 0 && num <= 9) {
 			for (int i = 0; i < upgrades.size(); i++) {
 				if (upgrades[i] == num) canAdd = false;
 			}
 			if (canAdd == false) {
-			}//aqu� poner que esa mejora ya la tienes
+			}
 			else upgrades.push_back(num);
 		}
-		//else aqu� poner algo en plan que tienes demasiadas mejoras
 	}
-	//else poner aqu� que la update no la tienes colegon
 	LoadUpgrades();
 }
 
 void Player::RemoveUpgrade(int num) {
 	int index = -1;
-	for (int i = 0; i < upgrades.size(); i++) {
-		if (upgrades[i] == num) index = i;
+	if (!upgrades.empty()) {
+		for (int i = 0; i < upgrades.size(); i++) {
+			if (upgrades[i] == num) index = i;
+		}
 	}
 	if (index >= 0) upgrades.erase(upgrades.begin() + index);
-	//else aqu� poner algo rollo esta mejora no la tienes activa
 	LoadUpgrades();
 }
