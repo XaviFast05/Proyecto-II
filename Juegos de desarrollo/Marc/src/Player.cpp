@@ -1004,7 +1004,7 @@ void Player::UnlockUpgrade(int num) {
 	bool canAdd = true;
 	if (!upgrades.empty()) {
 		for (int i = 0; i < unlockedUpgrades.size(); i++) {
-			if (num == unlockedUpgrades[i]) canAdd = false; //ya tienes la mejora
+			if (num == unlockedUpgrades[i]) canAdd = false; 
 		}
 	}
 	if (canAdd) unlockedUpgrades.push_back(num);
