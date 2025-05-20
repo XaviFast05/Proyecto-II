@@ -71,8 +71,8 @@ bool Bullet::Start() {
     case BulletType::BOSSJUMP:
         pbody->ctype = ColliderType::JUMP;
         break;
-    case BulletType::FINALBOSS:
-        pbody->ctype = ColliderType::FINALBOSS;
+    case BulletType::CHILD:
+        pbody->ctype = ColliderType::JUMP;
         break;
     case BulletType::PICKAXE:
     default:
@@ -164,7 +164,7 @@ void Bullet::ChangeDirection(BulletDirection t) {
 void Bullet::OnCollision(PhysBody* physA, PhysBody* physB) {
     switch (bullet_type)
     {
-    case BulletType::BOSSJUMP:
+    case BulletType::CHILD:
         switch (physB->ctype) {
         case ColliderType::PICKAXE:
         case ColliderType::PLATFORM:
@@ -188,6 +188,18 @@ void Bullet::OnCollision(PhysBody* physA, PhysBody* physB) {
             stuckOnWall = true;
             bulletfixedpos = pbody->body->GetTransform().p;
             break;
+        case ColliderType::ENEMY:
+            LOG("Collided - DESTROY");
+            destroyPickaxe = true;
+            break;
+        }
+        break;
+    case BulletType::BOSSJUMP:
+        switch (physB->ctype) {
+        case ColliderType::PICKAXE:
+        case ColliderType::PLATFORM:
+        case ColliderType::CLIMBINGWALL:
+        case ColliderType::PLAYER:
         case ColliderType::ENEMY:
             LOG("Collided - DESTROY");
             destroyPickaxe = true;

@@ -116,6 +116,9 @@ Entity* EntityManager::CreateEntity(EntityType bullet_direction)
 	case EntityType::JUMPSHOT:
 		entity = new Bullet(BulletType::BOSSJUMP, BulletDirection::HORIZONTAL);
 		break;
+	case EntityType::CHILD:
+		entity = new Bullet(BulletType::CHILD, BulletDirection::HORIZONTAL);
+		break;
 	case EntityType::FINALBOSS:
 		entity = new FinalBoss();
 		break;
@@ -165,6 +168,9 @@ std::list<Entity*> EntityManager::CreatePooledEntities(EntityType bullet_directi
 			break;
 		case EntityType::JUMPING_ENEMY:
 			entity = new JumpingEnemy();
+			break;
+		case EntityType::CHILD:
+			entity = new Bullet(BulletType::CHILD, BulletDirection::HORIZONTAL);
 			break;
 		case EntityType::RUNNING_ENEMY:
 			entity = new RunningEnemy();
@@ -228,6 +234,9 @@ Entity* EntityManager::CreatePooledEntities(EntityType bullet_direction)
 		break;
 	case EntityType::JUMPING_ENEMY:
 		entity = new JumpingEnemy();
+		break;
+	case EntityType::CHILD:
+		entity = new Bullet(BulletType::CHILD, BulletDirection::HORIZONTAL);
 		break;
 	case EntityType::RUNNING_ENEMY:
 		entity = new RunningEnemy();

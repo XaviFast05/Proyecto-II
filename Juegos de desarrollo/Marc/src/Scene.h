@@ -30,6 +30,7 @@ class GuiControlCheckBox;
 class SoulRock;
 class Ally;
 class Merchant;
+class ShootingEnemy;
 
 
 enum Levels {

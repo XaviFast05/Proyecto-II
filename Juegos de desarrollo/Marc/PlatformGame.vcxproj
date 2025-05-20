@@ -149,7 +149,6 @@
     <None Include="vcpkg.json" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ShootingEnemy.cpp" />
     <ClCompile Include="src\Ally.cpp" />
     <ClCompile Include="src\ChildEnemy.cpp" />
     <ClCompile Include="src\DialoguesManager.cpp" />
@@ -188,6 +187,7 @@
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\Render.cpp" />
     <ClCompile Include="src\Scene.cpp" />
+    <ClCompile Include="src\ShootingEnemy.cpp" />
     <ClCompile Include="src\SoulRock.cpp" />
     <ClCompile Include="src\TextManager.cpp" />
     <ClCompile Include="src\Textures.cpp" />
@@ -198,7 +198,6 @@
     <ClCompile Include="src\WinMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ShootingEnemy.h" />
     <ClInclude Include="src\Ally.h" />
     <ClInclude Include="src\ChildEnemy.h" />
     <ClInclude Include="src\DialoguesManager.h" />
@@ -240,6 +239,7 @@
     <ClInclude Include="src\RunningEnemy.h" />
     <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\Settings.h" />
+    <ClInclude Include="src\ShootingEnemy.h" />
     <ClInclude Include="src\SoulRock.h" />
     <ClInclude Include="src\TextManager.h" />
     <ClInclude Include="src\Textures.h" />

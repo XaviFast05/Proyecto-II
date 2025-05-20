@@ -155,6 +155,7 @@ void WallBreaker::OnCollision(PhysBody* physA, PhysBody* physB) {
 	default:
 		break;
 	}
+}
 
 
 

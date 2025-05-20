@@ -16,7 +16,8 @@ enum class BulletDirection {
 enum class BulletType {
 	BOSSJUMP,
 	FINALBOSS,
-	PICKAXE
+	PICKAXE,
+    CHILD
 };
 
 class Bullet : public Entity

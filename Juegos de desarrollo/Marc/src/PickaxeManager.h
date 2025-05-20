@@ -30,6 +30,9 @@ public:
 
 	Entity* CreateJumpProjectile();
 
+	void ThrowChild(Vector2D position, Vector2D Direction );
+
+	Entity* CreateChild();
 
 	int GetNumPickaxes();
 

@@ -119,6 +119,34 @@ Entity* ProjectileManager::CreateJumpProjectile()
 	return bullet;
 }
 
+void ProjectileManager::ThrowChild(Vector2D position, Vector2D direction)
+{
+	Bullet* bullet = (Bullet*)Engine::GetInstance().entityManager->GetPooledEntity(EntityType::CHILD);
+	if (!bullet)
+	{
+		bullet = (Bullet*)CreateChild();
+	}
+
+	Vector2D bulletPos = position;
+	bulletPos.setX(bulletPos.getX() + (direction.getX() * 90)); // Ajusta si hace falta
+	bulletPos.setY(bulletPos.getY() + 50); // Ajusta si hace falta
+
+	bullet->SetPosition(bulletPos);
+	bullet->SetDirection(direction);
+	bullet->ChangeDirection(BulletDirection::HORIZONTAL);
+	bullet->Enable();
+}
+
+Entity* ProjectileManager::CreateChild()
+{
+	Bullet* bullet = (Bullet*)Engine::GetInstance().entityManager->CreatePooledEntities(EntityType::CHILD);
+	bullet->bullet_direction = BulletDirection::HORIZONTAL;
+	bullet->SetParameters(Engine::GetInstance().scene.get()->configParameters);
+	bullet->texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/balaEnemy.png");
+	bullet->Start();
+	return bullet;
+}
+
 int ProjectileManager::GetNumPickaxes()
 {
 	return pickaxeCount;
