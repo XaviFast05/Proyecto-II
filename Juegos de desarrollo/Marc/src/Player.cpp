@@ -661,6 +661,26 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::SPYKE:
 		LOG("Collision SPYKE");
 		break;
+	case ColliderType::JUMP:
+		LOG("Collision BULLET");
+		if (!godMode || !canHurt) {
+			if (playerState != DEAD) {
+				//HURT LOGIC
+				if (hits >= 1 && playerState != HURT) DamagePlayer();
+				if (hits == 0) KillPlayer();
+				//PUSHING THE PLAYER WHEN HURT
+				b2Vec2 pushVec((physA->body->GetPosition().x - physB->body->GetPosition().x),
+					(physA->body->GetPosition().y - physB->body->GetPosition().y));
+				pushVec.Normalize();
+				pushVec *= pushForce;
+				pushVec.x *= 6;
+
+				pbody->body->SetLinearVelocity(b2Vec2(0, 0));
+				pbody->body->ApplyLinearImpulseToCenter(pushVec, true);
+			}
+
+		}
+		break;
 	case ColliderType::ENEMY:
 		LOG("Collision ENEMY");
 		if (!godMode || !canHurt) {
