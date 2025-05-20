@@ -186,6 +186,7 @@
     <ClCompile Include="src\SoulRock.cpp" />
     <ClCompile Include="src\Textures.cpp" />
     <ClCompile Include="src\Timer.cpp" />
+    <ClCompile Include="src\MerchantMenu.cpp" />
     <ClCompile Include="src\Vector2D.cpp" />
     <ClCompile Include="src\Window.cpp" />
     <ClCompile Include="src\Intro.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="src\CurrencyOrb.h" />
     <ClInclude Include="src\CurrencyManager.h" />
     <ClInclude Include="src\Merchant.h" />
+    <ClInclude Include="src\MerchantMenu.h" />
     <ClInclude Include="src\PickaxeManager.h" />
     <ClInclude Include="src\Bullet.h" />
     <ClInclude Include="src\DeathMenu.h" />

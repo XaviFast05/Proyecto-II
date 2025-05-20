@@ -192,6 +192,12 @@
     <ClCompile Include="src\Merchant.cpp">
       <Filter>Source Files\Game\Allies</Filter>
     </ClCompile>
+    <ClCompile Include="src\Intro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MerchantMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Audio.h">
@@ -327,6 +333,8 @@
     <ClInclude Include="src\Merchant.h">
       <Filter>Source Files\Game\Allies</Filter>
     </ClInclude>
+    <ClInclude Include="src\Intro.h" />
+    <ClInclude Include="src\MerchantMenu.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="config.xml">

@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "LOG.h"
 #include "tracy/Tracy.hpp"
+#include "MerchantMenu.h"
 
 Merchant::Merchant()
 {
@@ -173,16 +174,19 @@ bool Merchant::Update(float dt) {
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Z) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_B) == KEY_DOWN) {
 				state = INTERACTION;
 				player->pbody->body->SetEnabled(false);
+				Engine::GetInstance().merchantMenu.get()->merchantPanelOpen = true;
 			}
 
 		}
 		else if (INTERACTION) {
 
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Z) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_B) == KEY_DOWN) {
+			if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Z) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_B) == KEY_DOWN) || !Engine::GetInstance().merchantMenu.get()->merchantPanelOpen) {
 				state = DETECTION;
-
 				player->pbody->body->SetEnabled(true) ;
+				Engine::GetInstance().merchantMenu.get()->merchantPanelOpen = false;
 			}
+
+
 		}
 	
 		//if (state == PATROL) {

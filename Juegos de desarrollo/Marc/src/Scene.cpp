@@ -31,6 +31,7 @@
 #include "WinMenu.h"
 #include "PickaxeManager.h"
 #include "CurrencyManager.h"
+#include "MerchantMenu.h"
 
 #include "Intro.h"
 
