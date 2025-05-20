@@ -54,6 +54,14 @@ public:
 
 	GuiControlButton* backBt;
 	GuiControlButton* changeMenuBt;
+	GuiControlCheckBox* upg1;
+	GuiControlCheckBox* upg2;
+	GuiControlCheckBox* upg3;
+	GuiControlCheckBox* upg4;
+	GuiControlCheckBox* upg5;
+	GuiControlCheckBox* upg6;
+	GuiControlCheckBox* upg7;
+	GuiControlCheckBox* upg8;
 
 	std::list<GuiControl*> upgradesGUI;
 };

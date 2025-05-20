@@ -47,6 +47,23 @@ bool UpgradesMenu::Start()
 	SetGuiParameters(backBt, "backBt", configParameters);
 	changeMenuBt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, "changeMenuBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
 	SetGuiParameters(changeMenuBt, "changeMenuBt", configParameters);
+	upg1 = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "upg1", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	SetGuiParameters(upg1, "upg1", configParameters);
+	upg2 = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "upg2", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	SetGuiParameters(upg2, "upg2", configParameters);
+	upg3 = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "upg3", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	SetGuiParameters(upg3, "upg3", configParameters);
+	upg4 = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "upg4", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	SetGuiParameters(upg4, "upg4", configParameters);
+	upg5 = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "upg5", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	SetGuiParameters(upg5, "upg5", configParameters);
+	upg6 = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "upg6", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	SetGuiParameters(upg6, "upg6", configParameters);
+	upg7 = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "upg7", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	SetGuiParameters(upg7, "upg7", configParameters);
+	upg8 = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "upg8", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	SetGuiParameters(upg8, "upg8", configParameters);
+
 
 	upgradesGUI.push_back(backBt);
 
@@ -85,10 +102,20 @@ bool UpgradesMenu::Update(float dt)
 			}
 		}
 
+		upg1->Update(dt);
+		upg2->Update(dt);
+		upg3->Update(dt);
+		upg4->Update(dt);
+		upg5->Update(dt);
+		upg6->Update(dt);
+		upg7->Update(dt);
+		upg8->Update(dt);
+
 		backBt->Update(dt);
 		OnGuiMouseClickEvent(backBt);
 		changeMenuBt->Update(dt);
 		OnGuiMouseClickEvent(changeMenuBt);
+
 	}
 	else {
 		for (GuiControl* gui : upgradesGUI) {
@@ -145,6 +172,70 @@ bool UpgradesMenu::OnGuiMouseClickEvent(GuiControl* control) {
 			}
 			break;
 		break;
+		case GuiControlId::UPG1:
+			if (upg1->isChecked) {
+				LOG("UPG1 CHECKED");
+			}
+			else {
+
+			}
+			break;
+		case GuiControlId::UPG2:
+			if (upg2->isChecked) {
+				LOG("UPG2 CHECKED");
+			}
+			else {
+
+			}
+			break;
+		case GuiControlId::UPG3:
+			if (upg3->isChecked) {
+
+			}
+			else {
+
+			}
+			break;
+		case GuiControlId::UPG4:
+			if (upg4->isChecked) {
+
+			}
+			else {
+
+			}
+			break;
+		case GuiControlId::UPG5:
+			if (upg5->isChecked) {
+
+			}
+			else {
+
+			}
+			break;
+		case GuiControlId::UPG6:
+			if (upg6->isChecked) {
+
+			}
+			else {
+
+			}
+			break;
+		case GuiControlId::UPG7:
+			if (upg7->isChecked) {
+
+			}
+			else {
+
+			}
+			break;
+		case GuiControlId::UPG8:
+			if (upg8->isChecked) {
+
+			}
+			else {
+
+			}
+			break;
 	}
 
 

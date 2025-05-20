@@ -51,6 +51,8 @@ enum class GuiControlId
 	FIRST_CAPE,
 
 	CHANGE_MENU,
+
+	UPG1, UPG2, UPG3, UPG4, UPG5, UPG6, UPG7, UPG8, 
 };
 
 class GuiControl
