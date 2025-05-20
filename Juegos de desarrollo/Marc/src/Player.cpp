@@ -238,8 +238,13 @@ bool Player::Update(float dt)
 		}
 		else
 		{
+			//DAMAGE BOOST
+			if (damageBoost && hits == 1) damageAdded = damageBoostAdded;
+			else if (damageBoost && hits != 1 && damageSmallBoost) damageAdded = 2;
+			else if (damageBoost && hits != 1 && !damageSmallBoost) damageAdded = 0;
+
 			//CHANGERS
-			if (playerState == DEAD) {
+			if (playerState == DEAD || playerState == CHARGED) {
 			}
 			else if (playerState == HURT) {
 				if (hurtTimer.ReadSec() >= hurtTime) playerState = IDLE;
@@ -267,6 +272,8 @@ bool Player::Update(float dt)
 				stateTimer.Start();
 				playerState = CHOP;
 
+				if (meleeTimerOn) deleteCharged = true;
+				charging = true;
 				meleeTimer.Start();
 				meleeTimerOn = true;
 			}
@@ -285,6 +292,21 @@ bool Player::Update(float dt)
 				stateTimer.Start();
 				playerState = THROW;
 			}
+			else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN && stateFlow[playerState][DASH] && canDash == true && unlockedDash == true) {
+				pbody->body->SetLinearVelocity(b2Vec2_zero);
+				if (dir == RIGHT) pbody->body->ApplyLinearImpulseToCenter(b2Vec2(dashForce, 0), true);
+				else if (dir == LEFT) pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-dashForce, 0), true);
+
+				if (grounded && (playerState == IDLE || playerState == RUN)) {
+					dashCooldownTimerOn = true;
+					dashCooldownTimer.Start();
+				}
+
+				canDash = false;
+				dashTimer.Start();
+				dashTimerOn = true;
+				playerState = DASH;
+			}
 
 			//COYOTE TIME LOGIC
 			if (coyoteTimerOn) {
@@ -299,6 +321,23 @@ bool Player::Update(float dt)
 				if (coyoteTimer.ReadSec() >= coyoteTimerMax) coyoteTimerOn = false;
 			}
 
+			//DASH LOGIC
+			if (dashTimerOn) {
+				if (dashTimer.ReadSec() > dashTimerMax) {
+					playerState = IDLE;
+					dashTimerOn = false;
+				}
+			}
+
+			//DASH PREVENT SPAMMING LOGIC
+			if (dashCooldownTimerOn) {
+				if (dashCooldownTimer.ReadSec() > dashCooldownTimerMax) {
+					dashCooldownTimerOn = false;
+					canDash = true;
+				}
+			}
+			else if (grounded && (playerState == IDLE || playerState == RUN)) canDash = true;
+
 			//PLUS JUMP LOGIC
 			if (plusJumpTimerOn) {
 				if (!grounded && playerState == JUMP && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && plusJumpTimer.ReadSec() < plusJumpTimerMax) {
@@ -308,12 +347,32 @@ bool Player::Update(float dt)
 				if (plusJumpTimer.ReadSec() >= plusJumpTimerMax) plusJumpTimerOn = false;
 			}
 
+			//CHARGED ATTACK LOGIC
+			if (chargedCooldown) {
+				if (chargedCooldownTimer.ReadSec() > chargedCooldownTimerMax) chargedCooldown = false;
+			}
+			if (playerState == CHARGED && (meleeTimerOn == false && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_UP || chargeAttackTimer.ReadSec() > chargeAttackTimerMax)) {
+				meleeTimer.Start();
+				meleeTimerOn = true;
+			}
+
 			//MELEE ATTACKS LOGIC
 			if (meleeTimerOn) {
+				if (deleteCharged) {
+					meleeArea->body->SetEnabled(false);
+					deleteCharged = false;
+				}
 				if (meleeTimer.ReadSec() == 0.0) {
-					meleeDisplace = (dir == RIGHT) ? (2 * texW / 3 + MELEE_AREA_WIDTH / 2) : (texW / 3 - MELEE_AREA_WIDTH / 2);
-					meleeArea = Engine::GetInstance().physics.get()->CreateRectangleSensor((position.getX() + meleeDisplace), position.getY() + texH / 2, MELEE_AREA_WIDTH, texH, DYNAMIC);
-					meleeArea->ctype = ColliderType::MELEE_AREA;
+					if (playerState == CHARGED) {
+						meleeDisplace = (dir == RIGHT) ? (2 * texW / 3 + MELEE_AREA_WIDTH) : (texW / 3 - MELEE_AREA_WIDTH);
+						meleeArea = Engine::GetInstance().physics.get()->CreateRectangleSensor((position.getX() + meleeDisplace), position.getY() + texH / 2, MELEE_AREA_WIDTH * 2, texH * 1.5, DYNAMIC);
+						meleeArea->ctype = ColliderType::MELEE_AREA_CHARGED;
+					}
+					else {
+						meleeDisplace = (dir == RIGHT) ? (2 * texW / 3 + MELEE_AREA_WIDTH / 2) : (texW / 3 - MELEE_AREA_WIDTH / 2);
+						meleeArea = Engine::GetInstance().physics.get()->CreateRectangleSensor((position.getX() + meleeDisplace), position.getY() + texH / 2, MELEE_AREA_WIDTH, texH, DYNAMIC);
+						meleeArea->ctype = ColliderType::MELEE_AREA;
+					}
 				}
 				if (meleeTimer.ReadSec() < meleeTimerMax) {
 					b2Vec2 meleeAreaMovePos = b2Vec2(pbody->body->GetPosition().x + PIXEL_TO_METERS(meleeDisplace) - PIXEL_TO_METERS(texW / 2), pbody->body->GetPosition().y);
@@ -402,9 +461,16 @@ bool Player::Update(float dt)
 					playSound = false;
 				}
 				if (CheckMoveX() && !grounded) MoveX();
+
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_UP) charging = false;
 				if (stateTimer.ReadSec() >= pickaxeTimerAnimation)
 				{
-					playerState = IDLE;
+					if (charging == true && chargedCooldown == false && unlockedCharged == true) {
+						playerState = CHARGED;
+						chargeAttackTimer.Start();
+						break;
+					}
+					else playerState = IDLE;
 					if (playSound == false) {
 						playSound = true;
 					}
@@ -432,13 +498,22 @@ bool Player::Update(float dt)
 					playerState = IDLE;
 					hits = 3;
 				}
-
+				break;
 			}
+			case CHARGED:
+				if (chargeAttackTimer.ReadSec() > chargeAttackTimerMax || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_UP) {
+					chargedCooldownTimer.Start();
+					chargedCooldown = true;
+					playerState = IDLE;
+				}
+				break;
 			default:
 				break;
 			}
 
-			velocity = { velocity.x, pbody->body->GetLinearVelocity().y };
+			if (playerState == DASH) velocity = { pbody->body->GetLinearVelocity().x, 0 };
+			else velocity = { velocity.x, pbody->body->GetLinearVelocity().y };
+
 			pbody->body->SetLinearVelocity(velocity);
 		}
 	}
