@@ -20,7 +20,6 @@
 		<buttons defaultTex="Assets/Textures/Menus/Title Screen/title screen button sheet.png">
 			<newGameBt id="1" x="448" y="230" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/New Game Button Sheet.png" />
 			<testLevelBt id="13" x="448" y="326" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Test Level Button Sheet.png" />
-			<thirdLevelBt id="14" x="700" y="326" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Test Level Button Sheet.png" />
 			<continueBt id="2" x="4000" y="78" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Continue Button Sheet.png" />
 			<optionsBt id="3" x="448" y="422" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Options Button Sheet.png" />
 			<creditsBt id="4" x="448" y="518" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Credits Button Sheet.png" />

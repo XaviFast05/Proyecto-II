@@ -286,8 +286,16 @@ bool Scene::Update(float dt)
 	if (changeLevel || level == LVL1 && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 	{
 		changeLevel = false;
-		level = LVL1;
-		Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)Engine::GetInstance().mainMenu.get(), 30);
+		if (level == LVL1)
+		{
+			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
+			level = LVL3;
+		}
+		else if (level == LVL3)
+		{
+			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)Engine::GetInstance().mainMenu.get(), 30);
+			level = LVL1;
+		}
 		return true;
 	}
 
