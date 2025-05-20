@@ -187,238 +187,247 @@ bool Player::Update(float dt)
 
 		if (godMode) {
 			velocity = b2Vec2_zero;
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) velocity.x = -moveSpeed * 25;
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) velocity.x = moveSpeed * 25;
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) velocity.y = -moveSpeed * 25;
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) velocity.y = moveSpeed * 25;
+
+			if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) ||
+				(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) ||
+				(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) ||
+				(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT))
+			{
+				
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+					velocity.x = -moveSpeed * 25;
+					CheckMoveX();
+					playerState = RUN;
+				}
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+					velocity.x = moveSpeed * 25;
+					CheckMoveX();
+					playerState = RUN;
+				}
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+				{
+					velocity.y = -moveSpeed * 25;
+					playerState = JUMP;
+				}
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) 
+				{
+					velocity.y = moveSpeed * 25;
+					playerState = FALL;
+				}
+			}
+			else
+			{
+				playerState = IDLE;
+			}
 
 			pbody->body->SetLinearVelocity(velocity);
 
-			b2Transform pbodyPos = pbody->body->GetTransform();
-
-			if (renderable) {
-				position.setX(METERS_TO_PIXELS((pbodyPos.p.x) - texW / 2) + drawOffsetX);
-				position.setY(METERS_TO_PIXELS((pbodyPos.p.y) - texH / 2) + drawOffsetY);
-
-				if (dir == RIGHT) Engine::GetInstance().render.get()->DrawTextureBuffer(texture, position.getX(), position.getY(), false, PLAYER,&currentFrame);
-				else if (dir == LEFT) Engine::GetInstance().render.get()->DrawTextureBuffer(texture, position.getX(), position.getY(), true, PLAYER, &currentFrame);
+		}
+		else
+		{
+			//CHANGERS
+			if (playerState == DEAD) {
 			}
-			
-
-			currentAnim->Update();
-
-			return true;
-		}
-
-		//printf("POSITION X: %f\n", position.getX());
-		//printf("POSITION Y: %f\n", position.getY());
-		// POSITION X: 4235.000000
-		// POSITION Y : 832.000000
-		// 
-		// POSITION X: 8931.000000
-		// POSITION Y : 4480.000000
-		//CHANGERS
-		if (playerState == DEAD) {
-		}
-		else if (playerState == HURT) {
-			if (hurtTimer.ReadSec() >= hurtTime) playerState = IDLE;
-		}
-		else if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && stateFlow[playerState][RUN] && grounded) {
-			playerState = RUN;
-		}
-		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && ((stateFlow[playerState][JUMP] && grounded) /*MODIFICAR GODMODE*/ || godMode)) {
-			playerState = JUMP;
-			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
-			grounded = false;
-			plusJumpTimer.Start();
-			plusJumpTimerOn = true;
-
-		}
-		else if (pbody->body->GetLinearVelocity().y > 0.001 && stateFlow[playerState][FALL]) {
-			if (playerState == RUN) {
-				coyoteTimer.Start();
-				coyoteTimerOn = true;
+			else if (playerState == HURT) {
+				if (hurtTimer.ReadSec() >= hurtTime) playerState = IDLE;
 			}
-			playerState = FALL;
-			grounded = false;
-		}
-		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][CHOP] && pickaxeManager->GetNumPickaxes() > 0) {
-			stateTimer.Start();
-			playerState = CHOP;
-
-			meleeTimer.Start();
-			meleeTimerOn = true;
-		}
-		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][PUNCH] && pickaxeManager->GetNumPickaxes() <= 0) {
-			stateTimer.Start();
-			playerState = PUNCH;
-
-			meleeTimer.Start();
-			meleeTimerOn = true;
-		}
-		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Q) && stateFlow[playerState][THROW] && pickaxeManager->GetNumPickaxes() > 0) {
-			
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W)) pickaxeManager->ThrowPickaxe({0,1}, pbody->GetPhysBodyWorldPosition());
-			else pickaxeManager->ThrowPickaxe(GetDirection(), pbody->GetPhysBodyWorldPosition());
-
-			stateTimer.Start();
-			playerState = THROW;
-		}
-
-		//COYOTE TIME LOGIC
-		if (coyoteTimerOn) {
-			if (coyoteTimer.ReadSec() < coyoteTimerMax && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE)) {
-				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
-				playerState = JUMP;
-				coyoteTimerOn = false;
-
-				plusJumpTimer.Start();
-				plusJumpTimerOn = true;
+			else if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && stateFlow[playerState][RUN] && grounded) {
+				playerState = RUN;
 			}
-			if (coyoteTimer.ReadSec() >= coyoteTimerMax) coyoteTimerOn = false;
-		}
-
-		//PLUS JUMP LOGIC
-		if (plusJumpTimerOn) {
-			if (!grounded && playerState == JUMP && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && plusJumpTimer.ReadSec() < plusJumpTimerMax) {
-				float jumpPlusForce = 1;
-				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpPlusForce), true);
-			}
-			if (plusJumpTimer.ReadSec() >= plusJumpTimerMax) plusJumpTimerOn = false;
-		}
-
-		//MELEE ATTACKS LOGIC
-		if (meleeTimerOn) {
-			if (meleeTimer.ReadSec() == 0.0) {
-				meleeDisplace = (dir == RIGHT) ? (2 * texW / 3 + MELEE_AREA_WIDTH / 2) : (texW / 3 - MELEE_AREA_WIDTH / 2);
-				meleeArea = Engine::GetInstance().physics.get()->CreateRectangleSensor((position.getX() + meleeDisplace), position.getY() + texH / 2, MELEE_AREA_WIDTH, texH, DYNAMIC);
-				meleeArea->ctype = ColliderType::MELEE_AREA;
-			}
-			if (meleeTimer.ReadSec() < meleeTimerMax) {
-				b2Vec2 meleeAreaMovePos = b2Vec2(pbody->body->GetPosition().x + PIXEL_TO_METERS(meleeDisplace) - PIXEL_TO_METERS(texW/2), pbody->body->GetPosition().y);
-				meleeArea->body->SetTransform(meleeAreaMovePos, 0);
-			}
-			if (meleeTimer.ReadSec() >= meleeTimerMax) {
-				meleeArea->body->SetEnabled(false);
-				meleeTimerOn = false;
-			}
-		}
-
-		if (respawnHeal == true) respawnHeal = false;
-
-		//LOGIC & SFX
-		switch (playerState) {
-		case IDLE:
-			if (playSound == false) {
-				playSound = true;
-			}
-			break;
-		case RUN:
-			// SALTO: Evaluar siempre primero
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN
-				&& (grounded || godMode))
-			{
+			else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && ((stateFlow[playerState][JUMP] && grounded) /*MODIFICAR GODMODE*/ || godMode)) {
 				playerState = JUMP;
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 				grounded = false;
 				plusJumpTimer.Start();
 				plusJumpTimerOn = true;
+
+			}
+			else if (pbody->body->GetLinearVelocity().y > 0.001 && stateFlow[playerState][FALL]) {
+				if (playerState == RUN) {
+					coyoteTimer.Start();
+					coyoteTimerOn = true;
+				}
+				playerState = FALL;
+				grounded = false;
+			}
+			else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][CHOP] && pickaxeManager->GetNumPickaxes() > 0) {
+				stateTimer.Start();
+				playerState = CHOP;
+
+				meleeTimer.Start();
+				meleeTimerOn = true;
+			}
+			else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][PUNCH] && pickaxeManager->GetNumPickaxes() <= 0) {
+				stateTimer.Start();
+				playerState = PUNCH;
+
+				meleeTimer.Start();
+				meleeTimerOn = true;
+			}
+			else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Q) && stateFlow[playerState][THROW] && pickaxeManager->GetNumPickaxes() > 0) {
+
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W)) pickaxeManager->ThrowPickaxe({ 0,1 }, pbody->GetPhysBodyWorldPosition());
+				else pickaxeManager->ThrowPickaxe(GetDirection(), pbody->GetPhysBodyWorldPosition());
+
+				stateTimer.Start();
+				playerState = THROW;
+			}
+
+			//COYOTE TIME LOGIC
+			if (coyoteTimerOn) {
+				if (coyoteTimer.ReadSec() < coyoteTimerMax && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE)) {
+					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
+					playerState = JUMP;
+					coyoteTimerOn = false;
+
+					plusJumpTimer.Start();
+					plusJumpTimerOn = true;
+				}
+				if (coyoteTimer.ReadSec() >= coyoteTimerMax) coyoteTimerOn = false;
+			}
+
+			//PLUS JUMP LOGIC
+			if (plusJumpTimerOn) {
+				if (!grounded && playerState == JUMP && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && plusJumpTimer.ReadSec() < plusJumpTimerMax) {
+					float jumpPlusForce = 1;
+					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpPlusForce), true);
+				}
+				if (plusJumpTimer.ReadSec() >= plusJumpTimerMax) plusJumpTimerOn = false;
+			}
+
+			//MELEE ATTACKS LOGIC
+			if (meleeTimerOn) {
+				if (meleeTimer.ReadSec() == 0.0) {
+					meleeDisplace = (dir == RIGHT) ? (2 * texW / 3 + MELEE_AREA_WIDTH / 2) : (texW / 3 - MELEE_AREA_WIDTH / 2);
+					meleeArea = Engine::GetInstance().physics.get()->CreateRectangleSensor((position.getX() + meleeDisplace), position.getY() + texH / 2, MELEE_AREA_WIDTH, texH, DYNAMIC);
+					meleeArea->ctype = ColliderType::MELEE_AREA;
+				}
+				if (meleeTimer.ReadSec() < meleeTimerMax) {
+					b2Vec2 meleeAreaMovePos = b2Vec2(pbody->body->GetPosition().x + PIXEL_TO_METERS(meleeDisplace) - PIXEL_TO_METERS(texW / 2), pbody->body->GetPosition().y);
+					meleeArea->body->SetTransform(meleeAreaMovePos, 0);
+				}
+				if (meleeTimer.ReadSec() >= meleeTimerMax) {
+					meleeArea->body->SetEnabled(false);
+					meleeTimerOn = false;
+				}
+			}
+
+			if (respawnHeal == true) respawnHeal = false;
+
+			//LOGIC & SFX
+			switch (playerState) {
+			case IDLE:
+				if (playSound == false) {
+					playSound = true;
+				}
+				break;
+			case RUN:
+				// SALTO: Evaluar siempre primero
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN
+					&& (grounded || godMode))
+				{
+					playerState = JUMP;
+					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
+					grounded = false;
+					plusJumpTimer.Start();
+					plusJumpTimerOn = true;
+					break;
+				}
+
+				// MOVIMIENTO HORIZONTAL si está en suelo y no hay colisión lateral
+				if (grounded) {
+					if (CheckMoveX()) {
+						playerState = RUN;
+						MoveX();
+					}
+					else {
+						playerState = IDLE;
+					}
+				}
+				break;
+			case JUMP:
+				if (playSound == true) {
+					Engine::GetInstance().audio.get()->PlayFx(playerJumpSFX);
+					playSound = false;
+				}
+				if (CheckMoveX()) MoveX();
+				if (grounded)
+				{
+					playerState = IDLE;
+					if (playSound == false) {
+						playSound = true;
+					}
+				}
+				break;
+			case FALL:
+				if (playSound == false) {
+					playSound = true;
+				}
+				if (CheckMoveX()) MoveX();
+				if (grounded) {
+					Engine::GetInstance().audio.get()->PlayFx(playerLandSFX);
+					playerState = IDLE;
+				}
+				break;
+			case PUNCH:
+				if (playSound == true) {
+					Engine::GetInstance().audio.get()->PlayFx(playerAttack2SFX);
+					playSound = false;
+				}
+				if (CheckMoveX() && !grounded) MoveX();
+				if (stateTimer.ReadSec() >= punchTimerAnimation)
+				{
+					playerState = IDLE;
+					if (playSound == false) {
+						playSound = true;
+					}
+				}
+				break;
+			case CHOP:
+				if (playSound == true) {
+					Engine::GetInstance().audio.get()->PlayFx(playerAttack1SFX);
+					playSound = false;
+				}
+				if (CheckMoveX() && !grounded) MoveX();
+				if (stateTimer.ReadSec() >= pickaxeTimerAnimation)
+				{
+					playerState = IDLE;
+					if (playSound == false) {
+						playSound = true;
+					}
+				}
+				break;
+			case THROW:
+				if (playSound == true) {
+					Engine::GetInstance().audio.get()->PlayFx(playerThrowSFX);
+					playSound = false;
+				}
+				if (CheckMoveX() && !grounded) MoveX();
+				if (stateTimer.ReadSec() >= pickaxeTimerAnimation)
+				{
+					playerState = IDLE;
+					if (playSound == false) {
+						playSound = true;
+					}
+				}
+				break;
+			case DEAD:
+			{
+				pbody->body->SetLinearVelocity(b2Vec2(0, 0));
+				if (respawnTimer.ReadSec() >= respawnTime) {
+					Engine::GetInstance().scene.get()->LoadState();
+					playerState = IDLE;
+					hits = 3;
+				}
+
+			}
+			default:
 				break;
 			}
 
-			// MOVIMIENTO HORIZONTAL si está en suelo y no hay colisión lateral
-			if (grounded) {
-				if (CheckMoveX()) {
-					playerState = RUN;
-					MoveX();
-				}
-				else {
-					playerState = IDLE;
-				}
-			}
-			break;
-		case JUMP:
-			if (playSound == true) {
-				Engine::GetInstance().audio.get()->PlayFx(playerJumpSFX);
-				playSound = false;
-			}
-			if (CheckMoveX()) MoveX();
-			if (grounded) 
-			{
-				playerState = IDLE;
-				if (playSound == false) {
-					playSound = true;
-				}
-			}
-			break;
-		case FALL:
-			if (playSound == false) {
-				playSound = true;
-			}
-			if (CheckMoveX()) MoveX();
-			if (grounded) {
-				Engine::GetInstance().audio.get()->PlayFx(playerLandSFX);
-				playerState = IDLE;
-			}
-			break;
-		case PUNCH:
-			if (playSound == true) {
-				Engine::GetInstance().audio.get()->PlayFx(playerAttack2SFX);
-				playSound = false;
-			}
-			if (CheckMoveX() && !grounded) MoveX();
-			if (stateTimer.ReadSec() >= punchTimerAnimation)
-			{
-				playerState = IDLE;
-				if (playSound == false) {
-					playSound = true;
-				}
-			}
-			break;
-		case CHOP:
-			if (playSound == true) {
-				Engine::GetInstance().audio.get()->PlayFx(playerAttack1SFX);
-				playSound = false;
-			}
-			if (CheckMoveX() && !grounded) MoveX();
-			if (stateTimer.ReadSec() >= pickaxeTimerAnimation)
-			{
-				playerState = IDLE;
-				if (playSound == false) {
-					playSound = true;
-				}
-			}
-			break;
-		case THROW:
-			if (playSound == true) {
-				Engine::GetInstance().audio.get()->PlayFx(playerThrowSFX);
-				playSound = false;
-			}
-			if (CheckMoveX() && !grounded) MoveX();
-			if (stateTimer.ReadSec() >= pickaxeTimerAnimation)
-			{
-				playerState = IDLE;
-				if (playSound == false) {
-					playSound = true;
-				}
-			}
-			break;
-		case DEAD:
-		{
-			pbody->body->SetLinearVelocity(b2Vec2(0, 0));
-			if (respawnTimer.ReadSec() >= respawnTime) {
-				Engine::GetInstance().scene.get()->LoadState();
-				playerState = IDLE;
-				hits = 3;
-			}
-
+			velocity = { velocity.x, pbody->body->GetLinearVelocity().y };
+			pbody->body->SetLinearVelocity(velocity);
 		}
-		default:
-			break;
-		}
-
-		velocity = { velocity.x, pbody->body->GetLinearVelocity().y };
-		pbody->body->SetLinearVelocity(velocity);
 	}
 
 	//ANIMS
