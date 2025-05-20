@@ -177,19 +177,14 @@ void Enemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::WEAPON:
 		break;
 	case ColliderType::PICKAXE:
-		if (state != DEAD) 	DMGEnemy(1);
+		if (state != DEAD) 	DMGEnemyPickaxe();
 		break;
 	case ColliderType::MELEE_AREA:
 		if (state != DEAD) {
 			if (canPush) push = true;
-			DMGEnemy(3);
+			DMGEnemyMelee();
 		}
 		break;
-	case ColliderType::MELEE_AREA_CHARGED:
-		if (state != DEAD) {
-			if (canPush) push = true;
-			DMGEnemy(5);
-		}
 	case ColliderType::SPYKE:
 		break;
 	case ColliderType::ENEMY:
@@ -231,8 +226,17 @@ void Enemy::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 	}
 }
 
-void Enemy::DMGEnemy(int damage) {
-	lives -= (damage + player->damageAdded);
+void Enemy::DMGEnemyPickaxe() {
+	lives = lives - pickaxeDamage;
+	if (lives <= 0) {
+		deathTimer.Start();
+		death.Reset();
+		state = DEAD;
+	}
+}
+
+void Enemy::DMGEnemyMelee() {
+	lives = lives - meleeDamage;
 	if (lives <= 0) {
 		deathTimer.Start();
 		death.Reset();

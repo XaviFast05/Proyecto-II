@@ -25,6 +25,8 @@ public:
 		CHASING,
 		ATTACK,
 		JUMP,
+		RUN,
+		TIRED,
 		DEAD,
 		HURT
 	};
@@ -69,7 +71,8 @@ public:
 
 	virtual void Restart();
 
-	virtual void DMGEnemy(int damage);
+	virtual void DMGEnemyPickaxe();
+	virtual void DMGEnemyMelee();
 
 	void DropLoot();
 
@@ -96,6 +99,8 @@ public:
 	Animation jump;
 	Animation fall;
 	Animation walk;
+	Animation run;
+	Animation tired;
 
 	//PATH
 	Pathfinding* pathfinding;
@@ -110,8 +115,12 @@ public:
 	int attackArea;
 	int noSound;
 
+	int pickaxeDamage = 3;
+	int meleeDamage = 4;
+
 	Timer deathTimer;
 	float deathTime;
+	bool damaged = false;
 	bool dead;
 	bool playingSound;
 

@@ -16,6 +16,7 @@
 #include "Bullet.h"
 #include "PickaxeManager.h"
 #include "CurrencyManager.h"
+#include "DialoguesManager.h"
 
  
 
@@ -88,7 +89,6 @@ bool Player::Start() {
 	godMode = false;
 	canClimb = false;
 	reachedCheckPoint = false;
-
 	pugi::xml_document baseFile;
 	pugi::xml_parse_result result = baseFile.load_file("config.xml");
 
@@ -129,12 +129,14 @@ bool Player::Start() {
 	hurtTimer = Timer();
 	respawnTimer = Timer();
 
-	pickaxeManager = new PickaxeManager();
+	projectileManager = new ProjectileManager();
 	currencyManager = new CurrencyManager();
 	currencyManager->Start();
+	dialoguesManager = new DialoguesManager();
+	dialoguesManager->Start();
 
 	LoadDefaults();
-	pickaxeManager->Start();
+	projectileManager->Start();
 
 	b2Fixture* fixture = pbody->body->GetFixtureList();
 	if (fixture) {
@@ -185,7 +187,8 @@ bool Player::Update(float dt)
 		grounded = VALUE_NEAR_TO_0(pbody->body->GetLinearVelocity().y);
 
 		//UPDATE SUBMODULES
-		pickaxeManager->Update(dt);
+		projectileManager->Update(dt);
+		dialoguesManager->Update(dt);
 
 		//GODMODE
 		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F10) == KEY_DOWN) {
@@ -249,7 +252,7 @@ bool Player::Update(float dt)
 			playerState = FALL;
 			grounded = false;
 		}
-		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][CHOP] && pickaxeManager->GetNumPickaxes() > 0) {
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][CHOP] && projectileManager->GetNumPickaxes() > 0) {
 			stateTimer.Start();
 			playerState = CHOP;
 
@@ -258,17 +261,17 @@ bool Player::Update(float dt)
 			meleeTimer.Start();
 			meleeTimerOn = true;
 		}
-		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][PUNCH] && pickaxeManager->GetNumPickaxes() <= 0) {
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][PUNCH] && projectileManager->GetNumPickaxes() <= 0) {
 			stateTimer.Start();
 			playerState = PUNCH;
 
 			meleeTimer.Start();
 			meleeTimerOn = true;
 		}
-		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Q) && stateFlow[playerState][THROW] && pickaxeManager->GetNumPickaxes() > 0) {
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Q) && stateFlow[playerState][THROW] && projectileManager->GetNumPickaxes() > 0) {
 			
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W)) pickaxeManager->ThrowPickaxe({0,1}, pbody->GetPhysBodyWorldPosition());
-			else pickaxeManager->ThrowPickaxe(GetDirection(), pbody->GetPhysBodyWorldPosition());
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W)) projectileManager->ThrowPickaxe({0,1}, pbody->GetPhysBodyWorldPosition());
+			else projectileManager->ThrowPickaxe(GetDirection(), pbody->GetPhysBodyWorldPosition());
 
 			stateTimer.Start();
 			playerState = THROW;
@@ -287,6 +290,11 @@ bool Player::Update(float dt)
 			dashTimer.Start();
 			dashTimerOn = true;
 			playerState = DASH;
+		}
+		else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && stateFlow[playerState][TALK] && !dialoguesManager->GetOnDialogue()) {
+			
+			dialoguesManager->StartDialogue("DIALOG01");
+			playerState = TALK;
 		}
 
 		//COYOTE TIME LOGIC
@@ -386,7 +394,7 @@ bool Player::Update(float dt)
 				break;
 			}
 
-			// MOVIMIENTO HORIZONTAL si está en suelo y no hay colisión lateral
+			// MOVIMIENTO HORIZONTAL si estï¿½ en suelo y no hay colisiï¿½n lateral
 			if (grounded) {
 				if (CheckMoveX()) {
 					playerState = RUN;
@@ -485,6 +493,12 @@ bool Player::Update(float dt)
 				playerState = IDLE;
 			}
 			break;
+		case TALK:
+			
+			if (!dialoguesManager->GetOnDialogue()) {
+				playerState = IDLE;
+			}
+			break;
 		default:
 			break;
 		}
@@ -553,14 +567,14 @@ bool Player::Update(float dt)
 		break;
 
 	case DASH:
-		//aquí poner animación dash
+		//aquï¿½ poner animaciï¿½n dash
 		currentAnim = &idle;
 		if (resetAnimation == true) {
 			currentAnim->Reset();
 			resetAnimation = false;
 		}
 	case CHARGED:
-		//aquí poner animación ataque cargado
+		//aquï¿½ poner animaciï¿½n ataque cargado
 		currentAnim = &idle;
 		if (resetAnimation == true) {
 			currentAnim->Reset();
@@ -579,6 +593,13 @@ bool Player::Update(float dt)
 			currentAnim->Reset();
 			resetAnimation = false;
 		}
+		break;
+	case TALK:
+		if (resetAnimation == false) {
+			currentAnim->Reset();
+			resetAnimation = true;
+		}
+		currentAnim = &idle;
 		break;
 	}
 
@@ -627,7 +648,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		rightBlocked = true;
 	}
 
-	//Colisión del cuerpo principal
+	//Colisiï¿½n del cuerpo principal
 	switch (physB->ctype)
 	{
 	case ColliderType::PLATFORM:
@@ -639,6 +660,26 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	case ColliderType::SPYKE:
 		LOG("Collision SPYKE");
+		break;
+	case ColliderType::JUMP:
+		LOG("Collision BULLET");
+		if (!godMode || !canHurt) {
+			if (playerState != DEAD) {
+				//HURT LOGIC
+				if (hits >= 1 && playerState != HURT) DamagePlayer();
+				if (hits == 0) KillPlayer();
+				//PUSHING THE PLAYER WHEN HURT
+				b2Vec2 pushVec((physA->body->GetPosition().x - physB->body->GetPosition().x),
+					(physA->body->GetPosition().y - physB->body->GetPosition().y));
+				pushVec.Normalize();
+				pushVec *= pushForce;
+				pushVec.x *= 6;
+
+				pbody->body->SetLinearVelocity(b2Vec2(0, 0));
+				pbody->body->ApplyLinearImpulseToCenter(pushVec, true);
+			}
+
+		}
 		break;
 	case ColliderType::ENEMY:
 		LOG("Collision ENEMY");
@@ -724,7 +765,7 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 		rightBlocked = false;
 	}
 	
-	//Colisión del cuerpo principal
+	//Colisiï¿½n del cuerpo principal
 	switch (physB->ctype)
 	{
 	case ColliderType::PICKAXE:
@@ -860,7 +901,7 @@ void Player::MoveX() {
 void Player::CheckJump() {
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && grounded) {
 		pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
-		grounded = false; // ya no está en el suelo hasta que colisione de nuevo
+		grounded = false; // ya no estï¿½ en el suelo hasta que colisione de nuevo
 	}
 }
 
@@ -875,14 +916,14 @@ void Player::LoadDefaults() {
 	plusJumpTimerMax = 0.2; // salto extra del salto
 	dashForce = 8; // impulso de dash
 	chargedCooldownTimerMax = 5; // tiempo entre ataque cargado
-	pickaxeManager->pickaxeRecollectCount = 2.5; // tiempo entre piqueta y piqueta
+	projectileManager->pickaxeRecollectCount = 2.5; // tiempo entre piqueta y piqueta
 	moveSpeed = 0.7; // velocidad del player
-	damageAdded = 0; // añadido de daño al base
-	maxPickaxes = 3; // piquetas máximas
-	pickaxeManager->maxPickaxes = maxPickaxes;
+	damageAdded = 0; // aï¿½adido de daï¿½o al base
+	maxPickaxes = 3; // piquetas mï¿½ximas
+	projectileManager->maxPickaxes = maxPickaxes;
 	damageSmallBoost = false;
-	damageBoost = false; // hacer mas daño cuando tienes un corazón
-	damageBoostAdded = 5; // el daño que haces cuando tienes un corazón y el boost
+	damageBoost = false; // hacer mas daï¿½o cuando tienes un corazï¿½n
+	damageBoostAdded = 5; // el daï¿½o que haces cuando tienes un corazï¿½n y el boost
 }
 
 void Player::LoadUpgrades() {
@@ -899,7 +940,7 @@ void Player::LoadUpgrades() {
 			chargedCooldownTimerMax = 3;
 			break;
 		case 3:
-			pickaxeManager->pickaxeRecollectCount = 1.25;
+			projectileManager->pickaxeRecollectCount = 1.25;
 			break;
 		case 4:
 			moveSpeed = 0.9;
@@ -910,8 +951,8 @@ void Player::LoadUpgrades() {
 			break;
 		case 6:
 			maxPickaxes = 4;
-			pickaxeManager->pickaxeCount = maxPickaxes;
-			pickaxeManager->maxPickaxes = maxPickaxes;
+			projectileManager->pickaxeCount = maxPickaxes;
+			projectileManager->maxPickaxes = maxPickaxes;
 			break;
 		case 7:
 			damageBoost = true;
@@ -946,12 +987,12 @@ void Player::AddUpgrade(int num) {
 				if (upgrades[i] == num) canAdd = false;
 			}
 			if (canAdd == false) {
-			}//aquí poner que esa mejora ya la tienes
+			}//aquï¿½ poner que esa mejora ya la tienes
 			else upgrades.push_back(num);
 		}
-		//else aquí poner algo en plan que tienes demasiadas mejoras
+		//else aquï¿½ poner algo en plan que tienes demasiadas mejoras
 	}
-	//else poner aquí que la update no la tienes colegon
+	//else poner aquï¿½ que la update no la tienes colegon
 	LoadUpgrades();
 }
 
@@ -961,6 +1002,6 @@ void Player::RemoveUpgrade(int num) {
 		if (upgrades[i] == num) index = i;
 	}
 	if (index >= 0) upgrades.erase(upgrades.begin() + index);
-	//else aquí poner algo rollo esta mejora no la tienes activa
+	//else aquï¿½ poner algo rollo esta mejora no la tienes activa
 	LoadUpgrades();
 }

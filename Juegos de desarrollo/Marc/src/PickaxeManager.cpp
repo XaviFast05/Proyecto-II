@@ -1,22 +1,31 @@
 #include "PickaxeManager.h"
 
-PickaxeManager::PickaxeManager()
+
+ProjectileManager::ProjectileManager()
 {
 
 }
 
-bool PickaxeManager::Start()
+bool ProjectileManager::Start()
 {
-	for (int i = 0; i < maxPickaxes; i++)
+	startNumPickaxe = 3;
+	for (int i = 0; i < startNumPickaxe; i++)
 	{
 		Bullet* bullet = (Bullet*)CreatePickaxe();
 	}
 
-	pickaxeCount = maxPickaxes;
+	startNumJumpProjectiles = 5;
+	for (int j = 0; j < startNumJumpProjectiles; j++)
+	{
+		Bullet* jumpBullet = (Bullet*)CreateJumpProjectile();
+	}
+
+	pickaxeCount = startNumPickaxe;
 	return true;
 }
 
-bool PickaxeManager::Update(float dt)
+
+bool ProjectileManager::Update(float dt)
 {
 	//PICKAXE LOGIC
 	if (pickaxeCount < maxPickaxes && not recollectingPickaxes) {
@@ -28,15 +37,16 @@ bool PickaxeManager::Update(float dt)
 		recollectingPickaxes = false;
 	}
 
+
 	return true;
 }
 
-bool PickaxeManager::CleanUp()
+bool ProjectileManager::CleanUp()
 {
 	return true;
 }
 
-void PickaxeManager::ThrowPickaxe(Vector2D Direction, Vector2D Position)
+void ProjectileManager::ThrowPickaxe(Vector2D Direction, Vector2D Position)
 {
 	pickaxeCount--;
 	pickaxeRecollectTimer.Start();
@@ -50,15 +60,15 @@ void PickaxeManager::ThrowPickaxe(Vector2D Direction, Vector2D Position)
 	bulletPosition.setY(bulletPosition.getY() + (Direction.getY() * -50));
 	bullet->SetPosition(bulletPosition);
 	bullet->SetDirection(Direction);
-	if (Direction.getX() != 0) bullet->ChangeType(BulletType::HORIZONTAL);
-	else bullet->ChangeType(BulletType::VERTICAL);
+	if (Direction.getX() != 0) bullet->ChangeDirection(BulletDirection::HORIZONTAL);
+	else bullet->ChangeDirection(BulletDirection::VERTICAL);
 	bullet->Enable(); 
 }
 
-Entity* PickaxeManager::CreatePickaxe()
+Entity* ProjectileManager::CreatePickaxe()
 {
 	Bullet* bullet = (Bullet*)Engine::GetInstance().entityManager->CreatePooledEntities(EntityType::SHOT);
-	bullet->type = BulletType::HORIZONTAL;
+	bullet->bullet_direction = BulletDirection::HORIZONTAL;
 	bullet->SetParameters(Engine::GetInstance().scene.get()->configParameters);
 	bullet->texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/bala.png");
 	bullet->Start();
@@ -66,12 +76,55 @@ Entity* PickaxeManager::CreatePickaxe()
 	return bullet;
 }
 
-int PickaxeManager::GetNumPickaxes()
+void ProjectileManager::ThrowJumpProjectiles(Vector2D position)
+{
+	// Dirección derecha
+	Vector2D dirRight(1, 0);
+	Bullet* bulletRight = (Bullet*)Engine::GetInstance().entityManager->GetPooledEntity(EntityType::JUMPSHOT);
+	if (!bulletRight)
+	{
+		bulletRight = (Bullet*)CreateJumpProjectile();
+	}
+	Vector2D rightPos = position;
+	rightPos.setX(rightPos.getX() + 90); // desplazamiento opcional
+	rightPos.setY(rightPos.getY() + 50); // desplazamiento opcional
+	bulletRight->SetPosition(rightPos);
+	bulletRight->SetDirection(dirRight);
+	bulletRight->ChangeDirection(BulletDirection::HORIZONTAL);
+	bulletRight->Enable();
+
+	// Dirección izquierda
+	Vector2D dirLeft(-1, 0);
+	Bullet* bulletLeft = (Bullet*)Engine::GetInstance().entityManager->GetPooledEntity(EntityType::JUMPSHOT);
+	if (!bulletLeft)
+	{
+		bulletLeft = (Bullet*)CreateJumpProjectile();
+	}
+	Vector2D leftPos = position;
+	leftPos.setX(leftPos.getX() - 90); // desplazamiento opcional
+	leftPos.setY(rightPos.getY()); // desplazamiento opcional
+	bulletLeft->SetPosition(leftPos);
+	bulletLeft->SetDirection(dirLeft);
+	bulletLeft->ChangeDirection(BulletDirection::HORIZONTAL);
+	bulletLeft->Enable();
+}
+
+Entity* ProjectileManager::CreateJumpProjectile()
+{
+	Bullet* bullet = (Bullet*)Engine::GetInstance().entityManager->CreatePooledEntities(EntityType::JUMPSHOT);
+	bullet->bullet_direction = BulletDirection::HORIZONTAL;
+	bullet->SetParameters(Engine::GetInstance().scene.get()->configParameters);
+	bullet->texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/balaJumper.png");
+	bullet->Start();
+	return bullet;
+}
+
+int ProjectileManager::GetNumPickaxes()
 {
 	return pickaxeCount;
 }
 
-int PickaxeManager::GetNumRed() {
+int ProjectileManager::GetNumRed() {
 	float timeFactor = pickaxeRecollectTimer.ReadSec() / (pickaxeRecollectCount - 0.2f);
 	int num = timeFactor * 8;
 	return num;

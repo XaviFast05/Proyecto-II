@@ -7,14 +7,14 @@
 #include "Timer.h"
 #include "Particle.h"
 
-
 #define GHOST_W 32
 //#define MAX_PICKAXES 4
 #define MELEE_AREA_WIDTH 30
 
 //FORWARD DECLARATION
-class PickaxeManager;
+class ProjectileManager;
 class CurrencyManager;
+class DialoguesManager;
 
 struct SDL_Texture;
 
@@ -29,7 +29,8 @@ enum state {
 	DASH,
 	CHARGED,
 	HURT,
-	DEAD
+	DEAD,
+	TALK
 };
 
 enum Direction {
@@ -151,8 +152,9 @@ public:
 	bool resetAnimation = false;
 
 	//MANAGERS
-	PickaxeManager* pickaxeManager;
+	ProjectileManager* projectileManager;
 	CurrencyManager* currencyManager;
+	DialoguesManager* dialoguesManager;
 
 	Timer coyoteTimer;
 	bool coyoteTimerOn = false;
@@ -219,6 +221,5 @@ public:
 	bool playSound = true;
 
 	bool respawnHeal = false;
-
 	Direction dir;
 };

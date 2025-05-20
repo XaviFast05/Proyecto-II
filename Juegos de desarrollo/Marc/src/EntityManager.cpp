@@ -7,8 +7,11 @@
 #include "CheckPoint.h"
 #include "BatEnemy.h"
 #include "GroundEnemy.h"
+#include "ChildEnemy.h"
+#include "JumpingEnemy.h"
+#include "RunningEnemy.h"
+#include "FinalBoss.h"
 #include "Particle.h"
-#include "Santa.h"
 #include "SoulRock.h"
 #include "Bullet.h"
 #include "Ally.h"
@@ -77,11 +80,11 @@ bool EntityManager::CleanUp()
 	return ret;
 }
 
-Entity* EntityManager::CreateEntity(EntityType type)
+Entity* EntityManager::CreateEntity(EntityType bullet_direction)
 {
 	Entity* entity = nullptr; 
 
-	switch (type)
+	switch (bullet_direction)
 	{
 	case EntityType::PLAYER:
 		entity = new Player();
@@ -98,11 +101,23 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	case EntityType::GROUND_ENEMY:
 		entity = new GroundEnemy();
 		break;
-	case EntityType::BOSS:
-		entity = new Santa();
+	case EntityType::CHILD_ENEMY:
+		entity = new ChildEnemy();
+		break;
+	case EntityType::JUMPING_ENEMY:
+		entity = new JumpingEnemy();
+		break;
+	case EntityType::RUNNING_ENEMY:
+		entity = new RunningEnemy();
 		break;
 	case EntityType::SHOT:
-		entity = new Bullet();
+		entity = new Bullet(BulletType::PICKAXE, BulletDirection::HORIZONTAL);
+		break;
+	case EntityType::JUMPSHOT:
+		entity = new Bullet(BulletType::BOSSJUMP, BulletDirection::HORIZONTAL);
+		break;
+	case EntityType::FINALBOSS:
+		entity = new FinalBoss();
 		break;
 	case EntityType::CURRENCY_ORB:
 		entity = new CurrencyOrb();
@@ -122,13 +137,13 @@ Entity* EntityManager::CreateEntity(EntityType type)
 	return entity;
 }
 
-std::list<Entity*> EntityManager::CreatePooledEntities(EntityType type, int num)
+std::list<Entity*> EntityManager::CreatePooledEntities(EntityType bullet_direction, int num)
 {
 	for (int i = 0; i < num; i++)
 	{
 		Entity* entity = nullptr;
 
-		switch (type)
+		switch (bullet_direction)
 		{
 		case EntityType::PLAYER:
 			entity = new Player();
@@ -145,11 +160,25 @@ std::list<Entity*> EntityManager::CreatePooledEntities(EntityType type, int num)
 		case EntityType::GROUND_ENEMY:
 			entity = new GroundEnemy();
 			break;
+		case EntityType::CHILD_ENEMY:
+			entity = new ChildEnemy();
+			break;
+		case EntityType::JUMPING_ENEMY:
+			entity = new JumpingEnemy();
+			break;
+		case EntityType::RUNNING_ENEMY:
+			entity = new RunningEnemy();
+			break;
 		case EntityType::BOSS:
-			entity = new Santa();
 			break;
 		case EntityType::SHOT:
-			entity = new Bullet();
+			entity = new Bullet(BulletType::PICKAXE, BulletDirection::HORIZONTAL);
+			break;
+		case EntityType::JUMPSHOT:
+			entity = new Bullet(BulletType::BOSSJUMP, BulletDirection::HORIZONTAL);
+			break;
+		case EntityType::FINALBOSS:
+			entity = new FinalBoss();
 			break;
 		case EntityType::CURRENCY_ORB:
 			entity = new CurrencyOrb();
@@ -166,18 +195,18 @@ std::list<Entity*> EntityManager::CreatePooledEntities(EntityType type, int num)
 
 		entity->Disable();
 		entities.push_back(entity);
-		pooledEntities[type].push_back(entity);
+		pooledEntities[bullet_direction].push_back(entity);
 	}
 
-	return pooledEntities[type];
+	return pooledEntities[bullet_direction];
 }
 
-Entity* EntityManager::CreatePooledEntities(EntityType type)
+Entity* EntityManager::CreatePooledEntities(EntityType bullet_direction)
 {
 
 	Entity* entity = nullptr;
 
-	switch (type)
+	switch (bullet_direction)
 	{
 	case EntityType::PLAYER:
 		entity = new Player();
@@ -194,11 +223,25 @@ Entity* EntityManager::CreatePooledEntities(EntityType type)
 	case EntityType::GROUND_ENEMY:
 		entity = new GroundEnemy();
 		break;
+	case EntityType::CHILD_ENEMY:
+		entity = new ChildEnemy();
+		break;
+	case EntityType::JUMPING_ENEMY:
+		entity = new JumpingEnemy();
+		break;
+	case EntityType::RUNNING_ENEMY:
+		entity = new RunningEnemy();
+		break;
 	case EntityType::BOSS:
-		entity = new Santa();
 		break;
 	case EntityType::SHOT:
-		entity = new Bullet();
+		entity = new Bullet(BulletType::PICKAXE, BulletDirection::HORIZONTAL);
+		break;
+	case EntityType::JUMPSHOT:
+		entity = new Bullet(BulletType::BOSSJUMP, BulletDirection::HORIZONTAL);
+		break;
+	case EntityType::FINALBOSS:
+		entity = new FinalBoss();
 		break;
 	case EntityType::CURRENCY_ORB:
 		entity = new CurrencyOrb();
@@ -215,14 +258,14 @@ Entity* EntityManager::CreatePooledEntities(EntityType type)
 
 	entity->Disable();
 	entities.push_back(entity);
-	pooledEntities[type].push_back(entity);
+	pooledEntities[bullet_direction].push_back(entity);
 
 	return entity;
 }
 
-Entity* EntityManager::GetPooledEntity(EntityType type)
+Entity* EntityManager::GetPooledEntity(EntityType bullet_direction)
 {
-	for (Entity* entity : pooledEntities[type])
+	for (Entity* entity : pooledEntities[bullet_direction])
 	{
 		if (!entity->active)
 		{

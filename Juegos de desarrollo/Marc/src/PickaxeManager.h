@@ -5,15 +5,16 @@
 #include "Engine.h"
 #include "Bullet.h"
 #include "Textures.h"
+#include "Player.h"
 #include "Scene.h"
 #include "Timer.h"
 
-class PickaxeManager
+class ProjectileManager
 {
 public:
 
-	PickaxeManager();
-	virtual ~PickaxeManager() {};
+	ProjectileManager();
+	virtual ~ProjectileManager() {};
 
 	bool Start();
 
@@ -25,15 +26,21 @@ public:
 
 	Entity* CreatePickaxe();
 
+	void ThrowJumpProjectiles(Vector2D position);
+
+	Entity* CreateJumpProjectile();
+
+
 	int GetNumPickaxes();
 
 	int GetNumRed();
-
 public:
 
 	int startNumPickaxe;
+	int startNumJumpProjectiles;
 
 	int pickaxeCount;
+
 
 	Timer pickaxeRecollectTimer;
 	float pickaxeRecollectCount;
