@@ -143,28 +143,28 @@ bool MerchantMenu::Update(float dt)
 	
 	if (merchantPanelOpen) {
 		if (hasOpened) {
-			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(0) || Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost1) firstUpgradeBt->state = GuiControlState::DISABLED;
+			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(0)) firstUpgradeBt->state = GuiControlState::DISABLED;
 			else firstUpgradeBt->state = GuiControlState::NORMAL;
 
-			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(1) || Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost2) secondUpgradeBt->state = GuiControlState::DISABLED;
+			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(1)) secondUpgradeBt->state = GuiControlState::DISABLED;
 			else secondUpgradeBt->state = GuiControlState::NORMAL;
 
-			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(2) || Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost3) thirdUpgradeBt->state = GuiControlState::DISABLED;
+			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(2)) thirdUpgradeBt->state = GuiControlState::DISABLED;
 			else thirdUpgradeBt->state = GuiControlState::NORMAL;
 
-			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(3) || Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost4) fourthUpgradeBt->state = GuiControlState::DISABLED;
+			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(3)) fourthUpgradeBt->state = GuiControlState::DISABLED;
 			else fourthUpgradeBt->state = GuiControlState::NORMAL;
 
-			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(4) || Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost5) fifthUpgradeBt->state = GuiControlState::DISABLED;
+			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(4)) fifthUpgradeBt->state = GuiControlState::DISABLED;
 			else fifthUpgradeBt->state = GuiControlState::NORMAL;
 
-			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(5) || Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost6) sixthUpgradeBt->state = GuiControlState::DISABLED;
+			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(5)) sixthUpgradeBt->state = GuiControlState::DISABLED;
 			else sixthUpgradeBt->state = GuiControlState::NORMAL;
 
-			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(6) || Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost7) seventhUpgradeBt->state = GuiControlState::DISABLED;
+			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(6)) seventhUpgradeBt->state = GuiControlState::DISABLED;
 			else seventhUpgradeBt->state = GuiControlState::NORMAL;
 
-			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(7) || Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost8) eighthUpgradeBt->state = GuiControlState::DISABLED;
+			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(7)) eighthUpgradeBt->state = GuiControlState::DISABLED;
 			else eighthUpgradeBt->state = GuiControlState::NORMAL;
 
 			hasOpened = false;
@@ -268,46 +268,89 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 	switch (control->id) {
 	case GuiControlId::FIRST_UPGRADE:
 		if (firstUpgradeBt->isChecked) {
-			Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost1);
-			Engine::GetInstance().scene.get()->player->UnlockUpgrade(0);
-			firstUpgradeBt->state == GuiControlState::DISABLED;
-			hasOpened = true;
+			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost1)
+			{
+				LOG("POBRE DE MIERDA");
+				firstUpgradeBt->SetChecked(false);
+			}
+			else {
+				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost1);
+				Engine::GetInstance().scene.get()->player->UnlockUpgrade(0);
+				LOG("GRACIAS POR COMPRAR");
+				firstUpgradeBt->state == GuiControlState::DISABLED;
+				hasOpened = true;
+			}
+			
 		}
 		break;
 
 	case GuiControlId::SECOND_UPGRADE:
 		if (secondUpgradeBt->isChecked) {
-			Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost2);
-			Engine::GetInstance().scene.get()->player->UnlockUpgrade(1);
-			secondUpgradeBt->state == GuiControlState::DISABLED;
-			hasOpened = true;
+			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost2)
+			{
+				LOG("POBRE DE MIERDA");
+				secondUpgradeBt->SetChecked(false);
+			}
+			else {
+				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost2);
+				Engine::GetInstance().scene.get()->player->UnlockUpgrade(1);
+				LOG("GRACIAS POR COMPRAR");
+				secondUpgradeBt->state == GuiControlState::DISABLED;
+				hasOpened = true;
+			}
+
 		}
 		break;
 
 	case GuiControlId::THIRD_UPGRADE:
 		if (thirdUpgradeBt->isChecked) {
-			Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost3);
-			Engine::GetInstance().scene.get()->player->UnlockUpgrade(2);
-			thirdUpgradeBt->state == GuiControlState::DISABLED;
-			hasOpened = true;
+			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost3)
+			{
+				LOG("POBRE DE MIERDA");
+				thirdUpgradeBt->SetChecked(false);
+			}
+			else {
+				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost3);
+				Engine::GetInstance().scene.get()->player->UnlockUpgrade(2);
+				LOG("GRACIAS POR COMPRAR");
+				thirdUpgradeBt->state == GuiControlState::DISABLED;
+				hasOpened = true;
+			}
+
 		}
 		break;
 
 	case GuiControlId::FOURTH_UPGRADE:
 		if (fourthUpgradeBt->isChecked) {
-			Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost4);
-			Engine::GetInstance().scene.get()->player->UnlockUpgrade(3);
-			fourthUpgradeBt->state == GuiControlState::DISABLED;
-			hasOpened = true;
+			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost4)
+			{
+				LOG("POBRE DE MIERDA");
+				fourthUpgradeBt->SetChecked(false);
+			}
+			else {
+				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost4);
+				Engine::GetInstance().scene.get()->player->UnlockUpgrade(3);
+				LOG("GRACIAS POR COMPRAR");
+				fourthUpgradeBt->state == GuiControlState::DISABLED;
+				hasOpened = true;
+			}
 		}
 		break;
 
 	case GuiControlId::FIFTH_UPGRADE:
 		if (fifthUpgradeBt->isChecked) {
-			Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost5);
-			Engine::GetInstance().scene.get()->player->UnlockUpgrade(4);
-			fifthUpgradeBt->state == GuiControlState::DISABLED;
-			hasOpened = true;
+			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost5)
+			{
+				LOG("POBRE DE MIERDA");
+				fifthUpgradeBt->SetChecked(false);
+			}
+			else {
+				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost5);
+				Engine::GetInstance().scene.get()->player->UnlockUpgrade(4);
+				LOG("GRACIAS POR COMPRAR");
+				fifthUpgradeBt->state == GuiControlState::DISABLED;
+				hasOpened = true;
+			}
 		}
 		break;
 
@@ -317,24 +360,52 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 			Engine::GetInstance().scene.get()->player->UnlockUpgrade(5);
 			sixthUpgradeBt->state == GuiControlState::DISABLED;
 			hasOpened = true;
+			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost6)
+			{
+				LOG("POBRE DE MIERDA");
+				sixthUpgradeBt->SetChecked(false);
+			}
+			else {
+				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost6);
+				Engine::GetInstance().scene.get()->player->UnlockUpgrade(5);
+				LOG("GRACIAS POR COMPRAR");
+				sixthUpgradeBt->state == GuiControlState::DISABLED;
+				hasOpened = true;
+			}
 		}
 		break;
 
 	case GuiControlId::SEVENTH_UPGRADE:
 		if (seventhUpgradeBt->isChecked) {
-			Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost7);
-			Engine::GetInstance().scene.get()->player->UnlockUpgrade(6);
-			seventhUpgradeBt->state == GuiControlState::DISABLED;
-			hasOpened = true;
+			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost7)
+			{
+				LOG("POBRE DE MIERDA");
+				seventhUpgradeBt->SetChecked(false);
+			}
+			else {
+				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost7);
+				Engine::GetInstance().scene.get()->player->UnlockUpgrade(6);
+				LOG("GRACIAS POR COMPRAR");
+				seventhUpgradeBt->state == GuiControlState::DISABLED;
+				hasOpened = true;
+			}
 		}
 		break;
 
 	case GuiControlId::EIGHTH_UPGRADE:
 		if (eighthUpgradeBt->isChecked) {
-			Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost8);
-			Engine::GetInstance().scene.get()->player->UnlockUpgrade(7);
-			eighthUpgradeBt->state == GuiControlState::DISABLED;
-			hasOpened = true;
+			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost8)
+			{
+				LOG("POBRE DE MIERDA");
+				eighthUpgradeBt->SetChecked(false);
+			}
+			else {
+				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost8);
+				Engine::GetInstance().scene.get()->player->UnlockUpgrade(7);
+				LOG("GRACIAS POR COMPRAR");
+				eighthUpgradeBt->state == GuiControlState::DISABLED;
+				hasOpened = true;
+			}
 		}
 		break;
 	}

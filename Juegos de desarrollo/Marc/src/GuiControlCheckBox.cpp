@@ -53,7 +53,7 @@ bool GuiControlCheckBox::Update(float dt)
 				}
 			}
 			else {
-				state = GuiControlState::NORMAL;
+				//state = GuiControlState::NORMAL;
 			}
 		}
 	}

@@ -101,6 +101,7 @@ bool UpgradesMenu::Update(float dt)
 			if (!Engine::GetInstance().scene.get()->player->HaveUpgrade(7)) upg8->state = GuiControlState::DISABLED;
 
 			if (Engine::GetInstance().scene.get()->player->upgrades.size() < Engine::GetInstance().scene.get()->player->maxUpgrades) {
+				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(0)) upg1->state = GuiControlState::NORMAL;
 				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(1)) upg2->state = GuiControlState::NORMAL;
 				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(2)) upg3->state = GuiControlState::NORMAL;
 				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(3)) upg4->state = GuiControlState::NORMAL;
