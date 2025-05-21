@@ -56,9 +56,9 @@ bool FadeToBlack::Update(float dt)
 	if (currentStep == Fade_Step::NONE) return true;
 
 	float fadeRatio = (float)frameCount / (float)maxFadeFrames;
+
 	// Render the black square with alpha on the screen
-	SDL_SetRenderDrawColor(Engine::GetInstance().render.get()->renderer, 0, 0, 0, (Uint8)(fadeRatio * 255.0f));
-	SDL_RenderFillRect(Engine::GetInstance().render.get()->renderer, &screenRect);
+	Engine::GetInstance().render.get()->DrawRectangleBuffer(screenRect, 0, 0, 0, (Uint8)(fadeRatio * 255.0f), FADE_LAYER, true, false);
 
 	return true;
 }

@@ -105,22 +105,22 @@ bool DialoguesManager::Update(float dt)
             -(float)Engine::GetInstance().render.get()->camera.y + rectangleTextureY
         };
 
-        Engine::GetInstance().render.get()->DrawTexture(rectangleTexture, rectPos.getX(), rectPos.getY());
-        Engine::GetInstance().render.get()->DrawTexture(images[vignetteParameters.attribute("talker").as_string()], rectPos.getX() + imageOffsetX, rectPos.getY() + imageOffsetY);
+        Engine::GetInstance().render.get()->DrawTextureBuffer(rectangleTexture, rectPos.getX(), rectPos.getY(), false, HUD);
+        Engine::GetInstance().render.get()->DrawTextureBuffer(images[vignetteParameters.attribute("talker").as_string()], rectPos.getX() + imageOffsetX, rectPos.getY() + imageOffsetY, false, HUD);
 
         for (int i = 0; i < lines.size(); i++)
         {
             int lineW = 0, lineH = 0;
             TTF_SizeText(textFont, lines[i].c_str(), &lineW, &lineH);
 
-            Engine::GetInstance().render.get()->DrawTextEx(
+            Engine::GetInstance().render.get()->DrawTextToBuffer(
                 lines[i].c_str(),
                 rectangleTextureX + textOffsetX,
                 rectangleTextureY + textOffsetY + lineH * i,
                 lineW,
                 lineH,
                 textFont,
-                { 255, 255, 255, 255 }
+                { 255, 255, 255, 255 }, HUD
             );
         }
     }

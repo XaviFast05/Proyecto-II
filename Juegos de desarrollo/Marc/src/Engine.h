@@ -25,6 +25,7 @@ class ParticleManager;
 class GuiManager;
 class Intro;
 class Settings;
+class UpgradesMenu;
 class DeathMenu;
 class WinMenu;
 class FadeToBlack;
@@ -124,6 +125,7 @@ public:
 	std::shared_ptr<GuiManager> guiManager;
 	std::shared_ptr<Intro> intro;
 	std::shared_ptr<Settings> settings;
+	std::shared_ptr<UpgradesMenu> upgradesMenu;
 	std::shared_ptr<FadeToBlack> fade;
 	std::shared_ptr<DeathMenu> death;
 	std::shared_ptr<WinMenu> win;

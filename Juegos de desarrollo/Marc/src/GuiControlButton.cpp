@@ -77,7 +77,7 @@ bool GuiControlButton::Update(float dt)
 
 	if (active) {
 		if (texture != nullptr) {
-			Engine::GetInstance().render.get()->DrawTexture(texture, -camera.x / windowScale + bounds.x, -camera.y / windowScale + bounds.y, &section);
+			Engine::GetInstance().render.get()->DrawTextureBuffer(texture, -camera.x / windowScale + bounds.x, -camera.y / windowScale + bounds.y, false, MENUS,&section);
 		}
 
 		/*Engine::GetInstance().render->DrawText(text.c_str(), bounds.x * 2 + bounds.w / 2, bounds.y * 2 + bounds.h / 2, bounds.w, bounds.h);*/

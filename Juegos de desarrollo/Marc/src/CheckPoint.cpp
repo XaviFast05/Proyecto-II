@@ -64,7 +64,7 @@ bool CheckPoint::Update(float dt)
 	position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texW / 2);
 	position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
 
-	Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY(), &currentFrame);
+	Engine::GetInstance().render.get()->DrawTextureBuffer(texture, (int)position.getX(), (int)position.getY(), false, DEFAULT, &currentFrame);
 
 	return true;
 }

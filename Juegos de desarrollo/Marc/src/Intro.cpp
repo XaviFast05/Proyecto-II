@@ -53,7 +53,7 @@ bool Intro::PreUpdate()
 // Called each loop iteration
 bool Intro::Update(float dt)
 {
-	Engine::GetInstance().render.get()->DrawTexture(intro, 0, 0, NULL);
+	Engine::GetInstance().render.get()->DrawTextureBuffer(intro, 0, 0, false, MENUS);
 	if (introTimer.ReadSec() > maxIntroTime || (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)) {
 		Engine::GetInstance().fade.get()->Fade(this, Engine::GetInstance().mainMenu.get(), 60);
 	}

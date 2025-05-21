@@ -71,8 +71,8 @@ bool GuiControlSlider::Update(float dt)
 
     if (active) {
        
-        Engine::GetInstance().render.get()->DrawTexture(sliderTexture, -camera.x / windowScale + sliderBounds.x, -camera.y / windowScale + sliderBounds.y, NULL);
-        Engine::GetInstance().render.get()->DrawTexture(texture, -camera.x / windowScale + sliderPosX, -camera.y / windowScale + sliderBounds.y - bounds.h/4, NULL);
+        Engine::GetInstance().render.get()->DrawTextureBuffer(sliderTexture, -camera.x / windowScale + sliderBounds.x, -camera.y / windowScale + sliderBounds.y, false,MENUS);
+        Engine::GetInstance().render.get()->DrawTextureBuffer(texture, -camera.x / windowScale + sliderPosX, -camera.y / windowScale + sliderBounds.y - bounds.h/4, false,MENUS);
     }
 
 

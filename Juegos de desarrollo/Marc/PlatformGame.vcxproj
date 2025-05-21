@@ -192,6 +192,7 @@
     <ClCompile Include="src\TextManager.cpp" />
     <ClCompile Include="src\Textures.cpp" />
     <ClCompile Include="src\Timer.cpp" />
+    <ClCompile Include="src\UpgradesMenu.cpp" />
     <ClCompile Include="src\Vector2D.cpp" />
     <ClCompile Include="src\WallBreaker.cpp" />
     <ClCompile Include="src\Window.cpp" />
@@ -244,6 +245,7 @@
     <ClInclude Include="src\TextManager.h" />
     <ClInclude Include="src\Textures.h" />
     <ClInclude Include="src\Timer.h" />
+    <ClInclude Include="src\UpgradesMenu.h" />
     <ClInclude Include="src\Vector2D.h" />
     <ClInclude Include="src\WallBreaker.h" />
     <ClInclude Include="src\Window.h" />

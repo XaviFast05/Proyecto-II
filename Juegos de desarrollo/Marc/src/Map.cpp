@@ -51,12 +51,11 @@ bool Map::Update(float dt)
 
             for (int numRep = 0; numRep < paralax->repeatNum; numRep++)
             {
-                if (numRep % 2 != 0) Engine::GetInstance().render->DrawTexture(paralax->texture, -cameraX / paralax->slowX + paralax->marginX + paralax->width * (numRep), -cameraY / paralax->slowY + paralax->marginY);
-                else Engine::GetInstance().render->DrawTextureFlipped(paralax->texture, -cameraX / paralax->slowX + paralax->marginX + paralax->width * (numRep), -cameraY / paralax->slowY + paralax->marginY);
+                if (numRep % 2 != 0) Engine::GetInstance().render->DrawTextureBuffer(paralax->texture, -cameraX / paralax->slowX + paralax->marginX + paralax->width * (numRep), -cameraY / paralax->slowY + paralax->marginY,false, PARALAX);
+                else Engine::GetInstance().render->DrawTextureBuffer(paralax->texture, -cameraX / paralax->slowX + paralax->marginX + paralax->width * (numRep), -cameraY / paralax->slowY + paralax->marginY, true, PARALAX);
             }
         }
     }
-
 
     if (mapLoaded) {
 
@@ -64,7 +63,9 @@ bool Map::Update(float dt)
         // iterate all tiles in a layer
         for (const auto& mapLayer : mapData.layers) {
             //Check if the property Draw exist get the value, if it's true draw the lawyer
-            if (mapLayer->properties.GetProperty("Draw") != NULL && mapLayer->properties.GetProperty("Draw")->value == true) {
+            if ((mapLayer->properties.GetProperty("PreDraw") != NULL && mapLayer->properties.GetProperty("PreDraw")->value == true) || 
+                (mapLayer->properties.GetProperty("Draw") != NULL && mapLayer->properties.GetProperty("Draw")->value == true) || 
+                (mapLayer->properties.GetProperty("PostDraw") != NULL && mapLayer->properties.GetProperty("PostDraw")->value == true)) {
                 for (int i = 0; i < mapData.width; i++) {
                     for (int j = 0; j < mapData.height; j++) {
 
@@ -83,9 +84,14 @@ bool Map::Update(float dt)
                                     //Get the Rect from the tileSetTexture;
                                     SDL_Rect tileRect = tileSet->GetRect(gid);
                                     //Get the screen coordinates from the tile coordinates
-                                        Vector2D mapCoord = MapToWorld(i, j);
+                                    Vector2D mapCoord = MapToWorld(i, j);
                                     //Draw the texture
-                                    Engine::GetInstance().render->DrawTexture(tileSet->texture, mapCoord.getX(), mapCoord.getY(), &tileRect);
+                                    RenderLayers layer = DEFAULT;
+                                    if (mapLayer->properties.GetProperty("Draw") != NULL) layer = MAP;
+                                    if (mapLayer->properties.GetProperty("PreDraw") != NULL) layer = BEHIND_MAP;
+                                    if (mapLayer->properties.GetProperty("PostDraw") != NULL) layer = FRONT;
+        
+                                    Engine::GetInstance().render->DrawTextureBuffer(tileSet->texture, mapCoord.getX(), mapCoord.getY(), false, layer, &tileRect);
                                 }
                             }
                         }
@@ -94,7 +100,6 @@ bool Map::Update(float dt)
             }
         }
     }
-
     return ret;
 }
 
@@ -102,43 +107,6 @@ bool Map::PostUpdate()
 {
     ZoneScoped;
     bool ret = true;
-
-    if (mapLoaded) {
-
-        // L07 TODO 5: Prepare the loop to draw all tiles in a layer + DrawTexture()
-        // iterate all tiles in a layer
-        for (const auto& mapLayer : mapData.layers) {
-            //Check if the property Draw exist get the value, if it's true draw the lawyer
-            if (mapLayer->properties.GetProperty("PostDraw") != NULL && mapLayer->properties.GetProperty("PostDraw")->value == true) {
-                for (int i = 0; i < mapData.width; i++) {
-                    for (int j = 0; j < mapData.height; j++) {
-
-                        // L07 TODO 9: Complete the draw function
-
-                        Vector2D mapInWorld = MapToWorld(i, j);
-                        if (Engine::GetInstance().render.get()->InCameraView(mapInWorld.getX(), mapInWorld.getY(), mapData.tileWidth, mapData.tileHeight))
-                        {
-                            //Get the gid from tile
-                            int gid = mapLayer->Get(i, j);
-                            //Check if the gid is different from 0 - some tiles are empty
-                            if (gid != 0) {
-                                //L09: TODO 3: Obtain the tile set using GetTilesetFromTileId
-                                TileSet* tileSet = GetTilesetFromTileId(gid);
-                                if (tileSet != nullptr) {
-                                    //Get the Rect from the tileSetTexture;
-                                    SDL_Rect tileRect = tileSet->GetRect(gid);
-                                    //Get the screen coordinates from the tile coordinates
-                                    Vector2D mapCoord = MapToWorld(i, j);
-                                    //Draw the texture
-                                    Engine::GetInstance().render->DrawTexture(tileSet->texture, mapCoord.getX(), mapCoord.getY(), &tileRect);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
 
     return ret;
 }

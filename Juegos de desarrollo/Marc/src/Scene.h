@@ -38,6 +38,7 @@ enum Levels {
 	UNKNOWN,
 	LVL1,
 	LVL2,
+	LVL3
 };
 
 class Scene : public Module

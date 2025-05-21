@@ -34,6 +34,7 @@
 #include "WinMenu.h"
 #include "PickaxeManager.h"
 #include "CurrencyManager.h"
+#include "UpgradesMenu.h"
 
 #include "Intro.h"
 
@@ -160,7 +161,9 @@ bool Scene::Start()
 	if (level == LVL1)Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl1Mus").attribute("path").as_string());
 	else if (level == LVL2) {
 		Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl2Mus").attribute("path").as_string());
-
+	}
+	else if (level == LVL3) {
+		Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl2Mus").attribute("path").as_string());
 	}
 
 	startBossFight = false;
@@ -266,6 +269,14 @@ bool Scene::Update(float dt)
 		Engine::GetInstance().fade.get()->Fade(this, this);
 	}
 
+	if (level != LVL3 && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		level = LVL3;
+		loadScene = false;
+		Engine::GetInstance().fade.get()->Fade(this, this);
+	}
+
+
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
 		loadScene = false;
@@ -276,8 +287,16 @@ bool Scene::Update(float dt)
 	if (changeLevel || level == LVL1 && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 	{
 		changeLevel = false;
-		level = LVL1;
-		Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)Engine::GetInstance().mainMenu.get(), 30);
+		if (level == LVL1)
+		{
+			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
+			level = LVL3;
+		}
+		else if (level == LVL3)
+		{
+			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)Engine::GetInstance().mainMenu.get(), 30);
+			level = LVL1;
+		}
 		return true;
 	}
 
@@ -307,13 +326,32 @@ bool Scene::Update(float dt)
 		//CAMERA Y
 		Engine::GetInstance().render.get()->camera.y = (METERS_TO_PIXELS(player->pbody->body->GetPosition().y) + CAM_EXTRA_DISPLACEMENT_Y) * -Engine::GetInstance().window.get()->scale;
 
-		//CAMERA LIMITS X
-		if (Engine::GetInstance().render.get()->camera.x < -9980) Engine::GetInstance().render.get()->camera.x = -9980;
-		else if (Engine::GetInstance().render.get()->camera.x > -35) Engine::GetInstance().render.get()->camera.x = -35;
+	
+		if (level == LVL1)
+		{
+			//CAMERA LIMITS X
+			if (Engine::GetInstance().render.get()->camera.x < -9980) Engine::GetInstance().render.get()->camera.x = -9980;
+			else if (Engine::GetInstance().render.get()->camera.x > -35) Engine::GetInstance().render.get()->camera.x = -35;
 
-		//CAMERA LIMITS Y
-		if (Engine::GetInstance().render.get()->camera.y < -4088) Engine::GetInstance().render.get()->camera.y = -4088;
-		else if (Engine::GetInstance().render.get()->camera.y > 0) Engine::GetInstance().render.get()->camera.y = 0;
+			//CAMERA LIMITS Y
+			if (Engine::GetInstance().render.get()->camera.y < -4088) Engine::GetInstance().render.get()->camera.y = -4088;
+			else if (Engine::GetInstance().render.get()->camera.y > 0) Engine::GetInstance().render.get()->camera.y = 0;
+		}
+		else if (level == LVL2)
+		{
+			//CAMERA LIMITS X
+			if (Engine::GetInstance().render.get()->camera.x < -9980) Engine::GetInstance().render.get()->camera.x = -9980;
+			else if (Engine::GetInstance().render.get()->camera.x > -35) Engine::GetInstance().render.get()->camera.x = -35;
+
+			//CAMERA LIMITS Y
+			if (Engine::GetInstance().render.get()->camera.y < -4088) Engine::GetInstance().render.get()->camera.y = -4088;
+			else if (Engine::GetInstance().render.get()->camera.y > 0) Engine::GetInstance().render.get()->camera.y = 0;
+		}
+		else if (level == LVL3)
+		{
+
+		}
+		
 
 	}
 
@@ -359,8 +397,6 @@ bool Scene::Update(float dt)
 // Called each loop iteration
 bool Scene::PostUpdate()
 {
-
-
 	bool ret = true;
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
@@ -377,48 +413,49 @@ bool Scene::PostUpdate()
 	}
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
 		paused = !paused;
+		Engine::GetInstance().settings.get()->settingsOpen = false;
 	}
 
 	Render* render = Engine::GetInstance().render.get();
 	Window* window = Engine::GetInstance().window.get();
 
-
-
 	//UI
 	if (!Engine::GetInstance().settings.get()->settingsOpen) {
+		
+		if (!paused) {
+			DrawPlayerHitsUI();
 
-		DrawPlayerHitsUI();
+			DrawPickaxesUI();
 
-		DrawPickaxesUI();
+			DrawCurrencyUI();
 
-		DrawCurrencyUI();
-
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_TAB)) DrawMap();
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_TAB)) DrawMap();
+		}
 
 		if (paused && !Engine::GetInstance().settings.get()->settingsOpen) {
 
+			if (!Engine::GetInstance().upgradesMenu.get()->upgradesOpen) {
+				Engine::GetInstance().render.get()->DrawRectangle({ -render->camera.x / window->scale , -render->camera.y / window->scale, window->width, window->height }, 0, 0, 0, 200, true, true);
+				Engine::GetInstance().render.get()->DrawTextureBuffer(pausePanel, -render->camera.x / window->scale + pausePos.getX(), -render->camera.y / window->scale + pausePos.getY(), false, MENUS);
 
-			Engine::GetInstance().render.get()->DrawRectangle({ -render->camera.x / window->scale , -render->camera.y / window->scale, window->width, window->height }, 0, 0, 0, 200, true, true);
-			Engine::GetInstance().render.get()->DrawTexture(pausePanel, -render->camera.x / window->scale + pausePos.getX(), -render->camera.y / window->scale + pausePos.getY());
+				for (const auto& bt : pauseButtons) {
+					if (bt.second->active == false) {
+						bt.second->active = true;
+					}
+					else {
+						bt.second->Update(_dt);
+						OnGuiMouseClickEvent(bt.second);
 
-			for (const auto& bt : pauseButtons) {
-				if (bt.second->active == false) {
-					bt.second->active = true;
+					}
 				}
-				else {
-					bt.second->Update(_dt);
-					OnGuiMouseClickEvent(bt.second);
 
-				}
-
+				if (Engine::GetInstance().settings.get()->settingsOpen)
+					for (const auto& bt : pauseButtons)
+						bt.second->state = GuiControlState::DISABLED;
+				else
+					for (const auto& bt : pauseButtons)
+						bt.second->state = GuiControlState::NORMAL;
 			}
-
-			if (Engine::GetInstance().settings.get()->settingsOpen)
-				for (const auto& bt : pauseButtons)
-					bt.second->state = GuiControlState::DISABLED;
-			else
-				for (const auto& bt : pauseButtons)
-					bt.second->state = GuiControlState::NORMAL;
 		}
 		else {
 			for (const auto& bt : pauseButtons)
@@ -426,15 +463,17 @@ bool Scene::PostUpdate()
 		}
 
 		if (help)
-			render->DrawTexture(helpMenu, -render->camera.x / window->scale + helpPos.getX(), -render->camera.y / window->scale + helpPos.getY());
-
-
+			render->DrawTextureBuffer(helpMenu, -render->camera.x / window->scale + helpPos.getX(), -render->camera.y / window->scale + helpPos.getY(), false ,MENUS);
+			
+			
 
 		if (quit) return false;
 
 		return ret;
 	}
 }
+
+
 
 // Called before quitting
 bool Scene::CleanUp()
@@ -659,9 +698,18 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 			quit = true;
 		}
 		break;
+
+	case GuiControlId::CHANGE_MENU:
+		if (control->state == GuiControlState::PRESSED) {
+			if (!Engine::GetInstance().upgradesMenu.get()->upgradesOpen) {
+				Engine::GetInstance().upgradesMenu.get()->upgradesOpen = true;
+				if (Engine::GetInstance().settings.get()->settingsOpen) {
+					Engine::GetInstance().settings.get()->settingsOpen = false;
+				}
+			}
+		}
+		break;
 	}
-
-
 
 	return true;
 }
@@ -738,23 +786,23 @@ void Scene::ChangeDirectionCameraX()
 
 void Scene::DrawPlayerHitsUI()
 {
-	// Tamaño de cada sección de la textura (224x224)
+	// Tamaï¿½o de cada secciï¿½n de la textura (224x224)
 	const int sectionWidth = 224;
 	const int sectionHeight = 224;
 
-	// Calcular la sección de la textura a dibujar según los hits restantes
+	// Calcular la secciï¿½n de la textura a dibujar segï¿½n los hits restantes
 	SDL_Rect section;
-	section.x = (3 - player->hits) * sectionWidth; // Mover a la siguiente sección por cada golpe
+	section.x = (3 - player->hits) * sectionWidth; // Mover a la siguiente secciï¿½n por cada golpe
 	section.y = 0;
 	section.w = sectionWidth;
 	section.h = sectionHeight;
 
-	// Dibujar la textura en la posición deseada
-	Engine::GetInstance().render.get()->DrawTexture(
+	// Dibujar la textura en la posiciï¿½n deseada
+	Engine::GetInstance().render.get()->DrawTextureBuffer(
 		heartsTexture, // Textura de los corazones
-		-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 10, // Posición X
-		-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale - 50,    // Posición Y
-		&section // Sección de la textura a dibujar
+		-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 10, // Posiciï¿½n X
+		-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale - 50,    // Posiciï¿½n Y
+		false, HUD, &section // Secciï¿½n de la textura a dibujar
 	);
 }
 
@@ -763,40 +811,40 @@ void Scene::DrawPickaxesUI()
 	int numPickaxes = player->projectileManager->GetNumPickaxes(); // Piquetas disponibles
 	int scale = Engine::GetInstance().window.get()->GetScale(); // Escala de la ventana
 
-	// Posición inicial para dibujar las piquetas
+	// Posiciï¿½n inicial para dibujar las piquetas
 	int startX = 100; // Coordenada X inicial
 	int startY = 100;  // Coordenada Y inicial
 	int spacing = 50; // Espaciado entre las piquetas
 	int spacingRed = 8; // Espaciado entre las piquetas
 
 	for (int i = 0; i < player->maxPickaxes; ++i) {
-		// Si el índice es menor que el número de piquetas disponibles, dibuja una piqueta normal
+		// Si el ï¿½ndice es menor que el nï¿½mero de piquetas disponibles, dibuja una piqueta normal
 		if (i < numPickaxes) {
-			Engine::GetInstance().render.get()->DrawTexture(
+			Engine::GetInstance().render.get()->DrawTextureBuffer(
 				piquetaNormal,
-				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (i * spacing), // Posición X
-				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 10    // Posición Y
+				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (i * spacing), // Posiciï¿½n X
+				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 10, false, HUD    // Posiciï¿½n Y
 			);
 		}
 		// Si no, dibuja una piqueta gastada
 		else {
-			Engine::GetInstance().render.get()->DrawTexture(
+			Engine::GetInstance().render.get()->DrawTextureBuffer(
 				piquetaGastada,
-				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (i * spacing), // Posición X
-				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 10    // Posición Y
+				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (i * spacing), // Posiciï¿½n X
+				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 10 , false, HUD  // Posiciï¿½n Y
 			);
-			Engine::GetInstance().render.get()->DrawTexture(
+			Engine::GetInstance().render.get()->DrawTextureBuffer(
 				barraPiqueta,
-				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (numPickaxes * spacing), // Posición X
-				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 80    // Posición Y
+				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (numPickaxes * spacing), // Posiciï¿½n X
+				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 80 , false , HUD   // Posiciï¿½n Y
 			);
 			int redBars = player->projectileManager->GetNumRed();
 			int drawRedSpacing = 0;
 			for (int i = 0; i < redBars; i++) {
-				Engine::GetInstance().render.get()->DrawTexture(
+				Engine::GetInstance().render.get()->DrawTextureBuffer(
 					barraRoja,
-					-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (numPickaxes * spacing) + drawRedSpacing, // Posición X
-					-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 80    // Posición Y
+					-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (numPickaxes * spacing) + drawRedSpacing, // Posiciï¿½n X
+					-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 80 , false , HUD   // Posiciï¿½n Y
 				);
 				drawRedSpacing += spacingRed;
 			}
@@ -809,19 +857,19 @@ void Scene::DrawCurrencyUI()
 	int scale = Engine::GetInstance().window.get()->GetScale(); // Escala de la ventana
 
 	// Dibujar la textura del soul orb
-	Engine::GetInstance().render.get()->DrawTexture(
+	Engine::GetInstance().render.get()->DrawTextureBuffer(
 		orbSoul,
-		-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 1120, // Posición X
-		-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 10  // Posición Y
+		-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 1120, // Posiciï¿½n X
+		-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 10,  // Posiciï¿½n Y
+		false, HUD
 	);
 
 
-	// Texto que muestra el número de monedas
+	// Texto que muestra el nï¿½mero de monedas
 	std::string currencyText = std::to_string(player->currencyManager->GetCurrency());
 
-	// Dibujar el texto del número de monedas
-	Engine::GetInstance().render.get()->DrawText(
-		currencyText.c_str(), 1200, 32, 48, 32);
+	// Dibujar el texto del nï¿½mero de monedas
+	Engine::GetInstance().render.get()->DrawTextToBuffer(currencyText.c_str(), 1200, 32, 48, 32, Engine::GetInstance().render.get()->font, {255,255,255,255}, MENUS);
 }
 
 void Scene::DrawMap()
@@ -834,8 +882,8 @@ void Scene::DrawMap()
 	int centerY = -Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + (Engine::GetInstance().window.get()->height / 2) - 180;
 	switch (level) {
 	case LVL1:
-		Engine::GetInstance().render.get()->DrawTexture(bgTutorial, centerX, centerY);
-		Engine::GetInstance().render.get()->DrawTexture(kimHead, centerX + (posX * 720 / 225 - 10), centerY + (posY * 360 / 96 - 25));
+		Engine::GetInstance().render.get()->DrawTextureBuffer(bgTutorial, centerX, centerY, false, MENUS);
+		Engine::GetInstance().render.get()->DrawTextureBuffer(kimHead, centerX + (posX * 720 / 225 - 10), centerY + (posY * 360 / 96 - 25), false, MENUS);
 		break;
 	case LVL2:
 		break;

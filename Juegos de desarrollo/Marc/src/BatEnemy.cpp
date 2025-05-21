@@ -253,10 +253,10 @@ bool BatEnemy::Update(float dt) {
 
 
 			if (dir == LEFT) {
-				Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY() + 10, &currentAnimation->GetCurrentFrame());
+				Engine::GetInstance().render.get()->DrawTextureBuffer(texture, (int)position.getX(), (int)position.getY(), true, ENTITIES, &currentAnimation->GetCurrentFrame());
 			}
 			else if (dir == RIGHT) {
-				Engine::GetInstance().render.get()->DrawTextureFlipped(texture, (int)position.getX(), (int)position.getY() + 10, &currentAnimation->GetCurrentFrame());
+				Engine::GetInstance().render.get()->DrawTextureBuffer(texture, (int)position.getX(), (int)position.getY(), false, ENTITIES, &currentAnimation->GetCurrentFrame());
 			}
 		}
 
