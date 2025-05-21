@@ -29,6 +29,9 @@
     <Filter Include="Source Files\Game\Allies">
       <UniqueIdentifier>{18bf42a8-a64b-425b-bf46-4f59773b6fe8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game\Particles">
+      <UniqueIdentifier>{4e96af93-6782-4391-8da4-b68e7e87fbad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="vcpkg.json">
@@ -210,6 +213,15 @@
     <ClCompile Include="src\UpgradesMenu.cpp">
       <Filter>Source Files\Game\Menus</Filter>
     </ClCompile>
+    <ClCompile Include="src\DashParticle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SoulRockParticle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\WallBrakerParticle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Audio.h">
@@ -362,6 +374,9 @@
     <ClInclude Include="src\UpgradesMenu.h">
       <Filter>Source Files\Game\Menus</Filter>
     </ClInclude>
+    <ClInclude Include="src\DashParticle.h" />
+    <ClInclude Include="src\SoulRockParticle.h" />
+    <ClInclude Include="src\WallBrakerParticle.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="config.xml">

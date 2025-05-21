@@ -1,4 +1,5 @@
 #include "SoulRock.h"
+#include "SoulRockParticle.h"
 #include "Engine.h"
 #include "Textures.h"
 #include "Audio.h"
@@ -170,6 +171,12 @@ void SoulRock::BrakeSystem() {
 
 	if (hit) {
 		hits--;
+
+
+		SoulRockParticle* particle = (SoulRockParticle*)Engine::GetInstance().entityManager->CreatePooledEntities(EntityType::PARTICLE);
+		particle->SetParameters(Engine::GetInstance().scene.get()->configParameters);
+		particle->texture = Engine::GetInstance().textures.get()->Load("Assets/Textures/balaJumper.png");
+		particle->Start();
 
 		if (!droppedLoot) {
 			if (state == IDLE) {

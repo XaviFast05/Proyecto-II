@@ -35,6 +35,9 @@
 #include "PickaxeManager.h"
 #include "CurrencyManager.h"
 #include "UpgradesMenu.h"
+#include "SoulRockParticle.h"
+#include "DashParticle.h"
+#include "WallBrakerParticle.h"
 
 #include "Intro.h"
 

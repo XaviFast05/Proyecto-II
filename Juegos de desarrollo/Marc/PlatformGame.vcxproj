@@ -151,6 +151,7 @@
   <ItemGroup>
     <ClCompile Include="src\Ally.cpp" />
     <ClCompile Include="src\ChildEnemy.cpp" />
+    <ClCompile Include="src\DashParticle.cpp" />
     <ClCompile Include="src\DialoguesManager.cpp" />
     <ClCompile Include="src\CurrencyOrb.cpp" />
     <ClCompile Include="src\CurrencyManager.cpp" />
@@ -188,17 +189,20 @@
     <ClCompile Include="src\Render.cpp" />
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\SoulRock.cpp" />
+    <ClCompile Include="src\SoulRockParticle.cpp" />
     <ClCompile Include="src\TextManager.cpp" />
     <ClCompile Include="src\Textures.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\UpgradesMenu.cpp" />
     <ClCompile Include="src\Vector2D.cpp" />
+    <ClCompile Include="src\WallBrakerParticle.cpp" />
     <ClCompile Include="src\Window.cpp" />
     <ClCompile Include="src\WinMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Ally.h" />
     <ClInclude Include="src\ChildEnemy.h" />
+    <ClInclude Include="src\DashParticle.h" />
     <ClInclude Include="src\DialoguesManager.h" />
     <ClInclude Include="src\CurrencyOrb.h" />
     <ClInclude Include="src\CurrencyManager.h" />
@@ -239,11 +243,13 @@
     <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\Settings.h" />
     <ClInclude Include="src\SoulRock.h" />
+    <ClInclude Include="src\SoulRockParticle.h" />
     <ClInclude Include="src\TextManager.h" />
     <ClInclude Include="src\Textures.h" />
     <ClInclude Include="src\Timer.h" />
     <ClInclude Include="src\UpgradesMenu.h" />
     <ClInclude Include="src\Vector2D.h" />
+    <ClInclude Include="src\WallBrakerParticle.h" />
     <ClInclude Include="src\Window.h" />
     <ClInclude Include="src\WinMenu.h" />
   </ItemGroup>

@@ -22,6 +22,7 @@ enum class EntityType
 	FINALBOSS,
 	MERCHANT,
 	ALLY,
+	PARTICLE,
 	UNKNOWN
 };
 
