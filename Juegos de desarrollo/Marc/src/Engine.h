@@ -29,6 +29,7 @@ class UpgradesMenu;
 class DeathMenu;
 class WinMenu;
 class FadeToBlack;
+class MerchantMenu;
 
 
 class Engine
@@ -129,6 +130,7 @@ public:
 	std::shared_ptr<FadeToBlack> fade;
 	std::shared_ptr<DeathMenu> death;
 	std::shared_ptr<WinMenu> win;
+	std::shared_ptr<MerchantMenu> merchantMenu;
 
 
 private: 
