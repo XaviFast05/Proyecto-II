@@ -63,6 +63,9 @@ bool GuiControlButton::Update(float dt)
 	case GuiControlState::DISABLED:
 		section = { 0, bounds.h, bounds.w, bounds.h};
 		break;
+	case GuiControlState::OVERLOADED:
+		section = { 0, bounds.h, bounds.w, bounds.h };
+		break;
 	case GuiControlState::NORMAL:
 		section = { 0, 0, bounds.w, bounds.h };
 		break;

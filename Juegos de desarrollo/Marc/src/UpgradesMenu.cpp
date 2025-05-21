@@ -90,6 +90,38 @@ bool UpgradesMenu::Update(float dt)
 	SDL_Rect camera = Engine::GetInstance().render.get()->camera;
 	int windowScale = Engine::GetInstance().window.get()->GetScale();
 	if (upgradesOpen) {
+		if (hasOpened) {
+			if (!Engine::GetInstance().scene.get()->player->HaveUpgrade(0)) upg1->state = GuiControlState::DISABLED;
+			if (!Engine::GetInstance().scene.get()->player->HaveUpgrade(1)) upg2->state = GuiControlState::DISABLED;
+			if (!Engine::GetInstance().scene.get()->player->HaveUpgrade(2)) upg3->state = GuiControlState::DISABLED;
+			if (!Engine::GetInstance().scene.get()->player->HaveUpgrade(3)) upg4->state = GuiControlState::DISABLED;
+			if (!Engine::GetInstance().scene.get()->player->HaveUpgrade(4)) upg5->state = GuiControlState::DISABLED;
+			if (!Engine::GetInstance().scene.get()->player->HaveUpgrade(5)) upg6->state = GuiControlState::DISABLED;
+			if (!Engine::GetInstance().scene.get()->player->HaveUpgrade(6)) upg7->state = GuiControlState::DISABLED;
+			if (!Engine::GetInstance().scene.get()->player->HaveUpgrade(7)) upg8->state = GuiControlState::DISABLED;
+
+			if (Engine::GetInstance().scene.get()->player->upgrades.size() < Engine::GetInstance().scene.get()->player->maxUpgrades) {
+				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(1)) upg2->state = GuiControlState::NORMAL;
+				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(2)) upg3->state = GuiControlState::NORMAL;
+				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(3)) upg4->state = GuiControlState::NORMAL;
+				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(4)) upg5->state = GuiControlState::NORMAL;
+				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(5)) upg6->state = GuiControlState::NORMAL;
+				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(6)) upg7->state = GuiControlState::NORMAL;
+				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(7)) upg8->state = GuiControlState::NORMAL;
+			}
+			else {
+				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(0) && !Engine::GetInstance().scene.get()->player->HaveActiveUpgrade(0)) upg1->state = GuiControlState::OVERLOADED;
+				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(1) && !Engine::GetInstance().scene.get()->player->HaveActiveUpgrade(1)) upg2->state = GuiControlState::OVERLOADED;
+				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(2) && !Engine::GetInstance().scene.get()->player->HaveActiveUpgrade(2)) upg3->state = GuiControlState::OVERLOADED;
+				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(3) && !Engine::GetInstance().scene.get()->player->HaveActiveUpgrade(3)) upg4->state = GuiControlState::OVERLOADED;
+				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(4) && !Engine::GetInstance().scene.get()->player->HaveActiveUpgrade(4)) upg5->state = GuiControlState::OVERLOADED;
+				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(5) && !Engine::GetInstance().scene.get()->player->HaveActiveUpgrade(5)) upg6->state = GuiControlState::OVERLOADED;
+				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(6) && !Engine::GetInstance().scene.get()->player->HaveActiveUpgrade(6)) upg7->state = GuiControlState::OVERLOADED;
+				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(7) && !Engine::GetInstance().scene.get()->player->HaveActiveUpgrade(7)) upg8->state = GuiControlState::OVERLOADED;
+			}
+
+			hasOpened = false;
+		}
 		int screenWidth = rootNode.child("window").child("resolution").attribute("width").as_int();
 		int screenHeight = rootNode.child("window").child("resolution").attribute("height").as_int();
 
@@ -122,7 +154,6 @@ bool UpgradesMenu::Update(float dt)
 		for (GuiControl* gui : upgradesGUI) {
 			gui->active = false;
 		}
-
 	}
 
 	return true;
@@ -174,153 +205,53 @@ bool UpgradesMenu::OnGuiMouseClickEvent(GuiControl* control) {
 			break;
 		break;
 		case GuiControlId::UPG1:
-			if (upg1->isChecked) {
-				LOG("UPG1 CHECKED"); 
-				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(0)) {
-					Engine::GetInstance().scene.get()->player->AddUpgrade(0);
-				}
-				else {
-					upg1->state = GuiControlState::DISABLED;
-				}
-			}
-			else {
-				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(0)) {
-					Engine::GetInstance().scene.get()->player->RemoveUpgrade(0);
-				}
-				else {
-					upg1->state = GuiControlState::DISABLED;
-				}
-			}
+			if (upg1->isChecked) Engine::GetInstance().scene.get()->player->AddUpgrade(0);
+			else Engine::GetInstance().scene.get()->player->RemoveUpgrade(0);
+			hasOpened = true;
 			break;
+
 		case GuiControlId::UPG2:
-			if (upg2->isChecked) {
-				LOG("UPG2 CHECKED");
-				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(1)) {
-					Engine::GetInstance().scene.get()->player->AddUpgrade(1);
-				}
-				else {
-					upg2->state = GuiControlState::DISABLED;
-				}
-			}
-			else {
-				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(1)) {
-					Engine::GetInstance().scene.get()->player->RemoveUpgrade(1);
-				}
-				else {
-					upg2->state = GuiControlState::DISABLED;
-				}
-			}
+			if (upg2->isChecked) Engine::GetInstance().scene.get()->player->AddUpgrade(1);
+			else Engine::GetInstance().scene.get()->player->RemoveUpgrade(1);
+			hasOpened = true;
 			break;
+
 		case GuiControlId::UPG3:
-			if (upg3->isChecked) {
-				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(2)) {
-					Engine::GetInstance().scene.get()->player->AddUpgrade(2);
-				}
-				else {
-					upg3->state = GuiControlState::DISABLED;
-				}
-			}
-			else {
-				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(2)) {
-					Engine::GetInstance().scene.get()->player->RemoveUpgrade(2);
-				}
-				else {
-					upg3->state = GuiControlState::DISABLED;
-				}
-			}
+			if (upg3->isChecked) Engine::GetInstance().scene.get()->player->AddUpgrade(2);
+			else Engine::GetInstance().scene.get()->player->RemoveUpgrade(2);
+			hasOpened = true;
 			break;
+
 		case GuiControlId::UPG4:
-			if (upg4->isChecked) {
-				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(3)) {
-					Engine::GetInstance().scene.get()->player->AddUpgrade(3);
-				}
-				else {
-					upg4->state = GuiControlState::DISABLED;
-				}
-			}
-			else {
-				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(3)) {
-					Engine::GetInstance().scene.get()->player->RemoveUpgrade(3);
-				}
-				else {
-					upg4->state = GuiControlState::DISABLED;
-				}
-			}
+			if (upg4->isChecked) Engine::GetInstance().scene.get()->player->AddUpgrade(3);
+			else Engine::GetInstance().scene.get()->player->RemoveUpgrade(3);
+			hasOpened = true;
 			break;
+
 		case GuiControlId::UPG5:
-			if (upg5->isChecked) {
-				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(4)) {
-					Engine::GetInstance().scene.get()->player->AddUpgrade(4);
-				}
-				else {
-					upg5->state = GuiControlState::DISABLED;
-				}
-			}
-			else {
-				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(4)) {
-					Engine::GetInstance().scene.get()->player->RemoveUpgrade(4);
-				}
-				else {
-					upg5->state = GuiControlState::DISABLED;
-				}
-			}
+			if (upg5->isChecked) Engine::GetInstance().scene.get()->player->AddUpgrade(4);
+			else Engine::GetInstance().scene.get()->player->RemoveUpgrade(4);
+			hasOpened = true;
 			break;
+
 		case GuiControlId::UPG6:
-			if (upg6->isChecked) {
-				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(5)) {
-					Engine::GetInstance().scene.get()->player->AddUpgrade(5);
-				}
-				else {
-					upg6->state = GuiControlState::DISABLED;
-				}
-			}
-			else {
-				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(5)) {
-					Engine::GetInstance().scene.get()->player->RemoveUpgrade(5);
-				}
-				else {
-					upg6->state = GuiControlState::DISABLED;
-				}
-			}
+			if (upg6->isChecked) Engine::GetInstance().scene.get()->player->AddUpgrade(5);
+			else Engine::GetInstance().scene.get()->player->RemoveUpgrade(5);
+			hasOpened = true;
 			break;
+
 		case GuiControlId::UPG7:
-			if (upg7->isChecked) {
-				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(6)) {
-					Engine::GetInstance().scene.get()->player->AddUpgrade(6);
-				}
-				else {
-					upg7->state = GuiControlState::DISABLED;
-				}
-			}
-			else {
-				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(6)) {
-					Engine::GetInstance().scene.get()->player->RemoveUpgrade(6);
-				}
-				else {
-					upg7->state = GuiControlState::DISABLED;
-				}
-			}
+			if (upg7->isChecked) Engine::GetInstance().scene.get()->player->AddUpgrade(6);
+			else Engine::GetInstance().scene.get()->player->RemoveUpgrade(6);
+			hasOpened = true;
 			break;
+
 		case GuiControlId::UPG8:
-			if (upg8->isChecked) {
-				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(7)) {
-					Engine::GetInstance().scene.get()->player->AddUpgrade(7);
-				}
-				else {
-					upg8->state = GuiControlState::DISABLED;
-				}
-			}
-			else {
-				if (Engine::GetInstance().scene.get()->player->HaveUpgrade(7)) {
-					Engine::GetInstance().scene.get()->player->RemoveUpgrade(7);
-				}
-				else {
-					upg8->state = GuiControlState::DISABLED;
-				}
-			}
+			if (upg8->isChecked) Engine::GetInstance().scene.get()->player->AddUpgrade(7);
+			else Engine::GetInstance().scene.get()->player->RemoveUpgrade(7);
+			hasOpened = true;
 			break;
 	}
-
 
 	return true;
 }

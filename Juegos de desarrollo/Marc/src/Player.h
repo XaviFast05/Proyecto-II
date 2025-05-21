@@ -91,12 +91,10 @@ public:
 	void RemoveUpgrade(int num);
 
 	Vector2D GetDirection() const;
-
-	int GetCurrency();
 	
-	void LowerCurrency(int count);
-
 	bool HaveUpgrade(int index);
+
+	bool HaveActiveUpgrade(int index);
 
 public:
 	int maxPickaxes; // piquetas máximas

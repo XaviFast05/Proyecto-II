@@ -142,6 +142,34 @@ bool MerchantMenu::Update(float dt)
 	int windowScale = Engine::GetInstance().window.get()->GetScale();
 	
 	if (merchantPanelOpen) {
+		if (hasOpened) {
+			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(0) || Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost1) firstUpgradeBt->state = GuiControlState::DISABLED;
+			else firstUpgradeBt->state = GuiControlState::NORMAL;
+
+			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(1) || Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost2) secondUpgradeBt->state = GuiControlState::DISABLED;
+			else secondUpgradeBt->state = GuiControlState::NORMAL;
+
+			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(2) || Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost3) thirdUpgradeBt->state = GuiControlState::DISABLED;
+			else thirdUpgradeBt->state = GuiControlState::NORMAL;
+
+			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(3) || Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost4) fourthUpgradeBt->state = GuiControlState::DISABLED;
+			else fourthUpgradeBt->state = GuiControlState::NORMAL;
+
+			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(4) || Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost5) fifthUpgradeBt->state = GuiControlState::DISABLED;
+			else fifthUpgradeBt->state = GuiControlState::NORMAL;
+
+			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(5) || Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost6) sixthUpgradeBt->state = GuiControlState::DISABLED;
+			else sixthUpgradeBt->state = GuiControlState::NORMAL;
+
+			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(6) || Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost7) seventhUpgradeBt->state = GuiControlState::DISABLED;
+			else seventhUpgradeBt->state = GuiControlState::NORMAL;
+
+			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(7) || Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost8) eighthUpgradeBt->state = GuiControlState::DISABLED;
+			else eighthUpgradeBt->state = GuiControlState::NORMAL;
+
+			hasOpened = false;
+		}
+
 		int screenWidth = rootNode.child("window").child("resolution").attribute("width").as_int();
 		int screenHeight = rootNode.child("window").child("resolution").attribute("height").as_int();
 
@@ -237,74 +265,79 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 
 	saved = rootNode.child("scene").child("savedData").attribute("saved").as_bool();
 
-	if (!confirmClick && (int)control->id == beforeId) confirmClick = true;
-	else if (!confirmClick && (int)control->id != beforeId) beforeId = (int)control->id;
-	else if (confirmClick) {
-	
-		switch (control->id) {
-
-
-		case GuiControlId::FIRST_UPGRADE:
-			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() > 100) {
-				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-100);
-				// desbloquear mejora
-				control->state == GuiControlState::DISABLED;
-
-			}
-			break;
-		case GuiControlId::SECOND_UPGRADE:
-			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() > 200) {
-				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-200);
-				// desbloquear mejora
-				control->state == GuiControlState::DISABLED;
-			}
-			break;
-		case GuiControlId::THIRD_UPGRADE:
-			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() > 300) {
-				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-300);
-				// desbloquear mejora
-				control->state == GuiControlState::DISABLED;
-			}
-			break;
-		case GuiControlId::FOURTH_UPGRADE:
-			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() > 400) {
-				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-400);
-				// desbloquear mejora
-				control->state == GuiControlState::DISABLED;
-			}
-			break;
-		case GuiControlId::FIFTH_UPGRADE:
-			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() > 500) {
-				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-500);
-				// desbloquear mejora
-				control->state == GuiControlState::DISABLED;
-			}
-			break;
-		case GuiControlId::SIXTH_UPGRADE:
-			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() > 600) {
-				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-600);
-				// desbloquear mejora
-				control->state == GuiControlState::DISABLED;
-			}
-			break;
-		case GuiControlId::SEVENTH_UPGRADE:
-			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() > 700) {
-				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-700);
-				// desbloquear mejora
-				control->state == GuiControlState::DISABLED;
-			}
-			break;
-		case GuiControlId::EIGHTH_UPGRADE:
-			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() > 800) {
-				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-800);
-				// desbloquear mejora
-				control->state == GuiControlState::DISABLED;
-			}
-			break;
+	switch (control->id) {
+	case GuiControlId::FIRST_UPGRADE:
+		if (firstUpgradeBt->isChecked) {
+			Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost1);
+			Engine::GetInstance().scene.get()->player->UnlockUpgrade(0);
+			firstUpgradeBt->state == GuiControlState::DISABLED;
+			hasOpened = true;
 		}
-	
+		break;
+
+	case GuiControlId::SECOND_UPGRADE:
+		if (secondUpgradeBt->isChecked) {
+			Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost2);
+			Engine::GetInstance().scene.get()->player->UnlockUpgrade(1);
+			secondUpgradeBt->state == GuiControlState::DISABLED;
+			hasOpened = true;
+		}
+		break;
+
+	case GuiControlId::THIRD_UPGRADE:
+		if (thirdUpgradeBt->isChecked) {
+			Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost3);
+			Engine::GetInstance().scene.get()->player->UnlockUpgrade(2);
+			thirdUpgradeBt->state == GuiControlState::DISABLED;
+			hasOpened = true;
+		}
+		break;
+
+	case GuiControlId::FOURTH_UPGRADE:
+		if (fourthUpgradeBt->isChecked) {
+			Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost4);
+			Engine::GetInstance().scene.get()->player->UnlockUpgrade(3);
+			fourthUpgradeBt->state == GuiControlState::DISABLED;
+			hasOpened = true;
+		}
+		break;
+
+	case GuiControlId::FIFTH_UPGRADE:
+		if (fifthUpgradeBt->isChecked) {
+			Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost5);
+			Engine::GetInstance().scene.get()->player->UnlockUpgrade(4);
+			fifthUpgradeBt->state == GuiControlState::DISABLED;
+			hasOpened = true;
+		}
+		break;
+
+	case GuiControlId::SIXTH_UPGRADE:
+		if (sixthUpgradeBt->isChecked) {
+			Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost6);
+			Engine::GetInstance().scene.get()->player->UnlockUpgrade(5);
+			sixthUpgradeBt->state == GuiControlState::DISABLED;
+			hasOpened = true;
+		}
+		break;
+
+	case GuiControlId::SEVENTH_UPGRADE:
+		if (seventhUpgradeBt->isChecked) {
+			Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost7);
+			Engine::GetInstance().scene.get()->player->UnlockUpgrade(6);
+			seventhUpgradeBt->state == GuiControlState::DISABLED;
+			hasOpened = true;
+		}
+		break;
+
+	case GuiControlId::EIGHTH_UPGRADE:
+		if (eighthUpgradeBt->isChecked) {
+			Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost8);
+			Engine::GetInstance().scene.get()->player->UnlockUpgrade(7);
+			eighthUpgradeBt->state == GuiControlState::DISABLED;
+			hasOpened = true;
+		}
+		break;
 	}
-	
 
 	// BACK BUTTON
 	if (control->id == GuiControlId::BACK && control->state == GuiControlState::PRESSED && merchantPanelOpen) {
@@ -313,16 +346,10 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 		SavePrefs();
 	}
 
-
-
-	//sfxVolume = SetVolume((GuiControlSlider*)control);
-
 	return true;
 }
 
-
 void MerchantMenu::SetGuiParameters(GuiControl* bt, std::string btName, pugi::xml_node parameters) {
-
 	bt->id = (GuiControlId)parameters.child(btName.c_str()).attribute("id").as_int();
 	bt->bounds.x = parameters.child(btName.c_str()).attribute("x").as_int();
 	bt->bounds.y = parameters.child(btName.c_str()).attribute("y").as_int();

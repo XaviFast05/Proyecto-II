@@ -622,6 +622,8 @@ bool Player::Update(float dt)
 
 	currentAnim->Update();
 
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_X)) currencyManager->SumCurrency(200);
+
 	return true;
 }
 
@@ -814,19 +816,21 @@ Vector2D Player::GetDirection() const {
 	}
 }
 
-int Player::GetCurrency() {
-	return currencyManager->GetCurrency();
-}
-
-void Player::LowerCurrency(int count) {
-	currencyManager->orbNum -= count;
-}
-
 bool Player::HaveUpgrade(int index) {
 	bool haveUnlocked = false;
 	if (!unlockedUpgrades.empty()) {
 		for (int i = 0; i < unlockedUpgrades.size(); i++) {
 			if (unlockedUpgrades[i] == index) haveUnlocked = true;
+		}
+	}
+	return haveUnlocked;
+}
+
+bool Player::HaveActiveUpgrade(int index) {
+	bool haveUnlocked = false;
+	if (!upgrades.empty()) {
+		for (int i = 0; i < upgrades.size(); i++) {
+			if (upgrades[i] == index) haveUnlocked = true;
 		}
 	}
 	return haveUnlocked;

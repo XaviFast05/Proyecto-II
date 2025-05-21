@@ -707,6 +707,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 	case GuiControlId::CHANGE_MENU:
 		if (control->state == GuiControlState::PRESSED) {
 			if (!Engine::GetInstance().upgradesMenu.get()->upgradesOpen) {
+				Engine::GetInstance().upgradesMenu.get()->hasOpened = true;
 				Engine::GetInstance().upgradesMenu.get()->upgradesOpen = true;
 				if (Engine::GetInstance().settings.get()->settingsOpen) {
 					Engine::GetInstance().settings.get()->settingsOpen = false;

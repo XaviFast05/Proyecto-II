@@ -64,16 +64,8 @@ public:
 	GuiControlCheckBox* upg7;
 	GuiControlCheckBox* upg8;
 
-	int up0cost = 200;
-	int up1cost = 200;
-	int up2cost = 200;
-	int up3cost = 200;
-	int up4cost = 200;
-	int up5cost = 200;
-	int up6cost = 200;
-	int up7cost = 200;
-
 	Player* player;
+	bool hasOpened = false;
 
 	std::list<GuiControl*> upgradesGUI;
 };
