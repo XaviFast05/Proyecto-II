@@ -523,6 +523,8 @@ bool Player::Update(float dt)
 
 			if (playerState == DASH) velocity = { pbody->body->GetLinearVelocity().x, 0 };
 			else velocity = { velocity.x, pbody->body->GetLinearVelocity().y };
+
+			pbody->body->SetLinearVelocity(velocity);
 		}
 	}
 
@@ -571,7 +573,7 @@ bool Player::Update(float dt)
 		}
 		break;
 	case THROW:
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_UP) || SDL_GameControllerGetAxis(Engine::GetInstance().input.get()->controller, SDL_CONTROLLER_AXIS_LEFTY) < -6000) {
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W)) {
 			currentAnim = &throwPixUp;
 		}
 		else {
@@ -920,30 +922,13 @@ bool Player::CheckMoveX()
 	bool moveRight = input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT;
 	bool moveLeft = input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT;
 
-	// Joystick
-
-	//SDL_GameControllerGetAxis(input->controller, SDL_CONTROLLER_AXIS_LEFTX);
-
-
-	//if (SDL_GameControllerGetAxis(input->controller, SDL_CONTROLLER_AXIS_LEFTX); > DEADZONE && !rightBlocked) {
-	//	dir = RIGHT;
-	//	Engine::GetInstance().scene.get()->cameraDirectionChangeActivation = true;
-	//	return true;
-	//}
-	//else if (axis < -DEADZONE && !leftBlocked) {
-	//	dir = LEFT;
-	//	Engine::GetInstance().scene.get()->cameraDirectionChangeActivation = true;
-	//	return true;
-	//}
-	
-
-	if ((moveRight || SDL_GameControllerGetAxis(input->controller, SDL_CONTROLLER_AXIS_LEFTX) > 8000) && !rightBlocked)
+	if (moveRight && !rightBlocked)
 	{
 		dir = RIGHT;
 		Engine::GetInstance().scene.get()->cameraDirectionChangeActivation = true;
 		return true;
 	}
-	else if ((moveLeft || SDL_GameControllerGetAxis(input->controller, SDL_CONTROLLER_AXIS_LEFTX) < -8000) && !leftBlocked)
+	else if (moveLeft && !leftBlocked)
 	{
 		dir = LEFT;
 		Engine::GetInstance().scene.get()->cameraDirectionChangeActivation = true;
