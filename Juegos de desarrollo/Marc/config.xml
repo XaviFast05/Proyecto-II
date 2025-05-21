@@ -78,6 +78,8 @@
 				<lvl1 path="Assets/Maps/" name="Tutorial.tmx" />
 				<lvl2 path="Assets/Maps/" name="Playground.tmx" />
 				<lvl3 path="Assets/Maps/" name="level1 (1).tmx" />
+				<lvl4 path="Assets/Maps/" name="Zona_oniricaATC.tmx" />
+				<lvl5 path="Assets/Maps/" name="Zona_oniricaDASH.tmx" />
 			</paths>
 			<parallax>
 				<layer name="sky" path="Assets/Textures/Parallax/Fondo_Front.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="5" repeatNum="15" slowY="1" />
@@ -92,6 +94,8 @@
 					<lvl1 x="160" y="3400" />
 					<lvl2 x="160" y="3400" />
 					<lvl3 x="9536" y="6970" />
+					<lvl4 x="4032" y="1792" />
+					<lvl5 x="2240" y="1600" />
 				</startPositions>
 				<propierties gJumpForce="4.0f" pJumpForce="4.0f" pushForce="7.0f" moveSpeed="0.5f" friction="0.0f" gravity="9.0f" attack1Time="0.8f" attack2Time="1.0f" hurtTime="1.0f" respawnTime=" 2.0f" playerState="0" direction="1" shootCooldown="5" />
 				<statesFlow>

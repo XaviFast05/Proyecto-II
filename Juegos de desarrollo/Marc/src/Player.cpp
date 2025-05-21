@@ -751,6 +751,13 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		else if (Engine::GetInstance().scene.get()->level == LVL2) {
 		}
 		else if (Engine::GetInstance().scene.get()->level == LVL3) {
+			Engine::GetInstance().scene.get()->ChangeLevel();
+		}
+		else if (Engine::GetInstance().scene.get()->level == LVL4) {
+			Engine::GetInstance().scene.get()->ChangeLevel();
+		}
+		else if (Engine::GetInstance().scene.get()->level == LVL5) {
+			Engine::GetInstance().scene.get()->ChangeLevel();
 		}
 		break;
 	
