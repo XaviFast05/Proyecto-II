@@ -99,6 +99,7 @@ bool Render::PostUpdate()
 			switch (order.type) {
 				case RenderType::Texture: {
 				
+					
 					SDL_Rect rect;
 					rect.x = (int)(camera.x * order.speed) + order.x * scale;
 					rect.y = (int)(camera.y * order.speed) + order.y * scale;
@@ -152,46 +153,23 @@ bool Render::PostUpdate()
 
 				case RenderType::Text: {
 
-					SDL_Surface* surface = TTF_RenderText_Solid(order.font, order.text.c_str(), order.color);
-					SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-
-					int texW, texH;
-					/*texW *= scale;
-					texH *= scale;*/
-					SDL_QueryTexture(texture, NULL, NULL, &texW, &texH);
-					SDL_Rect dstrect = { order.x * scale, order.y * scale, order.width * scale, order.height * scale };
-
-					SDL_RenderCopy(renderer, texture, NULL, &dstrect);
-
-					SDL_DestroyTexture(texture);
-					SDL_FreeSurface(surface);
-
+					DrawTextEx(order.text.c_str(), order.x, order.y, order.width, order.height, order.font, order.color);
 					break;
 				}
 				case RenderType::Rectangle: {
 
-					int scale = Engine::GetInstance().window.get()->GetScale();
-
-					SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-					SDL_SetRenderDrawColor(renderer, order.r, order.g, order.b, order.a);
-
-					SDL_Rect rec(order.rect);
-					if (order.use_camera)
-					{
-						rec.x = (int)(camera.x + order.rect.x * scale);
-						rec.y = (int)(camera.y + order.rect.y * scale);
-						rec.w *= scale;
-						rec.h *= scale;
-					}
-
-					int result = (order.filled) ? SDL_RenderFillRect(renderer, &rec) : SDL_RenderDrawRect(renderer, &rec);
-
-					if (result != 0)
-					{
-						LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
-					}
+					DrawRectangle(order.rect, order.r, order.g, order.b, order.a, order.filled, order.use_camera);
 					break;
+				}
+				case RenderType::Line: {
 
+					DrawLine(order.x1, order.y1, order.x2, order.y2, order.r, order.g, order.b, order.a, order.use_camera);
+					break;
+				}
+				case RenderType::Circle: {
+
+					DrawCircle(order.x, order.y, order.radius, order.r, order.g, order.b, order.a, order.use_camera);
+					break;
 				}
 			}
 		}
@@ -315,14 +293,77 @@ bool Render::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b,
 
 	int result = -1;
 
-	if(use_camera)
+	if (!use_camera)
 		result = SDL_RenderDrawLine(renderer, camera.x + x1 * scale, camera.y + y1 * scale, camera.x + x2 * scale, camera.y + y2 * scale);
 	else
 		result = SDL_RenderDrawLine(renderer, x1 * scale, y1 * scale, x2 * scale, y2 * scale);
 
-	if(result != 0)
+	if (result != 0)
 	{
 		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
+		ret = false;
+	}
+
+	return ret;
+}
+
+bool Render::DrawLineBuffer(int _x1, int _y1, int _x2, int _y2, Uint8 _r, Uint8 _g, Uint8 _b, Uint8 _a, RenderLayers _zbuffer, bool _use_camera)
+{
+	bool ret = true;
+
+	RenderOrder renderOrder;
+	renderOrder.type = RenderType::Line;
+	renderOrder.x1 = _x1;
+	renderOrder.x2 = _x2;
+	renderOrder.y1 = _y1;
+	renderOrder.y2 = _y2;
+	renderOrder.r = _r;
+	renderOrder.g = _g;
+	renderOrder.b = _b;
+	renderOrder.a = _a;
+	renderOrder.use_camera;
+	renderOrder.zbuffer = (int)_zbuffer;
+
+	zBufferQuery[_zbuffer].push_back(renderOrder);
+
+	return ret;
+}
+
+bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* section, bool fliped, float speed, double angle, int pivotX, int pivotY) const
+{
+	bool ret = true;
+	int scale = Engine::GetInstance().window.get()->GetScale();
+
+	SDL_Rect rect;
+	rect.x = (int)(camera.x * speed) + x * scale;
+	rect.y = (int)(camera.y * speed) + y * scale;
+
+	if (section != NULL)
+	{
+		rect.w = section->w;
+		rect.h = section->h;
+	}
+	else
+	{
+		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
+	}
+
+	rect.w *= scale;
+	rect.h *= scale;
+
+	SDL_Point* p = NULL;
+	SDL_Point pivot;
+
+	if (pivotX != INT_MAX && pivotY != INT_MAX)
+	{
+		pivot.x = pivotX;
+		pivot.y = pivotY;
+		p = &pivot;
+	}
+
+	if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, fliped ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE) != 0)
+	{
+		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 		ret = false;
 	}
 
@@ -355,6 +396,29 @@ bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uin
 		LOG("Cannot draw quad to screen. SDL_RenderFillRect error: %s", SDL_GetError());
 		ret = false;
 	}
+
+
+	return ret;
+}
+
+bool Render::DrawCircleBuffer(int _x, int _y, int _radius, Uint8 _r, Uint8 _g, Uint8 _b, Uint8 _a, RenderLayers _zbuffer, bool _use_camera)
+{
+
+	bool ret = true;
+
+	RenderOrder renderOrder;
+	renderOrder.type = RenderType::Circle;
+	renderOrder.x = _x;
+	renderOrder.y = _y;
+	renderOrder.radius = _radius;
+	renderOrder.r = _r;
+	renderOrder.g = _g;
+	renderOrder.b = _b;
+	renderOrder.a = _a;
+	renderOrder.zbuffer = (int)_zbuffer;
+	renderOrder.use_camera = _use_camera;
+
+	zBufferQuery[_zbuffer].push_back(renderOrder);
 
 	return ret;
 }
@@ -407,7 +471,7 @@ bool Render::DrawTextEx(const char* text, int posx, int posy, int w, int h, TTF_
 {
 	int scale = Engine::GetInstance().window.get()->GetScale();
 	
-	SDL_Surface* surface = TTF_RenderText_Solid(_font, text, _color);
+	SDL_Surface* surface = TTF_RenderUTF8_Solid(_font, text, _color);
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 
 	int texW, texH;

@@ -315,10 +315,10 @@ bool Physics::PostUpdate()
 						Engine::GetInstance().window.get()->GetWindowSize(width, height);
 						b2Vec2 pos = f->GetBody()->GetPosition();
 						
-						Engine::GetInstance().render.get()->DrawCircle(METERS_TO_PIXELS(pos.x),
+						Engine::GetInstance().render.get()->DrawCircleBuffer(METERS_TO_PIXELS(pos.x),
 							METERS_TO_PIXELS(pos.y),
 							METERS_TO_PIXELS(shape->m_radius) * Engine::GetInstance().window.get()->GetScale(),
-							255, 255, 255);
+							255, 255, 255, 255, HUD, false);
 						
 
 					}
@@ -336,22 +336,22 @@ bool Physics::PostUpdate()
 							v = b->GetWorldPoint(polygonShape->m_vertices[i]);
 							if (i > 0)
 
-								Engine::GetInstance().render.get()->DrawLine(METERS_TO_PIXELS(prev.x),
+								Engine::GetInstance().render.get()->DrawLineBuffer(METERS_TO_PIXELS(prev.x),
 									METERS_TO_PIXELS(prev.y),
 									METERS_TO_PIXELS(v.x),
 									METERS_TO_PIXELS(v.y),
-									255, 255, 100);
+									255, 255, 100, 255, HUD, false);
 
 							prev = v;
 						}
 
 						v = b->GetWorldPoint(polygonShape->m_vertices[0]);
 						
-						Engine::GetInstance().render.get()->DrawLine(METERS_TO_PIXELS(prev.x),
+						Engine::GetInstance().render.get()->DrawLineBuffer(METERS_TO_PIXELS(prev.x),
 								METERS_TO_PIXELS(prev.y),
 								METERS_TO_PIXELS(v.x),
 								METERS_TO_PIXELS(v.y),
-								255, 255, 100);
+								255, 255, 100, 255, HUD, false);
 					}
 					break;
 
@@ -365,20 +365,20 @@ bool Physics::PostUpdate()
 						{
 							v = b->GetWorldPoint(shape->m_vertices[i]);
 							if (i > 0)
-								Engine::GetInstance().render.get()->DrawLine(METERS_TO_PIXELS(prev.x),
+								Engine::GetInstance().render.get()->DrawLineBuffer(METERS_TO_PIXELS(prev.x),
 									METERS_TO_PIXELS(prev.y),
 									METERS_TO_PIXELS(v.x),
 									METERS_TO_PIXELS(v.y),
-									100, 255, 100);
+									100, 255, 100, 255, HUD, false);
 							prev = v;
 						}
 
 						v = b->GetWorldPoint(shape->m_vertices[0]);
-						Engine::GetInstance().render.get()->DrawLine(METERS_TO_PIXELS(prev.x),
+						Engine::GetInstance().render.get()->DrawLineBuffer(METERS_TO_PIXELS(prev.x),
 							METERS_TO_PIXELS(prev.y),
 							METERS_TO_PIXELS(v.x),
 							METERS_TO_PIXELS(v.y),
-							100, 255, 100);
+							100, 255, 100, 255, HUD, false);
 					}
 					break;
 
@@ -390,19 +390,16 @@ bool Physics::PostUpdate()
 
 						v1 = b->GetWorldPoint(shape->m_vertex0);
 						v1 = b->GetWorldPoint(shape->m_vertex1);
-						Engine::GetInstance().render.get()->DrawLine(METERS_TO_PIXELS(v1.x),
+						Engine::GetInstance().render.get()->DrawLineBuffer(METERS_TO_PIXELS(v1.x),
 							METERS_TO_PIXELS(v1.y),
 							METERS_TO_PIXELS(v2.x),
 							METERS_TO_PIXELS(v2.y),
-							100, 100, 255);
+							100, 100, 255, 255, HUD, false);
 					}
 					break;
 
 					}
 				}
-			
-				
-
 			}
 		}
 	}
