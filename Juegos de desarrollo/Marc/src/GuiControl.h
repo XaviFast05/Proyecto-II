@@ -3,8 +3,10 @@
 #include "Input.h"
 #include "Render.h"
 #include "Module.h"
-
+#include "pugixml.hpp"
 #include "Vector2D.h"
+#include "Textures.h"
+#include "Engine.h"
 
 enum class GuiControlType
 {
@@ -114,6 +116,28 @@ public:
 		observer->OnGuiMouseClickEvent(this);
 	}
 
+	void SetGuiParameters(std::string btName, pugi::xml_node parameters)
+	{
+		id = (GuiControlId)parameters.child(btName.c_str()).attribute("id").as_int();
+		
+		if (bullet_direction == GuiControlType::SLIDER) {
+			sliderBounds.x = parameters.child(btName.c_str()).attribute("circleX").as_int();
+			sliderBounds.y = parameters.child(btName.c_str()).attribute("circleY").as_int();
+			sliderBounds.w = parameters.child(btName.c_str()).attribute("circleW").as_int();
+			sliderBounds.h = parameters.child(btName.c_str()).attribute("circleH").as_int();
+			sliderTexture = Engine::GetInstance().textures.get()->Load(parameters.child(btName.c_str()).attribute("circleTexture").as_string());
+		}
+
+		bounds.x = parameters.child(btName.c_str()).attribute("x").as_int();
+		bounds.y = parameters.child(btName.c_str()).attribute("y").as_int();
+		bounds.w = parameters.child(btName.c_str()).attribute("w").as_int();
+		bounds.h = parameters.child(btName.c_str()).attribute("h").as_int();
+
+		texture = Engine::GetInstance().textures.get()->Load(parameters.child(btName.c_str()).attribute("texture").as_string());
+		text = parameters.child(btName.c_str()).attribute("text").as_string();
+		font = TTF_OpenFont(parameters.child(btName.c_str()).attribute("font").as_string(), parameters.child(btName.c_str()).attribute("fontSize").as_int());
+	}
+
 public:
 
 	bool active;
@@ -129,8 +153,10 @@ public:
 	SDL_Rect bounds;        // Position and size
 	SDL_Rect sliderBounds;
 	SDL_Color color;        // Tint color
+	TTF_Font* font;
 
 	SDL_Texture* texture;   // Texture atlas reference
+	SDL_Texture* sliderTexture;
 	/*SDL_Texture* sliderTexture;*/
 	SDL_Rect section;       // Texture atlas base section
 

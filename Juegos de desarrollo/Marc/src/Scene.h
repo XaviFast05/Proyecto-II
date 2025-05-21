@@ -88,8 +88,6 @@ public:
 
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
-	void SetGuiParameters(GuiControl* bt, std::string btName, pugi::xml_node parameters);
-
 	void ChangeLevel();
 	
 	int GetLevel();

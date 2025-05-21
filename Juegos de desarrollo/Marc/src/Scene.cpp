@@ -133,7 +133,7 @@ bool Scene::Start()
 	{
 		std::string buttonName = child.name();
 		GuiControlButton* bt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, buttonName.c_str(), "", { 0, 0, 0, 0 }, this, { 0,0,0,0 });
-		this->SetGuiParameters(bt, buttonName, pauseBtNode);
+		bt->SetGuiParameters(buttonName, pauseBtNode);
 		pauseButtons[buttonName] = bt;
 		bt->active = false;
 	}
@@ -720,17 +720,6 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 	return true;
 }
 
-void Scene::SetGuiParameters(GuiControl* bt, std::string btName, pugi::xml_node parameters) {
-
-	bt->id = (GuiControlId)parameters.child(btName.c_str()).attribute("id").as_int();
-
-	bt->bounds.x = parameters.child(btName.c_str()).attribute("x").as_int();
-	bt->bounds.y = parameters.child(btName.c_str()).attribute("y").as_int();
-	bt->bounds.w = parameters.child(btName.c_str()).attribute("w").as_int();
-	bt->bounds.h = parameters.child(btName.c_str()).attribute("h").as_int();
-
-	bt->texture = Engine::GetInstance().textures.get()->Load(parameters.child(btName.c_str()).attribute("texture").as_string());
-}
 
 void Scene::ChangeLevel()
 {

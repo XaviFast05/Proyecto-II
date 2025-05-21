@@ -17,14 +17,14 @@
 	<intro path="Assets/Textures/Menus/Intro/intro-screen.png" />
 	<mainmenu>
 		<bg path="Assets/Textures/Menus/Title Screen/title screen pixel bg.png" />
-		<buttons defaultTex="Assets/Textures/Menus/Title Screen/title screen button sheet.png">
-			<newGameBt id="1" x="448" y="230" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/New Game Button Sheet.png" />
-			<testLevelBt id="13" x="448" y="326" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Test Level Button Sheet.png" />
-			<continueBt id="2" x="4000" y="78" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Continue Button Sheet.png" />
-			<optionsBt id="3" x="448" y="422" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Options Button Sheet.png" />
-			<creditsBt id="4" x="448" y="518" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Credits Button Sheet.png" />
-			<exitBt id="5" x="448" y="614" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Exit Button Sheet.png" />
-			<backBt id="6" x="448" y="614" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Back Button Sheet.png" />
+		<buttons defaultTex="Assets/Textures/Menus/Title Screen/DefaultButton.png">
+			<newGameBt id="1" x="448" y="230" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="TUTORIAL" font="Assets/Fonts/Crang.ttf" fontSize="30" />
+			<testLevelBt id="13" x="448" y="326" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="TEST_LEVEL" font="Assets/Fonts/Crang.ttf" fontSize="30" />
+			<continueBt id="2" x="4000" y="78" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="CONTINUE" font="Assets/Fonts/Crang.ttf" fontSize="30" />
+			<optionsBt id="3" x="448" y="422" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="OPTIONS" font="Assets/Fonts/Crang.ttf" fontSize="30" />
+			<creditsBt id="4" x="448" y="518" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="CREDITS" font="Assets/Fonts/Crang.ttf" fontSize="30" />
+			<exitBt id="5" x="448" y="614" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/RedButton.png" text="EXIT" font="Assets/Fonts/Crang.ttf" fontSize="30" />
+			<backBt id="6" x="448" y="614" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/RedButton.png" text="BACK" font="Assets/Fonts/Crang.ttf" fontSize="30" />
 		</buttons>
 		<credits path="Assets/Textures/Menus/Title Screen/credits screen.png" />
 	</mainmenu>
@@ -623,10 +623,16 @@
 			</dialoguePanel>
 			<DIALOG01>
 				<text textId="DIALOG01_01" talker="kim" />
-				<text textId="DIALOG01_02" talker="pepe" />
-				<text textId="DIALOG01_03" talker="kim" />
-				<text textId="DIALOG01_04" talker="pepe" />
+				<text textId="DIALOG01_02" talker="kim" />
 			</DIALOG01>
+			<DIALOG02>
+				<text textId="DIALOG02_01" talker="kim" />
+				<text textId="DIALOG02_02" talker="kim" />
+			</DIALOG02>
+			<DIALOG03>
+				<text textId="DIALOG03_01" talker="kim" />
+			</DIALOG03>
+			
 		</dialogues>
 	</scene>
 	<audio>
@@ -667,4 +673,10 @@
 		<musicVolume value="128" />
 		<sfxVolume value="52" />
 	</playerPrefs>
+	<fonts>
+		<pixolde path="Assets/Fonts/ttf_pixolde_bold.ttf" />
+		<halloweenpixels path="Assets/Fonts/Halloweenpixels.ttf" />
+		<CorvidConspiratorpath path="Assets/Fonts/Corvid Conspirator v1.1.ttf" />
+		<Crang path="Assets/Fonts/Crang.ttf" />
+	</fonts>
 </config>
