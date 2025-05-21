@@ -37,6 +37,11 @@
 		<fullScreenBox id="9" x="605" y="490" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
 		<backBt id="6" x="448" y="587" w="384" h="64" texture="Assets/Textures/Menus/Options/back.png" />
 	</settings>
+	<upgradesMenu>
+		<upgPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/settings-panel.png" />
+		<changeMenuBt id="15" x="100" y="490" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
+		<backBt id="6" x="448" y="587" w="384" h="64" texture="Assets/Textures/Menus/Options/back.png" />
+	</upgradesMenu>
 	<scene>
 		<ui>
 			<heartContainers path="Assets/Textures/UI/lifeSimp.png" />
@@ -571,6 +576,7 @@
 				<optionsBt id="3" x="448" y="319" w="384" h="64" texture="Assets/Textures/Menus/Pause/options resized.png" />
 				<backToTitleBt id="11" x="448" y="415" w="384" h="64" texture="Assets/Textures/Menus/Pause/back to title.png" />
 				<exitBt id="5" x="448" y="511" w="384" h="64" texture="Assets/Textures/Menus/Pause/exit centered.png" />
+				<changeMenuBt id="15" x="900" y="490" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
 			</buttons>
 		</pauseMenu>
 		<deathMenu>

@@ -9,6 +9,7 @@
 #include "MainMenu.h"
 #include "Scene.h"
 #include "Window.h"
+#include "Settings.h"
 
 
 UpgradesMenu::UpgradesMenu(bool startEnabled) : Module(startEnabled)
@@ -44,6 +45,8 @@ bool UpgradesMenu::Start()
 
 	backBt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, "backBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
 	SetGuiParameters(backBt, "backBt", configParameters);
+	changeMenuBt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, "changeMenuBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	SetGuiParameters(changeMenuBt, "changeMenuBt", configParameters);
 
 	upgradesGUI.push_back(backBt);
 
@@ -84,6 +87,8 @@ bool UpgradesMenu::Update(float dt)
 
 		backBt->Update(dt);
 		OnGuiMouseClickEvent(backBt);
+		changeMenuBt->Update(dt);
+		OnGuiMouseClickEvent(changeMenuBt);
 	}
 	else {
 		for (GuiControl* gui : upgradesGUI) {
@@ -129,7 +134,16 @@ bool UpgradesMenu::OnGuiMouseClickEvent(GuiControl* control) {
 			}
 			SavePrefs();
 		}
-
+		case GuiControlId::CHANGE_MENU:
+			if (control->state == GuiControlState::PRESSED && upgradesOpen) {
+				if (Engine::GetInstance().upgradesMenu.get()->upgradesOpen) {
+					Engine::GetInstance().upgradesMenu.get()->upgradesOpen = false;
+				}
+				if (Engine::GetInstance().settings.get()->settingsOpen) {
+					Engine::GetInstance().settings.get()->settingsOpen = false;
+				}
+			}
+			break;
 		break;
 	}
 

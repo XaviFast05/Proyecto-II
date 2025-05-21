@@ -77,8 +77,17 @@ bool Bullet::Start() {
     case BulletType::PICKAXE:
     default:
         pbody->ctype = ColliderType::PICKAXE;
+        fixture = pbody->body->GetFixtureList();
+        if (fixture) {
+            b2Filter filter = fixture->GetFilterData();
+            filter.categoryBits = CATEGORY_PICKAXE;
+            filter.maskBits = 0xFFFF & ~CATEGORY_PLAYER;
+            fixture->SetFilterData(filter);
+        }
         break;
     }
+
+    player = Engine::GetInstance().scene.get()->player;
 
     active = true;
     stuckOnWall = false;
@@ -97,6 +106,20 @@ bool Bullet::Update(float dt) {
         pbody->body->SetEnabled(false);
         active = false;
         destroyPickaxe = false;
+    }
+
+    if (bullet_type == BulletType::PICKAXE) {
+        if (onPlayer && player->onPickaxe && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) && isActive) {
+            inactiveTimer.Start();
+            fixture = pbody->body->GetFixtureList();
+            if (fixture) {
+                b2Filter filter = fixture->GetFilterData();
+                filter.categoryBits = CATEGORY_PICKAXE;
+                filter.maskBits = 0xFFFF & ~CATEGORY_PLAYER;
+                fixture->SetFilterData(filter);
+            }
+            isActive = false;
+        }
     }
 
     if (!stuckOnWall) {
@@ -124,6 +147,31 @@ bool Bullet::Update(float dt) {
     else
     {
         Engine::GetInstance().render.get()->DrawTextureBuffer(texture, static_cast<int>(position.getX()), static_cast<int>(position.getY()),false, BETWEEN_MAP, 0, 1.0f, 270);
+    }
+
+    if (bullet_type == BulletType::PICKAXE) {
+        if ((pbody->body->GetPosition().y - 0.5) > (player->pbody->body->GetPosition().y) && isActive) {
+            b2Filter filter = fixture->GetFilterData();
+            filter.categoryBits = CATEGORY_DEFAULT;
+            filter.maskBits = 0xFFFF;
+            fixture->SetFilterData(filter);
+        }
+        else {
+            b2Filter filter = fixture->GetFilterData();
+            filter.categoryBits = CATEGORY_PICKAXE;
+            filter.maskBits = 0xFFFF & ~CATEGORY_PLAYER;
+            fixture->SetFilterData(filter);
+        }
+
+        if (!isActive) {
+            if (inactiveTimer.ReadSec() > inactiveTimerMax) {
+                isActive = true;
+                b2Filter filter = fixture->GetFilterData();
+                filter.categoryBits = CATEGORY_PICKAXE;
+                filter.maskBits = 0xFFFF & ~CATEGORY_PLAYER;
+                fixture->SetFilterData(filter);
+            }
+        }
     }
 
     return true;
@@ -193,11 +241,22 @@ void Bullet::OnCollision(PhysBody* physA, PhysBody* physB) {
             LOG("Collided - DESTROY");
             destroyPickaxe = true;
             break;
+        case ColliderType::PLAYER:
+            onPlayer = true;
+            break;
         }
         break;
     default:
         break;
     }
-    
-    
+}
+
+void Bullet::OnCollisionEnd(PhysBody* physA, PhysBody* physB) {
+    if (bullet_type == BulletType::PICKAXE) {
+        switch (physB->ctype) {
+        case ColliderType::PLAYER:
+            onPlayer = false;
+            break;
+        }
+    }
 }

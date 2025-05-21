@@ -413,6 +413,7 @@ bool Scene::PostUpdate()
 	}
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
 		paused = !paused;
+		Engine::GetInstance().settings.get()->settingsOpen = false;
 	}
 
 	Render* render = Engine::GetInstance().render.get();
@@ -420,39 +421,41 @@ bool Scene::PostUpdate()
 
 	//UI
 	if (!Engine::GetInstance().settings.get()->settingsOpen) {
+		
+		if (!paused) {
+			DrawPlayerHitsUI();
 
-		DrawPlayerHitsUI();
+			DrawPickaxesUI();
 
-		DrawPickaxesUI();
+			DrawCurrencyUI();
 
-		DrawCurrencyUI();
-
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_TAB)) DrawMap();
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_TAB)) DrawMap();
+		}
 
 		if (paused && !Engine::GetInstance().settings.get()->settingsOpen) {
 
+			if (!Engine::GetInstance().upgradesMenu.get()->upgradesOpen) {
+				Engine::GetInstance().render.get()->DrawRectangle({ -render->camera.x / window->scale , -render->camera.y / window->scale, window->width, window->height }, 0, 0, 0, 200, true, true);
+				Engine::GetInstance().render.get()->DrawTextureBuffer(pausePanel, -render->camera.x / window->scale + pausePos.getX(), -render->camera.y / window->scale + pausePos.getY(), false, MENUS);
 
-			Engine::GetInstance().render.get()->DrawRectangle({ -render->camera.x / window->scale , - render->camera.y / window->scale, window->width, window->height}, 0, 0, 0, 200, true, true);
-			Engine::GetInstance().render.get()->DrawTextureBuffer(pausePanel, -render->camera.x / window->scale + pausePos.getX(), -render->camera.y / window->scale + pausePos.getY(), false, MENUS);
+				for (const auto& bt : pauseButtons) {
+					if (bt.second->active == false) {
+						bt.second->active = true;
+					}
+					else {
+						bt.second->Update(_dt);
+						OnGuiMouseClickEvent(bt.second);
 
-			for (const auto& bt : pauseButtons) {
-				if (bt.second->active == false) {
-					bt.second->active = true;
+					}
 				}
-				else {
-					bt.second->Update(_dt);
-					OnGuiMouseClickEvent(bt.second);
 
-				}
-
+				if (Engine::GetInstance().settings.get()->settingsOpen)
+					for (const auto& bt : pauseButtons)
+						bt.second->state = GuiControlState::DISABLED;
+				else
+					for (const auto& bt : pauseButtons)
+						bt.second->state = GuiControlState::NORMAL;
 			}
-
-			if (Engine::GetInstance().settings.get()->settingsOpen)
-				for (const auto& bt : pauseButtons)
-					bt.second->state = GuiControlState::DISABLED;
-			else
-				for (const auto& bt : pauseButtons)
-					bt.second->state = GuiControlState::NORMAL;
 		}
 		else {
 			for (const auto& bt : pauseButtons)
@@ -695,9 +698,18 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 			quit = true;
 		}
 		break;
+
+	case GuiControlId::CHANGE_MENU:
+		if (control->state == GuiControlState::PRESSED) {
+			if (!Engine::GetInstance().upgradesMenu.get()->upgradesOpen) {
+				Engine::GetInstance().upgradesMenu.get()->upgradesOpen = true;
+				if (Engine::GetInstance().settings.get()->settingsOpen) {
+					Engine::GetInstance().settings.get()->settingsOpen = false;
+				}
+			}
+		}
+		break;
 	}
-
-
 
 	return true;
 }

@@ -13,7 +13,7 @@
 		<enemy6 dead="false" x="1120" y="3232" />
 		<enemy7 dead="false" x="1120" y="3232" />
 	</lvl1>
-	<upgrades dash="false" charged="false" up0="false" up1="false" up2="false" up3="false" up4="false" up5="false" up6="false" up7="false" />
+	<upgrades dash="true" charged="true" up0="false" up1="false" up2="false" up3="false" up4="false" up5="false" up6="false" up7="false" />
 	<playerPrefs>
 		<fullscreen toggle="0" />
 		<musicVolume value="105" />
