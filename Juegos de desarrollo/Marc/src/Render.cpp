@@ -471,7 +471,7 @@ bool Render::DrawTextEx(const char* text, int posx, int posy, int w, int h, TTF_
 {
 	int scale = Engine::GetInstance().window.get()->GetScale();
 	
-	SDL_Surface* surface = TTF_RenderText_Solid(_font, text, _color);
+	SDL_Surface* surface = TTF_RenderUTF8_Solid(_font, text, _color);
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 
 	int texW, texH;

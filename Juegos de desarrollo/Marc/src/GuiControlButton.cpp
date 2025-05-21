@@ -83,7 +83,7 @@ bool GuiControlButton::Update(float dt)
 		if (text != "")
 		{
 			int textW = 0, textH = 0;
-			TTF_SizeText(font, Engine::GetInstance().textManager.get()->GetText(text).c_str(), &textW, &textH);
+			TTF_SizeUTF8(font, Engine::GetInstance().textManager.get()->GetText(text).c_str(), &textW, &textH);
 
 			Engine::GetInstance().render.get()->DrawTextToBuffer(
 				Engine::GetInstance().textManager.get()->GetText(text).c_str(),

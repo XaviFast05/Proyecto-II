@@ -611,10 +611,16 @@
 			</dialoguePanel>
 			<DIALOG01>
 				<text textId="DIALOG01_01" talker="kim" />
-				<text textId="DIALOG01_02" talker="pepe" />
-				<text textId="DIALOG01_03" talker="kim" />
-				<text textId="DIALOG01_04" talker="pepe" />
+				<text textId="DIALOG01_02" talker="kim" />
 			</DIALOG01>
+			<DIALOG02>
+				<text textId="DIALOG02_01" talker="kim" />
+				<text textId="DIALOG02_02" talker="kim" />
+			</DIALOG02>
+			<DIALOG03>
+				<text textId="DIALOG03_01" talker="kim" />
+			</DIALOG03>
+			
 		</dialogues>
 	</scene>
 	<audio>

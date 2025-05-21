@@ -21,6 +21,26 @@ public:
 
 	bool GetOnDialogue();
 
+	int GetUtf8CharLen(unsigned char c) {
+		if (c < 0x80) return 1;
+		else if ((c >> 5) == 0x6) return 2;
+		else if ((c >> 4) == 0xE) return 3;
+		else if ((c >> 3) == 0x1E) return 4;
+		return 1;
+	}
+
+	int CountUtf8Chars(const std::string& str)
+	{
+		int count = 0;
+		for (size_t i = 0; i < str.size(); )
+		{
+			int charLen = GetUtf8CharLen((unsigned char)str[i]);
+			i += charLen;
+			count++;
+		}
+		return count;
+	}
+
 private:
 
 	//PARAMETERS
@@ -53,5 +73,4 @@ private:
 	float nextLetterTime;
 	Timer textTimer;
 	bool skipLetterByLetter;
-	
 };
