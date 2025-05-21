@@ -356,10 +356,6 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 
 	case GuiControlId::SIXTH_UPGRADE:
 		if (sixthUpgradeBt->isChecked) {
-			Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost6);
-			Engine::GetInstance().scene.get()->player->UnlockUpgrade(5);
-			sixthUpgradeBt->state == GuiControlState::DISABLED;
-			hasOpened = true;
 			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost6)
 			{
 				LOG("POBRE DE MIERDA");
