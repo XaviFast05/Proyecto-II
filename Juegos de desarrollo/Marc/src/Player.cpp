@@ -61,6 +61,8 @@ bool Player::Start() {
 	chop.LoadAnimations(parameters.child("animations").child("chop"));
 	throwPix.LoadAnimations(parameters.child("animations").child("throwPix"));
 	throwPixUp.LoadAnimations(parameters.child("animations").child("throwPixUp"));
+	dash.LoadAnimations(parameters.child("animations").child("dash"));
+	charged.LoadAnimations(parameters.child("animations").child("charged"));
 
 	jumpForce = parameters.child("propierties").attribute("gJumpForce").as_float();
 	pushForce = parameters.child("propierties").attribute("pushForce").as_float();
@@ -586,19 +588,20 @@ bool Player::Update(float dt)
 		break;
 
 	case DASH:
-		//aqu� poner animaci�n dash
-		currentAnim = &idle;
+		currentAnim = &dash;
 		if (resetAnimation == true) {
 			currentAnim->Reset();
 			resetAnimation = false;
+
 		}
+		break;
 	case CHARGED:
-		//aqu� poner animaci�n ataque cargado
-		currentAnim = &idle;
+		currentAnim = &charged;
 		if (resetAnimation == true) {
 			currentAnim->Reset();
 			resetAnimation = false;
 		}
+		break;
 	case HURT:
 		currentAnim = &hurt;
 		if (resetAnimation == true) {
