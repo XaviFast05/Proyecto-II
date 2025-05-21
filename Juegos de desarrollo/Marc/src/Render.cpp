@@ -91,7 +91,6 @@ bool Render::PostUpdate()
 	{
 		for (RenderOrder order : zBufferQuery[i])
 		{
-			if (i != 8) break;
 			int scale = Engine::GetInstance().window.get()->GetScale();
 
 			int drawX = (int)(camera.x * order.speed) + order.x * scale;
@@ -176,7 +175,6 @@ bool Render::PostUpdate()
 		}
 		zBufferQuery[i].clear();
 	}
-
 
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
@@ -295,7 +293,7 @@ bool Render::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b,
 
 	int result = -1;
 
-	if (use_camera)
+	if (!use_camera)
 		result = SDL_RenderDrawLine(renderer, camera.x + x1 * scale, camera.y + y1 * scale, camera.x + x2 * scale, camera.y + y2 * scale);
 	else
 		result = SDL_RenderDrawLine(renderer, x1 * scale, y1 * scale, x2 * scale, y2 * scale);
