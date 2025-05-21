@@ -128,9 +128,8 @@ void ProjectileManager::ThrowChild(Vector2D position, Vector2D direction)
 	}
 
 	Vector2D bulletPos = position;
-	bulletPos.setX(bulletPos.getX() + (direction.getX() * 90)); // Ajusta si hace falta
-	bulletPos.setY(bulletPos.getY() + 50); // Ajusta si hace falta
-
+	bulletPos.setX(bulletPos.getX() + (direction.getX() * 90)); 
+	bulletPos.setY(bulletPos.getY() + 50); 
 	bullet->SetPosition(bulletPos);
 	bullet->SetDirection(direction);
 	bullet->ChangeDirection(BulletDirection::HORIZONTAL);

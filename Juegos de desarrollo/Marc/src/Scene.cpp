@@ -35,6 +35,7 @@
 #include "PickaxeManager.h"
 #include "CurrencyManager.h"
 #include "UpgradesMenu.h"
+#include "ShootingEnemy.h"
 
 #include "Intro.h"
 

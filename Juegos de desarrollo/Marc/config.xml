@@ -366,7 +366,7 @@
 						</death>
 					</animations>
 				</finalboss>
-				<shootingenemy x="240" y="4620" w="64" h="64" texture="Assets/Textures/Enemies/ShootingFirefly/spritesf.png">
+				<shootingenemy x="768" y="256" w="64" h="64" texture="Assets/Textures/Enemies/ShootingFirefly/spritesf.png">
 					<properties speed="5" chaseArea="600" deathTime="1.0f" lives="5" pushForce="1" pushFriction="5" lootAmount="3" canPush="false" />
 					<animations>
 						<idle loop="true" speed="0.1f">

@@ -10,6 +10,7 @@
 #include "ChildEnemy.h"
 #include "JumpingEnemy.h"
 #include "RunningEnemy.h"
+#include "ShootingEnemy.h"
 #include "FinalBoss.h"
 #include "Particle.h"
 #include "SoulRock.h"
@@ -130,6 +131,9 @@ Entity* EntityManager::CreateEntity(EntityType bullet_direction)
 		break;
 	case EntityType::MERCHANT:
 		entity = new Merchant();
+		break;
+	case EntityType::SHOOTING_ENEMY:
+		entity = new ShootingEnemy();
 		break;
 	default:
 		break;

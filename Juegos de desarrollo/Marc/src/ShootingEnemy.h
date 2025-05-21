@@ -1,10 +1,10 @@
 #pragma once
+
 #include "Enemy.h"
 #include "SDL2/SDL.h"
 #include "Animation.h"
 #include "Pathfinding.h"
 #include "PickaxeManager.h"
-#include "Player.h"
 #include <vector>
 
 
@@ -25,20 +25,22 @@ public:
 
 	void OnCollision(PhysBody* physA, PhysBody* physB) override;
 
-	bool shouldShoot = false;
-	ProjectileManager* projectileManager = nullptr;
+	void DMGEnemyPickaxe();
+	
+	bool shootRight = true;
+
 
 private:
 
 	int drawOffsetX = -16;
 	int drawOffsetY = -16;
 	Vector2D destinationPoint;
-
+	ProjectileManager* projectileManager;
 	//SOUND FX
 	int batWingsSFX;
 	int farBatWingsSFX;
 	int batDeathSFX;
-	
-	
+
 
 };
+

@@ -28,11 +28,11 @@ bool ShootingEnemy::Start() {
 
 	lives = 3;
 
-
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
 	attack.LoadAnimations(parameters.child("animations").child("attack"));
 	hurt.LoadAnimations(parameters.child("animations").child("hurt"));
 	death.LoadAnimations(parameters.child("animations").child("death"));
+	
 
 
 
@@ -43,11 +43,11 @@ bool ShootingEnemy::Start() {
 	pugi::xml_parse_result result = audioFile.load_file("config.xml");
 	audioNode = audioFile.child("config").child("audio").child("fx");
 
-	//SFX LOAD
-	batWingsSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("batWingsSFX").attribute("path").as_string());
-	farBatWingsSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("farBatWings").attribute("path").as_string());
-	batDeathSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("batDeathSFX").attribute("path").as_string());
-	noSound = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("noSound").attribute("path").as_string());
+	////SFX LOAD
+	//batWingsSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("batWingsSFX").attribute("path").as_string());
+	//farBatWingsSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("farBatWings").attribute("path").as_string());
+	//batDeathSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("batDeathSFX").attribute("path").as_string());
+	//noSound = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("noSound").attribute("path").as_string());
 
 
 	//INIT ROUTE
@@ -59,7 +59,7 @@ bool ShootingEnemy::Start() {
 	destinationPoint = route[routeDestinationIndex];
 
 	//INIT PHYSICS
-	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), 32, bodyType::DYNAMIC);
+	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), 16, bodyType::DYNAMIC);
 	pbody->ctype = ColliderType::ENEMY;
 	pbody->body->SetGravityScale(0);
 	pbody->body->SetFixedRotation(true);
@@ -236,7 +236,6 @@ bool ShootingEnemy::Update(float dt) {
 		//DRAW
 
 		if (pbody->body->IsEnabled()) {
-
 			if (Engine::GetInstance().GetDebug())
 			{
 				Engine::GetInstance().render.get()->DrawCircle(position.getX() + texW / 2, position.getY() + texH / 2, chaseArea * 2, 255, 255, 255);
@@ -248,34 +247,16 @@ bool ShootingEnemy::Update(float dt) {
 
 			b2Transform pbodyPos = pbody->body->GetTransform();
 			position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texW / 2 + drawOffsetX);
-			position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 1.5 + drawOffsetY);
-
-
-
+			position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2 + drawOffsetY);
 			if (dir == LEFT) {
-				Engine::GetInstance().render.get()->DrawTexture(texture, (int)position.getX(), (int)position.getY() + 10, &currentAnimation->GetCurrentFrame());
+				Engine::GetInstance().render.get()->DrawTextureBuffer(texture, (int)position.getX(), (int)position.getY(), true, ENTITIES, &currentAnimation->GetCurrentFrame());
 			}
 			else if (dir == RIGHT) {
-				Engine::GetInstance().render.get()->DrawTextureFlipped(texture, (int)position.getX(), (int)position.getY() + 10, &currentAnimation->GetCurrentFrame());
+				Engine::GetInstance().render.get()->DrawTextureBuffer(texture, (int)position.getX(), (int)position.getY(), false, ENTITIES, &currentAnimation->GetCurrentFrame());
 			}
 		}
 
-		if (shouldShoot) {
-			Vector2D spawnPosition = pbody->GetPhysBodyWorldPosition();
-
-			// Ajuste básico de dirección (según `dir`)
-			Vector2D directionVec;
-			if (dir == LEFT)
-				directionVec = { -1, 0 };
-			else
-				directionVec = { 1, 0 };
-
-			projectileManager->ThrowChild(spawnPosition, directionVec); // ? Usa el sistema que tengas
-
-			shouldShoot = false;
-		}
 	}
-	
 
 
 
@@ -289,20 +270,14 @@ void ShootingEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::WEAPON:
 		break;
 	case ColliderType::PICKAXE:
-		if (state != DEAD) {
-			DMGEnemyPickaxe();
-			shouldShoot = true; 
-		}
+		if (state != DEAD) 	DMGEnemyPickaxe();
 		break;
-
 	case ColliderType::MELEE_AREA:
 		if (state != DEAD) {
 			if (canPush) push = true;
 			DMGEnemyMelee();
-			shouldShoot = true; 
 		}
 		break;
-
 	case ColliderType::SPYKE:
 		break;
 	case ColliderType::ENEMY:
@@ -324,5 +299,26 @@ void ShootingEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
 		pbody->body->SetLinearVelocity(b2Vec2_zero);
 		pbody->body->ApplyLinearImpulseToCenter(pushVec, true);
 		pbody->body->SetLinearDamping(pushFriction);
+	}
+
+}
+void ShootingEnemy::DMGEnemyPickaxe()
+{
+	lives--;
+
+	// Alternar dirección
+	Vector2D direction = shootRight ? Vector2D(1, 0) : Vector2D(-1, 0);
+	shootRight = !shootRight;
+
+	// Llamar a ThrowChild
+	if (projectileManager != nullptr)
+		projectileManager->ThrowChild(position, direction);
+
+	// Resto de tu lógica
+	if (lives <= 0) {
+		// Muerte del enemigo
+		state = DEAD;
+		deathTimer.Start();
+		/*Engine::GetInstance().audio.get()->PlayFx(batDeathSFX, 0);*/
 	}
 }
