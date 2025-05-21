@@ -20,4 +20,49 @@
         <CA>Però un arbre va caure al pont i no podem passar.</CA>
         <EN>But a tree fell on the bridge and we can't get through.</EN>
     </Text>
+	<Text id="TUTORIAL">
+		<ES>TUTORIAL</ES>
+		<CA>TUTORIAL</CA>
+		<EN>TUTORIAL</EN>
+	</Text>
+	<Text id="TEST_LEVEL">
+		<ES>NIVEL DE PRUEBA</ES>
+		<CA>NIVELL DE PROBA</CA>
+		<EN>TEST LEVEL</EN>
+	</Text>
+	<Text id="OPTIONS">
+		<ES>OPCIONES</ES>
+		<CA>OPCIONS</CA>
+		<EN>OPTIONS</EN>
+	</Text>
+	<Text id="CREDITS">
+		<ES>CREDITOS</ES>
+		<CA>CREDITS</CA>
+		<EN>CREDITS</EN>
+	</Text>
+	<Text id="EXIT">
+		<ES>SALIR</ES>
+		<CA>SORTIR</CA>
+		<EN>EXIT</EN>
+	</Text>
+	<Text id="BACK">
+		<ES>ATRAS</ES>
+		<CA>ENRERE</CA>
+		<EN>BACK</EN>
+	</Text>
+	<Text id="MUSIC">
+		<ES>MUSICA</ES>
+		<CA>MUSICA</CA>
+		<EN>MUSIC</EN>
+	</Text>
+	<Text id="SOUND_EFFECTS">
+		<ES>EFECTOS DE SONIDO</ES>
+		<CA>EFECTES SONORS</CA>
+		<EN>SOUND EFFECTS</EN>
+	</Text>
+	<Text id="FULL_SCREEN">
+		<ES>PANTALLA COMPLETA</ES>
+		<CA>PANTALLA COMPLETA</CA>
+		<EN>FULL SCREEN</EN>
+	</Text>
 </Texts>

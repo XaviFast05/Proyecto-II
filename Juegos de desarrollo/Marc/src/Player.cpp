@@ -195,7 +195,6 @@ bool Player::Update(float dt)
 			godMode = !godMode;
 			pbody->body->SetGravityScale(godMode ? 0.0f : gravity);
 			pbody->body->SetLinearVelocity(b2Vec2_zero);
-			LOG("God mode = %d", (int)godMode);
 		}
 
 		if (godMode) {
