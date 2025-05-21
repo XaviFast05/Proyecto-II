@@ -5,6 +5,7 @@
 #include "Input.h"
 #include "MainMenu.h"
 #include "Window.h"
+#include "TextManager.h"
 
 GuiControlButton::GuiControlButton(const char* name, SDL_Rect bounds, const char* text, SDL_Texture* btTex) : GuiControl(GuiControlType::BUTTON, id, name)
 {
@@ -18,8 +19,7 @@ GuiControlButton::GuiControlButton(const char* name, SDL_Rect bounds, const char
 	drawBasic = false;
 	this->active = true;
 	/*state = GuiControlState::NORMAL;*/
-
-
+	
 }
 
 GuiControlButton::~GuiControlButton()
@@ -63,6 +63,9 @@ bool GuiControlButton::Update(float dt)
 	case GuiControlState::DISABLED:
 		section = { 0, bounds.h, bounds.w, bounds.h};
 		break;
+	case GuiControlState::OVERLOADED:
+		section = { 0, bounds.h, bounds.w, bounds.h };
+		break;
 	case GuiControlState::NORMAL:
 		section = { 0, 0, bounds.w, bounds.h };
 		break;
@@ -78,6 +81,22 @@ bool GuiControlButton::Update(float dt)
 	if (active) {
 		if (texture != nullptr) {
 			Engine::GetInstance().render.get()->DrawTextureBuffer(texture, -camera.x / windowScale + bounds.x, -camera.y / windowScale + bounds.y, false, MENUS,&section);
+			
+		}
+		if (text != "")
+		{
+			int textW = 0, textH = 0;
+			TTF_SizeUTF8(font, Engine::GetInstance().textManager.get()->GetText(text).c_str(), &textW, &textH);
+
+			Engine::GetInstance().render.get()->DrawTextToBuffer(
+				Engine::GetInstance().textManager.get()->GetText(text).c_str(),
+				bounds.x + (bounds.w/2) - textW /2,
+				bounds.y + (bounds.h / 2) - textH / 2,
+				textW,
+				textH,
+				font,
+				{ 255, 255, 255, 255 }, MENUS
+			);
 		}
 
 		/*Engine::GetInstance().render->DrawText(text.c_str(), bounds.x * 2 + bounds.w / 2, bounds.y * 2 + bounds.h / 2, bounds.w, bounds.h);*/

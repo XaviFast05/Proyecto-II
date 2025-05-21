@@ -6,6 +6,7 @@
 #include "GuiControlSlider.h"
 #include "GuiControlCheckBox.h"
 #include "GuiControl.h" 
+#include "Player.h" 
 
 
 #include <list>
@@ -54,6 +55,17 @@ public:
 
 	GuiControlButton* backBt;
 	GuiControlButton* changeMenuBt;
+	GuiControlCheckBox* upg1;
+	GuiControlCheckBox* upg2;
+	GuiControlCheckBox* upg3;
+	GuiControlCheckBox* upg4;
+	GuiControlCheckBox* upg5;
+	GuiControlCheckBox* upg6;
+	GuiControlCheckBox* upg7;
+	GuiControlCheckBox* upg8;
+
+	Player* player;
+	bool hasOpened = false;
 
 	std::list<GuiControl*> upgradesGUI;
 };

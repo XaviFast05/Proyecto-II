@@ -46,6 +46,12 @@ public:
 		int x = 0, y = 0;
 		int zbuffer = 0;
 		float speed = 1.0f;
+		Uint8 r = 255;
+		Uint8 g = 255;
+		Uint8 b = 255;
+		Uint8 a = 255;
+		bool filled = true;
+		bool use_camera = false;
 
 		// Para textura
 		SDL_Texture* texture = nullptr;
@@ -62,14 +68,13 @@ public:
 
 		//Para rectangulo
 		SDL_Rect rect = { 0,0,0,0 };
-		Uint8 r = 255;
-		Uint8 g = 255;
-		Uint8 b = 255;
-		Uint8 a = 255;
-		bool filled = true;
-		bool use_camera = false;
 
-		// En un futuro podrías meter más tipos (rect, line, etc)
+
+		//Para linea
+		int x1, x2, y1, y2;
+
+		//Para circulo
+		int radius;
 	};
 
 	Render(bool startEnabled);
@@ -96,6 +101,7 @@ public:
 
 	// Drawing
 	
+	bool DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* section = nullptr, bool fliped = false, float speed = 1.0f, double angle = 0, int pivotX = INT_MAX, int pivotY = INT_MAX) const;
 	bool DrawRectangle(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool filled = true, bool useCamera = true) const;
 	bool DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool useCamera = true) const;
 	bool DrawCircle(int x1, int y1, int redius, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool useCamera = true) const;
@@ -105,7 +111,8 @@ public:
 	bool DrawRectangleBuffer(const SDL_Rect& rect, Uint8 r = 255, Uint8 g = 255, Uint8 b=255, Uint8 a = 255, RenderLayers = DEFAULT, bool filled = true, bool useCamera = true);
 	bool DrawTextureBuffer(SDL_Texture* texture, int x, int y, bool flip = false, RenderLayers zBuffer = DEFAULT, const SDL_Rect* section = nullptr, float speed = 1.0f, double angle = 0, int pivotX = INT_MAX, int pivotY = INT_MAX);
 	bool DrawTextToBuffer(const std::string& text, int x, int y, int w, int h, TTF_Font* _font, SDL_Color color = {255,255,255,255}, RenderLayers layer = DEFAULT, float speed = 1.0f);
-
+	bool DrawLineBuffer(int x1, int y1, int x2, int y2, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255, RenderLayers zbuffer = DEFAULT, bool useCamera = true);
+	bool DrawCircleBuffer(int x1, int y1, int redius, Uint8 r = 255, Uint8 g = 255, Uint8 b = 255, Uint8 a = 255, RenderLayers zbuffer = DEFAULT, bool useCamera = true);
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
 

@@ -23,6 +23,7 @@
 #include "Settings.h"
 #include "UpgradesMenu.h"
 #include "TextManager.h"
+#include "MerchantMenu.h"
 
 // Constructor
 Engine::Engine() {
@@ -55,6 +56,7 @@ Engine::Engine() {
 	upgradesMenu = std::make_shared<UpgradesMenu>(true);
     death = std::make_shared<DeathMenu>(false);
     win = std::make_shared<WinMenu>(false);
+    merchantMenu = std::make_shared<MerchantMenu>(true);
 
 
     // Ordered for awake / Start / Update
@@ -75,6 +77,7 @@ Engine::Engine() {
     AddModule(std::static_pointer_cast<Module>(win));
     AddModule(std::static_pointer_cast<Module>(settings));
     AddModule(std::static_pointer_cast<Module>(upgradesMenu));
+    AddModule(std::static_pointer_cast<Module>(merchantMenu));
     AddModule(std::static_pointer_cast<Module>(fade));
     AddModule(std::static_pointer_cast<Module>(render));
 

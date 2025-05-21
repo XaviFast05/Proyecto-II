@@ -35,6 +35,7 @@
 #include "PickaxeManager.h"
 #include "CurrencyManager.h"
 #include "UpgradesMenu.h"
+#include "MerchantMenu.h"
 
 #include "Intro.h"
 
@@ -132,7 +133,7 @@ bool Scene::Start()
 	{
 		std::string buttonName = child.name();
 		GuiControlButton* bt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, buttonName.c_str(), "", { 0, 0, 0, 0 }, this, { 0,0,0,0 });
-		this->SetGuiParameters(bt, buttonName, pauseBtNode);
+		bt->SetGuiParameters(buttonName, pauseBtNode);
 		pauseButtons[buttonName] = bt;
 		bt->active = false;
 	}
@@ -411,9 +412,13 @@ bool Scene::PostUpdate()
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {
 		help = !help;
 	}
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_START) == KEY_DOWN) {
 		paused = !paused;
 		Engine::GetInstance().settings.get()->settingsOpen = false;
+	}
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_BACK) == KEY_DOWN)
+	{
+		drawnMap = !drawnMap;
 	}
 
 	Render* render = Engine::GetInstance().render.get();
@@ -462,10 +467,9 @@ bool Scene::PostUpdate()
 				bt.second->active = false;
 		}
 
-		if (help)
-			render->DrawTextureBuffer(helpMenu, -render->camera.x / window->scale + helpPos.getX(), -render->camera.y / window->scale + helpPos.getY(), false ,MENUS);
+		if (help) render->DrawTextureBuffer(helpMenu, -render->camera.x / window->scale + helpPos.getX(), -render->camera.y / window->scale + helpPos.getY());
 			
-			
+		if (drawnMap) DrawMap();
 
 		if (quit) return false;
 
@@ -489,6 +493,7 @@ bool Scene::CleanUp()
 	enemies.clear();
 	checkPoints.clear();
 	soulRocks.clear();
+	allies.clear();
 
 
 
@@ -702,6 +707,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 	case GuiControlId::CHANGE_MENU:
 		if (control->state == GuiControlState::PRESSED) {
 			if (!Engine::GetInstance().upgradesMenu.get()->upgradesOpen) {
+				Engine::GetInstance().upgradesMenu.get()->hasOpened = true;
 				Engine::GetInstance().upgradesMenu.get()->upgradesOpen = true;
 				if (Engine::GetInstance().settings.get()->settingsOpen) {
 					Engine::GetInstance().settings.get()->settingsOpen = false;
@@ -714,17 +720,6 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 	return true;
 }
 
-void Scene::SetGuiParameters(GuiControl* bt, std::string btName, pugi::xml_node parameters) {
-
-	bt->id = (GuiControlId)parameters.child(btName.c_str()).attribute("id").as_int();
-
-	bt->bounds.x = parameters.child(btName.c_str()).attribute("x").as_int();
-	bt->bounds.y = parameters.child(btName.c_str()).attribute("y").as_int();
-	bt->bounds.w = parameters.child(btName.c_str()).attribute("w").as_int();
-	bt->bounds.h = parameters.child(btName.c_str()).attribute("h").as_int();
-
-	bt->texture = Engine::GetInstance().textures.get()->Load(parameters.child(btName.c_str()).attribute("texture").as_string());
-}
 
 void Scene::ChangeLevel()
 {

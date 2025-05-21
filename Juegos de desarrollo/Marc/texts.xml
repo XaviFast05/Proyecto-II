@@ -1,23 +1,73 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Texts>
     <Text id="DIALOG01_01">
-        <ES>HOLA DON PEPITO</ES>
-        <CA>HELLO DON PEPIT</CA>
-        <EN>Welcome traveler!</EN>
+        <ES>Dios mío, ¿qué he hecho? Papá me dijo que no fuera con él y aun así lo hice, y mira lo que ha pasado… Todo por mi culpa.</ES>
+        <CA></CA>
+        <EN></EN>
     </Text>
     <Text id="DIALOG01_02">
-        <ES>HOLA DON JOSE</ES>
-        <CA>He vist com Gnorck s'emportava la teva barca.</CA>
-        <EN>I have seen how gnorkc took your boat.</EN>
+        <ES>Esa voz que oí fuera… ¿Era real? Papá debe estar aquí, estoy segura. Debo llegar lo antes posible, me niego a pensar que papá esté muerto.</ES>
+        <CA></CA>
+        <EN></EN>
     </Text>
-    <Text id="DIALOG01_03">
-        <ES>PASO USTED YA POR CASA</ES>
-        <CA>Crec que Topete pot ajudar-te a reparar-la.</CA>
-        <EN>I think Topete can help you repairing it.</EN>
+    <Text id="DIALOG02_01">
+        <ES>Vaya, no puedo saltar y llegar a lo más alto de esta pared… ¡Bueno, es hora de sacar las piquetas! Así seré capaz de llegar mucho más alto.</ES>
+        <CA></CA>
+        <EN></EN>
     </Text>
-    <Text id="DIALOG01_04">
-        <ES>POR SU CASA YO PASE</ES>
-        <CA>Però un arbre va caure al pont i no podem passar.</CA>
-        <EN>But a tree fell on the bridge and we can't get through.</EN>
+    <Text id="DIALOG02_02">
+        <ES>A ver las instrucciones… “Pulsa el botón Q para lanzar, y E para atacar”. Vaya, no recuerdo que funcionaran así. De todas formas, me alegro de que las haya traído.</ES>
+        <CA></CA>
+        <EN></EN>
     </Text>
+	<Text id="DIALOG03_01">
+        <ES>Guau, qué foso tan profundo, me da miedo de solo pensar qué habrá abajo… ¿Papá realmente está ahí abajo? No, debo ir, no puedo aceptar que esté muerto, debe de haber alguna forma de que vuelva a casa.</ES>
+        <CA></CA>
+        <EN></EN>
+    </Text>
+	<Text id="TUTORIAL">
+		<ES>TUTORIAL</ES>
+		<CA>TUTORIAL</CA>
+		<EN>TUTORIAL</EN>
+	</Text>
+	<Text id="TEST_LEVEL">
+		<ES>NIVEL DE PRUEBA</ES>
+		<CA>NIVELL DE PROBA</CA>
+		<EN>TEST LEVEL</EN>
+	</Text>
+	<Text id="OPTIONS">
+		<ES>OPCIONES</ES>
+		<CA>OPCIONS</CA>
+		<EN>OPTIONS</EN>
+	</Text>
+	<Text id="CREDITS">
+		<ES>CREDITOS</ES>
+		<CA>CREDITS</CA>
+		<EN>CREDITS</EN>
+	</Text>
+	<Text id="EXIT">
+		<ES>SALIR</ES>
+		<CA>SORTIR</CA>
+		<EN>EXIT</EN>
+	</Text>
+	<Text id="BACK">
+		<ES>ATRAS</ES>
+		<CA>ENRERE</CA>
+		<EN>BACK</EN>
+	</Text>
+	<Text id="MUSIC">
+		<ES>MUSICA</ES>
+		<CA>MUSICA</CA>
+		<EN>MUSIC</EN>
+	</Text>
+	<Text id="SOUND_EFFECTS">
+		<ES>EFECTOS DE SONIDO</ES>
+		<CA>EFECTES SONORS</CA>
+		<EN>SOUND EFFECTS</EN>
+	</Text>
+	<Text id="FULL_SCREEN">
+		<ES>PANTALLA COMPLETA</ES>
+		<CA>PANTALLA COMPLETA</CA>
+		<EN>FULL SCREEN</EN>
+	</Text>
 </Texts>

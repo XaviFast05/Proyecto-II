@@ -6,6 +6,7 @@
 #include "Vector2D.h"
 
 #define NUM_MOUSE_BUTTONS 5
+#define MAX_GAMEPAD_BUTTONS SDL_CONTROLLER_BUTTON_MAX
 
 enum EventWindow
 {
@@ -64,7 +65,15 @@ public:
 	Vector2D GetMousePosition();
 	Vector2D GetMouseMotion();
 
+	//SDL_GameController* GetController() const { return controller; }
+	KeyState gamepadButtons[MAX_GAMEPAD_BUTTONS] = {};
+	SDL_GameController* controller = nullptr;
+	KeyState GetGamepadButton(SDL_GameControllerButton button) const;
+
+
 private:
+
+
 	bool windowEvents[WE_COUNT];
 	KeyState*	keyboard;
 	KeyState mouseButtons[NUM_MOUSE_BUTTONS];

@@ -16,7 +16,6 @@ public:
    
     
    /* SDL_Rect sliderBounds;*/
-    SDL_Texture* sliderTexture;
     //PhysBody* button;
     //PhysBody* sliderBar;
     int minValue;
