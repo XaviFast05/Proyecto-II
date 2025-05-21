@@ -195,7 +195,6 @@ bool Player::Update(float dt)
 			godMode = !godMode;
 			pbody->body->SetGravityScale(godMode ? 0.0f : gravity);
 			pbody->body->SetLinearVelocity(b2Vec2_zero);
-			LOG("God mode = %d", (int)godMode);
 		}
 
 		if (godMode) {
@@ -306,6 +305,11 @@ bool Player::Update(float dt)
 				dashTimer.Start();
 				dashTimerOn = true;
 				playerState = DASH;
+			}
+			else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && stateFlow[playerState][TALK] && !dialoguesManager->GetOnDialogue()) {
+
+				dialoguesManager->StartDialogue("DIALOG01");
+				playerState = TALK;
 			}
 
 			//COYOTE TIME LOGIC
@@ -504,6 +508,12 @@ bool Player::Update(float dt)
 				if (chargeAttackTimer.ReadSec() > chargeAttackTimerMax || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_UP) {
 					chargedCooldownTimer.Start();
 					chargedCooldown = true;
+					playerState = IDLE;
+				}
+				break;
+			case TALK:
+
+				if (!dialoguesManager->GetOnDialogue()) {
 					playerState = IDLE;
 				}
 				break;

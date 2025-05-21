@@ -48,20 +48,58 @@ bool DialoguesManager::Update(float dt)
         std::string currentLine = "";
         std::string wordBuffer = "";
 
-        int letterNum = textTimer.ReadMSec() / (int)(nextLetterTime * 1000);
-        letterNum = std::min(letterNum, (int)textToShow.size());
+        int maxLetters = textTimer.ReadMSec() / (int)(nextLetterTime * 1000);
+        int totalVisibleLetters = 0;
 
         if (skipLetterByLetter)
         {
-            letterNum = textToShow.size();
+            maxLetters = INT_MAX;
         }
-    
+
+
+        //CREAR LINEAS CARACTER A CARACTER
+        for (size_t i = 0; i < textToShow.size(); )
+        {
+            if (totalVisibleLetters >= maxLetters)
+                break;
+
+            int charLen = GetUtf8CharLen((unsigned char)textToShow[i]);
+            std::string utf8Char = textToShow.substr(i, charLen);
+            wordBuffer += utf8Char;
+            i += charLen;
+            totalVisibleLetters++;
+
+            int textW = 0, textH = 0;
+            std::string tempLine = currentLine + wordBuffer;
+            TTF_SizeUTF8(textFont, tempLine.c_str(), &textW, &textH);
+
+            if (textW > textMaxW - 20)
+            {
+                if (!currentLine.empty())
+                    lines.push_back(currentLine);
+
+                currentLine = wordBuffer;
+                wordBuffer = "";
+            }
+
+            if (utf8Char == " ")
+            {
+                currentLine += wordBuffer;
+                wordBuffer = "";
+            }
+        }
+
+        currentLine += wordBuffer;
+        if (!currentLine.empty())
+            lines.push_back(currentLine);
+
+        //PASAR O COMPLETAR CON EL ENTER
         if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
         {
-            if (!skipLetterByLetter && letterNum < textToShow.size())
+            int totalChars = CountUtf8Chars(textToShow);
+            if (!skipLetterByLetter && totalVisibleLetters < totalChars)
             {
                 skipLetterByLetter = true;
-                letterNum = textToShow.size();
             }
             else
             {
@@ -69,37 +107,7 @@ bool DialoguesManager::Update(float dt)
             }
         }
 
-        for (int i = 0; i < letterNum; i++)
-        {
-            char c = textToShow[i];
-            wordBuffer += c;
-
-            int textW = 0, textH = 0;
-            std::string tempLine = currentLine + wordBuffer;
-            TTF_SizeText(textFont, tempLine.c_str(), &textW, &textH);
-
-            if (textW > textMaxW - 20)
-            {
-                if (!currentLine.empty()) {
-                    lines.push_back(currentLine);
-                }
-                currentLine = wordBuffer;
-                wordBuffer = "";
-            }
-
-            if (c == ' ') {
-                currentLine += wordBuffer;
-                wordBuffer = "";
-            }
-        }
-
-        // Añadir lo que queda
-        currentLine += wordBuffer;
-        if (!currentLine.empty()) {
-            lines.push_back(currentLine);
-        }
-
-        // Posición del rectángulo
+        //DRAW DEL DIALOGO
         Vector2D rectPos = {
             -(float)Engine::GetInstance().render.get()->camera.x + rectangleTextureX,
             -(float)Engine::GetInstance().render.get()->camera.y + rectangleTextureY
@@ -111,7 +119,7 @@ bool DialoguesManager::Update(float dt)
         for (int i = 0; i < lines.size(); i++)
         {
             int lineW = 0, lineH = 0;
-            TTF_SizeText(textFont, lines[i].c_str(), &lineW, &lineH);
+            TTF_SizeUTF8(textFont, lines[i].c_str(), &lineW, &lineH);
 
             Engine::GetInstance().render.get()->DrawTextToBuffer(
                 lines[i].c_str(),

@@ -36,11 +36,13 @@ bool TextManager::Update(float dt)
 {
     if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
     {
-        ChangeIdiom(0);
+        languageIndex--;
+        if (languageIndex < 0) languageIndex = 2;
     }
     else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
     {
-        ChangeIdiom(1);
+        languageIndex++;
+        if (languageIndex > 2) languageIndex = 0;
     }
     return true;
 }
