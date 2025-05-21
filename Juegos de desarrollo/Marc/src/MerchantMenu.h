@@ -61,8 +61,8 @@ public:
 
 
 	bool unlocked[8];
-	GuiControlButton* backBt, * firstUpgradeBt, * secondUpgradeBt, * thirdUpgradeBt, * fourthUpgradeBt, * fifthUpgradeBt, * sixthUpgradeBt, * seventhUpgradeBt, * eighthUpgradeBt;
-
+	GuiControlCheckBox* firstUpgradeBt, * secondUpgradeBt, * thirdUpgradeBt, * fourthUpgradeBt, * fifthUpgradeBt, * sixthUpgradeBt, * seventhUpgradeBt, * eighthUpgradeBt;
+	GuiControlButton* backBt;
 	int testSound;
 
 	std::list<GuiControl*> merchantGUI;

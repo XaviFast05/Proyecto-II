@@ -513,52 +513,6 @@ bool Player::Update(float dt)
 
 			if (playerState == DASH) velocity = { pbody->body->GetLinearVelocity().x, 0 };
 			else velocity = { velocity.x, pbody->body->GetLinearVelocity().y };
-
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_X) == KEY_UP || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_X) == KEY_UP) charging = false;
-			if (stateTimer.ReadSec() >= pickaxeTimerAnimation)
-			{
-				if (charging == true && chargedCooldown == false && unlockedCharged == true) {
-					playerState = CHARGED;
-					chargeAttackTimer.Start();
-					break;
-				}
-				else playerState = IDLE;
-				if (playSound == false) {
-					playSound = true;
-				}
-			}
-			break;
-		case THROW:
-			if (playSound == true) {
-				Engine::GetInstance().audio.get()->PlayFx(playerThrowSFX);
-				playSound = false;
-			}
-			if (CheckMoveX() && !grounded) MoveX();
-			if (stateTimer.ReadSec() >= pickaxeTimerAnimation)
-			{
-				playerState = IDLE;
-				if (playSound == false) {
-					playSound = true;
-				}
-			}
-			break;
-		case DEAD:
-			pbody->body->SetLinearVelocity(b2Vec2(0, 0));
-			if (respawnTimer.ReadSec() >= respawnTime) {
-				Engine::GetInstance().scene.get()->LoadState();
-				playerState = IDLE;
-				hits = 3;
-			}
-			break;
-		case CHARGED:
-			if (chargeAttackTimer.ReadSec() > chargeAttackTimerMax || (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_X) == KEY_UP || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_X) == KEY_UP)) {
-				chargedCooldownTimer.Start();
-				chargedCooldown = true;
-				playerState = IDLE;
-			}
-			break;
-		default:
-			break;
 		}
 	}
 
@@ -949,8 +903,8 @@ bool Player::CheckMoveX()
 {
 	Input* input = Engine::GetInstance().input.get();
 
-	bool moveRight = input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT;
-	bool moveLeft = input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT;
+	bool moveRight = input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT;
+	bool moveLeft = input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT;
 
 	// Joystick
 

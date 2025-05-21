@@ -467,7 +467,7 @@ bool Scene::PostUpdate()
 				bt.second->active = false;
 		}
 
-		if (help) render->DrawTexture(helpMenu, -render->camera.x / window->scale + helpPos.getX(), -render->camera.y / window->scale + helpPos.getY());
+		if (help) render->DrawTextureBuffer(helpMenu, -render->camera.x / window->scale + helpPos.getX(), -render->camera.y / window->scale + helpPos.getY());
 			
 		if (drawnMap) DrawMap();
 

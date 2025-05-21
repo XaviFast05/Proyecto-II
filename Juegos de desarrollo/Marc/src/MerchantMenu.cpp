@@ -58,42 +58,42 @@ bool MerchantMenu::Start()
 
 	//IMPORTANTE: Que siga este orden porque sino no coincide con el config
 
-	firstUpgradeBt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, "firstUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	firstUpgradeBt = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "firstUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
 	SetGuiParameters(firstUpgradeBt, "firstUpgradeBt", configParameters);
 
 	merchantGUI.push_back(firstUpgradeBt);
 
-	secondUpgradeBt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, "secondUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	secondUpgradeBt = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "secondUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
 	SetGuiParameters(secondUpgradeBt, "secondUpgradeBt", configParameters);
 
 	merchantGUI.push_back(secondUpgradeBt);
 
-	thirdUpgradeBt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, "thirdUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	thirdUpgradeBt = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "thirdUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
 	SetGuiParameters(thirdUpgradeBt, "thirdUpgradeBt", configParameters);
 
 	merchantGUI.push_back(thirdUpgradeBt);
 
-	fourthUpgradeBt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, "fourthUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	fourthUpgradeBt = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "fourthUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
 	SetGuiParameters(fourthUpgradeBt, "fourthUpgradeBt", configParameters);
 
 	merchantGUI.push_back(fourthUpgradeBt);
 
-	fifthUpgradeBt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, "fifthUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	fifthUpgradeBt = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "fifthUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
 	SetGuiParameters(fifthUpgradeBt, "fifthUpgradeBt", configParameters);
 
 	merchantGUI.push_back(fifthUpgradeBt);
 
-	sixthUpgradeBt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, "sixthUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	sixthUpgradeBt = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "sixthUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
 	SetGuiParameters(sixthUpgradeBt, "sixthUpgradeBt", configParameters);
 
 	merchantGUI.push_back(sixthUpgradeBt);
 
-	seventhUpgradeBt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, "seventhUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	seventhUpgradeBt = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "seventhUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
 	SetGuiParameters(seventhUpgradeBt, "seventhUpgradeBt", configParameters);
 
 	merchantGUI.push_back(seventhUpgradeBt);
 
-	eighthUpgradeBt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, "eighthUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	eighthUpgradeBt = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "eighthUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
 	SetGuiParameters(eighthUpgradeBt, "eighthUpgradeBt", configParameters);
 
 	merchantGUI.push_back(eighthUpgradeBt);
@@ -147,7 +147,7 @@ bool MerchantMenu::Update(float dt)
 
 
 		Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
-		Engine::GetInstance().render.get()->DrawTexture(merchantPanel, -camera.x / windowScale + merchantPanelX, -camera.y / windowScale + merchantPanelY);
+		Engine::GetInstance().render.get()->DrawTextureBuffer(merchantPanel, -camera.x / windowScale + merchantPanelX, -camera.y / windowScale + merchantPanelY);
 
 
 		for (GuiControl* gui : merchantGUI) {
