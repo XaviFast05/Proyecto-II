@@ -37,7 +37,10 @@ enum Levels {
 	UNKNOWN,
 	LVL1,
 	LVL2,
-	LVL3
+	LVL3, //CAPA 1
+	LVL4, //ZONA ONI 1
+	LVL5, //ZONA ONI 2
+	LVL6, //FINAL BOSS
 };
 
 class Scene : public Module
