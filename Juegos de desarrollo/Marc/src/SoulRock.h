@@ -6,6 +6,7 @@
 #include <vector>
 #include "Timer.h"
 #include "CurrencyManager.h"
+#include "SoulRockParticle.h"
 
 
 
@@ -54,6 +55,8 @@ private:
 
 	void BrakeSystem();
 
+	void ParticleUse();
+
 	void DropLoot();
 
 	//int drawOffsetX = 0;
@@ -62,6 +65,11 @@ private:
 	float attackTime;
 	Timer attackTimer;
 
+	SoulRockParticle* particle1 = nullptr;
+	SoulRockParticle* particle2 = nullptr;
+	Vector2D collidePos;
+	int diffPosX, diffPosY;
+	bool pendingParticles = false;
 
 	//sound FX
 	int hitSFX;
@@ -76,7 +84,7 @@ private:
 	bool flipSprite;
 	
 	pugi::xml_node parameters;
-	
+
 
 	Animation* currentAnimation = nullptr;
 	Animation idle;

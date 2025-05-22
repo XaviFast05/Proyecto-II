@@ -49,6 +49,7 @@ enum class ColliderType {
 	JUMP,
 	FINALBOSS,
 	DIALOG_STARTER,
+	PARTICLE,
 	UNKNOWN
 };
 
