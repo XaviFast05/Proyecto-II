@@ -29,8 +29,9 @@ bool ShootingEnemy::Start() {
 	lives = 3;
 
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
-	attack.LoadAnimations(parameters.child("animations").child("attack"));
+	walk.LoadAnimations(parameters.child("animations").child("move"));
 	hurt.LoadAnimations(parameters.child("animations").child("hurt"));
+	attack.LoadAnimations(parameters.child("animations").child("attack"));
 	death.LoadAnimations(parameters.child("animations").child("death"));
 	
 
@@ -59,7 +60,7 @@ bool ShootingEnemy::Start() {
 	destinationPoint = route[routeDestinationIndex];
 
 	//INIT PHYSICS
-	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), 16, bodyType::DYNAMIC);
+	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), 48, bodyType::DYNAMIC);
 	pbody->ctype = ColliderType::ENEMY;
 	pbody->body->SetGravityScale(0);
 	pbody->body->SetFixedRotation(true);
@@ -249,10 +250,10 @@ bool ShootingEnemy::Update(float dt) {
 			position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texW / 2 + drawOffsetX);
 			position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2 + drawOffsetY);
 			if (dir == LEFT) {
-				Engine::GetInstance().render.get()->DrawTextureBuffer(texture, (int)position.getX(), (int)position.getY(), true, ENTITIES, &currentAnimation->GetCurrentFrame());
+				Engine::GetInstance().render.get()->DrawTextureBuffer(texture, (int)position.getX(), (int)position.getY(), false, ENTITIES, &currentAnimation->GetCurrentFrame());
 			}
 			else if (dir == RIGHT) {
-				Engine::GetInstance().render.get()->DrawTextureBuffer(texture, (int)position.getX(), (int)position.getY(), false, ENTITIES, &currentAnimation->GetCurrentFrame());
+				Engine::GetInstance().render.get()->DrawTextureBuffer(texture, (int)position.getX(), (int)position.getY(), true, ENTITIES, &currentAnimation->GetCurrentFrame());
 			}
 		}
 

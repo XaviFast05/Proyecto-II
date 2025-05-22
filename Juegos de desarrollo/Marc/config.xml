@@ -399,6 +399,14 @@
 							<frame x="128" y="192" w="64" h="64" />
 							<frame x="192" y="192" w="64" h="64" />
 						</attack>
+						<death loop="false" speed="0.25f">
+							<frame x="0" y="256" w="64" h="64" />
+							<frame x="64" y="256" w="64" h="64" />
+							<frame x="128" y="256" w="64" h="64" />
+							<frame x="192" y="256" w="64" h="64" />
+							<frame x="256" y="256" w="64" h="64" />
+							<frame x="320" y="256" w="64" h="64" />
+						</death>
 					</animations>
 				</shootingenemy>
 				<instances>
