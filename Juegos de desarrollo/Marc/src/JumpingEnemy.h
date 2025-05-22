@@ -30,8 +30,8 @@ private:
     // Movimiento / física
     float speed = 0.0f;
     float bossJumpSpeedV = 700.0f;  // altura del salto en px/s
-    int bossJumpTargetXLeft = 2795;
-    int bossJumpTargetXRight = 3465;
+    int bossJumpTargetXLeft = 9635;
+    int bossJumpTargetXRight = 10265;
     int bossDirection = -1;         // -1 = salta a la izq, +1 = a la der
     bool isBossJumping = false;
 

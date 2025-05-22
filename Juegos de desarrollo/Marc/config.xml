@@ -409,7 +409,7 @@
 						</death>
 					</animations>
 				</jumper>
-				<runner x="4225" y="4220" w="64" h="64" texture="Assets/Textures/Enemies/Runner/cabra.png">
+				<runner x="3390" y="830" w="64" h="64" texture="Assets/Textures/Enemies/Runner/cabra.png">
 					<properties speed="9" chaseArea="700" deathTime="1.0f" lives="10" pushForce="1" pushFriction="5" lootAmount="5" canPush="false" />
 					<animations>
 						<idle loop="true" speed="0.1f">
@@ -432,7 +432,7 @@
 						</death>
 					</animations>
 				</runner>
-				<finalboss x="2240" y="4620" w="64" h="64" texture="Assets/Textures/Enemies/BossFinal/final.png">
+				<finalboss x="3265" y="2110" w="64" h="64" texture="Assets/Textures/Enemies/BossFinal/final.png">
 					<properties speed="8" chaseArea="700" deathTime="1.0f" lives="10" pushForce="1" pushFriction="5" lootAmount="5" canPush="false" />
 					<animations>
 						<idle loop="true" speed="0.1f">
@@ -499,11 +499,25 @@
 							<point x="4225" y="4220" />
 							<point x="4225" y="4220" />
 						</instance>
-						<instance enemyType="finalboss" entityType="13">
-							<point x="2050" y="4620" />
-							<point x="2050" y="4620" />
-						</instance>
 					</lvl2>
+					<lvl4>
+						<instance enemyType="runner" entityType="11">
+							<point x="3390" y="830" />
+							<point x="3390" y="830" />
+						</instance>
+					</lvl4>
+					<lvl5>
+						<instance enemyType="jumper" entityType="10">
+							<point x="10365" y="3575" />
+							<point x="10365" y="3575" />
+						</instance>
+					</lvl5>
+					<lvl6>
+						<instance enemyType="finalboss" entityType="13">
+							<point x="3265" y="2110" />
+							<point x="3265" y="2110" />
+						</instance>
+					</lvl6>
 				</instances>
 			</enemies>
 			<items>

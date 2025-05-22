@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<savedData saved="true" level="3" time="0" startBossFight="false" bossKilled="false">
-	<player x="9536" y="6969" soulPoints="10" hits="2" />
+<savedData saved="true" level="6" time="0" startBossFight="false" bossKilled="false">
+	<player x="4096" y="2048" soulPoints="10" hits="2" />
 	<lvl1>
 		<enemy0 dead="false" x="5106" y="2529" />
 		<enemy1 dead="false" x="4640" y="907" />
@@ -20,4 +20,5 @@
 		<sfxVolume value="117" />
 	</playerPrefs>
 	<lvl3 />
+	<lvl6 />
 </savedData>

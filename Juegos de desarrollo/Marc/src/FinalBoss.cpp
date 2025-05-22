@@ -44,7 +44,7 @@ bool FinalBoss::Start() {
 
     reverseCycle = false;
 
-    lives = 10;
+    lives = 15;
     speed = parameters.child("properties").attribute("speed").as_float();
     tiredDuration = 5.0f;
     dir = LEFT;
@@ -226,9 +226,10 @@ void FinalBoss::OnCollision(PhysBody* physA, PhysBody* physB) {
     case ColliderType::WEAPON:
         break;
     case ColliderType::PICKAXE:
-        if (state != DEAD) 	DMGEnemyPickaxe();
         break;
     case ColliderType::MELEE_AREA:
+        break;
+    case ColliderType::MELEE_AREA_CHARGED:
         if (state != DEAD) {
             if (canPush) push = true;
             DMGEnemyMelee();

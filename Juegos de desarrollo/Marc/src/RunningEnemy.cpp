@@ -191,9 +191,10 @@ void RunningEnemy::OnCollision(PhysBody* physA, PhysBody* physB) {
     case ColliderType::WEAPON:
         break;
     case ColliderType::PICKAXE:
-        if (state != DEAD) 	DMGEnemyPickaxe();
         break;
     case ColliderType::MELEE_AREA:
+        break;
+    case ColliderType::MELEE_AREA_CHARGED:
         if (state != DEAD) {
             if (canPush) push = true;
             DMGEnemyMelee();
