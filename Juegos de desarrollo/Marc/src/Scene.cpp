@@ -83,7 +83,7 @@ bool Scene::Start()
 	Engine::GetInstance().map->Load(path, name);
 
 	//Load Parallax
-	Engine::GetInstance().map->LoadParalax(configParameters.child("map").child("parallax"));
+	Engine::GetInstance().map->LoadParalax(configParameters.child("map").child("parallax").child(GetLevelString(level).c_str()));
 
 	//Load Player
 	player = (Player*)Engine::GetInstance().entityManager->CreateEntity(EntityType::PLAYER);

@@ -152,6 +152,8 @@ public:
 	Animation chop;
 	Animation throwPix;
 	Animation throwPixUp;
+	Animation dash;
+	Animation charged;
 
 	bool resetAnimation = false;
 
