@@ -550,9 +550,9 @@
 				<merchant x="400" y="3400" w="64" h="64" texture="Assets/Textures/Allies/merchant_idle.png">
 					<properties speed="0.8" movementArea="300" detectionArea="200" />
 					<instances>
-						<lvl1>
-							<instance entityType="14" x="190" y="3400" />
-						</lvl1>
+						<lvl3>
+							<instance entityType="14" x="9024" y="1920" dialog="DIALOG04" />
+						</lvl3>
 					</instances>
 					<animations>
 						<idle loop="true" speed="0.04f">
@@ -688,23 +688,44 @@
 		</winMenu>
 		<dialogues>
 			<dialoguePanel path="Assets/Textures/Menus/Dialogues/Recuadro.png" w="833" h="202" x="224" y="450">
-				<text maxW="620" maxH="167" offsetX="197" offsetY="18" font="Assets/Fonts/ttf_pixolde_bold.ttf" pointSize="30" />
+				<name maxW="620" maxH="167" offsetX="197" offsetY="10" font="Assets/Fonts/ttf_pixolde_bold.ttf" pointSize="50" />
+				<text maxW="620" maxH="167" offsetX="197" offsetY="58" font="Assets/Fonts/ttf_pixolde_bold.ttf" pointSize="30" />
 				<images w="160" h="160" offsetX="23" offsetY="21">
-					<image name="kim" path="Assets/Textures/Menus/Dialogues/Kim.png" />
-					<image name="pepe" path="Assets/Textures/Menus/Dialogues/pepe.png" />
+					<image name="Kim" path="Assets/Textures/Menus/Dialogues/KIM.png" />
+					<image name="Flo" path="Assets/Textures/Menus/Dialogues/FLO.png" />
 				</images>
 			</dialoguePanel>
 			<DIALOG01>
-				<text textId="DIALOG01_01" talker="kim" />
-				<text textId="DIALOG01_02" talker="kim" />
+				<text textId="DIALOG01_01" talker="Kim" />
+				<text textId="DIALOG01_02" talker="Kim" />
 			</DIALOG01>
 			<DIALOG02>
-				<text textId="DIALOG02_01" talker="kim" />
-				<text textId="DIALOG02_02" talker="kim" />
+				<text textId="DIALOG02_01" talker="Kim" />
+				<text textId="DIALOG02_02" talker="Kim" />
 			</DIALOG02>
 			<DIALOG03>
-				<text textId="DIALOG03_01" talker="kim" />
+				<text textId="DIALOG03_01" talker="Kim" />
+				<text textId="DIALOG03_02" talker="Kim" />
 			</DIALOG03>
+			<DIALOG04>
+				<text textId="DIALOG04_01" talker="Flo" />
+				<text textId="DIALOG04_02" talker="Kim" />
+				<text textId="DIALOG04_03" talker="Kim" />
+				<text textId="DIALOG04_04" talker="Flo" />
+				<text textId="DIALOG04_05" talker="Kim" />
+				<text textId="DIALOG04_06" talker="Kim" />
+				<text textId="DIALOG04_07" talker="Flo" />
+				<text textId="DIALOG04_08" talker="Flo" />
+				<text textId="DIALOG04_09" talker="Flo" />
+				<text textId="DIALOG04_10" talker="Kim" />
+				<text textId="DIALOG04_11" talker="Flo" />
+				<text textId="DIALOG04_12" talker="Flo" />
+				<text textId="DIALOG04_13" talker="Flo" />
+				<text textId="DIALOG04_14" talker="Kim" />
+			</DIALOG04>
+			<DIALOG05>
+				<text textId="DIALOG04_01" talker="Flo" />
+			</DIALOG05>
 		</dialogues>
 	</scene>
 	<audio>

@@ -48,6 +48,7 @@ enum class ColliderType {
 	ALLY,
 	JUMP,
 	FINALBOSS,
+	DIALOG_STARTER,
 	PARTICLE,
 	UNKNOWN
 };
@@ -84,6 +85,7 @@ public:
 	b2Body* body;
 	Entity* listener;
 	ColliderType ctype;
+	std::string data;
 };
 
 // Module --------------------------------------

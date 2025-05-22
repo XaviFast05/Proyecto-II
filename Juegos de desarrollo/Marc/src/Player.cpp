@@ -332,7 +332,7 @@ bool Player::Update(float dt)
 			}
 			else if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_A) == KEY_DOWN) && stateFlow[playerState][TALK] && !dialoguesManager->GetOnDialogue()) {
 
-				dialoguesManager->StartDialogue("DIALOG01");
+				dialoguesManager->StartDialogue("DIALOG04");
 				playerState = TALK;
 			}
 
@@ -685,16 +685,19 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	int soulAmount = 1;
 	
 	//Colision de los sensores
-	if (physA == leftSensor && physB->ctype == ColliderType::PLATFORM || physA == leftSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == leftSensor && physB->ctype == ColliderType::PICKAXE)
+	if (physA == leftSensor || physA == rightSensor)
 	{
-		leftBlocked = true;
+		if (physA == leftSensor && physB->ctype == ColliderType::PLATFORM || physA == leftSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == leftSensor && physB->ctype == ColliderType::PICKAXE)
+		{
+			leftBlocked = true;
+		}
+		else if (physA == rightSensor && physB->ctype == ColliderType::PLATFORM || physA == rightSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == rightSensor && physB->ctype == ColliderType::PICKAXE)
+		{
+			rightBlocked = true;
+		}
+		else return;
 	}
-
-	if (physA == rightSensor && physB->ctype == ColliderType::PLATFORM || physA == rightSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == rightSensor && physB->ctype == ColliderType::PICKAXE)
-	{
-		rightBlocked = true;
-	}
-
+	
 	//Colisi�n del cuerpo principal
 	switch (physB->ctype)
 	{
@@ -800,6 +803,15 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		else if (physB->width == 10) soulAmount = rand() % 5 + 10;
 
 		currencyManager->SumCurrency(soulAmount);
+		break;
+
+	case ColliderType::DIALOG_STARTER:
+		if (physB->data != "")
+		{
+			StartDialog(physB->data);
+			physB->data = "";
+		}
+		
 		break;
 
 	case ColliderType::UNKNOWN:
@@ -992,6 +1004,10 @@ void Player::DamagePlayer() {
 	hits--;
 	playerState = HURT;
 	hurtTimer.Start();
+}
+void Player::StartDialog(std::string dialog) {
+	dialoguesManager->StartDialogue(dialog);
+	playerState = TALK;
 }
 
 void Player::LoadDefaults() {

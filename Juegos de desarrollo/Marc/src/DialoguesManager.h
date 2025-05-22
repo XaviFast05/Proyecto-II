@@ -67,6 +67,11 @@ private:
 	int textMaxW;
 	int textMaxH;
 
+	//NAME
+	TTF_Font* nameFont;
+	int nameOffsetX;
+	int nameOffsetY;
+
 	//LOGIC
 	bool onDialogue;
 	std::string dialogueKey;
