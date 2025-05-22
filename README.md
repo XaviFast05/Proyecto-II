@@ -32,14 +32,33 @@ En esta versión inicial, nos hemos centrado en las mecánicas principales y nos
 - Mapa del tutorial: En este nivel, se usarán las mecánicas base del juego, se le enseñará al jugador a escalar, atacar enemigos y buscar recolectar el mayor número de puntos de alma posibles.
 - Mapa de testeo: Desde la pantalla de inicio, se puede acceder a un nivel de testeo. En este nivel probamos mecánicas y fluidez del juego en un ambiente mucho más simplificado, sin tiles avanzados y un tamaño reducido.
 
+## ALPHA
+En esta versión ALPHA, nos hemos centrado en un prototipo de una demo jugable de principio a fin y nos hemos asegurado de que su funcionamiento es correcto. En esta release hemos incluido los siguientes elementos y mecánicas:
+- Dos nuevas habilidades: Ataque cargado y dash.
+- Mapa de la capa 1, dos zonas oníricas y la sala del jefe final.
+- Comercio con un mercader, con un menú donde comprar mejoras para el jugador.
+- Mejoras que se pueden equipar que permiten aumentar parámetros del movimiento o habilidades del jugador.
+- Nuevos enemigos.
+- Sistema de dialogos con 3 idiomas distintos (Castellano, Catalán e Inglés).
+- 2 Bosses en las zonas oníricas y un Boss final.
+- Pulido en el movimiento del jugador.
+- Pulido en la escalada con piquetas, permitiendo atravesarlas al saltar desde abajo.
+- Minimapa que muestra la posición del jugador
+- Cambios en la lógica del render para mejorar el apartado visual (ahora las piquetas se muestran mejor clavadas y el jugador aparece al frente de los checkpoints)
+- Implementación de movimiento mediante mando de Xbox
+
 ## Controles
 ### Movimiento
-- A: Moverse a la izquierda
-- D: Moverse a la derecha
-- Barra espaciadora: Saltar (La altura del salto varía según el tiempo que mantengas pulsada la tecla)
-- Q: Disparar piqueta horizontalmente
-- Q + W: Disparar piqueta verticalmente
-- E: Ataque cuerpo a cuerpo
+- Flecha izquierda / Joystick a la izquierda: Moverse a la izquierda
+- Flecha derecha / Joystick a la derecha: Moverse a la derecha
+- Barra espaciadora / Botón A: Saltar (La altura del salto varía según el tiempo que mantengas pulsada la tecla)
+- C / Botón Y: Disparar piqueta horizontalmente
+- C + Flecha hacia arriba / Botón Y + Joystic hacia arriba: Disparar piqueta verticalmente
+- X / Botón X: Ataque cuerpo a cuerpo
+- L-Shift / botón RB: Dash
+- Mantén X / Mantén botón X: Ataque cargado
+- Tabulador / Botón Selects: Abrir minimapa
+- Z / Botón B: Interactuar
 ### Debug
 - F9: Mostrar/Dejar de ver colisiones
 - F10: Activar/Desactivar God mode
