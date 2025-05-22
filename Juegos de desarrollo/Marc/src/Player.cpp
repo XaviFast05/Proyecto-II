@@ -660,7 +660,7 @@ bool Player::Update(float dt)
 
 	currentAnim->Update();
 
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_X)) currencyManager->SumCurrency(200);
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_O)) currencyManager->SumCurrency(200);
 
 	return true;
 }
