@@ -211,28 +211,28 @@ bool Player::Update(float dt)
 		if (godMode) {
 			velocity = b2Vec2_zero;
 
-			if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) ||
-				(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) ||
-				(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) ||
-				(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT))
+			if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) ||
+				(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) ||
+				(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) ||
+				(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT))
 			{
 				
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
 					velocity.x = -moveSpeed * 25;
 					CheckMoveX();
 					playerState = RUN;
 				}
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 					velocity.x = moveSpeed * 25;
 					CheckMoveX();
 					playerState = RUN;
 				}
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 				{
 					velocity.y = -moveSpeed * 25;
 					playerState = JUMP;
 				}
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) 
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 				{
 					velocity.y = moveSpeed * 25;
 					playerState = FALL;
