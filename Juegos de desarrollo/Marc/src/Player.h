@@ -5,7 +5,7 @@
 #include "Box2D/Box2D.h"
 #include "Animation.h"
 #include "Timer.h"
-#include "Particle.h"
+#include "DashParticle.h"
 
 #define GHOST_W 32
 //#define MAX_PICKAXES 4
@@ -202,6 +202,8 @@ public:
 	float meleeDisplace = 0.0;
 
 	bool onPickaxe = false;
+
+	DashParticle* dashParticle;
 
 	//STATES FLOW
 	state playerState; 

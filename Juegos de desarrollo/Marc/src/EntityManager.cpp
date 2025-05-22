@@ -131,8 +131,14 @@ Entity* EntityManager::CreateEntity(EntityType bullet_direction)
 	case EntityType::MERCHANT:
 		entity = new Merchant();
 		break;
-	case EntityType::PARTICLE:
-		entity = new Merchant();
+	case EntityType::DASH_PARTICLE:
+		entity = new DashParticle();
+		break;
+	case EntityType::SOULROCK_PARTICLE:
+		entity = new SoulRockParticle();
+		break;
+	case EntityType::WALLBRAKER_PARTICLE:
+		entity = new WallBrakerParticle();
 		break;
 	default:
 		break;
@@ -195,8 +201,14 @@ std::list<Entity*> EntityManager::CreatePooledEntities(EntityType bullet_directi
 		case EntityType::MERCHANT:
 			entity = new Merchant();
 			break;
-		case EntityType::PARTICLE:
-			entity = new Merchant();
+		case EntityType::DASH_PARTICLE:
+			entity = new DashParticle();
+			break;
+		case EntityType::SOULROCK_PARTICLE:
+			entity = new SoulRockParticle();
+			break;
+		case EntityType::WALLBRAKER_PARTICLE:
+			entity = new WallBrakerParticle();
 			break;
 		default:
 			break;
@@ -261,8 +273,14 @@ Entity* EntityManager::CreatePooledEntities(EntityType bullet_direction)
 	case EntityType::MERCHANT:
 		entity = new Merchant();
 		break;
-	case EntityType::PARTICLE:
-		entity = new Merchant();
+	case EntityType::DASH_PARTICLE:
+		entity = new DashParticle();
+		break;
+	case EntityType::SOULROCK_PARTICLE:
+		entity = new SoulRockParticle();
+		break;
+	case EntityType::WALLBRAKER_PARTICLE:
+		entity = new WallBrakerParticle();
 		break;
 	default:
 		break;

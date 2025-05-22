@@ -1,39 +1,46 @@
 #include "WallBrakerParticle.h"
+#include "SoulRock.h"
 #include "Timer.h"
 #include "Engine.h"
 #include "Textures.h"
 #include "log.h"
 #include "Scene.h"
 
-
-
-WallBrakerParticle::WallBrakerParticle() : Entity(EntityType::PARTICLE)
+WallBrakerParticle::WallBrakerParticle() : Entity(EntityType::WALLBRAKER_PARTICLE)
 {
-
+	name = "wallBrakerParticle";
 }
 
 bool WallBrakerParticle::Start() {
 
 	pugi::xml_node sceneNode = Engine::GetInstance().scene.get()->configParameters;
-	texture = Engine::GetInstance().textures.get()->Load(sceneNode.child("entities").child("shot").attribute("texture").as_string());
-	texW = sceneNode.child("entities").child("shot").attribute("w").as_int();
-	texH = sceneNode.child("entities").child("shot").attribute("h").as_int();
+	texture = Engine::GetInstance().textures.get()->Load(sceneNode.child("entities").child("particles").child("wallBrakerParticle").attribute("texture").as_string());
+	texW = sceneNode.child("entities").child("particles").child("wallBrakerParticle").attribute("w").as_int();
+	texH = sceneNode.child("entities").child("particles").child("wallBrakerParticle").attribute("h").as_int();
 
-	shotRad = sceneNode.child("entities").child("shot").attribute("rad").as_int();
-	anim.LoadAnimations(sceneNode.child("entities").child("shot").child("animations").child("travel"));
-	pbody = Engine::GetInstance().physics.get()->CreateCircleSensor((int)position.getX(), (int)position.getY(), shotRad, bodyType::DYNAMIC);
+	rad = sceneNode.child("entities").child("particles").child("wallBrakerParticle").attribute("rad").as_int();
+	idle.LoadAnimations(sceneNode.child("entities").child("particles").child("wallBrakerParticle").child("animations").child("idle"));
+	pbody = Engine::GetInstance().physics.get()->CreateCircleSensor((int)position.getX(), (int)position.getY(), rad, bodyType::STATIC);
+
 	pbody->body->SetGravityScale(0);
-	pbody->ctype = ColliderType::PICKAXE;
+	pbody->ctype = ColliderType::PARTICLE;
 	pbody->body->SetLinearVelocity({ 0,0 });
 	pbody->body->SetEnabled(false);
 
-	speed = 5;
-	lifeTime = 1;
-	castTime = 0.5f;
-	posXOffset = 20;
+	active = true;
+	renderable = true;
+	Enable();
 
-	isCasted = false;
+	//speed = 5;
+	lifeTime = 0.2f;
+	castTime = 0.0f;
+	//posXOffset = 20;
+
+	currentAnim = &idle;
+
+	isCasted = true;
 	isAlive = false;
+	castTimer.Start();
 
 	return true;
 }
@@ -51,21 +58,18 @@ bool WallBrakerParticle::Update(float dt)
 		}
 		else if (isAlive && aliveTimer.ReadSec() < lifeTime)
 		{
-			anim.Update();
+			currentAnim->Update();
 
-			// Update the position in the screen
-			pbody->body->SetLinearVelocity({ direction.getX() * speed,direction.getY() });
-			position.setX(pbody->GetPhysBodyWorldPosition().getX() - texW / 2);
-			position.setY(pbody->GetPhysBodyWorldPosition().getY() - texH / 2);
-
-			if (direction.getX() > 0)Engine::GetInstance().render.get()->DrawTextureBuffer(texture, position.getX(), position.getY(), true, ENTITIES, &anim.GetCurrentFrame());
-			else Engine::GetInstance().render.get()->DrawTextureBuffer(texture, position.getX(), position.getY(), true, ENTITIES, &anim.GetCurrentFrame());
+			Engine::GetInstance().render.get()->DrawTextureBuffer(texture, METERS_TO_PIXELS(pbody->body->GetPosition().x - texW / 2) + 10, METERS_TO_PIXELS(pbody->body->GetPosition().y - texH / 1.5) + 10, true, ENTITIES, &currentAnim->GetCurrentFrame());
 
 		}
 		else if (isAlive && aliveTimer.ReadSec() >= lifeTime)
 		{
 			pbody->body->SetEnabled(false);
 			isCasted = false;
+			active = false;
+			renderable = false;
+			Disable();
 		}
 	}
 
@@ -87,10 +91,10 @@ void WallBrakerParticle::SetPosition(Vector2D pos)
 void WallBrakerParticle::Restart(Vector2D pos, Vector2D dir)
 {
 	pbody->body->SetLinearVelocity({ 0,0 });
-	float offset = 0;
-	if (dir.getX() > 0) offset = posXOffset;
-	else offset = -posXOffset;
-	pbody->body->SetTransform({ PIXEL_TO_METERS(pos.getX()) + PIXEL_TO_METERS(offset), PIXEL_TO_METERS(pos.getY()) }, 0);
+	//float offset = 0;
+	//if (dir.getX() > 0) offset = posXOffset;
+	//else offset = -posXOffset;
+	pbody->body->SetTransform({ PIXEL_TO_METERS(pos.getX()), PIXEL_TO_METERS(pos.getY()) }, 0);
 	direction = dir;
 	direction = direction.normalized();
 	isCasted = true;

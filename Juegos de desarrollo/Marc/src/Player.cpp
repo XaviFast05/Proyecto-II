@@ -17,6 +17,7 @@
 #include "PickaxeManager.h"
 #include "CurrencyManager.h"
 #include "DialoguesManager.h"
+#include "DashParticle.h"
 
  
 
@@ -145,6 +146,14 @@ bool Player::Start() {
 		filter.maskBits = 0xFFFF & ~CATEGORY_PICKAXE;
 		fixture->SetFilterData(filter);
 	}
+
+	dashParticle = (DashParticle*)(Engine::GetInstance().entityManager->CreateEntity(EntityType::DASH_PARTICLE));
+
+	dashParticle->SetParameters(
+		Engine::GetInstance().scene->configParameters);
+	dashParticle->Start();
+	Vector2D p1(METERS_TO_PIXELS(pbody->body->GetPosition().x), METERS_TO_PIXELS(pbody->body->GetPosition().y));
+	dashParticle->SetPosition(p1);
 
 	return true;
 }
@@ -291,10 +300,12 @@ bool Player::Update(float dt)
 				stateTimer.Start();
 				playerState = THROW;
 			}
-			else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN && stateFlow[playerState][DASH] && canDash == true && unlockedDash == true) {
+			else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN && stateFlow[playerState][DASH] && canDash == true /*&& unlockedDash == true*/ ) {
 				pbody->body->SetLinearVelocity(b2Vec2_zero);
+				dashParticle->isCasted = true;
+				dashParticle->active = true;
 				if (dir == RIGHT) pbody->body->ApplyLinearImpulseToCenter(b2Vec2(dashForce, 0), true);
-				else if (dir == LEFT) pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-dashForce, 0), true);
+				else if (dir == LEFT) pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-dashForce, 0), true); 
 
 				if (grounded && (playerState == IDLE || playerState == RUN)) {
 					dashCooldownTimerOn = true;

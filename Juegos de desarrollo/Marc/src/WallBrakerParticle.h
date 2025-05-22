@@ -35,9 +35,12 @@ public:
 	int posXOffset;
 	Vector2D direction;
 	int speed;
-	Animation anim;
+
+	Animation* currentAnim = nullptr;
+
+	Animation idle;
 	int texW, texH;
-	int shotRad;
+	int rad;
 
 	Timer aliveTimer;
 	Timer castTimer;
@@ -49,5 +52,3 @@ public:
 	float lifeTime;
 	float castTime;
 };
-
-
