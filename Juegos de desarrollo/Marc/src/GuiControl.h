@@ -28,7 +28,8 @@ enum class GuiControlState
 	NORMAL,
 	FOCUSED,
 	PRESSED,
-	SELECTED
+	SELECTED,
+	OVERLOADED
 };
 
 enum class GuiControlId
@@ -53,6 +54,8 @@ enum class GuiControlId
 	FIRST_CAPE,
 
 	CHANGE_MENU,
+
+	UPG1, UPG2, UPG3, UPG4, UPG5, UPG6, UPG7, UPG8, 
 
 	FIRST_UPGRADE,
 	SECOND_UPGRADE,

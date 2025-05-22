@@ -87,7 +87,7 @@ bool Scene::Start()
 	Engine::GetInstance().map->Load(path, name);
 
 	//Load Parallax
-	Engine::GetInstance().map->LoadParalax(configParameters.child("map").child("parallax"));
+	Engine::GetInstance().map->LoadParalax(configParameters.child("map").child("parallax").child(GetLevelString(level).c_str()));
 
 	//Load Player
 	player = (Player*)Engine::GetInstance().entityManager->CreateEntity(EntityType::PLAYER);
@@ -291,6 +291,8 @@ bool Scene::Update(float dt)
 
 	if (changeLevel || level == LVL1 && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 	{
+		int playerPOSX = player->GetPosition().getX();
+		int playerPOSY = player->GetPosition().getY();
 		changeLevel = false;
 		if (level == LVL1)
 		{
@@ -299,10 +301,33 @@ bool Scene::Update(float dt)
 		}
 		else if (level == LVL3)
 		{
-			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)Engine::GetInstance().mainMenu.get(), 30);
-			level = LVL1;
+			if (playerPOSX < 6000) {
+				Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
+				level = LVL4;
+			}
+			else if (playerPOSX > 9000) {
+				Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
+				level = LVL5;
+			}
 		}
-		return true;
+		else if (level == LVL4)
+		{
+			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
+			level = LVL3;
+		}
+		else if (level == LVL5)
+		{
+			if (playerPOSY < 1500)
+			{
+				Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
+				level = LVL3;
+			}
+			else if (playerPOSY > 1600)
+			{
+				Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
+				level = LVL3;
+			}
+		}
 	}
 
 	//if (player->won || level == LVL2 && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F8) == KEY_DOWN) {
@@ -712,6 +737,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 	case GuiControlId::CHANGE_MENU:
 		if (control->state == GuiControlState::PRESSED) {
 			if (!Engine::GetInstance().upgradesMenu.get()->upgradesOpen) {
+				Engine::GetInstance().upgradesMenu.get()->hasOpened = true;
 				Engine::GetInstance().upgradesMenu.get()->upgradesOpen = true;
 				if (Engine::GetInstance().settings.get()->settingsOpen) {
 					Engine::GetInstance().settings.get()->settingsOpen = false;
@@ -886,6 +912,15 @@ void Scene::DrawMap()
 		break;
 	case LVL2:
 		break;
+	case LVL3:
+		break;
+	case LVL4:
+		break;
+	case LVL5:
+		break;
+	case LVL6:
+		break;
+
 	default:
 		break;
 	}

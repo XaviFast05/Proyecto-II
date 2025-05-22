@@ -212,6 +212,11 @@
     </ClCompile>
     <ClCompile Include="src\UpgradesMenu.cpp">
       <Filter>Source Files\Game\Menus</Filter>
+    <ClCompile Include="src\Intro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MerchantMenu.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\DashParticle.cpp">
       <Filter>Source Files</Filter>

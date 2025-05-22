@@ -24,7 +24,7 @@ public:
 
 	void EnableOrb(float x, float y, int size);
 
-private:
+public:
 
 	int currencyNum;
 	int orbNum;

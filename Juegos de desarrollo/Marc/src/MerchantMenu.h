@@ -61,7 +61,9 @@ public:
 
 
 	bool unlocked[8];
-	GuiControlButton* backBt, * firstUpgradeBt, * secondUpgradeBt, * thirdUpgradeBt, * fourthUpgradeBt, * fifthUpgradeBt, * sixthUpgradeBt, * seventhUpgradeBt, * eighthUpgradeBt;
+
+	GuiControlCheckBox* firstUpgradeBt, * secondUpgradeBt, * thirdUpgradeBt, * fourthUpgradeBt, * fifthUpgradeBt, * sixthUpgradeBt, * seventhUpgradeBt, * eighthUpgradeBt;
+	GuiControlButton* backBt;
 
 	int testSound;
 
@@ -69,5 +71,17 @@ public:
 
 	//std::map<std::string, GuiControlButton*> buttons;
 
+
+	int cost1 = 200;
+	int cost2 = 200;
+	int cost3 = 200;
+	int cost4 = 200;
+	int cost5 = 200;
+	int cost6 = 200;
+	int cost7 = 200;
+	int cost8 = 200;
+
+	bool hasOpened = false;
+	//std::map<std::string, GuiControlButton*> buttons;
 };
 
