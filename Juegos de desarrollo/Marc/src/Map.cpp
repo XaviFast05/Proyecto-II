@@ -252,6 +252,7 @@ bool Map::Load(std::string path, std::string fileName)
                 object->y = objectNode.attribute("y").as_int();
                 object->width = objectNode.attribute("width").as_int();
                 object->height = objectNode.attribute("height").as_int();
+                object->name = objectNode.attribute("name").as_string();
                 objectGroup->object.push_back(object);
             }
             mapData.objectsGroups.push_back(objectGroup);
@@ -344,7 +345,16 @@ bool Map::Load(std::string path, std::string fileName)
 
                 }
             }
+            if (objectGroup->name == "DialogStarters") {
+                for (Object* object : objectGroup->object) {
 
+                    PhysBody* c = Engine::GetInstance().physics.get()->CreateRectangleSensor(object->x + object->width / 2, object->y + object->height / 2, object->width, object->height, STATIC);
+
+                    c->ctype = ColliderType::DIALOG_STARTER;
+                    
+                    c->data = object->name;
+                }
+            }
         }
 
 

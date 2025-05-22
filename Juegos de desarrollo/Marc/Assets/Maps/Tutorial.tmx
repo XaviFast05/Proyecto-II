@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="176" height="80" tilewidth="64" tileheight="64" infinite="0" nextlayerid="12" nextobjectid="207">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="176" height="80" tilewidth="64" tileheight="64" infinite="0" nextlayerid="13" nextobjectid="219">
  <properties>
   <property name="PostDraw" type="bool" value="true"/>
  </properties>
@@ -112831,6 +112831,15 @@
   <object id="198" x="5184" y="2880" width="64" height="64"/>
   <object id="199" x="5248" y="2816" width="64" height="64"/>
   <object id="200" x="5312" y="2752" width="64" height="64"/>
+ </objectgroup>
+ <objectgroup id="12" name="DialogStarters">
+  <object id="208" name="DIALOG01" x="256" y="3264" width="64" height="192"/>
+  <object id="216" name="DIALOG02" x="2048" y="3200" width="64" height="256">
+   <properties>
+    <property name="data" value="DIALOG02"/>
+   </properties>
+  </object>
+  <object id="218" name="DIALOG03" x="5760" y="2752" width="64" height="256"/>
  </objectgroup>
  <objectgroup id="8" name="LevelChanger">
   <object id="193" x="5184" y="4096" width="448" height="1024"/>

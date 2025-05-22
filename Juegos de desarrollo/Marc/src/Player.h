@@ -96,6 +96,8 @@ public:
 
 	bool HaveActiveUpgrade(int index);
 
+	void StartDialog(std::string dialog);
+
 public:
 	int maxPickaxes; // piquetas máximas
 	int hits = 3;

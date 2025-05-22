@@ -110,6 +110,7 @@ bool Scene::Start()
 
 	for (pugi::xml_node alliesNode : configParameters.child("entities").child("allies").child("merchant").child("instances").child(GetCurrentLevelString().c_str()).children())
 	{
+
 		Merchant* ally = (Merchant*)Engine::GetInstance().entityManager->CreateEntity((EntityType)alliesNode.attribute("entityType").as_int());;
 		LoadAlly(ally, alliesNode);
 	}
@@ -377,8 +378,6 @@ bool Scene::Update(float dt)
 		{
 
 		}
-		
-
 	}
 
 	if (!bossKilled && startBossFight)

@@ -22,10 +22,11 @@ Merchant::~Merchant() {
 bool Merchant::Start() {
 
 	texture = Engine::GetInstance().textures.get()->Load(parameters.attribute("texture").as_string());
-	position.setX(parameters.attribute("x").as_float());
-	position.setY(parameters.attribute("y").as_float());
+	position.setX(instanceParameters.attribute("x").as_float());
+	position.setY(instanceParameters.attribute("y").as_float());
 	texW = parameters.attribute("w").as_float();
 	texH = parameters.attribute("h").as_float();
+	dialog = instanceParameters.attribute("dialog").as_string();
 	drawOffsetX = 0;
 	drawOffsetY = 0;
 
@@ -88,19 +89,18 @@ bool Merchant::Update(float dt) {
 
 	ZoneScoped;
 
-	if (!Engine::GetInstance().render.get()->InCameraView(pbody->GetPosition().getX() - texW, pbody->GetPosition().getY() - texH, texW, texH))
-	{
-		pbody->body->SetEnabled(false);
-		return true;
-	}
-	else
-	{
-		pbody->body->SetEnabled(true);
-	}
+	//if (!Engine::GetInstance().render.get()->InCameraView(pbody->GetPosition().getX() - texW, pbody->GetPosition().getY() - texH, texW, texH))
+	//{
+	//	pbody->body->SetEnabled(false);
+	//	return true;
+	//}
+	//else
+	//{
+	//	pbody->body->SetEnabled(true);
+	//}
 
 	if (!Engine::GetInstance().scene.get()->paused) {
 		/*dist = pbody->GetPhysBodyWorldPosition().distanceEuclidean(player->pbody->GetPhysBodyWorldPosition());*/
-	
 	
 	//STATES CHANGERS
 	
@@ -323,6 +323,12 @@ void Merchant::OnCollision(PhysBody* physA, PhysBody* physB) {
 	switch (physB->ctype) {
 	case ColliderType::PLAYER:
 		
+		if (dialog != "")
+		{
+			player->StartDialog(dialog);
+			dialog = "";
+		}
+
 		if (state == PATROL) {
 
 			state = DETECTION;

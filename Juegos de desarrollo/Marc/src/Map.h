@@ -64,6 +64,7 @@ struct Object
     int y;
     int width;
     int height;
+    std::string name;
 };
 
 struct ObjectGroup

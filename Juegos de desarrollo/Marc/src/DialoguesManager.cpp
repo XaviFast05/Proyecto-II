@@ -26,6 +26,10 @@ bool DialoguesManager::Start()
 	textMaxW = configParameters.child("dialoguePanel").child("text").attribute("maxW").as_int();
 	textMaxH = configParameters.child("dialoguePanel").child("text").attribute("maxH").as_int();
 
+    nameFont = TTF_OpenFont(configParameters.child("dialoguePanel").child("name").attribute("font").as_string(), configParameters.child("dialoguePanel").child("name").attribute("pointSize").as_int());
+    nameOffsetX = configParameters.child("dialoguePanel").child("name").attribute("offsetX").as_int();
+    nameOffsetY = configParameters.child("dialoguePanel").child("name").attribute("offsetY").as_int();
+
     images.clear();
     for (pugi::xml_node node : configParameters.child("dialoguePanel").child("images").children())
     {
@@ -115,6 +119,21 @@ bool DialoguesManager::Update(float dt)
 
         Engine::GetInstance().render.get()->DrawTextureBuffer(rectangleTexture, rectPos.getX(), rectPos.getY(), false, HUD);
         Engine::GetInstance().render.get()->DrawTextureBuffer(images[vignetteParameters.attribute("talker").as_string()], rectPos.getX() + imageOffsetX, rectPos.getY() + imageOffsetY, false, HUD);
+
+        int nameW = 0, nameH = 0;
+
+        TTF_SizeUTF8(nameFont, vignetteParameters.attribute("talker").as_string(), &nameW, &nameH);
+
+        Engine::GetInstance().render.get()->DrawTextToBuffer(
+            vignetteParameters.attribute("talker").as_string(),
+            rectangleTextureX + nameOffsetX,
+            rectangleTextureY + nameOffsetY,
+            nameW,
+            nameH,
+            nameFont,
+            { 255, 255, 255, 255 }, HUD
+        );
+
 
         for (int i = 0; i < lines.size(); i++)
         {

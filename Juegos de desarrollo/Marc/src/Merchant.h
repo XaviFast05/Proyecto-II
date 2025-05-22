@@ -46,4 +46,6 @@ private:
 
 	float jumpForce;
 
+	std::string dialog;
+
 };

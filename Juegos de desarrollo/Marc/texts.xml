@@ -21,10 +21,90 @@
         <EN></EN>
     </Text>
 	<Text id="DIALOG03_01">
-        <ES>Guau, qué foso tan profundo, me da miedo de solo pensar qué habrá abajo… ¿Papá realmente está ahí abajo? No, debo ir, no puedo aceptar que esté muerto, debe de haber alguna forma de que vuelva a casa.</ES>
+        <ES>Guau, qué foso tan profundo, me da miedo de solo pensar qué habrá abajo… ¿Papá realmente está ahí abajo?</ES>
         <CA></CA>
         <EN></EN>
     </Text>
+	<Text id="DIALOG03_02">
+        <ES>No, debo ir, no puedo aceptar que esté muerto, debe de haber alguna forma de que vuelva a casa.</ES>
+        <CA></CA>
+        <EN></EN>
+    </Text>
+	<Text id="DIALOG04_01">
+		<ES>Madre mía, señorita, usted no debería estar por aquí… ¡Los vivos están vetados del inframundo!</ES>
+		<CA></CA>
+		<EN></EN>
+	</Text>
+	<Text id="DIALOG04_02">
+		<ES>¿Qué…? ¿¡¡QUÉEEE!!? Vale, estoy soñando. Esto es un sueño, no pasa nada.</ES>
+		<CA></CA>
+		<EN></EN>
+	</Text>
+	<Text id="DIALOG04_03">
+		<ES>¿Inframundo? Ja, ja, eso no existe, y además, ¿qué hace una luciérnaga que mide casi lo mismo que yo hablándome? </ES>
+		<CA></CA>
+		<EN></EN>
+	</Text>
+	<Text id="DIALOG04_04">
+		<ES>No sé de qué habla, señorita, pero esto es serio, debe volver a la tierra de los vivos, o si no pronto la empezarán a perseguir todas las criaturas demoníacas de este mundo.</ES>
+		<CA></CA>
+		<EN></EN>
+	</Text>
+	<Text id="DIALOG04_05">
+		<ES>Esto no puede ser cierto, me niego rotundamente. Aunque sea cierto, voy a intentar escapar de aquí.</ES>
+		<CA></CA>
+		<EN></EN>
+	</Text>
+	<Text id="DIALOG04_06">
+		<ES>Ni mi padre está muerto ni esto es real. No, no y no. Por cierto, ¿dónde estoy?</ES>
+		<CA></CA>
+		<EN></EN>
+	</Text>
+	<Text id="DIALOG04_07">
+		<ES>Se encuentra en la capa más profunda del inframundo, señorita.</ES>
+		<CA></CA>
+		<EN></EN>
+	</Text>
+	<Text id="DIALOG04_08">
+		<ES>Soy Flo, un luciérnago. No se alarme, los luciérnagos somos famosos por ser la especie más pacífica del inframundo, puede estar segura.</ES>
+		<CA></CA>
+		<EN></EN>
+	</Text>
+	<Text id="DIALOG04_09">
+		<ES>Nuestro asentamiento se encuentra cerca, por si busca refugio.</ES>
+		<CA></CA>
+		<EN></EN>
+	</Text>
+	<Text id="DIALOG04_10">
+		<ES>¿Tiene alguna idea de dónde puede estar mi padre, Flo? Antes de caer aquí, oí una voz que me dijo que mi padre estaría aquí, pero para empezar, no sé ni donde estoy.</ES>
+		<CA></CA>
+		<EN></EN>
+	</Text>
+	<Text id="DIALOG04_11">
+		<ES>Si tu padre es humano como tú, mucho me temo que se encuentra en la capa más alta del inframundo, muy lejos de donde nos encontramos, señorita.</ES>
+		<CA></CA>
+		<EN></EN>
+	</Text>
+	<Text id="DIALOG04_12">
+		<ES>Si realmente quiere ir a verle, tiene un largo viaje de camino. Le sugiero que se tranquilice y busque un camino para salir de aquí si tiene tanta prisa.</ES>
+		<CA></CA>
+		<EN></EN>
+	</Text>
+	<Text id="DIALOG04_13">
+		<ES>Un buen guía son los rayos de luz, pese a que son escasos en esta profundidad, pueden guiarla a la siguiente capa.</ES>
+		<CA></CA>
+		<EN></EN>
+	</Text>
+	<Text id="DIALOG04_14">
+		<ES>Gracias, Flo. Soy Kim, por cierto. Voy a adentrarme un poco más, a ver si encuentro alguna pista de dónde puede estar mi padre. ¡Nos vemos!</ES>
+		<CA></CA>
+		<EN></EN>
+	</Text>
+	<Text id="DIALOG05_1">
+		<ES>No tienes suficiente dinero, vuelve cuando lo tengas.</ES>
+		<CA></CA>
+		<EN></EN>
+	</Text>
 	<Text id="TUTORIAL">
 		<ES>TUTORIAL</ES>
 		<CA>TUTORIAL</CA>
