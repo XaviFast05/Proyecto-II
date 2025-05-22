@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="405" height="147" tilewidth="64" tileheight="64" infinite="0" nextlayerid="12" nextobjectid="848">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="405" height="147" tilewidth="64" tileheight="64" infinite="0" nextlayerid="12" nextobjectid="870">
  <tileset firstgid="1" name="Tileset_Tutorial" tilewidth="64" tileheight="64" tilecount="4" columns="2">
   <image source="Tileset_Tutorial.png" width="128" height="128"/>
  </tileset>
@@ -142729,8 +142729,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
    <tile gid="9"/>
+   <tile gid="10"/>
    <tile gid="10"/>
    <tile gid="11"/>
    <tile/>
@@ -143134,8 +143134,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
    <tile gid="25"/>
+   <tile gid="26"/>
    <tile gid="26"/>
    <tile gid="27"/>
    <tile/>
@@ -298019,7 +298019,7 @@
   <object id="284" x="6784" y="8640" width="8704" height="64"/>
   <object id="339" x="7360" y="5504" width="64" height="384"/>
   <object id="394" x="8896" y="3264" width="128" height="128"/>
-  <object id="395" x="8832" y="3712" width="192" height="128"/>
+  <object id="395" x="8768" y="3712" width="256" height="128"/>
   <object id="405" x="8064" y="3712" width="256" height="64"/>
   <object id="410" x="9472" y="3712" width="64" height="192"/>
   <object id="414" x="10560" y="1600" width="64" height="64"/>
@@ -298171,6 +298171,6 @@
   <object id="799" x="16960" y="8000" width="448" height="192"/>
   <object id="800" x="17152" y="5568" width="512" height="192"/>
   <object id="801" x="5248" y="6272" width="384" height="192"/>
-  <object id="844" x="4544" y="2624" width="448" height="192"/>
+  <object id="844" x="4736" y="2624" width="320" height="192"/>
  </objectgroup>
 </map>
