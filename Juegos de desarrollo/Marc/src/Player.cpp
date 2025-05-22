@@ -300,7 +300,7 @@ bool Player::Update(float dt)
 				stateTimer.Start();
 				playerState = THROW;
 			}
-			else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN && stateFlow[playerState][DASH] && canDash == true /*&& unlockedDash == true*/ ) {
+			else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN && stateFlow[playerState][DASH] && canDash == true && unlockedDash == true ) {
 				pbody->body->SetLinearVelocity(b2Vec2_zero);
 				dashParticle->isCasted = true;
 				dashParticle->active = true;
