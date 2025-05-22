@@ -330,7 +330,7 @@ bool Player::Update(float dt)
 				dashTimerOn = true;
 				playerState = DASH;
 			}
-			else if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_A) == KEY_DOWN) && stateFlow[playerState][TALK] && !dialoguesManager->GetOnDialogue()) {
+			else if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_P) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_A) == KEY_DOWN) && stateFlow[playerState][TALK] && !dialoguesManager->GetOnDialogue()) {
 
 				dialoguesManager->StartDialogue("DIALOG04");
 				playerState = TALK;
@@ -900,6 +900,8 @@ void Player::SaveData(pugi::xml_node playerNode, pugi::xml_node upgradesNode) {
 	if (active) {
 		playerNode.attribute("x").set_value(pbody->GetPhysBodyWorldPosition().getX());
 		playerNode.attribute("y").set_value(pbody->GetPhysBodyWorldPosition().getY());
+		playerNode.attribute("hits").set_value(hits);
+		playerNode.attribute("soulPoints").set_value(currencyManager->GetCurrency());
 		upgradesNode.attribute("dash").set_value(unlockedDash);
 		upgradesNode.attribute("charged").set_value(unlockedCharged);
 
@@ -943,6 +945,8 @@ void Player::LoadData(pugi::xml_node playerNode, pugi::xml_node upgradesNode)
 {
 	position.setX(playerNode.attribute("x").as_int());
 	position.setY(playerNode.attribute("y").as_int());
+	currencyManager->SetCurrency(playerNode.attribute("soulPoints").as_int());
+	hits = playerNode.attribute("hits").as_int();
 	SetPosition(position);
 	unlockedDash = upgradesNode.attribute("dash").as_bool();
 	unlockedCharged = upgradesNode.attribute("charged").as_bool();

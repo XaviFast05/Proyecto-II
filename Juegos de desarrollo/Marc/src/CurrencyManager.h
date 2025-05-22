@@ -17,6 +17,7 @@ public:
 	int GetCurrency();
 
 	void SumCurrency(int currency);
+	void SetCurrency(int currency);
 
 	Entity* CreateOrb();
 

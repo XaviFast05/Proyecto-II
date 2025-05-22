@@ -16,7 +16,7 @@
         <EN></EN>
     </Text>
     <Text id="DIALOG02_02">
-        <ES>A ver las instrucciones… “Pulsa el botón Q para lanzar, y E para atacar”. Vaya, no recuerdo que funcionaran así. De todas formas, me alegro de que las haya traído.</ES>
+        <ES>A ver las instrucciones… “Pulsa el botón C para lanzar, y X para atacar”. Vaya, no recuerdo que funcionaran así. De todas formas, me alegro de que las haya traído.</ES>
         <CA></CA>
         <EN></EN>
     </Text>
@@ -114,6 +114,11 @@
 		<ES>NIVEL DE PRUEBA</ES>
 		<CA>NIVELL DE PROBA</CA>
 		<EN>TEST LEVEL</EN>
+	</Text>
+	<Text id="CONTINUE">
+		<ES>CONTINUAR</ES>
+		<CA>CONTINUAR</CA>
+		<EN>CONTINUE</EN>
 	</Text>
 	<Text id="OPTIONS">
 		<ES>OPCIONES</ES>

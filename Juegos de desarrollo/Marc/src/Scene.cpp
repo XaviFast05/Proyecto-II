@@ -78,7 +78,13 @@ bool Scene::Start()
 	helpPos.setY(configParameters.child("helpMenu").attribute("y").as_int());
 	helpMenu = Engine::GetInstance().textures.get()->Load(configParameters.child("helpMenu").attribute("path").as_string());
 
-	if (loadScene) level = (Levels)configParameters.child("savedData").attribute("level").as_int();
+	if (loadScene) 
+	{
+		pugi::xml_document saveFile;
+		pugi::xml_parse_result result = saveFile.load_file("savedData.xml");
+		level = (Levels)saveFile.child("savedData").attribute("level").as_int();
+		saveFile.save_file("savedData.xml");
+	}
 
 	std::string path = configParameters.child("map").child("paths").child(GetCurrentLevelString().c_str()).attribute("path").as_string();
 	std::string name = configParameters.child("map").child("paths").child(GetCurrentLevelString().c_str()).attribute("name").as_string();
@@ -161,6 +167,10 @@ bool Scene::Start()
 			currentTime = 0;
 		}
 		SaveState();
+	}
+	else
+	{
+		LoadState();
 	}
 
 	musicNode = Engine::GetInstance().GetConfig().child("audio").child("music");
@@ -569,13 +579,14 @@ void Scene::SaveState()
 
 
 	pugi::xml_node savedDataNode = saveFile.child("savedData").child(GetCurrentLevelString().c_str());
+	if (!savedDataNode) 
+		saveFile.child("savedData").append_child(GetCurrentLevelString().c_str());
+
 	pugi::xml_node upgradesNode = saveFile.child("savedData").child("upgrades");
 
-	savedDataNode.attribute("saved").set_value(true);
-	savedDataNode.attribute("level").set_value((int)level);
-	savedDataNode.attribute("time").set_value(currentTime);
-	savedDataNode.attribute("startBossFight").set_value(startBossFight);
-	savedDataNode.attribute("bossKilled").set_value(bossKilled);
+	saveFile.child("savedData").attribute("saved").set_value(true);
+	saveFile.child("savedData").attribute("level").set_value((int)level);
+	saveFile.child("savedData").attribute("time").set_value(currentTime);
 
 	if (result == NULL)
 	{
@@ -587,7 +598,7 @@ void Scene::SaveState()
 
 	//Save info to XML 
 	//Player 
-	player->SaveData(savedDataNode.child("player"), upgradesNode);
+	player->SaveData(saveFile.child("savedData").child("player"), upgradesNode);
 
 	//Enemies
 	for (int i = 0; i < enemies.size(); i++)
@@ -658,7 +669,7 @@ void Scene::LoadState() {
 	startBossFight = savedDataNode.attribute("startBossFight").as_bool();
 	bossKilled = savedDataNode.attribute("bossKilled").as_bool();
 
-	player->LoadData(savedDataNode.child("player"), upgradesNode);
+	player->LoadData(loadFile.child("savedData").child("player"), upgradesNode);
 
 	//TODO: add an attribute to tell enemies from first and second level apart
 	for (int i = 0; i < enemies.size(); i++)
@@ -696,26 +707,13 @@ void Scene::LoadState() {
 
 void Scene::LoadTimeLivesCandies() {
 
-	int previousLevel = (int)level - 1;
-	std::string previousLevelString = GetLevelString(Levels(previousLevel));
+	pugi::xml_document saveFile;
+	pugi::xml_parse_result result = saveFile.load_file("savedData.xml");
+	
+	player->hits = saveFile.child("savedData").child("player").attribute("hits").as_int();
+	player->currencyManager->SetCurrency(saveFile.child("savedData").child("player").attribute("soulPoints").as_int());
 
-	LOG("%s", previousLevelString);
-
-	pugi::xml_document loadFile;
-	pugi::xml_parse_result result = loadFile.load_file("config.xml");
-
-	if (result == NULL) {
-		LOG("Error loading config.xml");
-		return;
-	}
-
-
-
-	pugi::xml_node savedDataNode = loadFile.child("config").child("scene").child("savedData");
-
-	currentTime = savedDataNode.attribute("time").as_float();
-
-	loadFile.save_file("config.xml");
+	saveFile.save_file("savedData.xml");
 }
 
 void Scene::SetLoadState(bool b)

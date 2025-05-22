@@ -19,8 +19,7 @@
 		<bg path="Assets/Textures/Menus/Title Screen/title screen pixel bg.png" />
 		<buttons defaultTex="Assets/Textures/Menus/Title Screen/DefaultButton.png">
 			<newGameBt id="1" x="448" y="230" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="TUTORIAL" font="Assets/Fonts/Crang.ttf" fontSize="30" />
-			<testLevelBt id="13" x="448" y="326" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="TEST_LEVEL" font="Assets/Fonts/Crang.ttf" fontSize="30" />
-			<continueBt id="2" x="4000" y="78" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="CONTINUE" font="Assets/Fonts/Crang.ttf" fontSize="30" />
+			<continueBt id="2" x="448" y="326" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="CONTINUE" font="Assets/Fonts/Crang.ttf" fontSize="30" />
 			<optionsBt id="3" x="448" y="422" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="OPTIONS" font="Assets/Fonts/Crang.ttf" fontSize="30" />
 			<creditsBt id="4" x="448" y="518" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="CREDITS" font="Assets/Fonts/Crang.ttf" fontSize="30" />
 			<exitBt id="5" x="448" y="614" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/RedButton.png" text="EXIT" font="Assets/Fonts/Crang.ttf" fontSize="30" />

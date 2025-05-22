@@ -37,6 +37,11 @@ void CurrencyManager::SumCurrency(int currency)
 	currencyNum += currency;
 }
 
+void CurrencyManager::SetCurrency(int currency)
+{
+	currencyNum = currency;
+}
+
 Entity* CurrencyManager::CreateOrb()
 {
 	CurrencyOrb* orb = (CurrencyOrb*)Engine::GetInstance().entityManager->CreatePooledEntities(EntityType::CURRENCY_ORB);
