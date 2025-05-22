@@ -14,6 +14,8 @@ Input::Input(bool startEnabled) : Module(startEnabled)
 	keyboard = new KeyState[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(KeyState) * MAX_KEYS);
 	memset(mouseButtons, KEY_IDLE, sizeof(KeyState) * NUM_MOUSE_BUTTONS);
+
+
 }
 
 // Destructor
@@ -29,10 +31,25 @@ bool Input::Awake()
 	bool ret = true;
 	SDL_Init(0);
 
-	if(SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
+
+
+	if(SDL_InitSubSystem(SDL_INIT_EVENTS | SDL_INIT_GAMECONTROLLER | SDL_INIT_JOYSTICK) < 0)
 	{
 		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
+	}
+	else {
+		if (SDL_NumJoysticks() > 0) {
+			if (SDL_IsGameController(0)) {
+				controller = SDL_GameControllerOpen(0);
+			}
+			else {
+				LOG("Joystick 0 is not a game controller");
+			}
+		}
+		else {
+			LOG("No gamepads detected");
+		}
 	}
 
 	return ret;
@@ -126,6 +143,38 @@ bool Input::PreUpdate()
 		}
 	}
 
+	// Gamepad button states update
+	if (controller != nullptr)
+	{
+		for (int i = 0; i < MAX_GAMEPAD_BUTTONS; ++i)
+		{
+			bool isPressed = SDL_GameControllerGetButton(controller, static_cast<SDL_GameControllerButton>(i));
+
+			switch (gamepadButtons[i])
+			{
+			case KEY_IDLE:
+				if (isPressed)
+					gamepadButtons[i] = KEY_DOWN;
+				break;
+			case KEY_DOWN:
+				gamepadButtons[i] = isPressed ? KEY_REPEAT : KEY_UP;
+				break;
+			case KEY_REPEAT:
+				if (!isPressed)
+					gamepadButtons[i] = KEY_UP;
+				break;
+			case KEY_UP:
+				gamepadButtons[i] = isPressed ? KEY_DOWN : KEY_IDLE;
+				break;
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < MAX_GAMEPAD_BUTTONS; ++i)
+			gamepadButtons[i] = KEY_IDLE;
+	}
+
 	return true;
 }
 
@@ -134,6 +183,11 @@ bool Input::CleanUp()
 {
 	LOG("Quitting SDL event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
+	
+	if (controller != nullptr) {
+		SDL_GameControllerClose(controller);
+		controller = nullptr;
+	}
 	return true;
 }
 
@@ -151,4 +205,9 @@ Vector2D Input::GetMousePosition()
 Vector2D Input::GetMouseMotion()
 {
 	return Vector2D(mouseMotionX, mouseMotionY);
+}
+
+KeyState Input::GetGamepadButton(SDL_GameControllerButton button) const
+{
+	return gamepadButtons[button];
 }

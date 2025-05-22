@@ -30,30 +30,31 @@ bool GuiControlCheckBox::Update(float dt)
 
 	// L16: TODO 3: Update the state of the GUiButton according to the mouse position
 	if (state != GuiControlState::DISABLED) {
-		Vector2D mousePos = Engine::GetInstance().input.get()->GetMousePosition();
+		if (state != GuiControlState::OVERLOADED) {
+			Vector2D mousePos = Engine::GetInstance().input.get()->GetMousePosition();
 
-		//If the position of the mouse if inside the bounds of the button 
-		if (mousePos.getX() > bounds.x && mousePos.getX() < bounds.x + bounds.w && mousePos.getY() > bounds.y && mousePos.getY() < bounds.y + bounds.h) {
+			//If the position of the mouse if inside the bounds of the button 
+			if (mousePos.getX() > bounds.x && mousePos.getX() < bounds.x + bounds.w && mousePos.getY() > bounds.y && mousePos.getY() < bounds.y + bounds.h) {
 
-			state = GuiControlState::FOCUSED;
+				state = GuiControlState::FOCUSED;
 
-			if (Engine::GetInstance().input.get()->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
-			{
-				state = GuiControlState::PRESSED;
+				if (Engine::GetInstance().input.get()->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
+				{
+					state = GuiControlState::PRESSED;
+				}
+
+				// If mouse button pressed -> Generate event!
+				if (Engine::GetInstance().input.get()->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
+				{
+
+					state = GuiControlState::SELECTED;
+
+					/*NotifyObserver();*/
+				}
 			}
-
-			// If mouse button pressed -> Generate event!
-			if (Engine::GetInstance().input.get()->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
-			{
-				
-				state = GuiControlState::SELECTED;
-				
-				/*NotifyObserver();*/
+			else {
+				//state = GuiControlState::NORMAL;
 			}
-		}
-		else {
-			
-			state = GuiControlState::NORMAL;
 		}
 	}
 
@@ -63,6 +64,11 @@ bool GuiControlCheckBox::Update(float dt)
 	switch (state)
 	{
 	case GuiControlState::DISABLED:
+		section = { bounds.h + bounds.h, 0, bounds.h, bounds.h };
+		break;
+
+	case GuiControlState::OVERLOADED:
+		section = { bounds.h + bounds.h, 0, bounds.h, bounds.h };
 		break;
 
 	case GuiControlState::NORMAL:

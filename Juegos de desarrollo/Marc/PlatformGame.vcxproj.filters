@@ -212,6 +212,11 @@
     </ClCompile>
     <ClCompile Include="src\UpgradesMenu.cpp">
       <Filter>Source Files\Game\Menus</Filter>
+    <ClCompile Include="src\Intro.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MerchantMenu.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\DashParticle.cpp">
       <Filter>Source Files</Filter>
@@ -377,6 +382,8 @@
     <ClInclude Include="src\DashParticle.h" />
     <ClInclude Include="src\SoulRockParticle.h" />
     <ClInclude Include="src\WallBrakerParticle.h" />
+    <ClInclude Include="src\Intro.h" />
+    <ClInclude Include="src\MerchantMenu.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="config.xml">

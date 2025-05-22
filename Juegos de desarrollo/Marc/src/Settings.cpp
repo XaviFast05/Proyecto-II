@@ -119,15 +119,7 @@ bool Settings::Update(float dt)
 
 
 	
-		if (fullScreenBox->isChecked) {
-			SDL_SetWindowFullscreen(Engine::GetInstance().window.get()->window, SDL_WINDOW_FULLSCREEN);
-		}
-		else {
-			int windowW, windowH;
-			Engine::GetInstance().window.get()->GetWindowSize(windowW, windowH);
-			SDL_SetWindowFullscreen(Engine::GetInstance().window.get()->window, 0);
-			SDL_SetWindowSize(Engine::GetInstance().window.get()->window, windowW, windowH);
-		}
+
 	}
 	else {
 		for (GuiControl* gui : settingsGUI) {
@@ -172,6 +164,15 @@ bool Settings::OnGuiMouseClickEvent(GuiControl* control) {
 		Engine::GetInstance().audio.get()->PlayFx(testSound);
 		break;
 	case GuiControlId::FULLSCREEN:
+		if (fullScreenBox->isChecked) {
+			SDL_SetWindowFullscreen(Engine::GetInstance().window.get()->window, SDL_WINDOW_FULLSCREEN);
+		}
+		else {
+			int windowW, windowH;
+			Engine::GetInstance().window.get()->GetWindowSize(windowW, windowH);
+			SDL_SetWindowFullscreen(Engine::GetInstance().window.get()->window, 0);
+			SDL_SetWindowSize(Engine::GetInstance().window.get()->window, windowW, windowH);
+		}
 		break;
 	case GuiControlId::BACK:
 		if (control->state == GuiControlState::PRESSED && settingsOpen) {

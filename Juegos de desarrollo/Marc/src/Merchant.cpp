@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "LOG.h"
 #include "tracy/Tracy.hpp"
+#include "MerchantMenu.h"
 
 Merchant::Merchant()
 {
@@ -134,7 +135,8 @@ bool Merchant::Update(float dt) {
 			if (lookTimerOn) {
 				if (lookTimer.ReadSec() >= lookTime) {
 					lookTimerOn = false;
-					dir = (position.getX() >= initialPosX)? LEFT : RIGHT;
+					if (position.getX() >= initialPosX) dir = LEFT;
+					else dir = RIGHT;
 
 					justTurned = true; 
 				}
@@ -144,8 +146,8 @@ bool Merchant::Update(float dt) {
 			}
 			else {
 
-				if (dir == RIGHT) pbody->body->SetLinearVelocity({ (float )speed, 0 });
-				else pbody->body->SetLinearVelocity({ (float)-speed, 0 });
+				if (dir == RIGHT) pbody->body->SetLinearVelocity({ speed, 0 });
+				else pbody->body->SetLinearVelocity({ -speed, 0 });
 
 
 				if (!justTurned && (position.getX() > initialPosX + dist || position.getX() < initialPosX - dist)) {
@@ -166,21 +168,26 @@ bool Merchant::Update(float dt) {
 		else if (state == DETECTION) {
 
 
-			dir = (playerPos.getX() > position.getX()) ? RIGHT : LEFT;
+			if (playerPos.getX() > position.getX()) dir = RIGHT;
+			else dir = LEFT;
 
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_J) == KEY_DOWN) {
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Z) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_B) == KEY_DOWN) {
 				state = INTERACTION;
 				player->pbody->body->SetEnabled(false);
+				Engine::GetInstance().merchantMenu.get()->merchantPanelOpen = true;
+				Engine::GetInstance().merchantMenu.get()->hasOpened = true;
 			}
 
 		}
 		else if (INTERACTION) {
 
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_J) == KEY_DOWN) {
+			if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Z) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_B) == KEY_DOWN) || !Engine::GetInstance().merchantMenu.get()->merchantPanelOpen) {
 				state = DETECTION;
-
 				player->pbody->body->SetEnabled(true) ;
+				Engine::GetInstance().merchantMenu.get()->merchantPanelOpen = false;
 			}
+
+
 		}
 	
 		//if (state == PATROL) {
