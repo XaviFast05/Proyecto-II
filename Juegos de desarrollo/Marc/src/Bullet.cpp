@@ -109,7 +109,7 @@ bool Bullet::Update(float dt) {
     }
 
     if (bullet_type == BulletType::PICKAXE) {
-        if (onPlayer && player->onPickaxe && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) && isActive) {
+        if ((onPlayer && player->onPickaxe && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) ||(SDL_GameControllerGetAxis(Engine::GetInstance().input.get()->controller, SDL_CONTROLLER_AXIS_LEFTY) > 6000 ) ) && isActive) {
             inactiveTimer.Start();
             fixture = pbody->body->GetFixtureList();
             if (fixture) {
