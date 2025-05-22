@@ -1798,7 +1798,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="8"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -1878,7 +1878,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="8"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -1958,7 +1958,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="8"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -2145,7 +2145,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="7"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -2194,19 +2194,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="8"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="8"/>
    <tile/>
    <tile/>
    <tile/>
@@ -2224,9 +2211,22 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="7"/>
-   <tile gid="7"/>
-   <tile gid="7"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -2274,19 +2274,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="8"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="8"/>
    <tile/>
    <tile/>
    <tile/>
@@ -2304,9 +2291,22 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="7"/>
-   <tile gid="7"/>
-   <tile gid="7"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -8674,7 +8674,7 @@
    <tile/>
   </data>
  </layer>
- <objectgroup id="3" name="ClimbingWall">
+ <objectgroup id="3" name="ClimbingWall" visible="0">
   <object id="36" x="2176" y="640" width="64" height="320"/>
   <object id="37" x="2432" y="832" width="64" height="320"/>
   <object id="38" x="2176" y="1152" width="64" height="384"/>
@@ -8682,7 +8682,7 @@
   <object id="41" x="576" y="1600" width="64" height="128"/>
   <object id="44" x="320" y="1344" width="64" height="512"/>
  </objectgroup>
- <objectgroup id="2" name="Collisions">
+ <objectgroup id="2" name="Collisions" visible="0">
   <object id="1" x="384" y="1856" width="4480" height="64"/>
   <object id="2" x="2368" y="1600" width="64" height="64"/>
   <object id="3" x="2432" y="1536" width="64" height="64"/>
@@ -8715,7 +8715,7 @@
   <object id="34" x="4288" y="896" width="64" height="704"/>
   <object id="45" x="640" y="1664" width="64" height="64"/>
  </objectgroup>
- <objectgroup id="5" name="LevelChanger">
+ <objectgroup id="5" name="LevelChanger" visible="0">
   <object id="54" x="4544" y="1664" width="320" height="192"/>
  </objectgroup>
 </map>
