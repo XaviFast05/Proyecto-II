@@ -684,7 +684,7 @@
 				<name maxW="620" maxH="167" offsetX="197" offsetY="10" font="Assets/Fonts/ttf_pixolde_bold.ttf" pointSize="50" />
 				<text maxW="620" maxH="167" offsetX="197" offsetY="58" font="Assets/Fonts/ttf_pixolde_bold.ttf" pointSize="30" />
 				<images w="160" h="160" offsetX="23" offsetY="21">
-					<image name="Kim" path="Assets/Textures/Menus/Dialogues/FLO.png" />
+					<image name="Kim" path="Assets/Textures/Menus/Dialogues/KIM.png" />
 					<image name="Flo" path="Assets/Textures/Menus/Dialogues/FLO.png" />
 				</images>
 			</dialoguePanel>
