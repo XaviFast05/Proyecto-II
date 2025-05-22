@@ -48,6 +48,7 @@ enum class ColliderType {
 	ALLY,
 	JUMP,
 	FINALBOSS,
+	PARTICLE,
 	UNKNOWN
 };
 
