@@ -38,6 +38,8 @@
 #include "SoulRockParticle.h"
 #include "DashParticle.h"
 #include "WallBrakerParticle.h"
+#include "MerchantMenu.h"
+
 
 #include "Intro.h"
 
@@ -414,9 +416,13 @@ bool Scene::PostUpdate()
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_H) == KEY_DOWN) {
 		help = !help;
 	}
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN) {
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_START) == KEY_DOWN) {
 		paused = !paused;
 		Engine::GetInstance().settings.get()->settingsOpen = false;
+	}
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_BACK) == KEY_DOWN)
+	{
+		drawnMap = !drawnMap;
 	}
 
 	Render* render = Engine::GetInstance().render.get();
@@ -424,6 +430,7 @@ bool Scene::PostUpdate()
 
 	//UI
 	if (!Engine::GetInstance().settings.get()->settingsOpen) {
+
 		
 		if (!paused) {
 			DrawPlayerHitsUI();
@@ -432,8 +439,8 @@ bool Scene::PostUpdate()
 
 			DrawCurrencyUI();
 
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_TAB)) DrawMap();
 		}
+
 
 		if (paused && !Engine::GetInstance().settings.get()->settingsOpen) {
 
@@ -465,10 +472,9 @@ bool Scene::PostUpdate()
 				bt.second->active = false;
 		}
 
-		if (help)
-			render->DrawTextureBuffer(helpMenu, -render->camera.x / window->scale + helpPos.getX(), -render->camera.y / window->scale + helpPos.getY(), false ,MENUS);
+		if (help) render->DrawTextureBuffer(helpMenu, -render->camera.x / window->scale + helpPos.getX(), -render->camera.y / window->scale + helpPos.getY(), false ,MENUS);
 			
-			
+		if (drawnMap) DrawMap();
 
 		if (quit) return false;
 
@@ -492,6 +498,7 @@ bool Scene::CleanUp()
 	enemies.clear();
 	checkPoints.clear();
 	soulRocks.clear();
+	allies.clear();
 
 
 
