@@ -263,6 +263,184 @@ bool Player::Update(float dt)
 				playerState = RUN;
 			}
 			else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && ((stateFlow[playerState][JUMP] && grounded) /*MODIFICAR GODMODE*/ || godMode)) {
+
+			
+
+			currentAnim->Update();
+
+			return true;
+		}
+
+		//DAMAGE BOOST
+		if (damageBoost && hits == 1) damageAdded = damageBoostAdded;
+		else if (damageBoost && hits != 1 && damageSmallBoost) damageAdded = 2;
+		else if (damageBoost && hits != 1 && !damageSmallBoost) damageAdded = 0;
+
+		//CHANGERS
+		if (playerState == DEAD || playerState == CHARGED) {
+		}
+		else if (playerState == HURT) {
+			if (hurtTimer.ReadSec() >= hurtTime) playerState = IDLE;
+		}
+		else if (
+			(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT ||
+				Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT ||
+				SDL_GameControllerGetAxis(Engine::GetInstance().input.get()->controller, SDL_CONTROLLER_AXIS_LEFTX) > 8000 ||
+				SDL_GameControllerGetAxis(Engine::GetInstance().input.get()->controller, SDL_CONTROLLER_AXIS_LEFTX) < -8000) &&
+			stateFlow[playerState][RUN] && grounded
+			)
+		{
+			playerState = RUN;
+		}
+		else if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_A) == KEY_DOWN)
+			&& ((stateFlow[playerState][JUMP] && grounded) || godMode)) {
+			playerState = JUMP;
+			pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
+			grounded = false;
+			plusJumpTimer.Start();
+			plusJumpTimerOn = true;
+		}
+		else if (pbody->body->GetLinearVelocity().y > 0.001 && stateFlow[playerState][FALL]) {
+			if (playerState == RUN) {
+				coyoteTimer.Start();
+				coyoteTimerOn = true;
+			}
+			playerState = FALL;
+			grounded = false;
+		}
+		else if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_X) || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_X) == KEY_DOWN)
+			&& stateFlow[playerState][CHOP] && pickaxeManager->GetNumPickaxes() > 0) {
+			stateTimer.Start();
+			playerState = CHOP;
+
+			if (meleeTimerOn) deleteCharged = true;
+			charging = true;
+			meleeTimer.Start();
+			meleeTimerOn = true;
+		}
+		else if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_X) || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_X) == KEY_DOWN)
+			&& stateFlow[playerState][PUNCH] && pickaxeManager->GetNumPickaxes() <= 0) {
+			stateTimer.Start();
+			playerState = PUNCH;
+
+			meleeTimer.Start();
+			meleeTimerOn = true;
+		}
+		else if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_C) || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_Y) == KEY_DOWN)
+			&& stateFlow[playerState][THROW] && pickaxeManager->GetNumPickaxes() > 0) {
+			
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_UP) || SDL_GameControllerGetAxis(Engine::GetInstance().input.get()->controller, SDL_CONTROLLER_AXIS_LEFTY) < -6000) pickaxeManager->ThrowPickaxe({0,1}, pbody->GetPhysBodyWorldPosition());
+			else pickaxeManager->ThrowPickaxe(GetDirection(), pbody->GetPhysBodyWorldPosition());
+
+			stateTimer.Start();
+			playerState = THROW;
+		}
+		else if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) == KEY_DOWN)
+			&& stateFlow[playerState][DASH] && canDash == true && unlockedDash == true) {
+			pbody->body->SetLinearVelocity(b2Vec2_zero);
+			if (dir == RIGHT) pbody->body->ApplyLinearImpulseToCenter(b2Vec2(dashForce, 0), true);
+			else if (dir == LEFT) pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-dashForce, 0), true);
+
+			if (grounded && (playerState == IDLE || playerState == RUN)) {
+				dashCooldownTimerOn = true;
+				dashCooldownTimer.Start();
+			}
+
+			canDash = false;
+			dashTimer.Start();
+			dashTimerOn = true;
+			playerState = DASH;
+		}
+
+		//COYOTE TIME LOGIC
+		if (coyoteTimerOn) {
+			if (coyoteTimer.ReadSec() < coyoteTimerMax && (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_A) == KEY_DOWN)) {
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
+				playerState = JUMP;
+				coyoteTimerOn = false;
+
+				plusJumpTimer.Start();
+				plusJumpTimerOn = true;
+			}
+			if (coyoteTimer.ReadSec() >= coyoteTimerMax) coyoteTimerOn = false;
+		}
+
+		//DASH LOGIC
+		if (dashTimerOn) {
+			if (dashTimer.ReadSec() > dashTimerMax) {
+				playerState = IDLE;
+				dashTimerOn = false;
+			}
+		}
+
+		//DASH PREVENT SPAMMING LOGIC
+		if (dashCooldownTimerOn) {
+			if (dashCooldownTimer.ReadSec() > dashCooldownTimerMax) {
+				dashCooldownTimerOn = false;
+				canDash = true;
+			}
+		}
+		else if (grounded && (playerState == IDLE || playerState == RUN)) canDash = true;
+
+		//PLUS JUMP LOGIC
+		if (plusJumpTimerOn) {
+			if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT || Engine::GetInstance().input.get()->GetGamepadButton( SDL_CONTROLLER_BUTTON_A) == KEY_REPEAT) && !grounded && playerState == JUMP && plusJumpTimer.ReadSec() < plusJumpTimerMax) {
+				float jumpPlusForce = 0.5;
+				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpPlusForce), true);
+			}
+			if (plusJumpTimer.ReadSec() >= plusJumpTimerMax) plusJumpTimerOn = false;
+		}
+
+		//CHARGED ATTACK LOGIC
+		if (chargedCooldown) {
+			if (chargedCooldownTimer.ReadSec() > chargedCooldownTimerMax) chargedCooldown = false;
+		}
+		if (playerState == CHARGED && (meleeTimerOn == false && (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_UP || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_X) == KEY_UP) || chargeAttackTimer.ReadSec() > chargeAttackTimerMax) ) {
+			meleeTimer.Start();
+			meleeTimerOn = true;
+		}
+
+		//MELEE ATTACKS LOGIC
+		if (meleeTimerOn) {
+			if (deleteCharged) {
+				meleeArea->body->SetEnabled(false);
+				deleteCharged = false;
+			}
+			if (meleeTimer.ReadSec() == 0.0) {
+				if (playerState == CHARGED) {
+					meleeDisplace = (dir == RIGHT) ? (2 * texW / 3 + MELEE_AREA_WIDTH) : (texW / 3 - MELEE_AREA_WIDTH);
+					meleeArea = Engine::GetInstance().physics.get()->CreateRectangleSensor((position.getX() + meleeDisplace), position.getY() + texH / 2, MELEE_AREA_WIDTH * 2, texH * 1.5, DYNAMIC);
+					meleeArea->ctype = ColliderType::MELEE_AREA_CHARGED;
+				}
+				else {
+					meleeDisplace = (dir == RIGHT) ? (2 * texW / 3 + MELEE_AREA_WIDTH / 2) : (texW / 3 - MELEE_AREA_WIDTH / 2);
+					meleeArea = Engine::GetInstance().physics.get()->CreateRectangleSensor((position.getX() + meleeDisplace), position.getY() + texH / 2, MELEE_AREA_WIDTH, texH, DYNAMIC);
+					meleeArea->ctype = ColliderType::MELEE_AREA;
+				}
+			}
+			if (meleeTimer.ReadSec() < meleeTimerMax) {
+				b2Vec2 meleeAreaMovePos = b2Vec2(pbody->body->GetPosition().x + PIXEL_TO_METERS(meleeDisplace) - PIXEL_TO_METERS(texW/2), pbody->body->GetPosition().y);
+				meleeArea->body->SetTransform(meleeAreaMovePos, 0);
+			}
+			if (meleeTimer.ReadSec() >= meleeTimerMax) {
+				meleeArea->body->SetEnabled(false);
+				meleeTimerOn = false;
+			}
+		}
+		if (respawnHeal == true) respawnHeal = false;
+
+		//LOGIC & SFX
+		switch (playerState) {
+		case IDLE:
+			if (playSound == false) {
+				playSound = true;
+			}
+			break;
+		case RUN:
+			// SALTO: Evaluar siempre primero
+			if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_A) == KEY_DOWN)
+				&& (grounded || godMode))
+			{
 				playerState = JUMP;
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 				grounded = false;
@@ -538,6 +716,52 @@ bool Player::Update(float dt)
 			else velocity = { velocity.x, pbody->body->GetLinearVelocity().y };
 
 			pbody->body->SetLinearVelocity(velocity);
+
+			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_X) == KEY_UP || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_X) == KEY_UP) charging = false;
+			if (stateTimer.ReadSec() >= pickaxeTimerAnimation)
+			{
+				if (charging == true && chargedCooldown == false && unlockedCharged == true) {
+					playerState = CHARGED;
+					chargeAttackTimer.Start();
+					break;
+				}
+				else playerState = IDLE;
+				if (playSound == false) {
+					playSound = true;
+				}
+			}
+			break;
+		case THROW:
+			if (playSound == true) {
+				Engine::GetInstance().audio.get()->PlayFx(playerThrowSFX);
+				playSound = false;
+			}
+			if (CheckMoveX() && !grounded) MoveX();
+			if (stateTimer.ReadSec() >= pickaxeTimerAnimation)
+			{
+				playerState = IDLE;
+				if (playSound == false) {
+					playSound = true;
+				}
+			}
+			break;
+		case DEAD:
+			pbody->body->SetLinearVelocity(b2Vec2(0, 0));
+			if (respawnTimer.ReadSec() >= respawnTime) {
+				Engine::GetInstance().scene.get()->LoadState();
+				playerState = IDLE;
+				hits = 3;
+			}
+			break;
+		case CHARGED:
+			if (chargeAttackTimer.ReadSec() > chargeAttackTimerMax || (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_X) == KEY_UP || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_X) == KEY_UP)) {
+				chargedCooldownTimer.Start();
+				chargedCooldown = true;
+				playerState = IDLE;
+			}
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -586,7 +810,7 @@ bool Player::Update(float dt)
 		}
 		break;
 	case THROW:
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W)) {
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_UP) || SDL_GameControllerGetAxis(Engine::GetInstance().input.get()->controller, SDL_CONTROLLER_AXIS_LEFTY) < -6000) {
 			currentAnim = &throwPixUp;
 		}
 		else {
@@ -940,16 +1164,33 @@ bool Player::CheckMoveX()
 {
 	Input* input = Engine::GetInstance().input.get();
 
-	bool moveRight = input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT;
-	bool moveLeft = input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT;
+	bool moveRight = input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT;
+	bool moveLeft = input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT;
 
-	if (moveRight && !rightBlocked)
+	// Joystick
+
+	//SDL_GameControllerGetAxis(input->controller, SDL_CONTROLLER_AXIS_LEFTX);
+
+
+	//if (SDL_GameControllerGetAxis(input->controller, SDL_CONTROLLER_AXIS_LEFTX); > DEADZONE && !rightBlocked) {
+	//	dir = RIGHT;
+	//	Engine::GetInstance().scene.get()->cameraDirectionChangeActivation = true;
+	//	return true;
+	//}
+	//else if (axis < -DEADZONE && !leftBlocked) {
+	//	dir = LEFT;
+	//	Engine::GetInstance().scene.get()->cameraDirectionChangeActivation = true;
+	//	return true;
+	//}
+	
+
+	if ((moveRight || SDL_GameControllerGetAxis(input->controller, SDL_CONTROLLER_AXIS_LEFTX) > 8000) && !rightBlocked)
 	{
 		dir = RIGHT;
 		Engine::GetInstance().scene.get()->cameraDirectionChangeActivation = true;
 		return true;
 	}
-	else if (moveLeft && !leftBlocked)
+	else if ((moveLeft || SDL_GameControllerGetAxis(input->controller, SDL_CONTROLLER_AXIS_LEFTX) < -8000) && !leftBlocked)
 	{
 		dir = LEFT;
 		Engine::GetInstance().scene.get()->cameraDirectionChangeActivation = true;

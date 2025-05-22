@@ -39,7 +39,7 @@
 #include "DashParticle.h"
 #include "WallBrakerParticle.h"
 #include "MerchantMenu.h"
-
+#include "MerchantMenu.h"
 
 #include "Intro.h"
 
@@ -450,6 +450,7 @@ bool Scene::PostUpdate()
 		drawnMap = !drawnMap;
 	}
 
+
 	Render* render = Engine::GetInstance().render.get();
 	Window* window = Engine::GetInstance().window.get();
 
@@ -465,6 +466,9 @@ bool Scene::PostUpdate()
 
 			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_TAB)) DrawMap();
 		}
+
+		DrawCurrencyUI();
+
 
 		if (paused && !Engine::GetInstance().settings.get()->settingsOpen) {
 
@@ -496,6 +500,7 @@ bool Scene::PostUpdate()
 				bt.second->active = false;
 		}
 
+
 		if (help) render->DrawTextureBuffer(helpMenu, -render->camera.x / window->scale + helpPos.getX(), -render->camera.y / window->scale + helpPos.getY());
 			
 		if (drawnMap) DrawMap();
@@ -523,7 +528,6 @@ bool Scene::CleanUp()
 	checkPoints.clear();
 	soulRocks.clear();
 	allies.clear();
-
 
 
 	LOG("Freeing scene");

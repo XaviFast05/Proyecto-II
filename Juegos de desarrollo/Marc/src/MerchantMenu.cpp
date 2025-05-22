@@ -59,41 +59,49 @@ bool MerchantMenu::Start()
 	//IMPORTANTE: Que siga este orden porque sino no coincide con el config
 
 	firstUpgradeBt = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "firstUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+
 	SetGuiParameters(firstUpgradeBt, "firstUpgradeBt", configParameters);
 
 	merchantGUI.push_back(firstUpgradeBt);
 
 	secondUpgradeBt = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "secondUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+
 	SetGuiParameters(secondUpgradeBt, "secondUpgradeBt", configParameters);
 
 	merchantGUI.push_back(secondUpgradeBt);
 
 	thirdUpgradeBt = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "thirdUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+
 	SetGuiParameters(thirdUpgradeBt, "thirdUpgradeBt", configParameters);
 
 	merchantGUI.push_back(thirdUpgradeBt);
 
 	fourthUpgradeBt = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "fourthUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+
 	SetGuiParameters(fourthUpgradeBt, "fourthUpgradeBt", configParameters);
 
 	merchantGUI.push_back(fourthUpgradeBt);
 
 	fifthUpgradeBt = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "fifthUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+
 	SetGuiParameters(fifthUpgradeBt, "fifthUpgradeBt", configParameters);
 
 	merchantGUI.push_back(fifthUpgradeBt);
 
 	sixthUpgradeBt = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "sixthUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+
 	SetGuiParameters(sixthUpgradeBt, "sixthUpgradeBt", configParameters);
 
 	merchantGUI.push_back(sixthUpgradeBt);
 
 	seventhUpgradeBt = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "seventhUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+
 	SetGuiParameters(seventhUpgradeBt, "seventhUpgradeBt", configParameters);
 
 	merchantGUI.push_back(seventhUpgradeBt);
 
 	eighthUpgradeBt = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "eighthUpgradeBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+
 	SetGuiParameters(eighthUpgradeBt, "eighthUpgradeBt", configParameters);
 
 	merchantGUI.push_back(eighthUpgradeBt);
@@ -142,6 +150,7 @@ bool MerchantMenu::Update(float dt)
 	int windowScale = Engine::GetInstance().window.get()->GetScale();
 	
 	if (merchantPanelOpen) {
+
 		if (hasOpened) {
 			if (Engine::GetInstance().scene.get()->player->HaveUpgrade(0)) firstUpgradeBt->state = GuiControlState::DISABLED;
 			else firstUpgradeBt->state = GuiControlState::NORMAL;
@@ -170,12 +179,14 @@ bool MerchantMenu::Update(float dt)
 			hasOpened = false;
 		}
 
+
 		int screenWidth = rootNode.child("window").child("resolution").attribute("width").as_int();
 		int screenHeight = rootNode.child("window").child("resolution").attribute("height").as_int();
 
 
 		Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
 		Engine::GetInstance().render.get()->DrawTextureBuffer(merchantPanel, -camera.x / windowScale + merchantPanelX, -camera.y / windowScale + merchantPanelY);
+
 
 
 		for (GuiControl* gui : merchantGUI) {
@@ -406,6 +417,7 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 		break;
 	}
 
+
 	// BACK BUTTON
 	if (control->id == GuiControlId::BACK && control->state == GuiControlState::PRESSED && merchantPanelOpen) {
 		merchantPanelOpen = false;
@@ -417,6 +429,7 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 }
 
 void MerchantMenu::SetGuiParameters(GuiControl* bt, std::string btName, pugi::xml_node parameters) {
+
 	bt->id = (GuiControlId)parameters.child(btName.c_str()).attribute("id").as_int();
 	bt->bounds.x = parameters.child(btName.c_str()).attribute("x").as_int();
 	bt->bounds.y = parameters.child(btName.c_str()).attribute("y").as_int();

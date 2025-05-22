@@ -51,6 +51,7 @@ enum class GuiControlId
 	RETRY,
 
 	TEST_LEVEL,
+
 	FIRST_CAPE,
 
 	CHANGE_MENU,
