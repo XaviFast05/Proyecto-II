@@ -185,6 +185,7 @@ bool Scene::Start()
 	barraRoja = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("barraRoja").attribute("path").as_string());
 	orbSoul = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("orbSoul").attribute("path").as_string());
 	bgTutorial = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("bgTut").attribute("path").as_string());
+	bgCapa1 = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("bgCapa1").attribute("path").as_string());
 	kimHead = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("kimHead").attribute("path").as_string());
 
 	return true;
@@ -931,6 +932,8 @@ void Scene::DrawMap()
 	case LVL2:
 		break;
 	case LVL3:
+		Engine::GetInstance().render.get()->DrawTextureBuffer(bgCapa1, centerX, centerY, false, MENUS);
+		Engine::GetInstance().render.get()->DrawTextureBuffer(kimHead, centerX + (posX * 720 / 225 - 10), centerY + (posY * 360 / 96 - 25), false, MENUS);
 		break;
 	case LVL4:
 		break;

@@ -71,6 +71,7 @@
 			<barraRoja path="Assets/Textures/UI/barra_roja.png" />
 			<orbSoul path="Assets/Textures/UI/orbSoul.png" />
 			<bgTut path="Assets/Maps/fondo_tut.png" />
+			<bgCapa1 path="Assets/Maps/fondo_capa1.png" />
 			<kimHead path="Assets/Textures/kim.png" />
 		</ui>
 		<map>
