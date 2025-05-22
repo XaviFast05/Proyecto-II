@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <savedData saved="true" level="1" time="4.10140848" startBossFight="false" bossKilled="false">
 	<lvl1>
-		<player x="150" y="3400" lives="3" transformable="false" transformed="false" candies="0" />
+		<player x="159" y="3400" lives="3" transformable="false" transformed="false" candies="0" />
 		<enemy0 dead="false" x="5216" y="2528" />
 		<enemy1 dead="false" x="4640" y="928" />
 		<enemy2 dead="false" x="7519" y="3616" />

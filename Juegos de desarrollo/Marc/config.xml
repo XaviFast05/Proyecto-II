@@ -80,6 +80,7 @@
 				<lvl3 path="Assets/Maps/" name="level1 (1).tmx" />
 				<lvl4 path="Assets/Maps/" name="Zona_oniricaATC.tmx" />
 				<lvl5 path="Assets/Maps/" name="Zona_oniricaDASH.tmx" />
+				<lvl6 path="Assets/Maps/" name="Zona_Boss.tmx" />
 			</paths>
 			<parallax>
 				<lvl1>
@@ -107,6 +108,11 @@
 					<layer name="sky2" path="Assets/Textures/Parallax/ZonaOnirica/Esto va delante del fondo.png" marginX="0" marginY="0" spacing="0" width="1280" height="720" slowX="1" repeatNum="15" slowY="1" />
 					<layer name="sky3" path="Assets/Textures/Parallax/ZonaOnirica/Fons.png" marginX="0" marginY="0" spacing="0" width="1280" height="720" slowX="2" repeatNum="15" slowY="1" />
 				</lvl5>
+				<lvl6>
+					<layer name="Cerca" path="Assets/Textures/Parallax/Capa1/Cerca.png" marginX="0" marginY="0" spacing="0" width="1280" height="720" slowX="5" repeatNum="15" slowY="1" />
+					<layer name="Medio" path="Assets/Textures/Parallax/Capa1/Medio.png" marginX="0" marginY="0" spacing="0" width="1280" height="720" slowX="3" repeatNum="15" slowY="1" />
+					<layer name="Fondo" path="Assets/Textures/Parallax/Capa1/Fondo.png" marginX="0" marginY="0" spacing="0" width="1280" height="720" slowX="2" repeatNum="15" slowY="1" />
+				</lvl6>
 			</parallax>
 		</map>
 		<helpMenu x="252" y="9" w="379" h="295" path="Assets/Textures/Menus/Help/HelpMenu_ver2.png" lvl="1" />
@@ -118,6 +124,7 @@
 					<lvl3 x="9536" y="6970" />
 					<lvl4 x="4032" y="1792" />
 					<lvl5 x="2240" y="1600" />
+					<lvl6 x="4096" y="2048" />
 				</startPositions>
 				<propierties gJumpForce="4.0f" pJumpForce="4.0f" pushForce="7.0f" moveSpeed="0.5f" friction="0.0f" gravity="9.0f" attack1Time="0.8f" attack2Time="1.0f" hurtTime="1.0f" respawnTime=" 2.0f" playerState="0" direction="1" shootCooldown="5" />
 				<statesFlow>

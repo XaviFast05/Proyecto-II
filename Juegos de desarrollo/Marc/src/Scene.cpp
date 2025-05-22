@@ -301,13 +301,18 @@ bool Scene::Update(float dt)
 		}
 		else if (level == LVL3)
 		{
-			if (playerPOSX < 6000) {
+			if (playerPOSX < 6000 && playerPOSY > 3000) {
 				Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
 				level = LVL4;
 			}
-			else if (playerPOSX > 9000) {
+			else if (playerPOSX > 9000 && playerPOSY > 3000) {
 				Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
 				level = LVL5;
+			}
+			else if (playerPOSY > 2500)
+			{
+				Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
+				level = LVL6;
 			}
 		}
 		else if (level == LVL4)
@@ -325,6 +330,19 @@ bool Scene::Update(float dt)
 			else if (playerPOSY > 1600)
 			{
 				Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
+				level = LVL3;
+			}
+		}
+		else if (level == LVL6)
+		{
+			if (playerPOSY > 1500)
+			{
+				Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
+				level = LVL3;
+			}
+			else if (playerPOSY < 1600)
+			{
+				Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)Engine::GetInstance().mainMenu.get(), 30);
 				level = LVL3;
 			}
 		}
