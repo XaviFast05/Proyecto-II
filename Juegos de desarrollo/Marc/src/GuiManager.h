@@ -34,5 +34,4 @@ public:
 	SDL_Texture* texture;
 	float musicVolume;
 	float fxVolume;
-
 };

@@ -17,14 +17,14 @@
 	<intro path="Assets/Textures/Menus/Intro/intro-screen.png" />
 	<mainmenu>
 		<bg path="Assets/Textures/Menus/Title Screen/title screen pixel bg.png" />
-		<buttons defaultTex="Assets/Textures/Menus/Title Screen/title screen button sheet.png">
-			<newGameBt id="1" x="448" y="230" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/New Game Button Sheet.png" />
-			<testLevelBt id="13" x="448" y="326" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Test Level Button Sheet.png" />
-			<continueBt id="2" x="4000" y="78" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Continue Button Sheet.png" />
-			<optionsBt id="3" x="448" y="422" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Options Button Sheet.png" />
-			<creditsBt id="4" x="448" y="518" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Credits Button Sheet.png" />
-			<exitBt id="5" x="448" y="614" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Exit Button Sheet.png" />
-			<backBt id="6" x="448" y="614" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Back Button Sheet.png" />
+		<buttons defaultTex="Assets/Textures/Menus/Title Screen/DefaultButton.png">
+			<newGameBt id="1" x="448" y="230" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="TUTORIAL" font="Assets/Fonts/Crang.ttf" fontSize="30" />
+			<testLevelBt id="13" x="448" y="326" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="TEST_LEVEL" font="Assets/Fonts/Crang.ttf" fontSize="30" />
+			<continueBt id="2" x="4000" y="78" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="CONTINUE" font="Assets/Fonts/Crang.ttf" fontSize="30" />
+			<optionsBt id="3" x="448" y="422" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="OPTIONS" font="Assets/Fonts/Crang.ttf" fontSize="30" />
+			<creditsBt id="4" x="448" y="518" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="CREDITS" font="Assets/Fonts/Crang.ttf" fontSize="30" />
+			<exitBt id="5" x="448" y="614" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/RedButton.png" text="EXIT" font="Assets/Fonts/Crang.ttf" fontSize="30" />
+			<backBt id="6" x="448" y="614" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/RedButton.png" text="BACK" font="Assets/Fonts/Crang.ttf" fontSize="30" />
 		</buttons>
 		<credits path="Assets/Textures/Menus/Title Screen/credits screen.png" />
 	</mainmenu>
@@ -41,7 +41,27 @@
 		<upgPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/settings-panel.png" />
 		<changeMenuBt id="15" x="100" y="490" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
 		<backBt id="6" x="448" y="587" w="384" h="64" texture="Assets/Textures/Menus/Options/back.png" />
+		<upg1 id="16" x="100" y="100" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
+		<upg2 id="17" x="300" y="100" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
+		<upg3 id="18" x="100" y="200" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
+		<upg4 id="19" x="300" y="200" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
+		<upg5 id="20" x="100" y="300" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
+		<upg6 id="21" x="300" y="300" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
+		<upg7 id="22" x="100" y="400" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
+		<upg8 id="23" x="300" y="400" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
 	</upgradesMenu>
+	<merchantMenu>
+		<merchantPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/MenuMerchant/TIENDA 02/PNGS/interfaz_conbutton_exit_negro.png" />
+		<firstUpgradeBt id="24" x="334" y="198" w="64" h="64" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
+		<secondUpgradeBt id="25" x="300" y="100" w="64" h="64" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
+		<thirdUpgradeBt id="26" x="100" y="200" w="64" h="64" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
+		<fourthUpgradeBt id="27" x="300" y="200" w="64" h="64" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
+		<fifthUpgradeBt id="28" x="100" y="300" w="64" h="64" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
+		<sixthUpgradeBt id="29" x="300" y="300" w="64" h="64" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
+		<seventhUpgradeBt id="30" x="100" y="400" w="64" h="64" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
+		<eighthUpgradeBt id="31" x="300" y="400" w="64" h="64" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
+		<backBt id="6" x="100" y="600" w="384" h="64" texture="Assets/Textures/Menus/Options/back.png" />
+	</merchantMenu>
 	<scene>
 		<ui>
 			<heartContainers path="Assets/Textures/UI/lifeSimp.png" />
@@ -58,11 +78,35 @@
 				<lvl1 path="Assets/Maps/" name="Tutorial.tmx" />
 				<lvl2 path="Assets/Maps/" name="Playground.tmx" />
 				<lvl3 path="Assets/Maps/" name="level1 (1).tmx" />
+				<lvl4 path="Assets/Maps/" name="Zona_oniricaATC.tmx" />
+				<lvl5 path="Assets/Maps/" name="Zona_oniricaDASH.tmx" />
 			</paths>
 			<parallax>
-				<layer name="sky" path="Assets/Textures/Parallax/Fondo_Front.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="5" repeatNum="15" slowY="1" />
-				<layer name="sky2" path="Assets/Textures/Parallax/Fondo_mid.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="3" repeatNum="15" slowY="1" />
-				<layer name="sky3" path="Assets/Textures/Parallax/Fondo_back.png" marginX="0" marginY="0" spacing="0" width="640" height="360" slowX="2" repeatNum="15" slowY="1" />
+				<lvl1>
+					<layer name="sky" path="Assets/Textures/Parallax/Fondo_Front.png" marginX="0" marginY="0" spacing="0" width="1280" height="720" slowX="5" repeatNum="15" slowY="1" />
+					<layer name="sky2" path="Assets/Textures/Parallax/Fondo_mid.png" marginX="0" marginY="0" spacing="0" width="1280" height="720" slowX="3" repeatNum="15" slowY="1" />
+					<layer name="sky3" path="Assets/Textures/Parallax/Fondo_back.png" marginX="0" marginY="0" spacing="0" width="1280" height="720" slowX="2" repeatNum="15" slowY="1" />
+				</lvl1>
+				<lvl2>
+					<layer name="sky" path="Assets/Textures/Parallax/Fondo_Front.png" marginX="0" marginY="0" spacing="0" width="1280" height="720" slowX="5" repeatNum="15" slowY="1" />
+					<layer name="sky2" path="Assets/Textures/Parallax/Fondo_mid.png" marginX="0" marginY="0" spacing="0" width="1280" height="720" slowX="3" repeatNum="15" slowY="1" />
+					<layer name="sky3" path="Assets/Textures/Parallax/Fondo_back.png" marginX="0" marginY="0" spacing="0" width="1280" height="720" slowX="2" repeatNum="15" slowY="1" />
+				</lvl2>
+				<lvl3>
+					<layer name="Cerca" path="Assets/Textures/Parallax/Capa1/Cerca.png" marginX="0" marginY="0" spacing="0" width="1280" height="720" slowX="5" repeatNum="15" slowY="1" />
+					<layer name="Medio" path="Assets/Textures/Parallax/Capa1/Medio.png" marginX="0" marginY="0" spacing="0" width="1280" height="720" slowX="3" repeatNum="15" slowY="1" />
+					<layer name="Fondo" path="Assets/Textures/Parallax/Capa1/Fondo.png" marginX="0" marginY="0" spacing="0" width="1280" height="720" slowX="2" repeatNum="15" slowY="1" />
+				</lvl3>
+				<lvl4>
+					<layer name="sky" path="Assets/Textures/Parallax/ZonaOnirica/Ojo.png" marginX="0" marginY="0" spacing="0" width="1280" height="720" slowX="5" repeatNum="15" slowY="1" />
+					<layer name="sky2" path="Assets/Textures/Parallax/ZonaOnirica/Esto va delante del fondo.png" marginX="0" marginY="0" spacing="0" width="1280" height="720" slowX="1" repeatNum="15" slowY="1" />
+					<layer name="sky3" path="Assets/Textures/Parallax/ZonaOnirica/Fons.png" marginX="0" marginY="0" spacing="0" width="1280" height="720" slowX="2" repeatNum="15" slowY="1" />
+				</lvl4>
+				<lvl5>
+					<layer name="sky" path="Assets/Textures/Parallax/ZonaOnirica/Ojo.png" marginX="0" marginY="0" spacing="0" width="1280" height="720" slowX="5" repeatNum="15" slowY="1" />
+					<layer name="sky2" path="Assets/Textures/Parallax/ZonaOnirica/Esto va delante del fondo.png" marginX="0" marginY="0" spacing="0" width="1280" height="720" slowX="1" repeatNum="15" slowY="1" />
+					<layer name="sky3" path="Assets/Textures/Parallax/ZonaOnirica/Fons.png" marginX="0" marginY="0" spacing="0" width="1280" height="720" slowX="2" repeatNum="15" slowY="1" />
+				</lvl5>
 			</parallax>
 		</map>
 		<helpMenu x="252" y="9" w="379" h="295" path="Assets/Textures/Menus/Help/HelpMenu_ver2.png" lvl="1" />
@@ -72,6 +116,8 @@
 					<lvl1 x="160" y="3400" />
 					<lvl2 x="160" y="3400" />
 					<lvl3 x="9536" y="6970" />
+					<lvl4 x="4032" y="1792" />
+					<lvl5 x="2240" y="1600" />
 				</startPositions>
 				<propierties gJumpForce="4.0f" pJumpForce="4.0f" pushForce="7.0f" moveSpeed="0.5f" friction="0.0f" gravity="9.0f" attack1Time="0.8f" attack2Time="1.0f" hurtTime="1.0f" respawnTime=" 2.0f" playerState="0" direction="1" shootCooldown="5" />
 				<statesFlow>
@@ -178,18 +224,58 @@
 						<frame x="640" y="416" w="64" h="96" offsetX="0" offsetY="-31" />
 						<frame x="704" y="416" w="64" h="96" offsetX="0" offsetY="-31" />
 					</throwPixUp>
+					<dash loop="false" speed="0.2f">
+						<frame x="64" y="672" w="64" h="64" offsetX="0" offsetY="1" />
+						<frame x="128" y="672" w="64" h="64" offsetX="0" offsetY="1" />
+						<frame x="192" y="672" w="64" h="64" offsetX="0" offsetY="1" />
+						<frame x="256" y="672" w="64" h="64" offsetX="0" offsetY="1" />
+						<frame x="320" y="672" w="64" h="64" offsetX="0" offsetY="1" />
+						<frame x="384" y="672" w="64" h="64" offsetX="0" offsetY="1" />
+						<frame x="448" y="672" w="64" h="64" offsetX="0" offsetY="1" />
+						<frame x="512" y="672" w="64" h="64" offsetX="0" offsetY="1" />
+					</dash>
+					<charged loop="false" speed="0.2f">
+						<frame x="64" y="736" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="128" y="736" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="192" y="736" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="256" y="736" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="320" y="736" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="384" y="736" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="448" y="736" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="512" y="736" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="576" y="736" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="640" y="736" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="704" y="736" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="768" y="736" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="832" y="736" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="896" y="736" w="64" h="80" offsetX="0" offsetY="-15" />
+					</charged>
 				</animations>
 			</player>
-			<shot x="0" y="0" w="64" h="64" rad="5" texture="Assets/Textures/Pumpkin Head/fireball-sheet-test.png">
-				<animations>
-					<travel loop="true" speed="0.2f">
-						<frame x="0" y="0" w="64" h="64" />
-						<frame x="64" y="0" w="64" h="64" />
-						<frame x="128" y="0" w="64" h="64" />
-						<frame x="192" y="0" w="64" h="64" />
-					</travel>
-				</animations>
-			</shot>
+			<particles>
+				<soulRockParticle x="0" y="0" w="64" h="64" rad="6" texture="Assets/Textures/balaJumper.png">
+					<animations>
+						<idle loop="true" speed="0.2f">
+							<frame x="0" y="0" w="64" h="64" />
+						</idle>
+					</animations>
+				</soulRockParticle>
+				<dashParticle x="0" y="0" w="64" h="64" rad="6" texture="Assets/Textures/Kim/Kim_spriteSheet.png">
+					<animations>
+						<idle loop="true" speed="0.2f">
+							<frame x="0" y="608" w="64" h="64" />
+							<frame x="64" y="608" w="64" h="64" />
+						</idle>
+					</animations>
+				</dashParticle>
+				<wallBrakerParticle x="0" y="0" w="64" h="64" rad="6" texture="Assets/Textures/balaJumper.png">
+					<animations>
+						<idle loop="true" speed="0.2f">
+							<frame x="0" y="0" w="64" h="64" />
+						</idle>
+					</animations>
+				</wallBrakerParticle>
+			</particles>
 			<enemies>
 				<skeleton x="100" y="420" w="64" h="64" texture="Assets/Textures/Enemies/Fantasma/Fantasma_spriteSheet.png">
 					<properties speed="1" chaseArea="400" attackArea="20" jumpForce="0.3f" attackTime="1.0f" deathTime="1.5f" lives="5" pushForce="1" pushFriction="5" lootAmount="5" canPush="true" />
@@ -501,7 +587,7 @@
 				</soulRock>
 			</items>
 			<allies>
-				<merchant x="400" y="3400" w="64" h="64" texture="Assets/Textures/Enemies/Fantasma/Fantasma_spriteSheet.png">
+				<merchant x="400" y="3400" w="64" h="64" texture="Assets/Textures/Allies/merchant_idle.png">
 					<properties speed="0.8" movementArea="300" detectionArea="200" />
 					<instances>
 						<lvl1>
@@ -509,19 +595,11 @@
 						</lvl1>
 					</instances>
 					<animations>
-						<idle loop="true" speed="0.2f">
+						<idle loop="true" speed="0.04f">
 							<frame x="0" y="0" w="64" h="64" />
 							<frame x="64" y="0" w="64" h="64" />
 							<frame x="128" y="0" w="64" h="64" />
 							<frame x="192" y="0" w="64" h="64" />
-							<frame x="256" y="0" w="64" h="64" />
-							<frame x="320" y="0" w="64" h="64" />
-							<frame x="384" y="0" w="64" h="64" />
-							<frame x="448" y="0" w="64" h="64" />
-							<frame x="512" y="0" w="64" h="64" />
-							<frame x="576" y="0" w="64" h="64" />
-							<frame x="640" y="0" w="64" h="64" />
-							<frame x="704" y="0" w="64" h="64" />
 						</idle>
 						<walk loop="true" speed="0.2f">
 							<frame x="0" y="64" w="64" h="64" />
@@ -658,10 +736,15 @@
 			</dialoguePanel>
 			<DIALOG01>
 				<text textId="DIALOG01_01" talker="kim" />
-				<text textId="DIALOG01_02" talker="pepe" />
-				<text textId="DIALOG01_03" talker="kim" />
-				<text textId="DIALOG01_04" talker="pepe" />
+				<text textId="DIALOG01_02" talker="kim" />
 			</DIALOG01>
+			<DIALOG02>
+				<text textId="DIALOG02_01" talker="kim" />
+				<text textId="DIALOG02_02" talker="kim" />
+			</DIALOG02>
+			<DIALOG03>
+				<text textId="DIALOG03_01" talker="kim" />
+			</DIALOG03>
 		</dialogues>
 	</scene>
 	<audio>
@@ -702,4 +785,10 @@
 		<musicVolume value="128" />
 		<sfxVolume value="52" />
 	</playerPrefs>
+	<fonts>
+		<pixolde path="Assets/Fonts/ttf_pixolde_bold.ttf" />
+		<halloweenpixels path="Assets/Fonts/Halloweenpixels.ttf" />
+		<CorvidConspiratorpath path="Assets/Fonts/Corvid Conspirator v1.1.ttf" />
+		<Crang path="Assets/Fonts/Crang.ttf" />
+	</fonts>
 </config>

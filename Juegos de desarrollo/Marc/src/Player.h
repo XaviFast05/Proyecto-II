@@ -5,7 +5,7 @@
 #include "Box2D/Box2D.h"
 #include "Animation.h"
 #include "Timer.h"
-#include "Particle.h"
+#include "DashParticle.h"
 
 #define GHOST_W 32
 //#define MAX_PICKAXES 4
@@ -91,6 +91,10 @@ public:
 	void RemoveUpgrade(int num);
 
 	Vector2D GetDirection() const;
+	
+	bool HaveUpgrade(int index);
+
+	bool HaveActiveUpgrade(int index);
 
 public:
 	int maxPickaxes; // piquetas máximas
@@ -148,6 +152,8 @@ public:
 	Animation chop;
 	Animation throwPix;
 	Animation throwPixUp;
+	Animation dash;
+	Animation charged;
 
 	bool resetAnimation = false;
 
@@ -202,6 +208,8 @@ public:
 	float meleeDisplace = 0.0;
 
 	bool onPickaxe = false;
+
+	DashParticle* dashParticle;
 
 	//STATES FLOW
 	state playerState; 

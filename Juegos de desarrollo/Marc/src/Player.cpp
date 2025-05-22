@@ -17,6 +17,7 @@
 #include "PickaxeManager.h"
 #include "CurrencyManager.h"
 #include "DialoguesManager.h"
+#include "DashParticle.h"
 
  
 
@@ -61,6 +62,8 @@ bool Player::Start() {
 	chop.LoadAnimations(parameters.child("animations").child("chop"));
 	throwPix.LoadAnimations(parameters.child("animations").child("throwPix"));
 	throwPixUp.LoadAnimations(parameters.child("animations").child("throwPixUp"));
+	dash.LoadAnimations(parameters.child("animations").child("dash"));
+	charged.LoadAnimations(parameters.child("animations").child("charged"));
 
 	jumpForce = parameters.child("propierties").attribute("gJumpForce").as_float();
 	pushForce = parameters.child("propierties").attribute("pushForce").as_float();
@@ -84,8 +87,8 @@ bool Player::Start() {
 		stateFlow.push_back(flow);
 	}
 
-	upgrades.empty();
-	unlockedUpgrades.empty();
+	upgrades.clear();
+	unlockedUpgrades.clear();
 	godMode = false;
 	canClimb = false;
 	reachedCheckPoint = false;
@@ -146,6 +149,14 @@ bool Player::Start() {
 		fixture->SetFilterData(filter);
 	}
 
+	dashParticle = (DashParticle*)(Engine::GetInstance().entityManager->CreateEntity(EntityType::DASH_PARTICLE));
+
+	dashParticle->SetParameters(
+		Engine::GetInstance().scene->configParameters);
+	dashParticle->Start();
+	Vector2D p1(METERS_TO_PIXELS(pbody->body->GetPosition().x), METERS_TO_PIXELS(pbody->body->GetPosition().y));
+	dashParticle->SetPosition(p1);
+
 	return true;
 }
 
@@ -195,34 +206,33 @@ bool Player::Update(float dt)
 			godMode = !godMode;
 			pbody->body->SetGravityScale(godMode ? 0.0f : gravity);
 			pbody->body->SetLinearVelocity(b2Vec2_zero);
-			LOG("God mode = %d", (int)godMode);
 		}
 
 		if (godMode) {
 			velocity = b2Vec2_zero;
 
-			if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) ||
-				(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) ||
-				(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) ||
-				(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT))
+			if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) ||
+				(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) ||
+				(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) ||
+				(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT))
 			{
 				
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) {
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT) {
 					velocity.x = -moveSpeed * 25;
 					CheckMoveX();
 					playerState = RUN;
 				}
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) {
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT) {
 					velocity.x = moveSpeed * 25;
 					CheckMoveX();
 					playerState = RUN;
 				}
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 				{
 					velocity.y = -moveSpeed * 25;
 					playerState = JUMP;
 				}
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) 
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT) 
 				{
 					velocity.y = moveSpeed * 25;
 					playerState = FALL;
@@ -249,10 +259,18 @@ bool Player::Update(float dt)
 			else if (playerState == HURT) {
 				if (hurtTimer.ReadSec() >= hurtTime) playerState = IDLE;
 			}
-			else if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_A) || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_D) == KEY_REPEAT) && stateFlow[playerState][RUN] && grounded) {
+			else if (
+				(Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT ||
+					Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT ||
+					SDL_GameControllerGetAxis(Engine::GetInstance().input.get()->controller, SDL_CONTROLLER_AXIS_LEFTX) > 8000 ||
+					SDL_GameControllerGetAxis(Engine::GetInstance().input.get()->controller, SDL_CONTROLLER_AXIS_LEFTX) < -8000) &&
+				stateFlow[playerState][RUN] && grounded
+				) 
+			{
 				playerState = RUN;
 			}
-			else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && ((stateFlow[playerState][JUMP] && grounded) /*MODIFICAR GODMODE*/ || godMode)) {
+			else if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_A) == KEY_DOWN) && ((stateFlow[playerState][JUMP] && grounded) /*MODIFICAR GODMODE*/ || godMode)) {
+
 				playerState = JUMP;
 				pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 				grounded = false;
@@ -268,7 +286,8 @@ bool Player::Update(float dt)
 				playerState = FALL;
 				grounded = false;
 			}
-			else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][CHOP] && projectileManager->GetNumPickaxes() > 0) {
+			else if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_X) || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_X) == KEY_DOWN)
+				&& stateFlow[playerState][CHOP] && projectileManager->GetNumPickaxes() > 0) {
 				stateTimer.Start();
 				playerState = CHOP;
 
@@ -277,25 +296,29 @@ bool Player::Update(float dt)
 				meleeTimer.Start();
 				meleeTimerOn = true;
 			}
-			else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) && stateFlow[playerState][PUNCH] && projectileManager->GetNumPickaxes() <= 0) {
+			else if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_X) || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_X) == KEY_DOWN)
+				&& stateFlow[playerState][PUNCH] && projectileManager->GetNumPickaxes() <= 0) {
 				stateTimer.Start();
 				playerState = PUNCH;
 
 				meleeTimer.Start();
 				meleeTimerOn = true;
 			}
-			else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_Q) && stateFlow[playerState][THROW] && projectileManager->GetNumPickaxes() > 0) {
+			else if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_C) || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_Y) == KEY_DOWN) && stateFlow[playerState][THROW] && projectileManager->GetNumPickaxes() > 0) {
 
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W)) projectileManager->ThrowPickaxe({ 0,1 }, pbody->GetPhysBodyWorldPosition());
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_UP) || SDL_GameControllerGetAxis(Engine::GetInstance().input.get()->controller, SDL_CONTROLLER_AXIS_LEFTY) < -6000) projectileManager->ThrowPickaxe({ 0,1 }, pbody->GetPhysBodyWorldPosition());
 				else projectileManager->ThrowPickaxe(GetDirection(), pbody->GetPhysBodyWorldPosition());
 
 				stateTimer.Start();
 				playerState = THROW;
 			}
-			else if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN && stateFlow[playerState][DASH] && canDash == true && unlockedDash == true) {
+			else if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) == KEY_DOWN)
+				&& stateFlow[playerState][DASH] && canDash == true && unlockedDash == true ) {
 				pbody->body->SetLinearVelocity(b2Vec2_zero);
+				dashParticle->isCasted = true;
+				dashParticle->active = true;
 				if (dir == RIGHT) pbody->body->ApplyLinearImpulseToCenter(b2Vec2(dashForce, 0), true);
-				else if (dir == LEFT) pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-dashForce, 0), true);
+				else if (dir == LEFT) pbody->body->ApplyLinearImpulseToCenter(b2Vec2(-dashForce, 0), true); 
 
 				if (grounded && (playerState == IDLE || playerState == RUN)) {
 					dashCooldownTimerOn = true;
@@ -307,10 +330,15 @@ bool Player::Update(float dt)
 				dashTimerOn = true;
 				playerState = DASH;
 			}
+			else if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_A) == KEY_DOWN) && stateFlow[playerState][TALK] && !dialoguesManager->GetOnDialogue()) {
+
+				dialoguesManager->StartDialogue("DIALOG01");
+				playerState = TALK;
+			}
 
 			//COYOTE TIME LOGIC
 			if (coyoteTimerOn) {
-				if (coyoteTimer.ReadSec() < coyoteTimerMax && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE)) {
+				if (coyoteTimer.ReadSec() < coyoteTimerMax && (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_A) == KEY_DOWN)) {
 					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 					playerState = JUMP;
 					coyoteTimerOn = false;
@@ -340,7 +368,7 @@ bool Player::Update(float dt)
 
 			//PLUS JUMP LOGIC
 			if (plusJumpTimerOn) {
-				if (!grounded && playerState == JUMP && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && plusJumpTimer.ReadSec() < plusJumpTimerMax) {
+				if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_A) == KEY_REPEAT) && !grounded && playerState == JUMP && plusJumpTimer.ReadSec() < plusJumpTimerMax) {
 					float jumpPlusForce = 1;
 					pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpPlusForce), true);
 				}
@@ -351,7 +379,7 @@ bool Player::Update(float dt)
 			if (chargedCooldown) {
 				if (chargedCooldownTimer.ReadSec() > chargedCooldownTimerMax) chargedCooldown = false;
 			}
-			if (playerState == CHARGED && (meleeTimerOn == false && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_UP || chargeAttackTimer.ReadSec() > chargeAttackTimerMax)) {
+			if (playerState == CHARGED && (meleeTimerOn == false && (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_UP || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_X) == KEY_UP) || chargeAttackTimer.ReadSec() > chargeAttackTimerMax)) {
 				meleeTimer.Start();
 				meleeTimerOn = true;
 			}
@@ -395,7 +423,7 @@ bool Player::Update(float dt)
 				break;
 			case RUN:
 				// SALTO: Evaluar siempre primero
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN
+				if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_A) == KEY_DOWN)
 					&& (grounded || godMode))
 				{
 					playerState = JUMP;
@@ -507,14 +535,21 @@ bool Player::Update(float dt)
 					playerState = IDLE;
 				}
 				break;
+			case TALK:
+
+				if (!dialoguesManager->GetOnDialogue()) {
+					playerState = IDLE;
+				}
+				break;
 			default:
 				break;
 			}
 
 			if (playerState == DASH) velocity = { pbody->body->GetLinearVelocity().x, 0 };
 			else velocity = { velocity.x, pbody->body->GetLinearVelocity().y };
-
 			pbody->body->SetLinearVelocity(velocity);
+
+
 		}
 	}
 
@@ -563,7 +598,7 @@ bool Player::Update(float dt)
 		}
 		break;
 	case THROW:
-		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_W)) {
+		if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_UP) || SDL_GameControllerGetAxis(Engine::GetInstance().input.get()->controller, SDL_CONTROLLER_AXIS_LEFTY) < -6000) {
 			currentAnim = &throwPixUp;
 		}
 		else {
@@ -576,19 +611,20 @@ bool Player::Update(float dt)
 		break;
 
 	case DASH:
-		//aqu� poner animaci�n dash
-		currentAnim = &idle;
+		currentAnim = &dash;
 		if (resetAnimation == true) {
 			currentAnim->Reset();
 			resetAnimation = false;
+
 		}
+		break;
 	case CHARGED:
-		//aqu� poner animaci�n ataque cargado
-		currentAnim = &idle;
+		currentAnim = &charged;
 		if (resetAnimation == true) {
 			currentAnim->Reset();
 			resetAnimation = false;
 		}
+		break;
 	case HURT:
 		currentAnim = &hurt;
 		if (resetAnimation == true) {
@@ -623,6 +659,8 @@ bool Player::Update(float dt)
 	}
 
 	currentAnim->Update();
+
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_X)) currencyManager->SumCurrency(200);
 
 	return true;
 }
@@ -739,6 +777,13 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		else if (Engine::GetInstance().scene.get()->level == LVL2) {
 		}
 		else if (Engine::GetInstance().scene.get()->level == LVL3) {
+			Engine::GetInstance().scene.get()->ChangeLevel();
+		}
+		else if (Engine::GetInstance().scene.get()->level == LVL4) {
+			Engine::GetInstance().scene.get()->ChangeLevel();
+		}
+		else if (Engine::GetInstance().scene.get()->level == LVL5) {
+			Engine::GetInstance().scene.get()->ChangeLevel();
 		}
 		break;
 	
@@ -816,6 +861,26 @@ Vector2D Player::GetDirection() const {
 	}
 }
 
+bool Player::HaveUpgrade(int index) {
+	bool haveUnlocked = false;
+	if (!unlockedUpgrades.empty()) {
+		for (int i = 0; i < unlockedUpgrades.size(); i++) {
+			if (unlockedUpgrades[i] == index) haveUnlocked = true;
+		}
+	}
+	return haveUnlocked;
+}
+
+bool Player::HaveActiveUpgrade(int index) {
+	bool haveUnlocked = false;
+	if (!upgrades.empty()) {
+		for (int i = 0; i < upgrades.size(); i++) {
+			if (upgrades[i] == index) haveUnlocked = true;
+		}
+	}
+	return haveUnlocked;
+}
+
 void Player::SaveData(pugi::xml_node playerNode, pugi::xml_node upgradesNode) {
 	if (active) {
 		playerNode.attribute("x").set_value(pbody->GetPhysBodyWorldPosition().getX());
@@ -824,26 +889,28 @@ void Player::SaveData(pugi::xml_node playerNode, pugi::xml_node upgradesNode) {
 		upgradesNode.attribute("charged").set_value(unlockedCharged);
 
 		bool up0 = false, up1 = false, up2 = false, up3 = false, up4 = false, up5 = false, up6 = false, up7 = false;
-		for (int i = 0; i < unlockedUpgrades.size(); i++) {
-			switch (unlockedUpgrades[i]) {
-			default:
-				break;
-			case 0: up0 = true;
-				break;
-			case 1: up1 = true;
-				break;
-			case 2: up2 = true;
-				break;
-			case 3: up3 = true;
-				break;
-			case 4: up4 = true;
-				break;
-			case 5: up5 = true;
-				break;
-			case 6: up6 = true;
-				break;
-			case 7: up7 = true;
-				break;
+		if (!unlockedUpgrades.empty()) {
+			for (int i = 0; i < unlockedUpgrades.size(); i++) {
+				switch (unlockedUpgrades[i]) {
+				default:
+					break;
+				case 0: up0 = true;
+					break;
+				case 1: up1 = true;
+					break;
+				case 2: up2 = true;
+					break;
+				case 3: up3 = true;
+					break;
+				case 4: up4 = true;
+					break;
+				case 5: up5 = true;
+					break;
+				case 6: up6 = true;
+					break;
+				case 7: up7 = true;
+					break;
+				}
 			}
 		}
 		upgradesNode.attribute("up0").set_value(up0);
@@ -885,16 +952,17 @@ bool Player::CheckMoveX()
 {
 	Input* input = Engine::GetInstance().input.get();
 
-	bool moveRight = input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT;
-	bool moveLeft = input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT;
+	bool moveRight = input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT;
+	bool moveLeft = input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT;
+	
 
-	if (moveRight && !rightBlocked)
+	if ((moveRight || SDL_GameControllerGetAxis(input->controller, SDL_CONTROLLER_AXIS_LEFTX) > 8000) && !rightBlocked)
 	{
 		dir = RIGHT;
 		Engine::GetInstance().scene.get()->cameraDirectionChangeActivation = true;
 		return true;
 	}
-	else if (moveLeft && !leftBlocked)
+	else if ((moveLeft || SDL_GameControllerGetAxis(input->controller, SDL_CONTROLLER_AXIS_LEFTX) < -8000) && !leftBlocked)
 	{
 		dir = LEFT;
 		Engine::GetInstance().scene.get()->cameraDirectionChangeActivation = true;
@@ -910,7 +978,7 @@ void Player::MoveX() {
 }
 
 void Player::CheckJump() {
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && grounded) {
+	if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_X) == KEY_DOWN ) && grounded) {
 		pbody->body->ApplyLinearImpulseToCenter(b2Vec2(0, -jumpForce), true);
 		grounded = false; // ya no est� en el suelo hasta que colisione de nuevo
 	}
@@ -939,80 +1007,86 @@ void Player::LoadDefaults() {
 
 void Player::LoadUpgrades() {
 	LoadDefaults();
-	for (int i = 0; i < upgrades.size(); i++) {
-		switch (upgrades[i]) {
-		case 0:
-			plusJumpTimerMax = 0.25;
-			break;
-		case 1:
-			dashForce = 12;
-			break;
-		case 2:
-			chargedCooldownTimerMax = 3;
-			break;
-		case 3:
-			projectileManager->pickaxeRecollectCount = 1.25;
-			break;
-		case 4:
-			moveSpeed = 0.9;
-			break;
-		case 5:
-			damageSmallBoost = true;
-			damageAdded = 2;
-			break;
-		case 6:
-			maxPickaxes = 4;
-			projectileManager->pickaxeCount = maxPickaxes;
-			projectileManager->maxPickaxes = maxPickaxes;
-			break;
-		case 7:
-			damageBoost = true;
-			break;
-		case 8:
-			break;
-		case 9:
-			break;
-		default:
-			break;
+	if (!upgrades.empty()) {
+		for (int i = 0; i < upgrades.size(); i++) {
+			switch (upgrades[i]) {
+			case 0:
+				plusJumpTimerMax = 0.25;
+				break;
+			case 1:
+				dashForce = 12;
+				break;
+			case 2:
+				chargedCooldownTimerMax = 3;
+				break;
+			case 3:
+				projectileManager->pickaxeRecollectCount = 1.25;
+				break;
+			case 4:
+				moveSpeed = 0.9;
+				break;
+			case 5:
+				damageSmallBoost = true;
+				damageAdded = 2;
+				break;
+			case 6:
+				maxPickaxes = 4;
+				projectileManager->pickaxeCount = maxPickaxes;
+				projectileManager->maxPickaxes = maxPickaxes;
+				break;
+			case 7:
+				damageBoost = true;
+				break;
+			case 8:
+				break;
+			case 9:
+				break;
+			default:
+				break;
+			}
 		}
 	}
 }
 
 void Player::UnlockUpgrade(int num) {
 	bool canAdd = true;
-	for (int i = 0; i < unlockedUpgrades.size(); i++) {
-		if (num == unlockedUpgrades[i]) canAdd = false; //ya tienes la mejora
+	if (!upgrades.empty()) {
+		for (int i = 0; i < unlockedUpgrades.size(); i++) {
+			if (num == unlockedUpgrades[i]) canAdd = false; 
+		}
 	}
 	if (canAdd) unlockedUpgrades.push_back(num);
 }
 
 void Player::AddUpgrade(int num) {
 	bool haveUpgrade = false;
-	for (int i = 0; i < unlockedUpgrades.size(); i++) {
-		if (num == unlockedUpgrades[i]) haveUpgrade = true;
+	if (!unlockedUpgrades.empty()) {
+		for (int i = 0; i < unlockedUpgrades.size(); i++) {
+			if (num == unlockedUpgrades[i]) haveUpgrade = true;
+		}
 	}
 	if (haveUpgrade) {
 		bool canAdd = true;
-		if (upgrades.size() <= maxUpgrades && num >= 0 && num <= 9) {
+		if (upgrades.empty()) upgrades.push_back(num);
+		else if (upgrades.size() <= maxUpgrades && num >= 0 && num <= 9) {
 			for (int i = 0; i < upgrades.size(); i++) {
 				if (upgrades[i] == num) canAdd = false;
 			}
 			if (canAdd == false) {
-			}//aqu� poner que esa mejora ya la tienes
+			}
 			else upgrades.push_back(num);
 		}
-		//else aqu� poner algo en plan que tienes demasiadas mejoras
 	}
-	//else poner aqu� que la update no la tienes colegon
 	LoadUpgrades();
 }
 
 void Player::RemoveUpgrade(int num) {
 	int index = -1;
-	for (int i = 0; i < upgrades.size(); i++) {
-		if (upgrades[i] == num) index = i;
+	if (!upgrades.empty()) {
+		for (int i = 0; i < upgrades.size(); i++) {
+			if (upgrades[i] == num) index = i;
+		}
 	}
 	if (index >= 0) upgrades.erase(upgrades.begin() + index);
-	//else aqu� poner algo rollo esta mejora no la tienes activa
 	LoadUpgrades();
 }

@@ -38,7 +38,10 @@ enum Levels {
 	UNKNOWN,
 	LVL1,
 	LVL2,
-	LVL3
+	LVL3, //CAPA 1
+	LVL4, //ZONA ONI 1
+	LVL5, //ZONA ONI 2
+	LVL6, //FINAL BOSS
 };
 
 class Scene : public Module
@@ -89,8 +92,6 @@ public:
 
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
-	void SetGuiParameters(GuiControl* bt, std::string btName, pugi::xml_node parameters);
-
 	void ChangeLevel();
 	
 	int GetLevel();
@@ -117,6 +118,7 @@ public:
 	std::string GetLevelString(Levels level);
 
 public:
+
 	Levels level;
 	bool paused = false;
 	bool help = false;
@@ -164,6 +166,7 @@ private:
 	std::map<std::string, GuiControlButton*> pauseButtons;
 	
 	bool loadScene = false;
+	bool drawnMap = false;
 	bool changeLevel = false;
 	bool startBossFight = false;
 	bool bossMusPlaying = false;

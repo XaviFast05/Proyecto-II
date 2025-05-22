@@ -18,6 +18,9 @@
 #include "Ally.h"
 #include "Merchant.h"
 #include "CurrencyOrb.h"
+#include "DashParticle.h"
+#include "SoulRockParticle.h"
+#include "WallBrakerParticle.h"
 
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
 {
@@ -135,6 +138,15 @@ Entity* EntityManager::CreateEntity(EntityType bullet_direction)
 	case EntityType::SHOOTING_ENEMY:
 		entity = new ShootingEnemy();
 		break;
+	case EntityType::DASH_PARTICLE:
+		entity = new DashParticle();
+		break;
+	case EntityType::SOULROCK_PARTICLE:
+		entity = new SoulRockParticle();
+		break;
+	case EntityType::WALLBRAKER_PARTICLE:
+		entity = new WallBrakerParticle();
+		break;
 	default:
 		break;
 	}
@@ -198,6 +210,15 @@ std::list<Entity*> EntityManager::CreatePooledEntities(EntityType bullet_directi
 			break;
 		case EntityType::MERCHANT:
 			entity = new Merchant();
+			break;
+		case EntityType::DASH_PARTICLE:
+			entity = new DashParticle();
+			break;
+		case EntityType::SOULROCK_PARTICLE:
+			entity = new SoulRockParticle();
+			break;
+		case EntityType::WALLBRAKER_PARTICLE:
+			entity = new WallBrakerParticle();
 			break;
 		default:
 			break;
@@ -264,6 +285,15 @@ Entity* EntityManager::CreatePooledEntities(EntityType bullet_direction)
 		break;
 	case EntityType::MERCHANT:
 		entity = new Merchant();
+		break;
+	case EntityType::DASH_PARTICLE:
+		entity = new DashParticle();
+		break;
+	case EntityType::SOULROCK_PARTICLE:
+		entity = new SoulRockParticle();
+		break;
+	case EntityType::WALLBRAKER_PARTICLE:
+		entity = new WallBrakerParticle();
 		break;
 	default:
 		break;
