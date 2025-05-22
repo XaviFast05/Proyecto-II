@@ -1,4 +1,5 @@
-#include "SoulRock.h"
+﻿#include "SoulRock.h"
+#include "SoulRockParticle.h"
 #include "Engine.h"
 #include "Textures.h"
 #include "Audio.h"
@@ -74,6 +75,9 @@ bool SoulRock::Start() {
 	hitSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("swordSFX").attribute("path").as_string());
 	brokenSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("skeletonDeathSFX").attribute("path").as_string());
 
+	diffPosX = 24.0f;
+	diffPosY = 24.0f;
+
 	return true;
 }
 
@@ -92,6 +96,8 @@ bool SoulRock::Update(float dt) {
 	}
 
 	if (!Engine::GetInstance().scene.get()->paused) {
+
+		ParticleUse();
 
 		//STATES CONTROLER
 		BrakeSystem();
@@ -142,34 +148,27 @@ bool SoulRock::CleanUp()
 
 void SoulRock::OnCollision(PhysBody* physA, PhysBody* physB) {
 
-	switch (physB->ctype) {
-	case ColliderType::WEAPON:
-		break;
-	case ColliderType::SHOT:
-		hit = true;
-		break;
-	case ColliderType::MELEE_AREA:
-		hit = true;
-		break;
-	case ColliderType::SPYKE:
-		break;
-	case ColliderType::ENEMY:
-		break;
-	case ColliderType::ABYSS:
-		break;
-	case ColliderType::UNKNOWN:
-		break;
-	default:
-		break;
-	}
+
+	if (physB->ctype != ColliderType::SHOT &&
+		physB->ctype != ColliderType::MELEE_AREA) return;
+
+
+	b2Vec2 hitPosMeters = physB->body->GetTransform().p;
+	collidePos.setX(METERS_TO_PIXELS(hitPosMeters.x));
+	collidePos.setY(METERS_TO_PIXELS(hitPosMeters.y));
+		
+
+	hit = true;     
+	pendingParticles = true;     
 
 }
 
 void SoulRock::BrakeSystem() {
-	
+
 
 	if (hit) {
 		hits--;
+
 
 		if (!droppedLoot) {
 			if (state == IDLE) {
@@ -177,6 +176,7 @@ void SoulRock::BrakeSystem() {
 				DropLoot();
 				droppedLoot = true;
 				dropTimer.Start();
+
 			}
 			else if (state == FRACTURED) {
 				amount = 3;
@@ -237,5 +237,47 @@ void SoulRock::DropLoot() {
 			int num = rand() % 9;
 			currencyManager->EnableOrb(pbody->body->GetPosition().x, pbody->body->GetPosition().y, sizes[num]);
 		}
+	}
+}
+
+void SoulRock::ParticleUse() {
+
+	if (pendingParticles)
+	{
+		particle1 = (SoulRockParticle*)(Engine::GetInstance().entityManager->CreatePooledEntities(EntityType::SOULROCK_PARTICLE));
+		particle2 = (SoulRockParticle*)(Engine::GetInstance().entityManager->CreatePooledEntities(EntityType::SOULROCK_PARTICLE));
+
+		particle1->SetParameters(Engine::GetInstance().scene->configParameters);
+		particle2->SetParameters(Engine::GetInstance().scene->configParameters);
+
+		particle1->Start();
+		particle2->Start();
+
+		Vector2D p1(METERS_TO_PIXELS(pbody->body->GetPosition().x) + diffPosX, METERS_TO_PIXELS(pbody->body->GetPosition().y) + diffPosY);
+		Vector2D p2(METERS_TO_PIXELS(pbody->body->GetPosition().x) - diffPosX, METERS_TO_PIXELS(pbody->body->GetPosition().y) - diffPosY);
+		Vector2D p3(METERS_TO_PIXELS(pbody->body->GetPosition().x) - diffPosX, METERS_TO_PIXELS(pbody->body->GetPosition().y) + diffPosY);
+		Vector2D p4(METERS_TO_PIXELS(pbody->body->GetPosition().x) + diffPosX, METERS_TO_PIXELS(pbody->body->GetPosition().y) - diffPosY);
+		Vector2D p5(METERS_TO_PIXELS(pbody->body->GetPosition().x), METERS_TO_PIXELS(pbody->body->GetPosition().y));
+
+		if (state == IDLE)
+		{
+
+			if (collidePos.getX() < METERS_TO_PIXELS(pbody->body->GetPosition().x))
+			{
+				particle1->SetPosition(p1); particle2->SetPosition(p2);
+
+			}
+			else
+			{
+				particle1->SetPosition(p3); particle2->SetPosition(p4);
+			}
+		}
+		else if (FRACTURED)
+		{
+			particle1->SetPosition(p5);
+			particle2->SetPosition(p5);
+		}
+
+		pendingParticles = false;
 	}
 }

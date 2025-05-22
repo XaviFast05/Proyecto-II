@@ -61,11 +61,14 @@ public:
 
 
 	bool unlocked[8];
+
 	GuiControlCheckBox* firstUpgradeBt, * secondUpgradeBt, * thirdUpgradeBt, * fourthUpgradeBt, * fifthUpgradeBt, * sixthUpgradeBt, * seventhUpgradeBt, * eighthUpgradeBt;
 	GuiControlButton* backBt;
+
 	int testSound;
 
 	std::list<GuiControl*> merchantGUI;
+
 
 	int cost1 = 200;
 	int cost2 = 200;
@@ -78,4 +81,6 @@ public:
 
 	bool hasOpened = false;
 	//std::map<std::string, GuiControlButton*> buttons;
+
 };
+

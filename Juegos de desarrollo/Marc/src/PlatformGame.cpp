@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
 		case Engine::EngineState::AWAKE:
 			LOG("AWAKE PHASE ===============================");
 			if (Engine::GetInstance().Awake() == true)
-				state = Engine::EngineState::START;
+ 				state = Engine::EngineState::START;
 			else
 			{
 				LOG("ERROR: Awake failed");

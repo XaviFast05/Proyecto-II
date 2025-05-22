@@ -176,6 +176,7 @@ bool Merchant::Update(float dt) {
 				player->pbody->body->SetEnabled(false);
 				Engine::GetInstance().merchantMenu.get()->merchantPanelOpen = true;
 				Engine::GetInstance().merchantMenu.get()->hasOpened = true;
+
 			}
 
 		}

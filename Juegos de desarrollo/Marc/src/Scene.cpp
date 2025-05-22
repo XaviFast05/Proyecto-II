@@ -35,7 +35,11 @@
 #include "PickaxeManager.h"
 #include "CurrencyManager.h"
 #include "UpgradesMenu.h"
+#include "SoulRockParticle.h"
+#include "DashParticle.h"
+#include "WallBrakerParticle.h"
 #include "MerchantMenu.h"
+
 
 #include "Intro.h"
 
@@ -451,6 +455,7 @@ bool Scene::PostUpdate()
 
 	//UI
 	if (!Engine::GetInstance().settings.get()->settingsOpen) {
+
 		
 		if (!paused) {
 			DrawPlayerHitsUI();
@@ -459,8 +464,8 @@ bool Scene::PostUpdate()
 
 			DrawCurrencyUI();
 
-			if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_TAB)) DrawMap();
 		}
+
 
 		if (paused && !Engine::GetInstance().settings.get()->settingsOpen) {
 
@@ -492,7 +497,8 @@ bool Scene::PostUpdate()
 				bt.second->active = false;
 		}
 
-		if (help) render->DrawTextureBuffer(helpMenu, -render->camera.x / window->scale + helpPos.getX(), -render->camera.y / window->scale + helpPos.getY());
+
+		if (help) render->DrawTextureBuffer(helpMenu, -render->camera.x / window->scale + helpPos.getX(), -render->camera.y / window->scale + helpPos.getY(), false ,MENUS);
 			
 		if (drawnMap) DrawMap();
 

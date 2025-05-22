@@ -252,16 +252,30 @@
 					</charged>
 				</animations>
 			</player>
-			<shot x="0" y="0" w="64" h="64" rad="5" texture="Assets/Textures/Pumpkin Head/fireball-sheet-test.png">
-				<animations>
-					<travel loop="true" speed="0.2f">
-						<frame x="0" y="0" w="64" h="64" />
-						<frame x="64" y="0" w="64" h="64" />
-						<frame x="128" y="0" w="64" h="64" />
-						<frame x="192" y="0" w="64" h="64" />
-					</travel>
-				</animations>
-			</shot>
+			<particles>
+				<soulRockParticle x="0" y="0" w="64" h="64" rad="6" texture="Assets/Textures/balaJumper.png">
+					<animations>
+						<idle loop="true" speed="0.2f">
+							<frame x="0" y="0" w="64" h="64" />
+						</idle>
+					</animations>
+				</soulRockParticle>
+				<dashParticle x="0" y="0" w="64" h="64" rad="6" texture="Assets/Textures/Kim/Kim_spriteSheet.png">
+					<animations>
+						<idle loop="true" speed="0.2f">
+							<frame x="0" y="608" w="64" h="64" />
+							<frame x="64" y="608" w="64" h="64" />
+						</idle>
+					</animations>
+				</dashParticle>
+				<wallBrakerParticle x="0" y="0" w="64" h="64" rad="6" texture="Assets/Textures/balaJumper.png">
+					<animations>
+						<idle loop="true" speed="0.2f">
+							<frame x="0" y="0" w="64" h="64" />
+						</idle>
+					</animations>
+				</wallBrakerParticle>
+			</particles>
 			<enemies>
 				<skeleton x="100" y="420" w="64" h="64" texture="Assets/Textures/Enemies/Fantasma/Fantasma_spriteSheet.png">
 					<properties speed="1" chaseArea="400" attackArea="20" jumpForce="0.3f" attackTime="1.0f" deathTime="1.5f" lives="5" pushForce="1" pushFriction="5" lootAmount="5" canPush="true" />
