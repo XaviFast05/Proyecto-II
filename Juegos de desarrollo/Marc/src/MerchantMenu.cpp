@@ -218,18 +218,34 @@ bool MerchantMenu::Update(float dt)
 		/*OnGuiMouseClickEvent(eighthUpgradeBt);*/
 
 		backBt->Update(dt);
-		/*OnGuiMouseClickEvent(backBt);*/
+		OnGuiMouseClickEvent(backBt);
 
 		//fullScreenBox->Update(dt);
 
-		ShowInfo(beforeId);
+		
 
 		//musicSlider->Update(dt);
 		//OnGuiMouseClickEvent(musicSlider);
 
 		//sfxSlider->Update(dt);
 
+		GuiControlCheckBox* upgrades[8] = {
+	   firstUpgradeBt, secondUpgradeBt, thirdUpgradeBt, fourthUpgradeBt,
+	   fifthUpgradeBt, sixthUpgradeBt, seventhUpgradeBt, eighthUpgradeBt
+		};
 
+		const char* upgradeNames[8] = {
+			"First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh", "Eighth"
+		};
+
+		for (int i = 0; i < 8; ++i) {
+			if (upgrades[i]->state == GuiControlState::FOCUSED) {
+				ShowInfo((int)upgrades[i]->id);
+			}
+			else if (upgrades[i]->state == GuiControlState::NORMAL) {
+			}
+		}
+		
 
 
 		//if (fullScreenBox->isChecked) {
@@ -289,9 +305,8 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 				firstUpgradeBt->state == GuiControlState::DISABLED;
 				hasOpened = true;
 			}
-			
+
 		}
-		break;
 
 	case GuiControlId::SECOND_UPGRADE:
 		if (secondUpgradeBt->isChecked) {
@@ -413,13 +428,14 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 			}
 		}
 		break;
-	}
-
-	// BACK BUTTON
-	if (control->id == GuiControlId::BACK && control->state == GuiControlState::PRESSED && merchantPanelOpen) {
-		merchantPanelOpen = false;
-		Engine::GetInstance().scene.get()->player->pbody->body->SetEnabled(true);
-		SavePrefs();
+	
+	case GuiControlId::BACK:
+		if (backBt->state == GuiControlState::PRESSED) {
+			merchantPanelOpen = false;
+			Engine::GetInstance().scene.get()->player->pbody->body->SetEnabled(true);
+			SavePrefs();
+		}
+		break;
 	}
 
 	return true;
@@ -482,7 +498,7 @@ void MerchantMenu::ShowInfo(int id)
 
 
 	switch (id) {
-	case 14:
+	case (int)GuiControlId::FIRST_UPGRADE:
 		nameText = "Upgrade 1";
 		valueText = "Valor: 100";
 		descriptionText = "Saltas más alto";
@@ -533,9 +549,10 @@ void MerchantMenu::ShowInfo(int id)
 	}
 
 	// Render
-	Engine::GetInstance().render.get()->DrawText(nameText.c_str(), 450, 100, 64*6, 64);
+	Engine::GetInstance().render.get()->DrawTextToBuffer(nameText.c_str(), 789, 210, 150, 48, Engine::GetInstance().render.get()->font, { 255,255,255,255 }, MENUS);
 
-	Engine::GetInstance().render.get()->DrawText(valueText.c_str(), 450, 200, 32*6, 32);
+	Engine::GetInstance().render.get()->DrawTextToBuffer(valueText.c_str(), 918, 433, 48, 32, Engine::GetInstance().render.get()->font, { 255,255,255,255 }, MENUS);
 
-	Engine::GetInstance().render.get()->DrawText(descriptionText.c_str(), 450, 300, 24*14, 24);
+	Engine::GetInstance().render.get()->DrawTextToBuffer(descriptionText.c_str(), 672, 304, 64, 32, Engine::GetInstance().render.get()->font, { 255,255,255,255 }, MENUS);
+
 }

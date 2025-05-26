@@ -80,6 +80,7 @@ public:
 	int cost8 = 200;
 
 	bool hasOpened = false;
+	bool showOnceUpgrade[8] = { false, false, false, false, false, false, false, false };
 	//std::map<std::string, GuiControlButton*> buttons;
 
 };

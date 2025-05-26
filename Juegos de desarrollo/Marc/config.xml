@@ -51,15 +51,15 @@
 	</upgradesMenu>
 	<merchantMenu>
 		<merchantPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/MenuMerchant/TIENDA 02/PNGS/interfaz_conbutton_exit_negro.png" />
-		<firstUpgradeBt id="24" x="334" y="198" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg1_icon.png" />
-		<secondUpgradeBt id="25" x="300" y="100" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg2_icon.png" />
-		<thirdUpgradeBt id="26" x="100" y="200" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg3_icon.png" />
-		<fourthUpgradeBt id="27" x="300" y="200" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg4_icon.png" />
-		<fifthUpgradeBt id="28" x="100" y="300" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg5_icon.png" />
-		<sixthUpgradeBt id="29" x="300" y="300" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg6_icon.png" />
-		<seventhUpgradeBt id="30" x="100" y="400" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg7_icon.png" />
-		<eighthUpgradeBt id="31" x="300" y="400" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg8_icon.png" />
-		<backBt id="6" x="100" y="600" w="384" h="64" texture="Assets/Textures/Menus/Options/back.png" />
+		<firstUpgradeBt id="24" x="324" y="185" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg1_icon.png" />
+		<secondUpgradeBt id="25" x="464" y="185" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg2_icon.png" />
+		<thirdUpgradeBt id="26" x="324" y="300" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg3_icon.png" />
+		<fourthUpgradeBt id="27" x="464" y="300" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg4_icon.png" />
+		<fifthUpgradeBt id="28" x="324" y="415" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg5_icon.png" />
+		<sixthUpgradeBt id="29" x="464" y="415" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg6_icon.png" />
+		<seventhUpgradeBt id="30" x="324" y="529" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg7_icon.png" />
+		<eighthUpgradeBt id="31" x="464" y="529" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg8_icon.png" />
+		<backBt id="6" x="237" y="80" w="80" h="80" texture="Assets/Textures/Menus/MenuMerchant/TIENDA 02/PNGS/Button_exit_solo.png" />
 	</merchantMenu>
 	<scene>
 		<ui>
@@ -630,6 +630,9 @@
 				<merchant x="400" y="3400" w="64" h="64" texture="Assets/Textures/Allies/merchant_idle.png">
 					<properties speed="0.8" movementArea="300" detectionArea="200" />
 					<instances>
+						<lvl1>
+							<instance entityType="14" x="576" y="3392" />
+						</lvl1>
 						<lvl3>
 							<instance entityType="14" x="9024" y="1920" dialog="DIALOG04" />
 						</lvl3>
