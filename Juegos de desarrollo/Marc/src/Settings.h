@@ -34,7 +34,6 @@ public:
 	bool CleanUp() override;
 
 	bool OnGuiMouseClickEvent(GuiControl* control);
-	void SetGuiParameters(GuiControl* bt, std::string btName, pugi::xml_node parameters);
 
 	int SetVolume(GuiControlSlider* slider);
 	void SavePrefs();
@@ -48,12 +47,14 @@ public:
 	SDL_Texture* bgTex, * btTex, * optPanel, * pausePanel;
 
 	TTF_Font* btFont;
+	TTF_Font* titleFont;
+	std::string titleText;
 	bool settingsOpen = false;
 	bool fullScreen;
 	bool saved;
 
 	int musicVolume, sfxVolume;
-	int optPanelX, optPanelY;
+	int optPanelX, optPanelY, optPanelW, optPanelH;
 	float _dt;
 
 
@@ -62,6 +63,7 @@ public:
 	GuiControlButton* backBt;
 
 	int testSound;
+	int titleVerticalDisplacement;
 
 	std::list<GuiControl*> settingsGUI;
 

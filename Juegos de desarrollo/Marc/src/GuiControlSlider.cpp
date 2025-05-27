@@ -8,6 +8,7 @@
 #include "Textures.h"
 #include "Audio.h"
 #include "MainMenu.h"
+#include "TextManager.h"
 #include <algorithm>
 
 GuiControlSlider::GuiControlSlider(const char* name, const char* text, SDL_Rect circleBounds, SDL_Rect barBounds, SDL_Texture* circleTex, SDL_Texture* barTex) : GuiControl(GuiControlType::SLIDER, id, name)
@@ -73,6 +74,21 @@ bool GuiControlSlider::Update(float dt)
        
         Engine::GetInstance().render.get()->DrawTextureBuffer(sliderTexture, -camera.x / windowScale + sliderBounds.x, -camera.y / windowScale + sliderBounds.y, false,MENUS);
         Engine::GetInstance().render.get()->DrawTextureBuffer(texture, -camera.x / windowScale + sliderPosX, -camera.y / windowScale + sliderBounds.y - bounds.h/4, false,MENUS);
+        if (text != "")
+        {
+            int textW = 0, textH = 0;
+            TTF_SizeUTF8(font, Engine::GetInstance().textManager.get()->GetText(text).c_str(), &textW, &textH);
+
+            Engine::GetInstance().render.get()->DrawTextToBuffer(
+                Engine::GetInstance().textManager.get()->GetText(text).c_str(),
+                sliderBounds.x + (sliderBounds.w / 2) - textW / 2,
+                sliderBounds.y + (sliderBounds.h / 2) - textH / 2 + textVerticalDisplacement ,
+                textW,
+                textH,
+                font,
+                { 255, 255, 255, 255 }, MENUS
+            );
+        }
     }
 
 

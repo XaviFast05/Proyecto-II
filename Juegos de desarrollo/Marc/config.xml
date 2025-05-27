@@ -28,13 +28,13 @@
 		<credits path="Assets/Textures/Menus/Title Screen/credits screen.png" />
 	</mainmenu>
 	<settings>
-		<optPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/settings-panel.png" />
+		<optPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/settings-panel-empty.png"  fontSize="50" font="Assets/Fonts/Crang.ttf" text="OPTIONS" textVerticalDisplacement="-250"/>
 		<sliders barW="384" barH="40" barTexture="Assets/Textures/Menus/Options/slider.png" circleW="70" circleH="70" texture="Assets/Textures/Menus/Options/pumpkinBt.png">
-			<musicSlider id="7" barX="448" circleX="450" barY="236" circleY="221" />
-			<sfxSlider id="8" barX="448" circleX="450" barY="364" circleY="349" />
+			<musicSlider id="7" barX="448" circleX="450" barY="236" circleY="221" text="MUSIC" fontSize="30" font="Assets/Fonts/Crang.ttf" verticalDisplacement="-50" textVerticalDisplacement="-60"/>
+			<sfxSlider id="8" barX="448" circleX="450" barY="364" circleY="349" text="SOUND_EFFECTS" fontSize="30" font="Assets/Fonts/Crang.ttf" verticalDisplacement="-50" textVerticalDisplacement="-60"/>
 		</sliders>
-		<fullScreenBox id="9" x="605" y="490" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
-		<backBt id="6" x="448" y="587" w="384" h="64" texture="Assets/Textures/Menus/Options/back.png" />
+		<fullScreenBox id="9" x="605" y="490" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" text="FULL_SCREEN" fontSize="30" font="Assets/Fonts/Crang.ttf" textVerticalDisplacement="-60"/>
+		<backBt id="6" x="448" y="587" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/RedButton.png" text="BACK" fontSize="30" font="Assets/Fonts/Crang.ttf"/>
 	</settings>
 	<upgradesMenu>
 		<upgPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/settings-panel.png" />

@@ -4,6 +4,7 @@
 #include "Engine.h"
 #include "Audio.h"
 #include "Input.h"
+#include "TextManager.h"
 
 GuiControlCheckBox::GuiControlCheckBox(const char* name, SDL_Rect bounds, const char* text, SDL_Texture* boxTex) : GuiControl(GuiControlType::CHECKBOX, id, name)
 {
@@ -117,8 +118,21 @@ bool GuiControlCheckBox::Update(float dt)
 			Engine::GetInstance().render.get()->DrawTextureBuffer(texture, -camera.x / windowScale + bounds.x, -camera.y / windowScale + bounds.y, false, MENUS, &section);
 			
 		}
+		if (text != "")
+		{
+			int textW = 0, textH = 0;
+			TTF_SizeUTF8(font, Engine::GetInstance().textManager.get()->GetText(text).c_str(), &textW, &textH);
 
-		/*Engine::GetInstance().render->DrawText(text.c_str(), bounds.x * 2 + bounds.w / 2, bounds.y * 2 + bounds.h / 2, bounds.w, bounds.h);*/
+			Engine::GetInstance().render.get()->DrawTextToBuffer(
+				Engine::GetInstance().textManager.get()->GetText(text).c_str(),
+				bounds.x + (section.w / 2) - textW / 2,
+				bounds.y + (section.h / 2) - textH / 2 + textVerticalDisplacement,
+				textW,
+				textH,
+				font,
+				{ 255, 255, 255, 255 }, MENUS
+			);
+		}
 	}
 
 	return false;
