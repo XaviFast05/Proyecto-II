@@ -334,17 +334,16 @@
 						</death>
 					</animations>
 				</skeleton>
-				<bat x="250" y="350" w="64" h="64" texture="Assets/Textures/Enemies/Fantasma/fantasmavolador.png">
+				<bat x="250" y="350" w="64" h="64" texture="Assets/Textures/Enemies/Luciernaga/luciernaga_vomitahijos.png">
 					<properties speed="2" chaseArea="400" deathTime="1.0f" lives="10" pushForce="1" pushFriction="5" lootAmount="1" canPush="true" />
 					<animations>
 						<idle loop="true" speed="0.2f">
-							<frame x="0" y="64" w="64" h="64" />
-							<frame x="64" y="64" w="64" h="64" />
-							<frame x="128" y="64" w="64" h="64" />
-							<frame x="192" y="64" w="64" h="64" />
-							<frame x="256" y="64" w="64" h="64" />
-							<frame x="320" y="64" w="64" h="64" />
-							<frame x="384" y="64" w="64" h="64" />
+							<frame x="0" y="0" w="64" h="64" />
+							<frame x="64" y="0" w="64" h="64" />
+							<frame x="128" y="0" w="64" h="64" />
+							<frame x="192" y="0" w="64" h="64" />
+							<frame x="256" y="0" w="64" h="64" />
+							<frame x="320" y="0" w="64" h="64" />
 						</idle>
 						<attack loop="true" speed="0.2f">
 							<frame x="0" y="64" w="64" h="64" />
@@ -353,19 +352,23 @@
 							<frame x="192" y="64" w="64" h="64" />
 							<frame x="256" y="64" w="64" h="64" />
 							<frame x="320" y="64" w="64" h="64" />
-							<frame x="384" y="64" w="64" h="64" />
 						</attack>
 						<hurt loop=" false" speed="0.2f">
-							<frame x="0" y="0" w="64" h="64" />
-						</hurt>
-						<death loop=" false" speed="0.1f">
 							<frame x="0" y="128" w="64" h="64" />
 							<frame x="64" y="128" w="64" h="64" />
 							<frame x="128" y="128" w="64" h="64" />
 							<frame x="192" y="128" w="64" h="64" />
 							<frame x="256" y="128" w="64" h="64" />
 							<frame x="320" y="128" w="64" h="64" />
-							<frame x="384" y="128" w="64" h="64" />
+						</hurt>
+						<death loop=" false" speed="0.1f">
+							<frame x="0" y="192" w="64" h="64" />
+							<frame x="64" y="192" w="64" h="64" />
+							<frame x="128" y="192" w="64" h="64" />
+							<frame x="192" y="192" w="64" h="64" />
+							<frame x="256" y="192" w="64" h="64" />
+							<frame x="320" y="192" w="64" h="64" />
+							<frame x="384" y="192" w="64" h="64" />
 						</death>
 					</animations>
 				</bat>
@@ -520,6 +523,12 @@
 						</instance>
 					</lvl2>
 					<lvl3>
+						<instance enemyType="bat" entityType="4">
+							<point x="9792" y="8512" />
+						</instance>
+						<instance enemyType="child" entityType="9">
+							<point x="9216" y="8512" />
+						</instance>
 						<instance enemyType="skeleton" entityType="5">
 							<point x="7616" y="7936" />
 							<point x="7617" y="7936" />
