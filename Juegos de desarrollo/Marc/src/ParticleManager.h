@@ -1,9 +1,12 @@
 #pragma once
 
-#include "Vector2D.h"
 #include "Entity.h"
-#include "Physics.h"
+#include "SDL2/SDL.h"
+#include "Animation.h"
+#include "Pathfinding.h"
 #include "Timer.h"
+
+struct SDL_Texture;
 
 
 class Particle : public Entity
@@ -13,12 +16,9 @@ public:
 	Particle();
 	virtual ~Particle() {};
 
-	bool Start();
-
-
-	bool Update(float dt);
-
-	//void OnCollision(PhysBody* physA, PhysBody* physB);
+	bool Awake();
+	virtual bool Start();
+	virtual bool Update(float dt);
 
 	void SetDirection(Vector2D dir);
 	void SetPosition(Vector2D pos);
@@ -32,22 +32,21 @@ public:
 	SDL_Texture* texture;
 
 	Vector2D position;
-	int posXOffset;
 	Vector2D direction;
 	int speed;
-	Animation anim;
+
+	Animation* currentAnim = nullptr;
+
+	Animation idle;
 	int texW, texH;
-	int shotRad;
-	
+	int rad;
+
 	Timer aliveTimer;
 	Timer castTimer;
 
 	bool isAlive;
 	bool isCasted;
 
-	//Should be uint
 	float lifeTime;
 	float castTime;
 };
-
-

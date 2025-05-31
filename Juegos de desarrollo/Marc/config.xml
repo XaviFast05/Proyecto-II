@@ -650,10 +650,10 @@
 					<properties speed="0.8" movementArea="300" detectionArea="200" />
 					<instances>
 						<lvl1>
-							<instance entityType="14" x="576" y="3392" />
+							<instance entityType="15" x="576" y="3392" />
 						</lvl1>
 						<lvl3>
-							<instance entityType="14" x="9024" y="1920" dialog="DIALOG04" />
+							<instance entityType="15" x="9024" y="1920" dialog="DIALOG04" />
 						</lvl3>
 					</instances>
 					<animations>

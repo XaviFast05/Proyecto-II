@@ -158,6 +158,7 @@
     <ClCompile Include="src\FinalBoss.cpp" />
     <ClCompile Include="src\JumpingEnemy.cpp" />
     <ClCompile Include="src\Merchant.cpp" />
+    <ClCompile Include="src\ParticleManager.cpp" />
     <ClCompile Include="src\PickaxeManager.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
     <ClCompile Include="src\DeathMenu.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="src\JumpingEnemy.h" />
     <ClInclude Include="src\Merchant.h" />
     <ClInclude Include="src\MerchantMenu.h" />
+    <ClInclude Include="src\ParticleManager.h" />
     <ClInclude Include="src\PickaxeManager.h" />
     <ClInclude Include="src\Bullet.h" />
     <ClInclude Include="src\DeathMenu.h" />

@@ -490,7 +490,7 @@ bool Player::Update(float dt)
 				}
 				if (CheckMoveX() && !grounded) MoveX();
 
-				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_UP) charging = false;
+				if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_X) == KEY_UP || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_X) == KEY_UP) charging = false;
 				if (stateTimer.ReadSec() >= pickaxeTimerAnimation)
 				{
 					if (charging == true && chargedCooldown == false && unlockedCharged == true) {

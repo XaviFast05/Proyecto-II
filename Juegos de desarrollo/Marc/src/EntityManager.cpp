@@ -17,6 +17,7 @@
 #include "Ally.h"
 #include "Merchant.h"
 #include "CurrencyOrb.h"
+#include "ParticleManager.h"
 #include "DashParticle.h"
 #include "SoulRockParticle.h"
 #include "WallBrakerParticle.h"
@@ -131,6 +132,9 @@ Entity* EntityManager::CreateEntity(EntityType bullet_direction)
 	case EntityType::MERCHANT:
 		entity = new Merchant();
 		break;
+	case EntityType::PARTICLE:
+		entity = new Particle();
+		break;
 	case EntityType::DASH_PARTICLE:
 		entity = new DashParticle();
 		break;
@@ -200,6 +204,9 @@ std::list<Entity*> EntityManager::CreatePooledEntities(EntityType bullet_directi
 			break;
 		case EntityType::MERCHANT:
 			entity = new Merchant();
+			break;
+		case EntityType::PARTICLE:
+			entity = new Particle();
 			break;
 		case EntityType::DASH_PARTICLE:
 			entity = new DashParticle();
@@ -272,6 +279,9 @@ Entity* EntityManager::CreatePooledEntities(EntityType bullet_direction)
 		break;
 	case EntityType::MERCHANT:
 		entity = new Merchant();
+		break;
+	case EntityType::PARTICLE:
+		entity = new Particle();
 		break;
 	case EntityType::DASH_PARTICLE:
 		entity = new DashParticle();
