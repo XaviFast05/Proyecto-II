@@ -6,7 +6,7 @@
 #include "log.h"
 #include "Scene.h"
 
-DashParticle::DashParticle() : Entity(EntityType::DASH_PARTICLE)
+DashParticle::DashParticle()
 {
 	name = "dashParticle";
 }
@@ -90,35 +90,4 @@ bool DashParticle::Update(float dt)
 	}
 
 	return ret;
-}
-
-
-void DashParticle::SetDirection(Vector2D dir)
-{
-	direction = dir;
-	direction = direction.normalized();
-}
-
-void DashParticle::SetPosition(Vector2D pos)
-{
-	pbody->body->SetTransform({ PIXEL_TO_METERS(pos.getX()), PIXEL_TO_METERS(pos.getY()) }, 0);
-}
-
-void DashParticle::Restart(Vector2D pos, Vector2D dir)
-{
-	pbody->body->SetLinearVelocity({ 0,0 });
-	//float offset = 0;
-	//if (dir.getX() > 0) offset = posXOffset;
-	//else offset = -posXOffset;
-	pbody->body->SetTransform({ PIXEL_TO_METERS(pos.getX()), PIXEL_TO_METERS(pos.getY()) }, 0);
-	direction = dir;
-	direction = direction.normalized();
-	isCasted = true;
-	isAlive = false;
-	castTimer.Start();
-}
-
-bool DashParticle::CleanUp()
-{
-	return true;
 }

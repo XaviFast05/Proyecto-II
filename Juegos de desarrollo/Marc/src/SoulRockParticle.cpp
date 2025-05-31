@@ -6,7 +6,7 @@
 #include "log.h"
 #include "Scene.h"
 
-SoulRockParticle::SoulRockParticle() : Entity(EntityType::SOULROCK_PARTICLE)
+SoulRockParticle::SoulRockParticle()
 {
 	name = "soulRockParticle";
 }
@@ -74,35 +74,4 @@ bool SoulRockParticle::Update(float dt)
 	}
 
 	return ret;
-}
-
-
-void SoulRockParticle::SetDirection(Vector2D dir)
-{
-	direction = dir;
-	direction = direction.normalized();
-}
-
-void SoulRockParticle::SetPosition(Vector2D pos)
-{
-	pbody->body->SetTransform({ PIXEL_TO_METERS(pos.getX()), PIXEL_TO_METERS(pos.getY()) }, 0);
-}
-
-void SoulRockParticle::Restart(Vector2D pos, Vector2D dir)
-{
-	pbody->body->SetLinearVelocity({ 0,0 });
-	//float offset = 0;
-	//if (dir.getX() > 0) offset = posXOffset;
-	//else offset = -posXOffset;
-	pbody->body->SetTransform({ PIXEL_TO_METERS(pos.getX()), PIXEL_TO_METERS(pos.getY()) }, 0);
-	direction = dir;
-	direction = direction.normalized();
-	isCasted = true;
-	isAlive = false;
-	castTimer.Start();
-}
-
-bool SoulRockParticle::CleanUp()
-{
-	return true;
 }

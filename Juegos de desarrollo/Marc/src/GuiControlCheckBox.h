@@ -24,7 +24,4 @@ public:
 	bool isChecked;
 private:
 
-	TTF_Font* font;
-	
-
 };

@@ -9,6 +9,7 @@
 #include "MainMenu.h"
 #include "Scene.h"
 #include "Window.h"
+#include "TextManager.h"
 
 
 Settings::Settings(bool startEnabled) : Module(startEnabled)
@@ -48,29 +49,32 @@ bool Settings::Start()
 
 	musicSlider = (GuiControlSlider*)Engine::Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::SLIDER, "musicSlider", "", { 0,0,0,0 }, this, { 0,0,0,0 }, circleTex, barTex);
 
-	SetGuiParameters(musicSlider, "musicSlider", configParameters.child("sliders"));
+	musicSlider->SetGuiParameters("musicSlider", configParameters.child("sliders"));
 	settingsGUI.push_back(musicSlider);
 
 	sfxSlider = (GuiControlSlider*)Engine::Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::SLIDER, "sfxSlider", "", { 0,0,0,0 }, this, { 0,0,0,0 }, circleTex, barTex);
-	SetGuiParameters(sfxSlider, "sfxSlider", configParameters.child("sliders"));
+	sfxSlider->SetGuiParameters("sfxSlider", configParameters.child("sliders"));
 
 	settingsGUI.push_back(sfxSlider);
 
 	backBt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, "backBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
-	SetGuiParameters(backBt, "backBt", configParameters);
+	backBt->SetGuiParameters("backBt", configParameters);
 	
 	settingsGUI.push_back(backBt);
 	
 	fullScreenBox = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "fullScreenBox", "", { 0,0,0,0 }, this, { 0,0,0,0 });
-	SetGuiParameters(fullScreenBox, "fullScreenBox", configParameters);
+	fullScreenBox->SetGuiParameters("fullScreenBox", configParameters);
 	settingsGUI.push_back(fullScreenBox);
 
 	optPanel = Engine::GetInstance().textures.get()->Load(configParameters.child("optPanel").attribute("path").as_string());
 	optPanelX = configParameters.child("optPanel").attribute("x").as_int();
 	optPanelY = configParameters.child("optPanel").attribute("y").as_int();
+	optPanelW = configParameters.child("optPanel").attribute("w").as_int();
+	optPanelH = configParameters.child("optPanel").attribute("h").as_int();
+	titleFont = TTF_OpenFont(configParameters.child("optPanel").attribute("font").as_string(), configParameters.child("optPanel").attribute("fontSize").as_int());
+	titleText = configParameters.child("optPanel").attribute("text").as_string();
+	titleVerticalDisplacement = configParameters.child("optPanel").attribute("textVerticalDisplacement").as_int();
 
-
-	
 	musicSlider->sliderPosX = musicSlider->sliderBounds.x + musicSlider->sliderBounds.w/2 - musicSlider->bounds.w/2;
 	sfxSlider->sliderPosX = sfxSlider->sliderBounds.x + sfxSlider->sliderBounds.w/2 - sfxSlider->bounds.w/2;
 
@@ -116,7 +120,21 @@ bool Settings::Update(float dt)
 		
 		sfxSlider->Update(dt);
 		
+		if (titleText != "")
+		{
+			int textW = 0, textH = 0;
+			TTF_SizeUTF8(titleFont, Engine::GetInstance().textManager.get()->GetText(titleText).c_str(), &textW, &textH);
 
+			Engine::GetInstance().render.get()->DrawTextToBuffer(
+				Engine::GetInstance().textManager.get()->GetText(titleText).c_str(),
+				optPanelX + (optPanelW / 2) - textW / 2,
+				optPanelY + (optPanelH / 2) - textH / 2 + titleVerticalDisplacement,
+				textW,
+				textH,
+				titleFont,
+				{ 255, 255, 255, 255 }, MENUS
+			);
+		}
 
 	
 
@@ -191,32 +209,6 @@ bool Settings::OnGuiMouseClickEvent(GuiControl* control) {
 
 
 	return true;
-}
-
-
-void Settings::SetGuiParameters(GuiControl* bt, std::string btName, pugi::xml_node parameters) {
-
-	bt->id = (GuiControlId)parameters.child(btName.c_str()).attribute("id").as_int();
-	if (bt->bullet_direction == GuiControlType::SLIDER) {
-		bt->sliderBounds.x = parameters.child(btName.c_str()).attribute("barX").as_int();
-		bt->sliderBounds.y = parameters.child(btName.c_str()).attribute("barY").as_int();
-		bt->sliderBounds.w = parameters.attribute("barW").as_int();
-		bt->sliderBounds.h = parameters.attribute("barH").as_int();
-		bt->bounds.x = parameters.child(btName.c_str()).attribute("circleX").as_int();
-		bt->bounds.y = parameters.child(btName.c_str()).attribute("circleY").as_int();
-		bt->bounds.w = parameters.attribute("circleW").as_int();
-		bt->bounds.h = parameters.attribute("circleH").as_int();
-	}
-	else if (bt->bullet_direction == GuiControlType::BUTTON || bt->bullet_direction == GuiControlType::CHECKBOX) {
-		bt->bounds.x = parameters.child(btName.c_str()).attribute("x").as_int();
-		bt->bounds.y = parameters.child(btName.c_str()).attribute("y").as_int();
-		bt->bounds.w = parameters.child(btName.c_str()).attribute("w").as_int();
-		bt->bounds.h = parameters.child(btName.c_str()).attribute("h").as_int();
-		bt->texture = Engine::GetInstance().textures.get()->Load(parameters.child(btName.c_str()).attribute("texture").as_string());
-	}
-
-
-	
 }
 
 int Settings::SetVolume(GuiControlSlider* slider) {

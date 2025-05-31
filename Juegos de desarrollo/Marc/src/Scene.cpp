@@ -22,7 +22,6 @@
 #include "Ally.h"
 #include "Merchant.h"
 #include <string>
-#include "Particle.h"
 #include "tracy/Tracy.hpp"
 #include "GuiControl.h"
 #include "GuiManager.h"
@@ -35,6 +34,7 @@
 #include "PickaxeManager.h"
 #include "CurrencyManager.h"
 #include "UpgradesMenu.h"
+#include "ParticleManager.h"
 #include "SoulRockParticle.h"
 #include "DashParticle.h"
 #include "WallBrakerParticle.h"

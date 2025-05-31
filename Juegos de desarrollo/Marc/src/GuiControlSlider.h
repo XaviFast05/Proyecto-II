@@ -20,6 +20,7 @@ public:
     //PhysBody* sliderBar;
     int minValue;
     int maxValue;
+
         
     float sliderPosX;
     float volumeValue;
