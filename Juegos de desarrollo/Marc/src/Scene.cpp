@@ -22,7 +22,6 @@
 #include "Ally.h"
 #include "Merchant.h"
 #include <string>
-#include "Particle.h"
 #include "tracy/Tracy.hpp"
 #include "GuiControl.h"
 #include "GuiManager.h"

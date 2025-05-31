@@ -8,7 +8,6 @@
 #include "Log.h"
 #include "Pathfinding.h"
 #include "Physics.h"
-#include "Particle.h"
 #include "EntityManager.h"
 #include "MainMenu.h"
 #include "WinMenu.h"
