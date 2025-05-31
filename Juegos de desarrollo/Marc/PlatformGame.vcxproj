@@ -181,7 +181,6 @@
     <ClCompile Include="src\CheckPoint.cpp" />
     <ClCompile Include="src\Log.cpp" />
     <ClCompile Include="src\Map.cpp" />
-    <ClCompile Include="src\Particle.cpp" />
     <ClCompile Include="src\Pathfinding.cpp" />
     <ClCompile Include="src\PerfTimer.cpp" />
     <ClCompile Include="src\Physics.cpp" />
