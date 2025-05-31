@@ -18,23 +18,23 @@
 	<mainmenu>
 		<bg path="Assets/Textures/Menus/Title Screen/title screen pixel bg.png" />
 		<buttons defaultTex="Assets/Textures/Menus/Title Screen/DefaultButton.png">
-			<newGameBt id="1" x="448" y="230" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="TUTORIAL" font="Assets/Fonts/Crang.ttf" fontSize="30" />
-			<continueBt id="2" x="448" y="326" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="CONTINUE" font="Assets/Fonts/Crang.ttf" fontSize="30" />
-			<optionsBt id="3" x="448" y="422" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="OPTIONS" font="Assets/Fonts/Crang.ttf" fontSize="30" />
-			<creditsBt id="4" x="448" y="518" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="CREDITS" font="Assets/Fonts/Crang.ttf" fontSize="30" />
-			<exitBt id="5" x="448" y="614" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/RedButton.png" text="EXIT" font="Assets/Fonts/Crang.ttf" fontSize="30" />
-			<backBt id="6" x="448" y="614" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/RedButton.png" text="BACK" font="Assets/Fonts/Crang.ttf" fontSize="30" />
+			<newGameBt id="1" x="448" y="230" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/New Game Button Sheet Background.png" text="TUTORIAL" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
+			<continueBt id="2" x="448" y="326" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Continue Button Sheet Background.png" text="CONTINUE" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
+			<optionsBt id="3" x="448" y="422" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Options Button Sheet Background.png" text="OPTIONS" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
+			<creditsBt id="4" x="448" y="518" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Credits Button Sheet Background.png" text="CREDITS" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
+			<exitBt id="5" x="448" y="614" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/RedButton.png" text="EXIT" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
+			<backBt id="6" x="448" y="614" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/RedButton.png" text="BACK" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
 		</buttons>
 		<credits path="Assets/Textures/Menus/Title Screen/credits screen.png" />
 	</mainmenu>
 	<settings>
-		<optPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/settings-panel-empty.png"  fontSize="50" font="Assets/Fonts/Crang.ttf" text="OPTIONS" textVerticalDisplacement="-250"/>
+		<optPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/settings-panel-empty.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="OPTIONS" textVerticalDisplacement="-250"/>
 		<sliders barW="384" barH="40" barTexture="Assets/Textures/Menus/Options/slider.png" circleW="70" circleH="70" texture="Assets/Textures/Menus/Options/pumpkinBt.png">
-			<musicSlider id="7" barX="448" circleX="450" barY="236" circleY="221" text="MUSIC" fontSize="30" font="Assets/Fonts/Crang.ttf" verticalDisplacement="-50" textVerticalDisplacement="-60"/>
-			<sfxSlider id="8" barX="448" circleX="450" barY="364" circleY="349" text="SOUND_EFFECTS" fontSize="30" font="Assets/Fonts/Crang.ttf" verticalDisplacement="-50" textVerticalDisplacement="-60"/>
+			<musicSlider id="7" barX="448" circleX="450" barY="236" circleY="221" text="MUSIC" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" verticalDisplacement="-50" textVerticalDisplacement="-60"/>
+			<sfxSlider id="8" barX="448" circleX="450" barY="364" circleY="349" text="SOUND_EFFECTS" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" verticalDisplacement="-50" textVerticalDisplacement="-60"/>
 		</sliders>
-		<fullScreenBox id="9" x="605" y="490" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" text="FULL_SCREEN" fontSize="30" font="Assets/Fonts/Crang.ttf" textVerticalDisplacement="-60"/>
-		<backBt id="6" x="448" y="587" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/RedButton.png" text="BACK" fontSize="30" font="Assets/Fonts/Crang.ttf"/>
+		<fullScreenBox id="9" x="605" y="490" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" text="FULL_SCREEN" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" textVerticalDisplacement="-60"/>
+		<backBt id="6" x="448" y="587" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/RedButton.png" text="BACK" fontSize="65" font="Assets/Fonts/PIXELADE.ttf"/>
 	</settings>
 	<upgradesMenu>
 		<upgPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/settings-panel.png" />
@@ -882,5 +882,6 @@
 		<halloweenpixels path="Assets/Fonts/Halloweenpixels.ttf" />
 		<CorvidConspiratorpath path="Assets/Fonts/Corvid Conspirator v1.1.ttf" />
 		<Crang path="Assets/Fonts/Crang.ttf" />
+		<PIXELADE path="Assets/Fonts/PIXELADE.ttf" />
 	</fonts>
 </config>
