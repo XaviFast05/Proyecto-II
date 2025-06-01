@@ -309,6 +309,7 @@ bool Scene::Update(float dt)
 		changeLevel = false;
 		if (level == LVL1)
 		{
+			Engine::GetInstance().cutScene->ConvertPixels(0, 1);
 			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
 			level = LVL3;
 		}

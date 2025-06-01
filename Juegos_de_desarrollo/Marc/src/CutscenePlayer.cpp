@@ -29,7 +29,8 @@ bool CutscenePlayer::Start()
     position2 = Vector2D(600, 500);
     // File path of the video to be played
    // file = "Assets/Video/video.mp4";
-    file = "Assets/Video/sample-5s.mp4";
+    file = "Assets/Video/Cinematica_KimSeCae.mov";
+
 
     // Allocate memory for the format context
     formatContext = avformat_alloc_context();
