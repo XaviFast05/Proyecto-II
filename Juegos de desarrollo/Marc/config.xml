@@ -30,24 +30,23 @@
 	<settings>
 		<optPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/settings-panel-empty.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="OPTIONS" textVerticalDisplacement="-250"/>
 		<sliders barW="384" barH="40" barTexture="Assets/Textures/Menus/Options/slider.png" circleW="70" circleH="70" texture="Assets/Textures/Menus/Options/pumpkinBt.png">
-			<musicSlider id="7" barX="448" circleX="450" barY="236" circleY="221" text="MUSIC" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" verticalDisplacement="-50" textVerticalDisplacement="-60"/>
-			<sfxSlider id="8" barX="448" circleX="450" barY="364" circleY="349" text="SOUND_EFFECTS" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" verticalDisplacement="-50" textVerticalDisplacement="-60"/>
+			<musicSlider id="7" barX="448" circleX="450" barY="236" circleY="221" text="MUSIC" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" verticalDisplacement="-50" textVerticalDisplacement="-65"/>
+			<sfxSlider id="8" barX="448" circleX="450" barY="364" circleY="349" text="SOUND_EFFECTS" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" verticalDisplacement="-50" textVerticalDisplacement="-65"/>
 		</sliders>
-		<fullScreenBox id="9" x="605" y="490" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" text="FULL_SCREEN" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" textVerticalDisplacement="-60"/>
+		<fullScreenBox id="9" x="605" y="490" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" text="FULL_SCREEN" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" textVerticalDisplacement="-75"/>
 		<backBt id="6" x="448" y="587" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/RedButton.png" text="BACK" fontSize="65" font="Assets/Fonts/PIXELADE.ttf"/>
 	</settings>
 	<upgradesMenu>
-		<upgPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/settings-panel.png" />
-		<changeMenuBt id="15" x="100" y="490" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
-		<backBt id="6" x="448" y="587" w="384" h="64" texture="Assets/Textures/Menus/Options/back.png" />
-		<upg1 id="16" x="100" y="100" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg1_icon.png" />
-		<upg2 id="17" x="300" y="100" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg2_icon.png" />
-		<upg3 id="18" x="100" y="200" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg3_icon.png" />
-		<upg4 id="19" x="300" y="200" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg4_icon.png" />
-		<upg5 id="20" x="100" y="300" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg5_icon.png" />
-		<upg6 id="21" x="300" y="300" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg6_icon.png" />
-		<upg7 id="22" x="100" y="400" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg7_icon.png" />
-		<upg8 id="23" x="300" y="400" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg8_icon.png" />
+		<upgPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/MenuUpgrades/pngs_interfaz_completa/Interfaz_mejoras_BW.png" />
+		<changeMenuBt id="15" x="20" y="4" w="80" h="80" texture="Assets/Textures/Menus/MenuMerchant/TIENDA 02/PNGS/Button_exit_solo.png" />
+		<upg1 id="16" x="216" y="103" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg1_icon.png" />
+		<upg2 id="17" x="361" y="103" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg2_icon.png" />
+		<upg3 id="18" x="216" y="220" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg3_icon.png" />
+		<upg4 id="19" x="361" y="220" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg4_icon.png" />
+		<upg5 id="20" x="216" y="338" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg5_icon.png" />
+		<upg6 id="21" x="361" y="338" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg6_icon.png" />
+		<upg7 id="22" x="216" y="456" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg7_icon.png" />
+		<upg8 id="23" x="361" y="456" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg8_icon.png" />
 	</upgradesMenu>
 	<merchantMenu>
 		<merchantPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/MenuMerchant/TIENDA 02/PNGS/interfaz_conbutton_exit_negro.png" />
