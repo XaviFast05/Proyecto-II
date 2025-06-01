@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Texts>
+	<Text id="DIALOG01_01">
+		<ES>Dios mío, ¿qué he hecho? Papá me dijo que no fuera con él y aun así lo hice, y mira lo que ha pasado… Todo por mi culpa.</ES>
+		<CA>Déu meu, què he fet? El pare em va dir que no hi anés amb ell i igualment ho vaig fer, i mira què ha passat... Tot és culpa meva.</CA>
+		<EN>Oh my God, what have I done? Dad told me not to go with him and I did it anyway, and look what happened... It's all my fault.</EN>
+	</Text>
+	<Text id="DIALOG01_02">
+		<ES>Esa voz que oí fuera… ¿Era real? Papá debe estar aquí, estoy segura. Debo llegar lo antes posible, me niego a pensar que papá esté muerto.</ES>
+		<CA>Aquesta veu que vaig sentir fora... Era real? El pare ha de ser aquí, n’estic segura. He d’arribar com més aviat millor, em nego a pensar que sigui mort.</CA>
+		<EN>That voice I heard outside… Was it real? Dad must be here, I’m sure. I have to get there as soon as possible, I refuse to believe he's dead.</EN>
+	</Text>
+	<Text id="DIALOG02_01">
+		<ES>Vaya, no puedo saltar y llegar a lo más alto de esta pared… ¡Bueno, es hora de sacar las piquetas! Así seré capaz de llegar mucho más alto.</ES>
+		<CA>Vaja, no puc saltar i arribar fins a dalt de tot d’aquest mur... Bé, és hora de treure els pics! Així podré arribar molt més amunt.</CA>
+		<EN>Wow, I can't jump and reach the top of this wall... Well, it's time to pull out the picks! That way I’ll be able to climb much higher.</EN>
+	</Text>
+	<Text id="DIALOG02_02">
+		<ES>A ver las instrucciones… “Pulsa el botón C para lanzar, y X para atacar”. Vaya, no recuerdo que funcionaran así. De todas formas, me alegro de que las haya traído.</ES>
+		<CA>A veure les instruccions... "Prem el botó C per llançar, i X per atacar". Vaja, no recordava que funcionessin així. En tot cas, m’alegro d’haver-les portat.</CA>
+		<EN>Let’s check the instructions... “Press the C button to throw, and X to attack.” Huh, I don’t remember them working like that. Anyway, I’m glad I brought them.</EN>
+	</Text>
+	<Text id="DIALOG03_01">
+		<ES>Guau, qué foso tan profundo, me da miedo de solo pensar qué habrá abajo… ¿Papá realmente está ahí abajo?</ES>
+		<CA>Uau, quin fossat tan profund, em fa por només pensar què hi pot haver a sota... El pare realment és allà baix?</CA>
+		<EN>Wow, what a deep pit, it scares me just to think what might be down there... Is Dad really down there?</EN>
+	</Text>
+	<Text id="DIALOG03_02">
+		<ES>No, debo ir, no puedo aceptar que esté muerto, debe de haber alguna forma de que vuelva a casa.</ES>
+		<CA>No, he d’anar-hi, no puc acceptar que sigui mort, ha d’haver-hi alguna manera perquè torni a casa.</CA>
+		<EN>No, I have to go, I can’t accept that he’s dead, there must be a way for him to come back home.</EN>
+	</Text>
+	<Text id="DIALOG04_01">
+		<ES>Madre mía, señorita, usted no debería estar por aquí… ¡Los vivos están vetados del inframundo!</ES>
+		<CA>Mare meva, senyoreta, vostè no hauria d’estar per aquí... Els vius tenen prohibit l’inframón!</CA>
+		<EN>Goodness me, miss, you shouldn't be here... The living are banned from the underworld!</EN>
+	</Text>
+	<Text id="DIALOG04_02">
+		<ES>¿Qué…? ¿¡¡QUÉEEE!!? Vale, estoy soñando. Esto es un sueño, no pasa nada.</ES>
+		<CA>Què...? QUÈÈÈÈ!!? D’acord, estic somiant. Això és un somni, no passa res.</CA>
+		<EN>What...? WHAAAT!? Okay, I’m dreaming. This is a dream, it’s fine.</EN>
+	</Text>
+	<Text id="DIALOG04_03">
+		<ES>¿Inframundo? Ja, ja, eso no existe, y además, ¿qué hace una luciérnaga que mide casi lo mismo que yo hablándome? </ES>
+		<CA>Inframón? Ja, ja, això no existeix, i a més, què fa una cuqueta de llum gairebé tan gran com jo parlant-me?</CA>
+		<EN>Underworld? Ha ha, that doesn’t exist, and besides, why is a firefly almost my size talking to me?</EN>
+	</Text>
+	<Text id="DIALOG04_04">
+		<ES>No sé de qué habla, señorita, pero esto es serio, debe volver a la tierra de los vivos, o si no pronto la empezarán a perseguir todas las criaturas demoníacas de este mundo.</ES>
+		<CA>No sé de què parla, senyoreta, però això és seriós, ha de tornar a la terra dels vius o aviat totes les criatures demoníaques d’aquest món la perseguiran.</CA>
+		<EN>I don't know what you're talking about, miss, but this is serious. You must return to the land of the living, or soon all the demonic creatures of this world will start hunting you.</EN>
+	</Text>
+	<Text id="DIALOG04_05">
+		<ES>Esto no puede ser cierto, me niego rotundamente. Aunque sea cierto, voy a intentar escapar de aquí.</ES>
+		<CA>Això no pot ser veritat, m’hi nego rotundament. Encara que ho sigui, intentaré escapar d’aquí.</CA>
+		<EN>This can’t be true, I refuse to believe it. Even if it is, I’m going to try to escape from here.</EN>
+	</Text>
+	<Text id="DIALOG04_06">
+		<ES>Ni mi padre está muerto ni esto es real. No, no y no. Por cierto, ¿dónde estoy?</ES>
+		<CA>Ni el meu pare és mort ni això és real. No, no i no. Per cert, on sóc?</CA>
+		<EN>My dad isn’t dead and this isn’t real. No, no, and no. By the way, where am I?</EN>
+	</Text>
+	<Text id="DIALOG04_07">
+		<ES>Se encuentra en la capa más profunda del inframundo, señorita.</ES>
+		<CA>Es troba a la capa més profunda de l’inframón, senyoreta.</CA>
+		<EN>You are in the deepest layer of the underworld, miss.</EN>
+	</Text>
+	<Text id="DIALOG04_08">
+		<ES>Soy Flo, un luciérnago. No se alarme, los luciérnagos somos famosos por ser la especie más pacífica del inframundo, puede estar segura.</ES>
+		<CA>Sóc en Flo, un cuquet de llum. No s’alarme, els cuquets de llum som coneguts per ser l’espècie més pacífica de l’inframón, pot estar tranquil·la.</CA>
+		<EN>I’m Flo, a firefly. Don’t worry, we fireflies are known for being the most peaceful species in the underworld, you can feel safe.</EN>
+	</Text>
+	<Text id="DIALOG04_09">
+		<ES>Nuestro asentamiento se encuentra cerca, por si busca refugio.</ES>
+		<CA>El nostre assentament és a prop, per si necessita refugi.</CA>
+		<EN>Our settlement is nearby, in case you need shelter.</EN>
+	</Text>
+	<Text id="DIALOG04_10">
+		<ES>¿Tiene alguna idea de dónde puede estar mi padre, Flo? Antes de caer aquí, oí una voz que me dijo que mi padre estaría aquí, pero para empezar, no sé ni donde estoy.</ES>
+		<CA>Saps on pot estar el meu pare, Flo? Abans de caure aquí vaig sentir una veu que em deia que el meu pare seria aquí, però per començar, ni tan sols sé on sóc.</CA>
+		<EN>Do you have any idea where my father could be, Flo? Before I fell here, I heard a voice telling me he would be here, but to begin with, I don’t even know where I am.</EN>
+	</Text>
+	<Text id="DIALOG04_11">
+		<ES>Si tu padre es humano como tú, mucho me temo que se encuentra en la capa más alta del inframundo, muy lejos de donde nos encontramos, señorita.</ES>
+		<CA>Si el teu pare és humà com tu, em temo que es troba a la capa més alta de l’inframón, molt lluny d’on som ara, senyoreta.</CA>
+		<EN>If your father is human like you, I’m afraid he’s in the highest layer of the underworld, far from where we are now, miss.</EN>
+	</Text>
+	<Text id="DIALOG04_12">
+		<ES>Si realmente quiere ir a verle, tiene un largo viaje de camino. Le sugiero que se tranquilice y busque un camino para salir de aquí si tiene tanta prisa.</ES>
+		<CA>Si realment vol veure’l, té un llarg viatge per davant. Li suggereixo que es calmi i busqui un camí per sortir d’aquí si té tanta pressa.</CA>
+		<EN>If you really want to see him, you have a long journey ahead. I suggest you calm down and look for a way out of here if you’re in such a hurry.</EN>
+	</Text>
+	<Text id="DIALOG04_13">
+		<ES>Un buen guía son los rayos de luz, pese a que son escasos en esta profundidad, pueden guiarla a la siguiente capa.</ES>
+		<CA>Un bon guia són els raigs de llum, tot i que són escassos en aquesta profunditat, poden guiar-la cap a la següent capa.</CA>
+		<EN>A good guide is the rays of light. Though scarce at this depth, they can lead you to the next layer.</EN>
+	</Text>
+	<Text id="DIALOG04_14">
+		<ES>Gracias, Flo. Soy Kim, por cierto. Voy a adentrarme un poco más, a ver si encuentro alguna pista de dónde puede estar mi padre. ¡Nos vemos!</ES>
+		<CA>Gràcies, Flo. Sóc la Kim, per cert. M’endinsaré una mica més, a veure si trobo alguna pista sobre on pot estar el meu pare. Ens veiem!</CA>
+		<EN>Thanks, Flo. I’m Kim, by the way. I’ll go a bit further and see if I can find a clue about where my father might be. See you!</EN>
+	</Text>
+	<Text id="DIALOG05_1">
+		<ES>No tienes suficiente dinero, vuelve cuando lo tengas.</ES>
+		<CA>No tens prou diners, torna quan en tinguis.</CA>
+		<EN>You don’t have enough money, come back when you do.</EN>
+	</Text>
+	<Text id="TUTORIAL">
+		<ES>TUTORIAL</ES>
+		<CA>TUTORIAL</CA>
+		<EN>TUTORIAL</EN>
+	</Text>
+	<Text id="TEST_LEVEL">
+		<ES>NIVEL DE PRUEBA</ES>
+		<CA>NIVELL DE PROBA</CA>
+		<EN>TEST LEVEL</EN>
+	</Text>
+	<Text id="CONTINUE">
+		<ES>CONTINUAR</ES>
+		<CA>CONTINUAR</CA>
+		<EN>CONTINUE</EN>
+	</Text>
+	<Text id="OPTIONS">
+		<ES>OPCIONES</ES>
+		<CA>OPCIONS</CA>
+		<EN>OPTIONS</EN>
+	</Text>
+	<Text id="CREDITS">
+		<ES>CREDITOS</ES>
+		<CA>CREDITS</CA>
+		<EN>CREDITS</EN>
+	</Text>
+	<Text id="EXIT">
+		<ES>SALIR</ES>
+		<CA>SORTIR</CA>
+		<EN>EXIT</EN>
+	</Text>
+	<Text id="BACK">
+		<ES>ATRAS</ES>
+		<CA>ENRERE</CA>
+		<EN>BACK</EN>
+	</Text>
+	<Text id="MUSIC">
+		<ES>MUSICA</ES>
+		<CA>MUSICA</CA>
+		<EN>MUSIC</EN>
+	</Text>
+	<Text id="SOUND_EFFECTS">
+		<ES>EFECTOS DE SONIDO</ES>
+		<CA>EFECTES SONORS</CA>
+		<EN>SOUND EFFECTS</EN>
+	</Text>
+	<Text id="FULL_SCREEN">
+		<ES>PANTALLA COMPLETA</ES>
+		<CA>PANTALLA COMPLETA</CA>
+		<EN>FULL SCREEN</EN>
+	</Text>
+</Texts>
