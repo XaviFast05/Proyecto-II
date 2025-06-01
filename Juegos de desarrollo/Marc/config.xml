@@ -288,6 +288,40 @@
 						</idle>
 					</animations>
 				</wallBrakerParticle>
+				<environmentParticles  w="64" h="64" entityType="20" texture="Assets/Textures/Particles/environmentParticle.png">
+					<animations>
+						<idle loop="true" speed="0.0125f">
+							<frame x="0" y="0" w="64" h="64" />
+							<frame x="64" y="0" w="64" h="64" />
+							<frame x="128" y="0" w="64" h="64" />
+							<frame x="192" y="0" w="64" h="64" />
+							<frame x="256" y="0" w="64" h="64" />
+							<frame x="320" y="0" w="64" h="64" />
+							<frame x="384" y="0" w="64" h="64" />
+							<frame x="448" y="0" w="64" h="64" />
+						</idle>
+					</animations>
+				</environmentParticles>
+				<instances>
+					<lvl1>
+
+					</lvl1>
+					<lvl2>
+	
+					</lvl2>
+					<lvl3>
+
+					</lvl3>
+					<lvl4>
+
+					</lvl4>
+					<lvl5>
+
+					</lvl5>
+					<lvl6>
+
+					</lvl6>
+				</instances>
 			</particles>
 			<enemies>
 				<skeleton x="100" y="420" w="64" h="64" texture="Assets/Textures/Enemies/Fantasma/Fantasma_spriteSheet.png">

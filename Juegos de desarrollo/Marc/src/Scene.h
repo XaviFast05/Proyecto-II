@@ -82,6 +82,10 @@ public:
 
 	void LoadAlly(Merchant* merchant, pugi::xml_node instanceNode);
 
+	void LoadParticle(Particle* particle, pugi::xml_node instanceNode);
+
+	void LoadEnvironmentParticles(float areaX, float areaY, float areaW, float areaH);
+
 	void LoadState();
 
 	void LoadTimeLivesCandies();
@@ -161,6 +165,7 @@ private:
 	std::vector<CheckPoint*> checkPoints;
 	std::vector<SoulRock*> soulRocks;
 	std::vector<Merchant*> allies;
+	std::vector<Particle*> particles;
 	pugi::xml_node musicNode;
 
 	std::map<std::string, GuiControlButton*> pauseButtons;

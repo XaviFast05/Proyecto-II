@@ -38,6 +38,7 @@
 #include "SoulRockParticle.h"
 #include "DashParticle.h"
 #include "WallBrakerParticle.h"
+#include "EnvironmentParticles.h"
 #include "MerchantMenu.h"
 
 
@@ -102,7 +103,7 @@ bool Scene::Start()
 	//Load Enemies
 	for (pugi::xml_node enemyNode : configParameters.child("entities").child("enemies").child("instances").child(GetCurrentLevelString().c_str()).children())
 	{
-		Enemy* enemy = (GroundEnemy*)Engine::GetInstance().entityManager->CreateEntity((EntityType)enemyNode.attribute("entityType").as_int());;
+		Enemy* enemy = (Enemy*)Engine::GetInstance().entityManager->CreateEntity((EntityType)enemyNode.attribute("entityType").as_int());;
 		LoadEnemy(enemy, enemyNode);
 	}
 
@@ -124,6 +125,12 @@ bool Scene::Start()
 		Merchant* ally = (Merchant*)Engine::GetInstance().entityManager->CreateEntity((EntityType)alliesNode.attribute("entityType").as_int());;
 		LoadAlly(ally, alliesNode);
 	}
+
+	//for (pugi::xml_node particlesNode : configParameters.child("entities").child("particles").child("instances").child(GetCurrentLevelString().c_str()).children())
+	//{
+	//	Particle* particle = (Particle*)Engine::GetInstance().entityManager->CreateEntity((EntityType)particlesNode.attribute("entityType").as_int());;
+	//	LoadParticle(particle, particlesNode);
+	//}
 
 	std::list<Entity*> entities = Engine::GetInstance().entityManager.get()->entities;
 	for (const auto& entity : entities) {
@@ -233,6 +240,29 @@ void Scene::LoadAlly(Merchant* merchant, pugi::xml_node instanceNode) {
 	merchant->SetInstanceParameters(instanceNode);
 	allies.push_back(merchant);
 
+}
+
+void Scene::LoadParticle(Particle* particle, pugi::xml_node instanceNode)
+{
+	particle->SetParameters(configParameters.child("entities").child("particles").child(instanceNode.attribute("particleType").as_string()));
+	particle->SetInstanceParameters(instanceNode);
+	particles.push_back(particle);
+}
+
+void Scene::LoadEnvironmentParticles(float areaX, float areaY, float areaWidth, float areaHeight)
+{
+	EnvironmentParticles* particle = (EnvironmentParticles*)Engine::GetInstance().entityManager->CreateEntity((EntityType)configParameters.child("entities").child("particles").child("environmentParticles").attribute("entityType").as_int());;
+	//if (particle == nullptr) {
+	//	printf("VINISIUUUUUUUUU");
+	//}
+	particle->SetParameters(configParameters.child("entities").child("particles").child("environmentParticles"));
+	particle->Start();
+	Vector2D pos(areaX, areaY);
+	particle->SetPosition(pos);
+	particle->areaW = areaWidth;
+	particle->areaH = areaHeight;
+	printf("POS OK: %f",particle->pbody->body->GetPosition().x);
+	particles.push_back(particle);
 }
 
 

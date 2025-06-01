@@ -1,5 +1,6 @@
 
 #include "Engine.h"
+#include "Scene.h"
 #include "Render.h"
 #include "Textures.h"
 #include "Map.h"
@@ -303,12 +304,13 @@ bool Map::Load(std::string path, std::string fileName)
                     c->ctype = ColliderType::MAPLIMITS;
                 }
             }
-            if (objectGroup->name == "Ladder") {
+            if (objectGroup->name == "EnvironmentParticles") {
                 for (Object* object : objectGroup->object)
                 {
-                    PhysBody* c = Engine::GetInstance().physics.get()->CreateRectangleSensor(object->x + object->width / 2, object->y + object->height / 2, object->width, object->height, STATIC);
+                    printf("CAPAAAAAA");
+                    Engine::GetInstance().scene.get()->LoadEnvironmentParticles(object->x + object->width / 2, object->y + object->height / 2, object->width, object->height);
+                    
 
-                    c->ctype = ColliderType::LADDER;
                 }
             }
             if (objectGroup->name == "Checkpoints") {
