@@ -113,9 +113,7 @@ bool Settings::Update(float dt)
 		int screenWidth = rootNode.child("window").child("resolution").attribute("width").as_int();
 		int screenHeight = rootNode.child("window").child("resolution").attribute("height").as_int();
 		
-		Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
-		Engine::GetInstance().render.get()->DrawTextureBuffer(optPanel, -camera.x / windowScale + optPanelX, -camera.y / windowScale + optPanelY, false, MENUS);
-
+		
 		
 		for (GuiControl* gui : settingsGUI) {
 			if (gui->active == false) {
@@ -125,6 +123,9 @@ bool Settings::Update(float dt)
 		
 		if (controlsOpen == false)
 		{
+			Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
+			Engine::GetInstance().render.get()->DrawTextureBuffer(optPanel, -camera.x / windowScale + optPanelX, -camera.y / windowScale + optPanelY, false, MENUS);
+
 			fullScreenBox->Update(dt);
 
 			musicSlider->Update(dt);
@@ -134,31 +135,47 @@ bool Settings::Update(float dt)
 
 			controlsBt->Update(dt);
 			OnGuiMouseClickEvent(controlsBt);
+			if (titleText != "")
+			{
+				int textW = 0, textH = 0;
+				TTF_SizeUTF8(titleFont, Engine::GetInstance().textManager.get()->GetText(titleText).c_str(), &textW, &textH);
+
+				Engine::GetInstance().render.get()->DrawTextToBuffer(
+					Engine::GetInstance().textManager.get()->GetText(titleText).c_str(),
+					optPanelX + (optPanelW / 2) - textW / 2,
+					optPanelY + (optPanelH / 2) - textH / 2 + titleVerticalDisplacement,
+					textW,
+					textH,
+					titleFont,
+					{ 255, 255, 255, 255 }, MENUS
+				);
+			}
 		}
 		else
 		{
 			Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
 			Engine::GetInstance().render.get()->DrawTextureBuffer(controlsKeyboardPanel, -camera.x / windowScale + controlsKeyboardPanelX, -camera.y / windowScale + controlsKeyboardPanelY, false, MENUS);
+			if (controlsText != "")
+			{
+				int textW = 0, textH = 0;
+				TTF_SizeUTF8(controlsFont, Engine::GetInstance().textManager.get()->GetText(controlsText).c_str(), &textW, &textH);
+
+				Engine::GetInstance().render.get()->DrawTextToBuffer(
+					Engine::GetInstance().textManager.get()->GetText(controlsText).c_str(),
+					controlsKeyboardPanelX + (controlsKeyboardPanelW / 2) - textW / 2,
+					controlsKeyboardPanelY + (controlsKeyboardPanelH / 2) - textH / 2 + titleVerticalDisplacement,
+					textW,
+					textH,
+					controlsFont,
+					{ 255, 255, 255, 255 }, MENUS
+				);
+			}
 		}
 		
 		backBt->Update(dt);
 		OnGuiMouseClickEvent(backBt);
 		
-		if (titleText != "")
-		{
-			int textW = 0, textH = 0;
-			TTF_SizeUTF8(titleFont, Engine::GetInstance().textManager.get()->GetText(titleText).c_str(), &textW, &textH);
-
-			Engine::GetInstance().render.get()->DrawTextToBuffer(
-				Engine::GetInstance().textManager.get()->GetText(titleText).c_str(),
-				optPanelX + (optPanelW / 2) - textW / 2,
-				optPanelY + (optPanelH / 2) - textH / 2 + titleVerticalDisplacement,
-				textW,
-				textH,
-				titleFont,
-				{ 255, 255, 255, 255 }, MENUS
-			);
-		}
+		
 	}
 	else {
 		for (GuiControl* gui : settingsGUI) {
