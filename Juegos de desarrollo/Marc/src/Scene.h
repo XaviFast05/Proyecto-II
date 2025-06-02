@@ -84,7 +84,7 @@ public:
 
 	void LoadParticle(Particle* particle, pugi::xml_node instanceNode);
 
-	void LoadEnvironmentParticles(float areaX, float areaY, float areaW, float areaH);
+	//void LoadEnvironmentParticles(float areaX, float areaY, float areaW, float areaH);
 
 	void LoadState();
 
@@ -155,6 +155,11 @@ public:
 	std::string currencyText;
 
 	bool cameraDirectionChangeActivation = false;
+
+	int camX = 0;
+	int camY = 0;
+	int camW = 0;
+	int camH = 0;
 
 private:
 	

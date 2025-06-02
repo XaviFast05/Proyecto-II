@@ -3,7 +3,18 @@
 #include "Vector2D.h"
 #include "Entity.h"
 #include "Timer.h"
+#include <vector>
 
+struct ParticleInstance
+{
+	SDL_FPoint position;
+	Animation anim;
+	float startDelay = 0.0f;
+	bool started = false;
+	bool finished = false;
+	float life = 0.0f;      
+	float maxLife = 2.0f;
+};
 
 class EnvironmentParticles : public Particle
 {
@@ -16,21 +27,17 @@ public:
 
 	bool Update(float dt) override;
 
-	int type;
+private:
 
 	int areaW;
 	int areaH;
 
-private:
-	bool active1, active2, active3, active4, active5;
-	float lifeTime1, lifeTime2, lifeTime3, lifeTime4, lifeTime5;
-	float castTime1, castTime2, castTime3, castTime4, castTime5;
-	bool changeDisplay;
+	const int maxParticles = 21;
+	int numParticles = 21;
+	
+	Timer particleTimer;
 
+	std::vector<ParticleInstance> particles;
 
-	int posX;
-	int posY;
-
-	float rotation;
 
 };

@@ -205,6 +205,19 @@ bool Scene::Start()
 	bgCapa1 = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("bgCapa1").attribute("path").as_string());
 	kimHead = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("kimHead").attribute("path").as_string());
 
+	//ENVIRONEMT PARTICLES ON CAMERA
+
+	EnvironmentParticles* particle = (EnvironmentParticles*)Engine::GetInstance().entityManager->CreateEntity((EntityType)configParameters.child("entities").child("particles").child("environmentParticles").attribute("entityType").as_int());;
+	particle->SetParameters(configParameters.child("entities").child("particles").child("environmentParticles"));
+	particle->Start();
+	particle->isCasted = true;
+	//Vector2D pos(camX, areaY);
+	//particle->SetPosition(pos);
+	//particle->areaW = areaWidth;
+	//particle->areaH = areaHeight;
+	particles.push_back(particle);
+	
+
 	return true;
 }
 
@@ -249,21 +262,17 @@ void Scene::LoadParticle(Particle* particle, pugi::xml_node instanceNode)
 	particles.push_back(particle);
 }
 
-void Scene::LoadEnvironmentParticles(float areaX, float areaY, float areaWidth, float areaHeight)
-{
-	EnvironmentParticles* particle = (EnvironmentParticles*)Engine::GetInstance().entityManager->CreateEntity((EntityType)configParameters.child("entities").child("particles").child("environmentParticles").attribute("entityType").as_int());;
-	//if (particle == nullptr) {
-	//	printf("VINISIUUUUUUUUU");
-	//}
-	particle->SetParameters(configParameters.child("entities").child("particles").child("environmentParticles"));
-	particle->Start();
-	Vector2D pos(areaX, areaY);
-	particle->SetPosition(pos);
-	particle->areaW = areaWidth;
-	particle->areaH = areaHeight;
-	printf("POS OK: %f",particle->pbody->body->GetPosition().x);
-	particles.push_back(particle);
-}
+//void Scene::LoadEnvironmentParticles(float areaX, float areaY, float areaWidth, float areaHeight)
+//{
+//	EnvironmentParticles* particle = (EnvironmentParticles*)Engine::GetInstance().entityManager->CreateEntity((EntityType)configParameters.child("entities").child("particles").child("environmentParticles").attribute("entityType").as_int());;
+//	particle->SetParameters(configParameters.child("entities").child("particles").child("environmentParticles"));
+//	particle->Start();
+//	Vector2D pos(areaX, areaY);
+//	particle->SetPosition(pos);
+//	particle->areaW = areaWidth;
+//	particle->areaH = areaHeight;
+//	particles.push_back(particle);
+//}
 
 
 int Scene::GetLevel()
@@ -409,6 +418,15 @@ bool Scene::Update(float dt)
 
 	if (!paused) {
 		currentTime += dt / 1000.0f;
+
+		//CAM VARIABLES
+		camX = -Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->GetScale();
+		camY = -Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->GetScale();
+		camW = Engine::GetInstance().window.get()->width;
+		camH = Engine::GetInstance().window.get()->height;
+
+		printf("CAM X: %i", camX);
+		printf("CAM Y: %i", camY);
 
 		//CAMERA X
 		ChangeDirectionCameraX();

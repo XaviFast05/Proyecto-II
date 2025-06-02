@@ -304,15 +304,15 @@ bool Map::Load(std::string path, std::string fileName)
                     c->ctype = ColliderType::MAPLIMITS;
                 }
             }
-            if (objectGroup->name == "EnvironmentParticles") {
-                for (Object* object : objectGroup->object)
-                {
-                    printf("CAPAAAAAA");
-                    Engine::GetInstance().scene.get()->LoadEnvironmentParticles(object->x + object->width / 2, object->y + object->height / 2, object->width, object->height);
-                    
+            //if (objectGroup->name == "EnvironmentParticles") {
+            //    for (Object* object : objectGroup->object)
+            //    {
 
-                }
-            }
+            //        Engine::GetInstance().scene.get()->LoadEnvironmentParticles(object->x + object->width / 2, object->y + object->height / 2, object->width, object->height);
+            //        
+
+            //    }
+            //}
             if (objectGroup->name == "Checkpoints") {
                 for (Object* object : objectGroup->object) {
 

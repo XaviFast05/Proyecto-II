@@ -290,7 +290,7 @@
 				</wallBrakerParticle>
 				<environmentParticles  w="64" h="64" entityType="20" texture="Assets/Textures/Particles/environmentParticle.png">
 					<animations>
-						<idle loop="true" speed="0.0125f">
+						<idle loop="true" speed="0.1f">
 							<frame x="0" y="0" w="64" h="64" />
 							<frame x="64" y="0" w="64" h="64" />
 							<frame x="128" y="0" w="64" h="64" />

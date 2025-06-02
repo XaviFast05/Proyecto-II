@@ -112847,9 +112847,4 @@
  <objectgroup id="8" name="LevelChanger" visible="0">
   <object id="193" x="5184" y="4096" width="448" height="1024"/>
  </objectgroup>
- <objectgroup id="13" name="EnvironmentParticles">
-  <object id="219" x="578" y="3134" width="702" height="258"/>
-  <object id="220" x="1288" y="3132" width="568" height="196"/>
-  <object id="221" x="1856" y="3200" width="512" height="256"/>
- </objectgroup>
 </map>
