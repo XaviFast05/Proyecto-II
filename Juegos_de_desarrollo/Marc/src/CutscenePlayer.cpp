@@ -28,7 +28,7 @@ bool CutscenePlayer::Start()
     position1 = Vector2D(300, 500);
     position2 = Vector2D(600, 500);
     // File path of the video to be played
-   // file = "Assets/Video/video.mp4";
+    // file = "Assets/Video/video.mp4";
     file = "Assets/Video/Cinematica_KimSeCae.mov";
 
 

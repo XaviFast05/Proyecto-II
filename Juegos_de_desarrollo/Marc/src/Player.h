@@ -132,7 +132,7 @@ public:
 	bool canClimb;
 	bool reachedCheckPoint;
 	bool canHurt = true;
-	
+
 	Timer respawnTimer;
 	float respawnTime;
 

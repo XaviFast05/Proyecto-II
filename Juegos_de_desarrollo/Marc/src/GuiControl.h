@@ -64,7 +64,9 @@ enum class GuiControlId
 	FIFTH_UPGRADE,
 	SIXTH_UPGRADE,
 	SEVENTH_UPGRADE,
-	EIGHTH_UPGRADE
+	EIGHTH_UPGRADE,
+
+	CONTROLS,
 };
 
 class GuiControl

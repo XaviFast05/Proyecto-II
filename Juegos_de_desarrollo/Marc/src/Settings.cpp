@@ -61,6 +61,11 @@ bool Settings::Start()
 	backBt->SetGuiParameters("backBt", configParameters);
 	
 	settingsGUI.push_back(backBt);
+
+	controlsBt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, "controlsBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	controlsBt->SetGuiParameters("controlsBt", configParameters);
+
+	settingsGUI.push_back(controlsBt);
 	
 	fullScreenBox = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "fullScreenBox", "", { 0,0,0,0 }, this, { 0,0,0,0 });
 	fullScreenBox->SetGuiParameters("fullScreenBox", configParameters);
@@ -74,6 +79,15 @@ bool Settings::Start()
 	titleFont = TTF_OpenFont(configParameters.child("optPanel").attribute("font").as_string(), configParameters.child("optPanel").attribute("fontSize").as_int());
 	titleText = configParameters.child("optPanel").attribute("text").as_string();
 	titleVerticalDisplacement = configParameters.child("optPanel").attribute("textVerticalDisplacement").as_int();
+
+	controlsKeyboardPanel = Engine::GetInstance().textures.get()->Load(configParameters.child("controlsKeyboardPanel").attribute("path").as_string());
+	controlsKeyboardPanelX = configParameters.child("controlsKeyboardPanel").attribute("x").as_int();
+	controlsKeyboardPanelY = configParameters.child("controlsKeyboardPanel").attribute("y").as_int();
+	controlsKeyboardPanelW = configParameters.child("controlsKeyboardPanel").attribute("w").as_int();
+	controlsKeyboardPanelH = configParameters.child("controlsKeyboardPanel").attribute("h").as_int();
+	controlsFont = TTF_OpenFont(configParameters.child("controlsKeyboardPanel").attribute("font").as_string(), configParameters.child("controlsKeyboardPanel").attribute("fontSize").as_int());
+	controlsText = configParameters.child("controlsKeyboardPanel").attribute("text").as_string();
+	controlsVerticalDisplacement = configParameters.child("controlsKeyboardPanel").attribute("textVerticalDisplacement").as_int();
 
 	musicSlider->sliderPosX = musicSlider->sliderBounds.x + musicSlider->sliderBounds.w/2 - musicSlider->bounds.w/2;
 	sfxSlider->sliderPosX = sfxSlider->sliderBounds.x + sfxSlider->sliderBounds.w/2 - sfxSlider->bounds.w/2;
@@ -109,16 +123,26 @@ bool Settings::Update(float dt)
 			}
 		}
 		
+		if (controlsOpen == false)
+		{
+			fullScreenBox->Update(dt);
+
+			musicSlider->Update(dt);
+			OnGuiMouseClickEvent(musicSlider);
+
+			sfxSlider->Update(dt);
+
+			controlsBt->Update(dt);
+			OnGuiMouseClickEvent(controlsBt);
+		}
+		else
+		{
+			Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
+			Engine::GetInstance().render.get()->DrawTextureBuffer(controlsKeyboardPanel, -camera.x / windowScale + controlsKeyboardPanelX, -camera.y / windowScale + controlsKeyboardPanelY, false, MENUS);
+		}
+		
 		backBt->Update(dt);
 		OnGuiMouseClickEvent(backBt);
-
-		fullScreenBox->Update(dt);
-
-		
-		musicSlider->Update(dt);
-		OnGuiMouseClickEvent(musicSlider);
-		
-		sfxSlider->Update(dt);
 		
 		if (titleText != "")
 		{
@@ -135,9 +159,6 @@ bool Settings::Update(float dt)
 				{ 255, 255, 255, 255 }, MENUS
 			);
 		}
-
-	
-
 	}
 	else {
 		for (GuiControl* gui : settingsGUI) {
@@ -194,14 +215,24 @@ bool Settings::OnGuiMouseClickEvent(GuiControl* control) {
 		break;
 	case GuiControlId::BACK:
 		if (control->state == GuiControlState::PRESSED && settingsOpen) {
-			settingsOpen = false;
-			for (const auto& bt : Engine::GetInstance().mainMenu.get()->buttons) {
-				bt.second->state = GuiControlState::NORMAL;
-				if (!saved) {
-					Engine::GetInstance().mainMenu.get()->buttons["continueBt"]->state = GuiControlState::DISABLED;
-				}
+			if (controlsOpen == true) {
+				controlsOpen = false;
 			}
-			SavePrefs();
+			else {
+				settingsOpen = false;
+				for (const auto& bt : Engine::GetInstance().mainMenu.get()->buttons) {
+					bt.second->state = GuiControlState::NORMAL;
+					if (!saved) {
+						Engine::GetInstance().mainMenu.get()->buttons["continueBt"]->state = GuiControlState::DISABLED;
+					}
+				}
+				SavePrefs();
+			}
+		}
+		break;
+	case GuiControlId::CONTROLS:
+		if (control->state == GuiControlState::PRESSED && settingsOpen) {
+			controlsOpen = true;
 		}
 		
 		break;

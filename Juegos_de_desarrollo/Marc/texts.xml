@@ -155,4 +155,14 @@
 		<CA>PANTALLA COMPLETA</CA>
 		<EN>FULL SCREEN</EN>
 	</Text>
-</Texts>
+	<Text id="NEW_GAME">
+		<ES>NUEVA PARTIDA</ES>
+		<CA>NOVA PARTIDA</CA>
+		<EN>NEW GAME</EN>
+	</Text>
+	<Text id="CONTROLS">
+		<ES>CONTROLES</ES>
+		<CA>CONTROLS</CA>
+		<EN>CONTROLS</EN>
+	</Text>
+	</Texts>

@@ -257,17 +257,6 @@ bool Scene::Update(float dt)
 
 	_dt = dt;
 
-	//if (player->lives <= 0 && player->respawnTimer.ReadSec() > player->respawnTime-1) {
-	//	/*Engine::GetInstance().death.get()->Enable();*/
-
-	//	Engine::GetInstance().death.get()->finalCandyNum = player->pickedCandies;
-	//	Engine::GetInstance().fade.get()->Fade((Module*)this, Engine::GetInstance().death.get());
-	//	
-
-	//	
-	//	return true;
-	//}
-
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 	{
 		player->KillPlayer();
