@@ -309,6 +309,7 @@ bool Player::Update(float dt)
 				else projectileManager->ThrowPickaxe(GetDirection(), pbody->GetPhysBodyWorldPosition());
 
 				stateTimer.Start();
+				Engine::GetInstance().scene.get()->charging = false;
 				playerState = THROW;
 			}
 			else if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) == KEY_DOWN)

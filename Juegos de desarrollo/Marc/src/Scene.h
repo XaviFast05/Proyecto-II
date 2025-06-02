@@ -135,8 +135,12 @@ public:
 	GuiControlCheckBox* fullScreenCheckBox;
 	SDL_Texture* pausePanel;
 	
-	SDL_Texture* heartsTexture, * piquetaNormal, * piquetaGastada, * barraPiqueta, * barraRoja, * orbSoul, *bgTutorial, * bgCapa1, *bgLvl1, *kimHead;
-	
+	SDL_Texture* heartsTexture, * piquetaNormal, * piquetaGastada, * barraPiqueta, * barraRoja, * orbSoul, *bgTutorial, * bgCapa1, *bgLvl1, *kimHead, *piquetaReload;
+	Animation charge;
+	Animation* currentAnim = nullptr;
+	SDL_Rect currentFrame;
+	bool charging = true;
+
 	Vector2D pausePos;
 
 	int finalCandyNum;

@@ -191,6 +191,7 @@ bool Scene::Start()
 	heartsTexture = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("heartContainers").attribute("path").as_string());
 	piquetaNormal = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("piquetaNormal").attribute("path").as_string());
 	piquetaGastada = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("piquetaGastada").attribute("path").as_string());
+	piquetaReload = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("piquetaRecarga").attribute("path").as_string());
 	barraPiqueta = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("barraPiqueta").attribute("path").as_string());
 	barraRoja = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("barraRoja").attribute("path").as_string());
 	orbSoul = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("orbSoul").attribute("path").as_string());
@@ -198,6 +199,7 @@ bool Scene::Start()
 	bgCapa1 = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("bgCapa1").attribute("path").as_string());
 	kimHead = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("kimHead").attribute("path").as_string());
 
+	charge.LoadAnimations(configParameters.child("ui").child("pickaxes").child("animations").child("charging"));
 	return true;
 }
 
@@ -868,6 +870,23 @@ void Scene::DrawPickaxesUI()
 				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 10, false, HUD    // Posici�n Y
 			);
 		}
+		else if (i == (numPickaxes)) {
+			if (player->projectileManager->pickaxeRecollectCount > 2) charge.speed = 0.122;
+			else charge.speed = 0.122 * 2;
+
+			if (!charging) {
+				currentAnim = &charge;
+				currentAnim->Reset();
+				charging = true;
+			}
+			currentFrame = currentAnim->GetCurrentFrame();
+			Engine::GetInstance().render.get()->DrawTextureBuffer(
+				piquetaReload,
+				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (i * spacing), // Posici�n X
+				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 10, false, HUD, &currentFrame  // Posici�n Y
+			);
+			currentAnim->Update();
+		}
 		// Si no, dibuja una piqueta gastada
 		else {
 			Engine::GetInstance().render.get()->DrawTextureBuffer(
@@ -875,21 +894,20 @@ void Scene::DrawPickaxesUI()
 				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (i * spacing), // Posici�n X
 				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 10 , false, HUD  // Posici�n Y
 			);
-			Engine::GetInstance().render.get()->DrawTextureBuffer(
-				barraPiqueta,
-				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (numPickaxes * spacing), // Posici�n X
-				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 80 , false , HUD   // Posici�n Y
-			);
-			int redBars = player->projectileManager->GetNumRed();
-			int drawRedSpacing = 0;
-			for (int i = 0; i < redBars; i++) {
-				Engine::GetInstance().render.get()->DrawTextureBuffer(
-					barraRoja,
-					-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (numPickaxes * spacing) + drawRedSpacing, // Posici�n X
-					-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 80 , false , HUD   // Posici�n Y
-				);
-				drawRedSpacing += spacingRed;
-			}
+			//Engine::GetInstance().render.get()->DrawTextureBuffer(
+			//	barraPiqueta,
+			//	-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (numPickaxes * spacing), // Posici�n X
+			//	-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 80 , false , HUD   // Posici�n Y
+			//);
+			//int redBars = player->projectileManager->GetNumRed();
+			//int drawRedSpacing = 0;
+			//for (int i = 0; i < redBars; i++) {
+			//	Engine::GetInstance().render.get()->DrawTextureBuffer(
+			//		barraRoja,
+			//		-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (numPickaxes * spacing) + drawRedSpacing, // Posici�n X
+			//		-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 80 , false , HUD   // Posici�n Y
+			//	);
+			//	drawRedSpacing += spacingRed;
 		}
 	}
 }
@@ -916,8 +934,6 @@ void Scene::DrawCurrencyUI()
 
 void Scene::DrawMap()
 {
-	// 3 x 68.465
-
 	float posX = player->pbody->body->GetPosition().x;
 	float posY = player->pbody->body->GetPosition().y;
 	int centerX = -Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + (Engine::GetInstance().window.get()->width / 2) - 360;

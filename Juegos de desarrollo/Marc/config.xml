@@ -65,12 +65,38 @@
 			<heartContainers path="Assets/Textures/UI/lifeSimp.png" />
 			<piquetaNormal path="Assets/Textures/UI/piqueta_normal.png" />
 			<piquetaGastada path="Assets/Textures/UI/piqueta_gastada.png" />
+			<piquetaRecarga path="Assets/Textures/UI/piqueta_recarga.png" />
 			<barraPiqueta path="Assets/Textures/UI/barra.png" />
 			<barraRoja path="Assets/Textures/UI/barra_roja.png" />
 			<orbSoul path="Assets/Textures/UI/orbSoul.png" />
 			<bgTut path="Assets/Maps/fondo_tut.png" />
 			<bgCapa1 path="Assets/Maps/fondo_capa1.png" />
 			<kimHead path="Assets/Textures/kim.png" />
+			<pickaxes>
+				<animations x="0" y="0" w="64" h="64" rad="6" texture="Assets/Textures/UI/piqueta_recarga.png">
+					<charging loop="true" speed="0.1f">
+						<frame x="0" y="0" w="64" h="64" />
+						<frame x="64" y="0" w="64" h="64" />
+						<frame x="128" y="0" w="64" h="64" />
+						<frame x="192" y="0" w="64" h="64" />
+						<frame x="256" y="0" w="64" h="64" />
+						<frame x="320" y="0" w="64" h="64" />
+						<frame x="384" y="0" w="64" h="64" />
+						<frame x="448" y="0" w="64" h="64" />
+						<frame x="512" y="0" w="64" h="64" />
+						<frame x="576" y="0" w="64" h="64" />
+						<frame x="640" y="0" w="64" h="64" />
+						<frame x="704" y="0" w="64" h="64" />
+						<frame x="768" y="0" w="64" h="64" />
+						<frame x="832" y="0" w="64" h="64" />
+						<frame x="896" y="0" w="64" h="64" />
+						<frame x="960" y="0" w="64" h="64" />
+						<frame x="1024" y="0" w="64" h="64" />
+						<frame x="1088" y="0" w="64" h="64" />
+						<frame x="1152" y="0" w="64" h="64" />
+					</charging>
+				</animations>
+			</pickaxes>
 		</ui>
 		<map>
 			<paths>
