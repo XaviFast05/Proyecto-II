@@ -5,7 +5,7 @@
 #include "GuiControlButton.h"
 
 #include "GuiControlSlider.h"
-
+#include <vector>
 #include <list>
 #include <map>
 
@@ -57,9 +57,14 @@ public:
 	int optPanelX, optPanelY;
 	float _dt;
 
+	int selectedIndex = 0;
 
 	GuiControlSlider* musicSlider, *sfxSlider;
 	GuiControlButton* backBt;
 
-	std::map<std::string, GuiControlButton*> buttons;
+	std::vector<GuiControlButton*> buttons;
+	Vector2D prevMousePos = { -1, -1 };
+	bool mouseMoved = false;
+	bool canClickBack = false;
+
 };

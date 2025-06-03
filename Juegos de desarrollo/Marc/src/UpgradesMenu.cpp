@@ -187,9 +187,9 @@ bool UpgradesMenu::OnGuiMouseClickEvent(GuiControl* control) {
 		if (control->state == GuiControlState::PRESSED && upgradesOpen) {
 			upgradesOpen = false;
 			for (const auto& bt : Engine::GetInstance().mainMenu.get()->buttons) {
-				bt.second->state = GuiControlState::NORMAL;
+				bt->state = GuiControlState::NORMAL;
 				if (!saved) {
-					Engine::GetInstance().mainMenu.get()->buttons["continueBt"]->state = GuiControlState::DISABLED;
+					Engine::GetInstance().mainMenu.get()->buttons[1]->state = GuiControlState::DISABLED;
 				}
 			}
 			SavePrefs();

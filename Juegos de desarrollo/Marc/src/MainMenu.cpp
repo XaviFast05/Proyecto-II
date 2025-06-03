@@ -14,6 +14,7 @@
 #include "Scene.h"
 #include "Settings.h"
 #include "Player.h"
+#include "Input.h"
 
 
 
@@ -60,7 +61,7 @@ bool MainMenu::Start()
 		std::string buttonName = child.name();
 		GuiControlButton* bt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, buttonName.c_str(), "", { 0, 0, 0, 0 }, this, { 0,0,0,0 });
 		bt->SetGuiParameters(buttonName, buttonNode);
-		buttons[buttonName] = bt;
+		buttons.push_back(bt);
 	}
 	
 	Engine::GetInstance().render.get()->camera.x = 0;
@@ -84,10 +85,11 @@ bool MainMenu::Start()
 	loadFile.save_file("savedData.xml");
 
 	if (!saved)
-		buttons["continueBt"]->state = GuiControlState::DISABLED();
+		buttons[1]->state = GuiControlState::DISABLED();
 
 	creditsOpen = false;
-	buttons["backBt"]->active = false;
+	buttons[5]->active = false;
+
 
 	return ret;
 }
@@ -96,16 +98,81 @@ bool MainMenu::Update(float dt)
 {
 	_dt = dt;
 
+	if (Engine::GetInstance().settings.get()->settingsOpen) return true;
+
 	Engine::GetInstance().render.get()->DrawTextureBuffer(bgTex, 0, 0, false, MENUS);
-	if (!Engine::GetInstance().settings.get()->settingsOpen && !creditsOpen)
+	Vector2D currentMousePos = Engine::GetInstance().input.get()->GetMousePosition();
+	mouseMoved = (currentMousePos.getX() != prevMousePos.getX() || currentMousePos.getY() != prevMousePos.getY());
+
+	if (creditsOpen)
 	{
-		for (const auto& bt : buttons)
+		buttons[5]->active = true;
+		buttons[5]->Update(dt);
+		OnGuiMouseClickEvent(buttons[5]);
+
+		if (!mouseMoved)
 		{
-			OnGuiMouseClickEvent(bt.second);
-			if (bt.second->name != "backBt")
-				bt.second->Update(dt);
+			buttons[5]->state = GuiControlState::FOCUSED;
+			if (Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_A) == KEY_DOWN)
+			{
+				buttons[5]->state = GuiControlState::PRESSED;
+				OnGuiMouseClickEvent(buttons[5]);
+			}
+		}
+		else
+		{
+			selectedIndex = 4;
+		}
+
+		prevMousePos = currentMousePos;
+		return true;
+	}
+
+	//Mouse 
+	if (mouseMoved)
+	{
+		for (auto& bt : buttons)
+		{
+			if (!bt->active) continue;
+			bt->Update(dt);
+			OnGuiMouseClickEvent(bt);
 		}
 	}
+	//Gamepad
+	else
+	{
+		if (Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_DPAD_DOWN) == KEY_DOWN)
+		{
+			do {
+				selectedIndex = (selectedIndex + 1 >= buttons.size()) ? 0 : selectedIndex + 1;
+			} while (!buttons[selectedIndex]->active || buttons[selectedIndex]->state == GuiControlState::DISABLED);
+		}
+		if (Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_DPAD_UP) == KEY_DOWN)
+		{
+			do {
+				selectedIndex = (selectedIndex == 0) ? buttons.size() - 1 : selectedIndex - 1;
+			} while (!buttons[selectedIndex]->active || buttons[selectedIndex]->state == GuiControlState::DISABLED);
+		}
+
+		for (int i = 0; i < buttons.size(); ++i)
+		{
+			if (!buttons[i]->active) continue;
+			buttons[i]->state = (i == selectedIndex) ? GuiControlState::FOCUSED : GuiControlState::NORMAL;
+			buttons[i]->Update(dt);
+			OnGuiMouseClickEvent(buttons[i]);
+		}
+
+		if (Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_A) == KEY_DOWN)
+		{
+			if (buttons[selectedIndex]->active && buttons[selectedIndex]->state != GuiControlState::DISABLED)
+			{
+				buttons[selectedIndex]->state = GuiControlState::PRESSED;
+				OnGuiMouseClickEvent(buttons[selectedIndex]);
+			}
+		}
+	}
+
+	prevMousePos = currentMousePos;
 
 	if (quit) return false;
 	
@@ -120,21 +187,17 @@ bool MainMenu::PostUpdate()
 	if (Engine::GetInstance().settings.get()->settingsOpen) {
 		
 		for (const auto& bt : buttons)
-			bt.second->state = GuiControlState::DISABLED;
+			bt->state = GuiControlState::DISABLED;
 	}
 
 	if (creditsOpen) {
 		Engine::GetInstance().render.get()->DrawTextureBuffer(credits, 0, 0, false, MENUS);
-
-		buttons["backBt"]->active = true;
-		OnGuiMouseClickEvent(buttons["backBt"]);
-		buttons["backBt"]->Update(_dt);
-
+		buttons[5]->Update(_dt);
 		
 	}
 	else {
-		buttons["backBt"]->active = false;
-		buttons["creditsBt"]->active = true;		
+		buttons[5]->active = false;
+		buttons[4]->active = true;		
 	}
 
 	return true;
@@ -143,7 +206,7 @@ bool MainMenu::PostUpdate()
 bool MainMenu::CleanUp() {
 
 	for (const auto& bt : buttons) {
-		bt.second->active = false;
+		bt->active = false;
 	}
 
 	return true;
@@ -179,13 +242,13 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control) {
 	case GuiControlId::CREDITS:
 		if (control->state == GuiControlState::PRESSED && !creditsOpen) {
 			creditsOpen = true;
-			buttons["creditsBt"]->active = false;
+			buttons[4]->active = false;
 		}
 		break;
 	case GuiControlId::BACK:
 		if (control->state == GuiControlState::PRESSED && creditsOpen) {
 			creditsOpen = false;
-			buttons["creditsBt"]->active = true;
+			buttons[4]->active = true;
 			
 		}
 		break;

@@ -49,7 +49,9 @@ bool GuiControlButton::Update(float dt)
 			}
 		}
 		else {
-			state = GuiControlState::NORMAL;
+			if (state != GuiControlState::FOCUSED && state != GuiControlState::PRESSED) {
+				state = GuiControlState::NORMAL;
+			}
 		}
 	}
 	
@@ -79,6 +81,7 @@ bool GuiControlButton::Update(float dt)
 
 
 	if (active) {
+		printf("CABRONPOONONN");
 		if (texture != nullptr) {
 			Engine::GetInstance().render.get()->DrawTextureBuffer(texture, -camera.x / windowScale + bounds.x, -camera.y / windowScale + bounds.y, false, MENUS,&section);
 			
