@@ -253,7 +253,7 @@ bool Player::Update(float dt)
 			else if (damageBoost && hits != 1 && !damageSmallBoost) damageAdded = 0;
 
 			//CHANGERS
-			if (playerState == DEAD || playerState == CHARGED) {
+			if (playerState == DEAD || playerState == CHARGED || playerState == UPGRADING) {
 			}
 			else if (playerState == HURT) {
 				if (hurtTimer.ReadSec() >= hurtTime) playerState = IDLE;
@@ -334,6 +334,11 @@ bool Player::Update(float dt)
 
 				dialoguesManager->StartDialogue("DIALOG04");
 				playerState = TALK;
+			}
+
+			//UPGRADING LOGIC
+			if (playerState == UPGRADING) {
+				if (unlockTimer.ReadSec() > unlockTimerMax) playerState = IDLE;
 			}
 
 			//COYOTE TIME LOGIC
@@ -625,6 +630,13 @@ bool Player::Update(float dt)
 			resetAnimation = false;
 		}
 		break;
+	case UPGRADING:
+		currentAnim = &charged; //XAVI AQUI PON LA ANIM DE UPGRADE HOLA
+		if (resetAnimation == true) {
+			currentAnim->Reset();
+			resetAnimation = false;
+		}
+		break;
 	case HURT:
 		currentAnim = &hurt;
 		if (resetAnimation == true) {
@@ -732,8 +744,16 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		}
 		break;
 	case ColliderType::UNLOCKAREA:
-		if (Engine::GetInstance().scene.get()->level == LVL5 && !unlockedDash) unlockedDash = true;
-		if (Engine::GetInstance().scene.get()->level == LVL4 && !unlockedCharged) unlockedCharged = true;
+		if (Engine::GetInstance().scene.get()->level == LVL5 && !unlockedDash) {
+			unlockedDash = true;
+			playerState = UPGRADING;
+			unlockTimer.Start();
+		}
+		if (Engine::GetInstance().scene.get()->level == LVL4 && !unlockedCharged) {
+			unlockedCharged = true;
+			playerState = UPGRADING;
+			unlockTimer.Start();
+		}
 		break;
 	case ColliderType::ENEMY:
 		LOG("Collision ENEMY");

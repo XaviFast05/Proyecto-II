@@ -292,7 +292,7 @@ bool Scene::Update(float dt)
 	{
 		//LVL3 CAPA 1
 		//LVL5 onirica dash
-		level = LVL4;
+		level = LVL5;
 		loadScene = false;
 		Engine::GetInstance().fade.get()->Fade(this, this);
 	}
