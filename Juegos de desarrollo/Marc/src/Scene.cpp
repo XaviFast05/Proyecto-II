@@ -40,6 +40,7 @@
 #include "WallBrakerParticle.h"
 #include "MerchantMenu.h"
 #include "TextManager.h"
+#include "DestructibleWall.h"
 
 
 #include "Intro.h"
@@ -112,6 +113,12 @@ bool Scene::Start()
 	{
 		CheckPoint* checkPoint = (CheckPoint*)Engine::GetInstance().entityManager->CreateEntity((EntityType)checkPointNode.attribute("entityType").as_int());;
 		LoadItem(checkPoint, checkPointNode);
+	}
+
+	for (pugi::xml_node destructibleWallNode : configParameters.child("entities").child("items").child("destructibleWalls").child("instances").child(GetCurrentLevelString().c_str()).children())
+	{
+		DestructibleWall* destructibleWall = (DestructibleWall*)Engine::GetInstance().entityManager->CreateEntity((EntityType)destructibleWallNode.attribute("entityType").as_int());;
+		LoadItem(destructibleWall, destructibleWallNode);
 	}
 
 	for (pugi::xml_node soulRockNode : configParameters.child("entities").child("items").child("soulRock").child("instances").child(GetCurrentLevelString().c_str()).children())
@@ -249,6 +256,13 @@ void Scene::LoadItem(CheckPoint* checkPoint, pugi::xml_node instanceNode) {
 	checkPoint->SetParameters(configParameters.child("entities").child("items").child("checkPoints"));
 	checkPoint->SetInstanceParameters(instanceNode);
 	checkPoints.push_back(checkPoint);
+}
+
+void Scene::LoadItem(DestructibleWall* destructibleWall, pugi::xml_node instanceNode) {
+
+	destructibleWall->SetParameters(configParameters.child("entities").child("items").child("destructibleWalls"));
+	destructibleWall->SetInstanceParameters(instanceNode);
+	destructibleWalls.push_back(destructibleWall);
 }
 
 void Scene::LoadAlly(Merchant* merchant, pugi::xml_node instanceNode) {
@@ -558,8 +572,6 @@ bool Scene::PostUpdate()
 
 			TTF_SizeUTF8(signFont, text.c_str(), &textW, &textH);
 
-			LOG("%d, %d", textW, textH);
-
 			Engine::GetInstance().render.get()->DrawTextToBuffer(
 				text.c_str(),
 				render->camera.w / 2 - textW/2,
@@ -671,11 +683,23 @@ void Scene::SaveState()
 		if (!parent) {
 			parent = savedDataNode.append_child(nodeChar.c_str());
 			parent.append_attribute("alight");
-			parent.append_attribute("x");
-			parent.append_attribute("y");
 		}
 
 		checkPoints[i]->SaveData(parent);
+	}
+
+	//BreakableWalls
+	for (int i = 0; i < destructibleWalls.size(); i++)
+	{
+		std::string nodeChar = "destructibleWall" + std::to_string(i);
+		pugi::xml_node parent = savedDataNode.child(nodeChar.c_str());
+
+		if (!parent) {
+			parent = savedDataNode.append_child(nodeChar.c_str());
+			parent.append_attribute("broke");
+		}
+
+		destructibleWalls[i]->SaveData(parent);
 	}
 
 	////SoulRocks
@@ -735,6 +759,16 @@ void Scene::LoadState() {
 		if (parent)
 		{
 			checkPoints[i]->LoadData(parent);
+		}
+	}
+
+	for (int i = 0; i < destructibleWalls.size(); i++)
+	{
+		std::string nodeChar = "destructibleWall" + std::to_string(i);
+		pugi::xml_node parent = savedDataNode.child(nodeChar.c_str());
+		if (parent)
+		{
+			destructibleWalls[i]->LoadData(parent);
 		}
 	}
 

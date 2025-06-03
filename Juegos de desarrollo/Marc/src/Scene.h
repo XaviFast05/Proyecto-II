@@ -23,6 +23,7 @@ class BatEnemy;
 class GroundEnemy;
 class Enemy;
 class CheckPoint;
+class DestructibleWall;
 class EntityManager;
 class GuiControlButton;
 class GuiControlSlider;
@@ -78,6 +79,8 @@ public:
 	void LoadEnemy(Enemy* enemy, pugi::xml_node instanceNode);
 
 	void LoadItem(CheckPoint* checkPoint, pugi::xml_node instanceNode);
+	
+	void LoadItem(DestructibleWall* destructibleWall, pugi::xml_node instanceNode);
 
 	void LoadSoulRock(SoulRock* soulRocks, pugi::xml_node instanceNode);
 
@@ -163,6 +166,7 @@ private:
 
 	std::vector<Enemy*> enemies;
 	std::vector<CheckPoint*> checkPoints;
+	std::vector<DestructibleWall*> destructibleWalls;
 	std::vector<SoulRock*> soulRocks;
 	std::vector<Merchant*> allies;
 	pugi::xml_node musicNode;

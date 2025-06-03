@@ -20,6 +20,7 @@
 #include "DashParticle.h"
 #include "SoulRockParticle.h"
 #include "WallBrakerParticle.h"
+#include "DestructibleWall.h"
 
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
 {
@@ -142,6 +143,9 @@ Entity* EntityManager::CreateEntity(EntityType bullet_direction)
 		break;
 	case EntityType::WALLBRAKER_PARTICLE:
 		entity = new WallBrakerParticle();
+		break;
+	case EntityType::DESTRUCTIBLE_WALL:
+		entity = new DestructibleWall();
 		break;
 	default:
 		break;

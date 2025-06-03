@@ -635,6 +635,23 @@
 						</lit>
 					</animations>
 				</checkPoints>
+				<destructibleWalls>
+					<properties w="64" h="192" texture="Assets/Textures/Objects/Roca rompible Onirica.png" />
+					<instances>
+						<lvl1>
+							<instance entityType="20" x="320" y="3264" />
+						</lvl1>
+					</instances>
+					<animations>
+						<unlit>
+							<frame x="0" y="0" w="128" h="128" />
+						</unlit>
+						<lit loop="true" speed="0.3f">
+							<frame x="128" y="0" w="128" h="128" />
+							<frame x="256" y="0" w="128" h="128" />
+						</lit>
+					</animations>
+				</destructibleWalls>
 				<soulRock>
 					<properties w="64" h="64" texture="Assets/Textures/Objects/SoulRock.png" />
 					<instances>

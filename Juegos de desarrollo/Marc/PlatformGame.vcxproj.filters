@@ -32,7 +32,6 @@
     <ClCompile Include="src\CheckPoint.cpp" />
     <ClCompile Include="src\Log.cpp" />
     <ClCompile Include="src\Map.cpp" />
-    <ClCompile Include="src\Particle.cpp" />
     <ClCompile Include="src\Pathfinding.cpp" />
     <ClCompile Include="src\PerfTimer.cpp" />
     <ClCompile Include="src\Physics.cpp" />
@@ -52,6 +51,7 @@
     <ClCompile Include="src\Window.cpp" />
     <ClCompile Include="src\WinMenu.cpp" />
     <ClCompile Include="src\ParticleManager.cpp" />
+    <ClCompile Include="src\DestructibleWall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Ally.h" />
@@ -108,6 +108,7 @@
     <ClInclude Include="src\Window.h" />
     <ClInclude Include="src\WinMenu.h" />
     <ClInclude Include="src\ParticleManager.h" />
+    <ClInclude Include="src\DestructibleWall.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="config.xml" />
