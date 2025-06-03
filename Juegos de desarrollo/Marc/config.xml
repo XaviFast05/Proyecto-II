@@ -618,11 +618,11 @@
 			</enemies>
 			<items>
 				<checkPoints>
-					<properties w="128" h="128" texture="Assets/Textures/Objects/checkpoint.png" />
+					<properties w="128" h="128" texture1="Assets/Textures/Objects/checkpoint.png" texture2="Assets/Textures/Objects/checkpoint_capa1.png"/>
 					<instances>
 						<lvl1>
-							<instance entityType="2" x="3568" y="2432" />
-							<instance entityType="2" x="9792" y="3392" />
+							<instance entityType="2" x="3568" y="2432" checkPointType = "1"/>
+							<instance entityType="2" x="9792" y="3392" checkPointType = "1"/>
 						</lvl1>
 					</instances>
 					<animations>
@@ -639,7 +639,6 @@
 					<properties w="64" h="192" texture="Assets/Textures/Objects/Roca rompible Onirica.png" />
 					<instances>
 						<lvl1>
-							<instance entityType="20" x="320" y="3264" />
 						</lvl1>
 					</instances>
 					<animations>

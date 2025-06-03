@@ -7,12 +7,18 @@
 #include <string.h>
 
 
-
 struct SDL_Texture;
 
 
 class CheckPoint : public Entity
 {
+	enum CheckPointType
+	{
+		UNKNOWN,
+		CHECKPOINT_ORANGE,
+		CHECKPOINT_BLACK
+	};
+
 public:
 
 	CheckPoint();
@@ -59,6 +65,8 @@ private:
 	Animation lit;
 	Animation unlit;
 	Animation* currentAnim = nullptr;
+
+	CheckPointType checkPointType;
 
 	pugi::xml_node parameters;
 };
