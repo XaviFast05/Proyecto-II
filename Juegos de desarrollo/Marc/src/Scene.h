@@ -42,6 +42,7 @@ enum Levels {
 	LVL4, //ZONA ONI 1
 	LVL5, //ZONA ONI 2
 	LVL6, //FINAL BOSS
+	LVL_COUNT
 };
 
 class Scene : public Module
@@ -117,6 +118,8 @@ public:
 	
 	std::string GetLevelString(Levels level);
 
+	void StartNewGame();
+
 public:
 
 	Levels level;
@@ -129,6 +132,7 @@ public:
 	bool stoppedTimer;
 
 	SDL_Texture* helpMenu;
+
 
 	GuiControlButton* resumeBt, * settingsBt, * backToTitleBt, * exitBt, *backBt;
 
@@ -168,6 +172,7 @@ private:
 	bool loadScene = false;
 	bool drawnMap = false;
 	bool changeLevel = false;
+	Timer changeLevelTimer;
 	bool startBossFight = false;
 	bool bossMusPlaying = false;
 	bool bossKilled = false;
@@ -177,4 +182,15 @@ private:
 	
 
 	Vector2D helpPos;
+
+	SDL_Texture* signTexture;
+	bool showSign;
+	int signTextureW;
+	int signTextureH;
+	int signTextureY;
+	TTF_Font* signFont;
+	std::string signKey;
+	int signTextY;
+	Timer timerShowSignText;
+	int timeShowingSignText;
 };

@@ -64,9 +64,9 @@ public:
 
 	void SetPosition(Vector2D pos);
 
-	void SaveData(pugi::xml_node playerNode, pugi::xml_node upgradesNode);
+	void SaveData(pugi::xml_node playerNode, pugi::xml_node upgradesNode, pugi::xml_node levelNode);
 
-	void LoadData(pugi::xml_node playerNode, pugi::xml_node upgradesNode);
+	void LoadData(pugi::xml_node playerNode, pugi::xml_node upgradesNode, pugi::xml_node levelNode);
 
 	void Restart();
 

@@ -39,6 +39,7 @@
 #include "DashParticle.h"
 #include "WallBrakerParticle.h"
 #include "MerchantMenu.h"
+#include "TextManager.h"
 
 
 #include "Intro.h"
@@ -54,6 +55,7 @@ Scene::Scene(bool startEnabled) : Module(startEnabled)
 // Destructor
 Scene::~Scene()
 {
+
 }
 
 // Called before render is available
@@ -156,22 +158,42 @@ bool Scene::Start()
 	transitionDisplace = 0;
 
 
-	if (!loadScene)
+	pugi::xml_document saveFile;
+	pugi::xml_parse_result result = saveFile.load_file("savedData.xml");
+	bool levelPlayed = saveFile.child("savedData").child(GetCurrentLevelString().c_str()).attribute("played").as_bool();
+	LOG("%d", (int)levelPlayed);
+	saveFile.save_file("savedData.xml");
+
+	if (levelPlayed)
 	{
-		if (level != LVL1)
-		{
-			LoadTimeLivesCandies();
-		}
-		else
-		{
-			currentTime = 0;
-		}
-		SaveState();
+		LoadState(); 
 	}
 	else
 	{
-		LoadState();
+		if (configParameters.child("levelName").child(GetCurrentLevelString().c_str()))
+		{
+			signTexture = Engine::GetInstance().textures.get()->Load(configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("path").as_string());
+			signTextureW = configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("w").as_int();
+			signTextureH = configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("h").as_int();
+			signTextureY = configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("y").as_int();
+			signFont = TTF_OpenFont(configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("font").as_string(), configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("fontSize").as_int());
+			signKey = configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("text").as_string();
+			signTextY = configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("signTextY").as_int();
+			timeShowingSignText = configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("timeShowingSignText").as_int();
+			showSign = true;
+			timerShowSignText.Start();
+		}
+		else showSign = false;
+		SaveState();
 	}
+
+	if (!levelPlayed && level!=LVL1)
+	{
+		LoadTimeLivesCandies();
+	}
+	
+	
+
 
 	musicNode = Engine::GetInstance().GetConfig().child("audio").child("music");
 	if (level == LVL1)Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl1Mus").attribute("path").as_string());
@@ -197,6 +219,9 @@ bool Scene::Start()
 	bgTutorial = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("bgTut").attribute("path").as_string());
 	bgCapa1 = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("bgCapa1").attribute("path").as_string());
 	kimHead = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("kimHead").attribute("path").as_string());
+
+	changeLevelTimer.Start();
+
 
 	return true;
 }
@@ -525,6 +550,26 @@ bool Scene::PostUpdate()
 				bt.second->active = false;
 		}
 
+		if (showSign && timerShowSignText.ReadSec() < timeShowingSignText)
+		{
+			render->DrawTextureBuffer(signTexture, -render->camera.x / window->scale + render->camera.w / 2 - signTextureW/2, -render->camera.y / window->scale + render->camera.h / 2 + signTextureY - signTextureH / 2, false, HUD);
+			int textW = 0, textH = 0;
+			std::string text = Engine::GetInstance().textManager.get()->GetText(signKey).c_str();
+
+			TTF_SizeUTF8(signFont, text.c_str(), &textW, &textH);
+
+			LOG("%d, %d", textW, textH);
+
+			Engine::GetInstance().render.get()->DrawTextToBuffer(
+				text.c_str(),
+				render->camera.w / 2 - textW/2,
+				render->camera.h / 2 - textH/2 + signTextureY + signTextY,
+				textW,
+				textH,
+				signFont,
+				{ 255, 255, 255, 255 }, HUD
+			);
+		}
 
 		if (help) render->DrawTextureBuffer(helpMenu, -render->camera.x / window->scale + helpPos.getX(), -render->camera.y / window->scale + helpPos.getY(), false ,MENUS);
 			
@@ -587,6 +632,7 @@ void Scene::SaveState()
 	saveFile.child("savedData").attribute("saved").set_value(true);
 	saveFile.child("savedData").attribute("level").set_value((int)level);
 	saveFile.child("savedData").attribute("time").set_value(currentTime);
+	savedDataNode.attribute("played").set_value(true);
 
 	if (result == NULL)
 	{
@@ -598,7 +644,7 @@ void Scene::SaveState()
 
 	//Save info to XML 
 	//Player 
-	player->SaveData(saveFile.child("savedData").child("player"), upgradesNode);
+	player->SaveData(saveFile.child("savedData").child("player"), upgradesNode, savedDataNode);
 
 	//Enemies
 	for (int i = 0; i < enemies.size(); i++)
@@ -669,7 +715,7 @@ void Scene::LoadState() {
 	startBossFight = savedDataNode.attribute("startBossFight").as_bool();
 	bossKilled = savedDataNode.attribute("bossKilled").as_bool();
 
-	player->LoadData(loadFile.child("savedData").child("player"), upgradesNode);
+	player->LoadData(loadFile.child("savedData").child("player"), upgradesNode, savedDataNode);
 
 	//TODO: add an attribute to tell enemies from first and second level apart
 	for (int i = 0; i < enemies.size(); i++)
@@ -770,7 +816,11 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 
 void Scene::ChangeLevel()
 {
-	changeLevel = true;
+	if (changeLevelTimer.ReadSec() > 3)
+	{
+		SaveState();
+		changeLevel = true;
+	}
 }
 
 
@@ -943,4 +993,26 @@ void Scene::DrawMap()
 	default:
 		break;
 	}
+}
+
+void Scene::StartNewGame()
+{
+	loadScene = false;
+
+	pugi::xml_document saveFile;
+	pugi::xml_parse_result result = saveFile.load_file("savedData.xml");
+
+	for (int i = 0; i < LVL_COUNT; ++i) {
+		
+		Levels level = static_cast<Levels>(i);
+		
+		if (level == UNKNOWN) continue;
+
+		if (!saveFile.child("savedData").child(GetLevelString(level).c_str())) saveFile.child("savedData").append_child(GetLevelString(level).c_str());
+		if (!saveFile.child("savedData").child(GetLevelString(level).c_str()).attribute("played")) saveFile.child("savedData").child(GetLevelString(level).c_str()).append_attribute("played");
+
+		saveFile.child("savedData").child(GetLevelString(level).c_str()).attribute("played").set_value(false);
+	}
+
+	saveFile.save_file("savedData.xml");
 }
