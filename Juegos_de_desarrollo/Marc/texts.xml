@@ -185,4 +185,9 @@
 		<CA>CAPA 1: NEGACIÓ</CA>
 		<EN>LAYER 1: DENIAL</EN>
 	</Text>
-</Texts>
+	<Text id="LANGUAGE">
+		<ES>ESPAÑOL</ES>
+		<CA>CATALÀ</CA>
+		<EN>ENGLISH</EN>
+	</Text>
+	</Texts>

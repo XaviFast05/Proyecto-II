@@ -36,7 +36,8 @@
 		</sliders>
 		<fullScreenBox id="9" x="605" y="490" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" text="FULL_SCREEN" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" textVerticalDisplacement="-75"/>
 		<backBt id="6" x="288" y="47" w="80" h="80" texture="Assets/Textures/Menus/Options/Button_exit_solo.png" />
-		<controlsBt id="32" x="448" y="564" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Credits Button Sheet Background.png" text="CONTROLS" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
+		<controlsBt id="32" x="348" y="564" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Credits Button Sheet Background.png" text="CONTROLS" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
+		<espBt id="33" x="748" y="564" w="224" h="64" texture="Assets/Textures/Menus/Options/language.png" text="LANGUAGE" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
 	</settings>
 	<upgradesMenu>
 		<upgPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/MenuUpgrades/pngs_interfaz_completa/Interfaz_mejoras_completo.png" />
@@ -808,13 +809,9 @@
 		</deathMenu>
 		<winMenu>
 			<bg path="Assets/Textures/Menus/Win-Lose/winScreen.png" />
-			<icons>
-				<candy x="24" y="17" w="38" h="33" textX="70" textY="22" textW="19" textH="23" path="Assets/Textures/Menus/Win-Lose/candy icon.png" />
-			</icons>
 			<buttons>
-				<replayBt id="12" x="379" y="125" w="233" h="39" texture="Assets/Textures/Menus/Win-Lose/Replay Button Sheet resized.png" />
-				<backToTitleBt id="11" x="379" y="180" w="233" h="39" texture="Assets/Textures/Menus/Win-Lose/back to title.png" />
-				<exitBt id="5" x="379" y="236" w="233" h="39" texture="Assets/Textures/Menus/Win-Lose/exit centered.png" />
+				<backToTitleBt id="11" x="448" y="400" w="384" h="64" texture="Assets/Textures/Menus/Pause/back to title.png" text="BACK_TO_TITLE" font="Assets/Fonts/PIXELADE.ttf" fontSize="55"  />
+				<exitBt id="5" x="448" y="544" w="384" h="64" texture="Assets/Textures/Menus/Pause/exit centered.png" text="EXIT" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
 			</buttons>
 		</winMenu>
 		<dialogues>

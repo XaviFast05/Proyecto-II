@@ -66,6 +66,9 @@ public:
 	GuiControlCheckBox* fullScreenBox;
 	GuiControlButton* backBt;
 	GuiControlButton* controlsBt;
+	GuiControlButton* espBt;
+
+	int currentLanguage = 1;
 
 	int testSound;
 	int titleVerticalDisplacement;

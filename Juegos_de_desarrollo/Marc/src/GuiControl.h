@@ -67,6 +67,10 @@ enum class GuiControlId
 	EIGHTH_UPGRADE,
 
 	CONTROLS,
+
+	ESP,
+	CAT,
+	ENG,
 };
 
 class GuiControl

@@ -385,7 +385,7 @@ bool Scene::Update(float dt)
 			}
 			else if (playerPOSY < 1600)
 			{
-				Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)Engine::GetInstance().mainMenu.get(), 30);
+				Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)Engine::GetInstance().win.get(), 30);
 				level = LVL3;
 			}
 		}

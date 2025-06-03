@@ -62,6 +62,10 @@ bool Settings::Start()
 	
 	settingsGUI.push_back(backBt);
 
+	// Language buttons
+	espBt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, "espBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	espBt->SetGuiParameters("espBt", configParameters);
+
 	controlsBt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, "controlsBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
 	controlsBt->SetGuiParameters("controlsBt", configParameters);
 
@@ -132,6 +136,10 @@ bool Settings::Update(float dt)
 			OnGuiMouseClickEvent(musicSlider);
 
 			sfxSlider->Update(dt);
+			OnGuiMouseClickEvent(sfxSlider);
+
+			espBt->Update(dt);
+			OnGuiMouseClickEvent(espBt);
 
 			controlsBt->Update(dt);
 			OnGuiMouseClickEvent(controlsBt);
@@ -252,6 +260,27 @@ bool Settings::OnGuiMouseClickEvent(GuiControl* control) {
 			controlsOpen = true;
 		}
 		
+		break;
+
+	case GuiControlId::ESP:
+		if (control->state == GuiControlState::PRESSED) {
+			Engine::GetInstance().textManager.get()->ChangeIdiom(currentLanguage++);
+			if (currentLanguage > 2) { // Assuming 0 = ESP, 1 = CAT, 2 = ENG
+				currentLanguage = 0;
+			}
+		}
+		break;
+
+	case GuiControlId::CAT:
+		if (control->state == GuiControlState::PRESSED) {
+			Engine::GetInstance().textManager.get()->ChangeIdiom(1);
+		}
+		break;
+
+		case GuiControlId::ENG:
+		if (control->state == GuiControlState::PRESSED) {
+			Engine::GetInstance().textManager.get()->ChangeIdiom(2);
+		}
 		break;
 	}
 
