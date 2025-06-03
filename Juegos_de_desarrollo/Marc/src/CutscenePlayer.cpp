@@ -25,6 +25,9 @@ bool CutscenePlayer::Awake(pugi::xml_node& config)
 
 bool CutscenePlayer::Start()
 {
+    pugi::xml_parse_result result = configFile.load_file("config.xml");
+    rootNode = configFile.child("config");
+
     position1 = Vector2D(300, 500);
     position2 = Vector2D(600, 500);
     // File path of the video to be played

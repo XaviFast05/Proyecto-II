@@ -39,7 +39,7 @@
 		<controlsBt id="32" x="448" y="564" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Credits Button Sheet Background.png" text="CONTROLS" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
 	</settings>
 	<upgradesMenu>
-		<upgPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/MenuUpgrades/pngs_interfaz_completa/Interfaz_mejoras_BW.png" />
+		<upgPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/MenuUpgrades/pngs_interfaz_completa/Interfaz_mejoras_completo.png" />
 		<changeMenuBt id="15" x="20" y="4" w="80" h="80" texture="Assets/Textures/Menus/MenuMerchant/TIENDA 02/PNGS/Button_exit_solo.png" />
 		<upg1 id="16" x="216" y="103" w="112" h="112" texture="Assets/Textures/Menus/MenuUpgrades/buttons/upg1_icon.png" />
 		<upg2 id="17" x="361" y="103" w="112" h="112" texture="Assets/Textures/Menus/MenuUpgrades/buttons/upg2_icon.png" />

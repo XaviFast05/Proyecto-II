@@ -46,6 +46,9 @@ public:
 	void audioCallbackProcess(Uint8* stream, int len);
 
 public:
+	pugi::xml_document configFile;
+	pugi::xml_node rootNode;
+
 	const char* file = nullptr;
 	int streamIndex = -1;
 	AVFormatContext* formatContext;
