@@ -42,6 +42,7 @@ enum Levels {
 	LVL4, //ZONA ONI 1
 	LVL5, //ZONA ONI 2
 	LVL6, //FINAL BOSS
+	LVL_COUNT
 };
 
 class Scene : public Module
@@ -116,6 +117,8 @@ public:
 	std::string GetCurrentLevelString();
 	
 	std::string GetLevelString(Levels level);
+
+	void StartNewGame();
 
 public:
 

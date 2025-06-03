@@ -54,6 +54,7 @@ Scene::Scene(bool startEnabled) : Module(startEnabled)
 // Destructor
 Scene::~Scene()
 {
+
 }
 
 // Called before render is available
@@ -156,22 +157,22 @@ bool Scene::Start()
 	transitionDisplace = 0;
 
 
-	if (!loadScene)
+	pugi::xml_document saveFile;
+	pugi::xml_parse_result result = saveFile.load_file("savedData.xml");
+	bool levelPlayed = saveFile.child("savedData").child(GetCurrentLevelString().c_str()).attribute("played").as_bool();
+	LOG("%d", (int)levelPlayed);
+	saveFile.save_file("savedData.xml");
+
+	if (levelPlayed)
 	{
-		if (level != LVL1)
-		{
-			LoadTimeLivesCandies();
-		}
-		else
-		{
-			currentTime = 0;
-		}
-		SaveState();
+		LoadState(); 
 	}
-	else
+	else if (level!=LVL1)
 	{
-		LoadState();
+		LoadTimeLivesCandies();
 	}
+	
+	SaveState();
 
 	musicNode = Engine::GetInstance().GetConfig().child("audio").child("music");
 	if (level == LVL1)Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl1Mus").attribute("path").as_string());
@@ -185,7 +186,6 @@ bool Scene::Start()
 	startBossFight = false;
 	bossMusPlaying = false;
 	bossKilled = false;
-
 
 	//UI
 	heartsTexture = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("heartContainers").attribute("path").as_string());
@@ -587,6 +587,7 @@ void Scene::SaveState()
 	saveFile.child("savedData").attribute("saved").set_value(true);
 	saveFile.child("savedData").attribute("level").set_value((int)level);
 	saveFile.child("savedData").attribute("time").set_value(currentTime);
+	savedDataNode.attribute("played").set_value(true);
 
 	if (result == NULL)
 	{
@@ -598,7 +599,7 @@ void Scene::SaveState()
 
 	//Save info to XML 
 	//Player 
-	player->SaveData(saveFile.child("savedData").child("player"), upgradesNode);
+	player->SaveData(saveFile.child("savedData").child("player"), upgradesNode, savedDataNode);
 
 	//Enemies
 	for (int i = 0; i < enemies.size(); i++)
@@ -669,7 +670,7 @@ void Scene::LoadState() {
 	startBossFight = savedDataNode.attribute("startBossFight").as_bool();
 	bossKilled = savedDataNode.attribute("bossKilled").as_bool();
 
-	player->LoadData(loadFile.child("savedData").child("player"), upgradesNode);
+	player->LoadData(loadFile.child("savedData").child("player"), upgradesNode, savedDataNode);
 
 	//TODO: add an attribute to tell enemies from first and second level apart
 	for (int i = 0; i < enemies.size(); i++)
@@ -943,4 +944,26 @@ void Scene::DrawMap()
 	default:
 		break;
 	}
+}
+
+void Scene::StartNewGame()
+{
+	loadScene = false;
+
+	pugi::xml_document saveFile;
+	pugi::xml_parse_result result = saveFile.load_file("savedData.xml");
+
+	for (int i = 0; i < LVL_COUNT; ++i) {
+		
+		Levels level = static_cast<Levels>(i);
+		
+		if (level == UNKNOWN) continue;
+
+		if (!saveFile.child("savedData").child(GetLevelString(level).c_str())) saveFile.child("savedData").append_child(GetLevelString(level).c_str());
+		if (!saveFile.child("savedData").child(GetLevelString(level).c_str()).attribute("played")) saveFile.child("savedData").child(GetLevelString(level).c_str()).append_attribute("played");
+
+		saveFile.child("savedData").child(GetLevelString(level).c_str()).attribute("played").set_value(false);
+	}
+
+	saveFile.save_file("savedData.xml");
 }
