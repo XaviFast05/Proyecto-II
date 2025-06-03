@@ -172,6 +172,7 @@ private:
 	bool loadScene = false;
 	bool drawnMap = false;
 	bool changeLevel = false;
+	Timer changeLevelTimer;
 	bool startBossFight = false;
 	bool bossMusPlaying = false;
 	bool bossKilled = false;

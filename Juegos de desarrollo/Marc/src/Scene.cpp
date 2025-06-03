@@ -184,6 +184,7 @@ bool Scene::Start()
 			timerShowSignText.Start();
 		}
 		else showSign = false;
+		SaveState();
 	}
 
 	if (!levelPlayed && level!=LVL1)
@@ -191,7 +192,7 @@ bool Scene::Start()
 		LoadTimeLivesCandies();
 	}
 	
-	SaveState();
+	
 
 
 	musicNode = Engine::GetInstance().GetConfig().child("audio").child("music");
@@ -219,7 +220,8 @@ bool Scene::Start()
 	bgCapa1 = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("bgCapa1").attribute("path").as_string());
 	kimHead = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("kimHead").attribute("path").as_string());
 
-	
+	changeLevelTimer.Start();
+
 
 	return true;
 }
@@ -814,7 +816,11 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 
 void Scene::ChangeLevel()
 {
-	changeLevel = true;
+	if (changeLevelTimer.ReadSec() > 3)
+	{
+		SaveState();
+		changeLevel = true;
+	}
 }
 
 
