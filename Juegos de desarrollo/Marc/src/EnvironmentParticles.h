@@ -9,6 +9,7 @@ struct ParticleInstance
 {
 	SDL_FPoint position;
 	Animation anim;
+	SDL_Texture* texture = nullptr;
 	float startDelay = 0.0f;
 	bool started = false;
 	bool finished = false;
@@ -38,6 +39,8 @@ private:
 	Timer particleTimer;
 
 	std::vector<ParticleInstance> particles;
+	Animation idle2;
+	Animation idle3;
 
 
 };

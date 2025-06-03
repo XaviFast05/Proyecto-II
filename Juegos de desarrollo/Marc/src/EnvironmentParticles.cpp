@@ -24,6 +24,8 @@ bool EnvironmentParticles::Start() {
 
 
 	idle.LoadAnimations(sceneNode.child("entities").child("particles").child("environmentParticles").child("animations").child("idle"));
+	idle2.LoadAnimations(sceneNode.child("entities").child("particles").child("environmentParticles").child("animations").child("idle2"));
+	idle3.LoadAnimations(sceneNode.child("entities").child("particles").child("environmentParticles").child("animations").child("idle3"));
 	pbody = Engine::GetInstance().physics.get()->CreateRectangleSensor((int)position.getX(), (int)position.getY(), areaW , areaH, bodyType::STATIC);
 
 	pbody->body->SetGravityScale(0);
@@ -94,11 +96,27 @@ bool EnvironmentParticles::Update(float dt)
 		ParticleInstance newParticle;
 		newParticle.position.x = float((rand() % camW) + camX);
 		newParticle.position.y = float((rand() % camH) + camY);
-		newParticle.anim = idle;
+		int animChoice = rand() % 3;
+		switch (animChoice)
+		{
+			case 0: newParticle.anim = idle; 
+				break;
+			case 1: newParticle.anim = idle2; 
+				break;
+			case 2: newParticle.anim = idle3; 
+				break;
+		}
 		newParticle.anim.Reset();
-		newParticle.startDelay = (rand() % 9) * 0.1f;       
-		newParticle.life = 0.0f;
-		newParticle.maxLife = 0.3f + (rand() % 5) * 0.1f;
+		newParticle.startDelay = (rand() % 9) * 0.1f;   
+		switch (animChoice)
+		{
+		case 0: newParticle.maxLife = 0.2f;
+			break;
+		case 1: newParticle.maxLife = 0.3f;
+			break;
+		case 2: newParticle.maxLife = 0.4f;
+			break;
+		}
 		newParticle.started = false;
 		newParticle.finished = false;
 		particles.push_back(newParticle);
