@@ -769,11 +769,11 @@
 		<pauseMenu>
 			<pausePanel x="0" y="0" w="1280" h="720" texture="Assets/Textures/Menus/Pause/pause-panel.png" />
 			<buttons>
-				<resumeBt id="10" x="448" y="223" w="384" h="64" texture="Assets/Textures/Menus/Pause/resume resized.png" />
-				<optionsBt id="3" x="448" y="319" w="384" h="64" texture="Assets/Textures/Menus/Pause/options resized.png" />
-				<backToTitleBt id="11" x="448" y="415" w="384" h="64" texture="Assets/Textures/Menus/Pause/back to title.png" />
-				<exitBt id="5" x="448" y="511" w="384" h="64" texture="Assets/Textures/Menus/Pause/exit centered.png" />
-				<changeMenuBt id="15" x="900" y="490" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
+				<resumeBt id="10" x="448" y="223" w="384" h="64" texture="Assets/Textures/Menus/Pause/resume resized.png" text="RESUME" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
+				<optionsBt id="3" x="448" y="375" w="384" h="64" texture="Assets/Textures/Menus/Pause/options resized.png" text="OPTIONS" font="Assets/Fonts/PIXELADE.ttf" fontSize="65"  />
+				<backToTitleBt id="11" x="448" y="451" w="384" h="64" texture="Assets/Textures/Menus/Pause/back to title.png" text="BACK_TO_TITLE" font="Assets/Fonts/PIXELADE.ttf" fontSize="55"  />
+				<exitBt id="5" x="448" y="527" w="384" h="64" texture="Assets/Textures/Menus/Pause/exit centered.png" text="EXIT" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
+				<changeMenuBt id="15" x="448" y="299" w="384" h="64" texture="Assets/Textures/Menus/Pause/resume resized.png" text="UPGRADES" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
 			</buttons>
 		</pauseMenu>
 		<deathMenu>

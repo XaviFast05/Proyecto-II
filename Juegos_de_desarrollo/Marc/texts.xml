@@ -165,4 +165,19 @@
 		<CA>CONTROLS</CA>
 		<EN>CONTROLS</EN>
 	</Text>
+	<Text id="RESUME">
+		<ES>REANUDAR</ES>
+		<CA>REPRENDRE</CA>
+		<EN>RESUME</EN>
+	</Text>
+	<Text id="UPGRADES">
+		<ES>MEJORAS</ES>
+		<CA>MILLORES</CA>
+		<EN>UPGRADES</EN>
+	</Text>
+	<Text id="BACK_TO_TITLE">
+		<ES>VOLVER AL TÍTULO</ES>
+		<CA>TORNAR AL TÍTOL</CA>
+		<EN>BACK TO TITLE</EN>
+	</Text>
 	</Texts>
