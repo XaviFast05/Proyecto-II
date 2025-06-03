@@ -179,6 +179,5 @@ private:
 	
 	int transitionDisplace;
 	
-
 	Vector2D helpPos;
 };

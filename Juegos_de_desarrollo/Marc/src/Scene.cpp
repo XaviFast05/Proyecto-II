@@ -290,7 +290,9 @@ bool Scene::Update(float dt)
 
 	if (level != LVL3 && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
-		level = LVL3;
+		//LVL3 CAPA 1
+		//LVL5 onirica dash
+		level = LVL4;
 		loadScene = false;
 		Engine::GetInstance().fade.get()->Fade(this, this);
 	}
@@ -331,8 +333,9 @@ bool Scene::Update(float dt)
 		}
 		else if (level == LVL4)
 		{
-			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
-			level = LVL3;
+
+			//Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
+			//level = LVL3;
 		}
 		else if (level == LVL5)
 		{
@@ -947,7 +950,7 @@ void Scene::DrawMap()
 		break;
 	case LVL3:
 		Engine::GetInstance().render.get()->DrawTextureBuffer(bgCapa1, centerX, centerY, false, MENUS);
-		Engine::GetInstance().render.get()->DrawTextureBuffer(kimHead, centerX + (posX * 720 / 225 - 10), centerY + (posY * 360 / 96 - 25), false, MENUS);
+		Engine::GetInstance().render.get()->DrawTextureBuffer(kimHead, centerX + (posX * 720 / 311 - 155), centerY + (posY * 360 / 163 - 50), false, MENUS);
 		break;
 	case LVL4:
 		break;

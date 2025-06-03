@@ -731,6 +731,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 
 		}
 		break;
+	case ColliderType::UNLOCKAREA:
+		if (Engine::GetInstance().scene.get()->level == LVL5 && !unlockedDash) unlockedDash = true;
+		if (Engine::GetInstance().scene.get()->level == LVL4 && !unlockedCharged) unlockedCharged = true;
+		break;
 	case ColliderType::ENEMY:
 		LOG("Collision ENEMY");
 		if (!godMode || !canHurt) {
@@ -948,6 +952,7 @@ void Player::LoadData(pugi::xml_node playerNode, pugi::xml_node upgradesNode)
 	currencyManager->SetCurrency(playerNode.attribute("soulPoints").as_int());
 	hits = playerNode.attribute("hits").as_int();
 	SetPosition(position);
+
 	unlockedDash = upgradesNode.attribute("dash").as_bool();
 	unlockedCharged = upgradesNode.attribute("charged").as_bool();
 
