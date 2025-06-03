@@ -2945,8 +2945,8 @@
    <tile gid="18"/>
    <tile gid="18"/>
    <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
    <tile gid="18"/>
    <tile gid="26"/>
    <tile gid="26"/>
@@ -3136,10 +3136,10 @@
    <tile gid="18"/>
    <tile gid="18"/>
    <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="19"/>
+   <tile gid="27"/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -3328,10 +3328,10 @@
    <tile gid="18"/>
    <tile gid="18"/>
    <tile gid="26"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="19"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -3520,10 +3520,10 @@
    <tile gid="18"/>
    <tile gid="27"/>
    <tile/>
-   <tile gid="25"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="19"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -3713,9 +3713,9 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="25"/>
-   <tile gid="18"/>
-   <tile gid="19"/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -3906,8 +3906,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="17"/>
-   <tile gid="19"/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -4098,8 +4098,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="17"/>
-   <tile gid="19"/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -4290,8 +4290,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="25"/>
-   <tile gid="27"/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -10897,11 +10897,11 @@
    <tile gid="18"/>
    <tile gid="18"/>
    <tile gid="18"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
    <tile/>
    <tile/>
    <tile/>
@@ -11089,11 +11089,11 @@
    <tile gid="18"/>
    <tile gid="18"/>
    <tile gid="18"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
    <tile/>
    <tile/>
    <tile/>
@@ -11281,11 +11281,11 @@
    <tile gid="18"/>
    <tile gid="18"/>
    <tile gid="18"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
    <tile/>
    <tile/>
    <tile/>
@@ -35785,8 +35785,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="405"/>
-   <tile gid="406"/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -35977,8 +35977,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="413"/>
-   <tile gid="414"/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -42392,6 +42392,11 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile gid="421"/>
    <tile gid="422"/>
    <tile gid="423"/>
@@ -42405,14 +42410,14 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
    <tile gid="384"/>
    <tile gid="385"/>
    <tile gid="386"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -42781,11 +42786,6 @@
    <tile gid="433"/>
    <tile gid="434"/>
    <tile gid="435"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -94507,17 +94507,17 @@
    <tile/>
   </data>
  </layer>
- <objectgroup id="6" name="Spikes" visible="0" opacity="0.9">
+ <objectgroup id="6" name="Spikes" opacity="0.9">
   <object id="114" x="9792" y="3712" width="320" height="64"/>
  </objectgroup>
- <objectgroup id="2" name="ClimbingWall" visible="0">
+ <objectgroup id="2" name="ClimbingWall">
   <object id="106" x="7232" y="1856" width="64" height="128"/>
   <object id="107" x="5504" y="1856" width="64" height="256"/>
   <object id="108" x="5184" y="1664" width="64" height="576"/>
   <object id="109" x="8192" y="1280" width="64" height="256"/>
   <object id="129" x="6976" y="1984" width="64" height="256"/>
  </objectgroup>
- <objectgroup id="3" name="Collisions" visible="0">
+ <objectgroup id="3" name="Collisions">
   <object id="1" x="-0.67" y="1664" width="4480" height="64"/>
   <object id="2" x="-0.67" y="1408" width="1984" height="64"/>
   <object id="3" x="1983.33" y="1344" width="64" height="64"/>
@@ -94525,10 +94525,8 @@
   <object id="5" x="2175.33" y="1216" width="64" height="64"/>
   <object id="6" x="2239.33" y="1152" width="64" height="64"/>
   <object id="7" x="2303.33" y="1088" width="64" height="64"/>
-  <object id="9" x="2367.33" y="1152" width="64" height="64"/>
-  <object id="10" x="2431.33" y="1216" width="64" height="64"/>
-  <object id="11" x="2495.33" y="1024" width="128.667" height="448"/>
-  <object id="15" x="2559.33" y="960" width="832" height="64"/>
+  <object id="9" x="2368" y="1024" width="64" height="64"/>
+  <object id="15" x="2432" y="960" width="959.33" height="64"/>
   <object id="16" x="3391.33" y="1024" width="128" height="64"/>
   <object id="17" x="3519.33" y="1088" width="128" height="64"/>
   <object id="18" x="3647.33" y="1152" width="128" height="64"/>
@@ -94592,16 +94590,16 @@
   <object id="100" x="6784" y="1856" width="256" height="128"/>
   <object id="101" x="6848" y="1984" width="64" height="256"/>
   <object id="113" x="11584" y="1536" width="64" height="832"/>
-  <object id="121" x="8320" y="3776" width="3584" height="64"/>
-  <object id="125" x="8320" y="3520" width="640" height="64"/>
+  <object id="121" x="6848" y="3776" width="5056" height="64"/>
+  <object id="125" x="7104" y="3520" width="1856" height="64"/>
   <object id="126" x="8896" y="2944" width="64" height="576"/>
   <object id="141" x="10176" y="3584" width="320" height="192"/>
   <object id="142" x="9408" y="3584" width="320" height="192"/>
   <object id="143" x="10496" y="3712" width="192" height="64"/>
   <object id="144" x="9216" y="3712" width="192" height="64"/>
  </objectgroup>
- <objectgroup id="4" name="LevelChanger" visible="0">
-  <object id="130" x="8320" y="3584" width="256" height="192"/>
+ <objectgroup id="4" name="LevelChanger">
+  <object id="130" x="8320" y="3584" width="128" height="192"/>
   <object id="137" x="640" y="1472" width="384" height="192"/>
  </objectgroup>
 </map>

@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
-<savedData saved="true" level="1" time="626.658936" startBossFight="false" bossKilled="false">
-	<player x="9789" y="3487" soulPoints="122" hits="3" />
+<savedData saved="true" level="3" time="0" startBossFight="false" bossKilled="false">
+	<player x="9536" y="6969" soulPoints="74" hits="3" />
 	<lvl1>
-		<enemy0 dead="true" x="5236" y="2521" />
-		<enemy1 dead="true" x="4654" y="844" />
-		<enemy2 dead="false" x="7519" y="3617" />
+		<enemy0 dead="true" x="7115" y="2464" />
+		<enemy1 dead="false" x="4640" y="929" />
+		<enemy2 dead="false" x="7518" y="3616" />
 		<enemy3 dead="false" x="7392" y="4612" />
-		<enemy4 dead="false" x="9632" y="1475" />
+		<enemy4 dead="false" x="9632" y="1761" />
 		<checkPoint0 alight="true" x="" y="" />
 		<checkPoint1 alight="true" x="" y="" />
-		<enemy5 dead="true" x="5528" y="2527" />
-		<enemy6 dead="true" x="635" y="3439" />
+		<enemy5 dead="false" x="5389" y="2333" />
+		<enemy6 dead="false" x="2132" y="3287" />
 		<enemy7 dead="false" x="1120" y="3232" />
 	</lvl1>
 	<upgrades dash="true" charged="true" up0="false" up1="false" up2="false" up3="false" up4="false" up5="false" up6="false" up7="false" />

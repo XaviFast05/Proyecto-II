@@ -10837,7 +10837,7 @@
    <tile/>
   </data>
  </layer>
- <objectgroup id="3" name="ClimbingWall" visible="0">
+ <objectgroup id="3" name="ClimbingWall">
   <object id="36" x="3456" y="640" width="64" height="320"/>
   <object id="37" x="3712" y="832" width="64" height="320"/>
   <object id="38" x="3456" y="1152" width="64" height="384"/>
@@ -10845,7 +10845,7 @@
   <object id="41" x="1856" y="1600" width="64" height="128"/>
   <object id="44" x="1600" y="1344" width="64" height="512"/>
  </objectgroup>
- <objectgroup id="2" name="Collisions" visible="0">
+ <objectgroup id="2" name="Collisions">
   <object id="1" x="1664" y="1856" width="4480" height="64"/>
   <object id="2" x="3648" y="1600" width="64" height="64"/>
   <object id="3" x="3712" y="1536" width="64" height="64"/>
@@ -10876,9 +10876,9 @@
   <object id="32" x="3520" y="1152" width="192" height="64"/>
   <object id="33" x="3712" y="832" width="1920" height="64"/>
   <object id="34" x="5568" y="896" width="64" height="704"/>
-  <object id="45" x="1920" y="1664" width="64" height="64"/>
+  <object id="45" x="1920" y="1664" width="1728" height="64"/>
  </objectgroup>
- <objectgroup id="5" name="LevelChanger" visible="0">
+ <objectgroup id="5" name="LevelChanger">
   <object id="54" x="5824" y="1664" width="320" height="192"/>
  </objectgroup>
 </map>

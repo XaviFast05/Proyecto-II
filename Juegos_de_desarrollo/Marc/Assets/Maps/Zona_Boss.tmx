@@ -3442,11 +3442,11 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="366"/>
-   <tile gid="366"/>
-   <tile gid="366"/>
-   <tile gid="366"/>
-   <tile gid="366"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile gid="366"/>
    <tile gid="366"/>
    <tile gid="366"/>
@@ -3553,11 +3553,11 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="366"/>
-   <tile gid="366"/>
-   <tile gid="366"/>
-   <tile gid="366"/>
-   <tile gid="366"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile gid="366"/>
    <tile gid="366"/>
    <tile gid="366"/>
@@ -3664,11 +3664,11 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="366"/>
-   <tile gid="366"/>
-   <tile gid="366"/>
-   <tile gid="366"/>
-   <tile gid="366"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile gid="366"/>
    <tile gid="366"/>
    <tile gid="366"/>
@@ -3775,7 +3775,7 @@
    <tile gid="358"/>
    <tile/>
    <tile/>
-   <tile gid="366"/>
+   <tile gid="361"/>
    <tile gid="366"/>
    <tile gid="366"/>
    <tile gid="366"/>
@@ -20033,8 +20033,8 @@
   <object id="78" x="2048" y="1792" width="64" height="128"/>
  </objectgroup>
  <objectgroup id="2" name="Collisions">
-  <object id="55" x="1792" y="2112" width="3328" height="64"/>
-  <object id="56" x="4096" y="1856" width="1024" height="64"/>
+  <object id="55" x="1792" y="2112" width="4032" height="64"/>
+  <object id="56" x="4096" y="1856" width="1728" height="64"/>
   <object id="57" x="4032" y="1792" width="64" height="64"/>
   <object id="58" x="3968" y="1728" width="64" height="64"/>
   <object id="59" x="3904" y="1664" width="64" height="64"/>
@@ -20054,7 +20054,7 @@
   <object id="73" x="2112" y="1792" width="320" height="128"/>
   <object id="81" x="1856" y="1600" width="256" height="64"/>
  </objectgroup>
- <objectgroup id="5" name="LevelChanger" visible="0">
+ <objectgroup id="5" name="LevelChanger">
   <object id="74" x="2176" y="960" width="192" height="128"/>
   <object id="79" x="4672" y="1920" width="128" height="192"/>
  </objectgroup>
