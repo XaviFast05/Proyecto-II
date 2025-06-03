@@ -31,6 +31,9 @@
  <tileset firstgid="1560" name="props_tutorial2" tilewidth="64" tileheight="64" tilecount="64" columns="8">
   <image source="props_tutorial2.png" width="512" height="512"/>
  </tileset>
+ <tileset firstgid="1624" name="TileSheet_Cova Reworked 1" tilewidth="64" tileheight="64" tilecount="64" columns="8">
+  <image source="TileSheet_Cova Reworked 1.png" width="512" height="512"/>
+ </tileset>
  <layer id="3" name="Background" width="176" height="80" visible="0">
   <properties>
    <property name="Draw" type="bool" value="false"/>
@@ -74260,13 +74263,13 @@
    <tile gid="5"/>
    <tile gid="6"/>
    <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
    <tile gid="6"/>
    <tile gid="6"/>
    <tile gid="6"/>
@@ -76407,13 +76410,13 @@
    <tile gid="6"/>
    <tile gid="6"/>
    <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
    <tile gid="6"/>
    <tile gid="6"/>
    <tile gid="7"/>
@@ -77589,14 +77592,14 @@
    <tile gid="6"/>
    <tile gid="6"/>
    <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
    <tile gid="6"/>
    <tile gid="6"/>
    <tile gid="6"/>
@@ -78604,10 +78607,10 @@
    <tile gid="32"/>
    <tile gid="32"/>
    <tile gid="32"/>
-   <tile gid="10"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
+   <tile gid="1629"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
    <tile gid="6"/>
    <tile gid="6"/>
    <tile gid="6"/>
@@ -78862,13 +78865,13 @@
    <tile gid="32"/>
    <tile gid="5"/>
    <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
    <tile gid="6"/>
    <tile gid="6"/>
    <tile gid="6"/>
@@ -79637,14 +79640,14 @@
    <tile gid="32"/>
    <tile gid="32"/>
    <tile gid="32"/>
+   <tile/>
+   <tile/>
    <tile gid="32"/>
    <tile gid="32"/>
    <tile gid="32"/>
    <tile gid="32"/>
-   <tile gid="32"/>
-   <tile gid="32"/>
-   <tile gid="5"/>
-   <tile gid="6"/>
+   <tile gid="1624"/>
+   <tile gid="1625"/>
    <tile gid="7"/>
    <tile gid="32"/>
    <tile gid="32"/>
@@ -79813,8 +79816,8 @@
    <tile gid="32"/>
    <tile gid="32"/>
    <tile gid="5"/>
-   <tile gid="6"/>
-   <tile gid="7"/>
+   <tile gid="1625"/>
+   <tile gid="1626"/>
    <tile gid="32"/>
    <tile gid="32"/>
    <tile gid="32"/>
@@ -79991,10 +79994,10 @@
    <tile gid="17"/>
    <tile gid="24"/>
    <tile gid="16"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
    <tile gid="17"/>
    <tile gid="14"/>
    <tile gid="16"/>
@@ -80002,14 +80005,14 @@
    <tile gid="6"/>
    <tile gid="6"/>
    <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
    <tile gid="6"/>
    <tile gid="6"/>
    <tile gid="17"/>
@@ -80615,12 +80618,12 @@
    <tile gid="14"/>
    <tile gid="14"/>
    <tile gid="16"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
-   <tile gid="6"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
+   <tile gid="1625"/>
    <tile gid="6"/>
    <tile gid="6"/>
    <tile gid="6"/>
