@@ -133,6 +133,7 @@ public:
 
 	SDL_Texture* helpMenu;
 
+
 	GuiControlButton* resumeBt, * settingsBt, * backToTitleBt, * exitBt, *backBt;
 
 	GuiControlCheckBox* fullScreenCheckBox;
@@ -180,4 +181,15 @@ private:
 	
 
 	Vector2D helpPos;
+
+	SDL_Texture* signTexture;
+	bool showSign;
+	int signTextureW;
+	int signTextureH;
+	int signTextureY;
+	TTF_Font* signFont;
+	std::string signKey;
+	int signTextY;
+	Timer timerShowSignText;
+	int timeShowingSignText;
 };

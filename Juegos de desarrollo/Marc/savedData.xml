@@ -1,28 +1,28 @@
 <?xml version="1.0"?>
-<savedData saved="true" level="3" time="9.67992973" startBossFight="false" bossKilled="false">
+<savedData saved="true" level="3" time="0" startBossFight="false" bossKilled="false">
 	<playerPrefs>
 		<fullscreen toggle="0" />
 		<musicVolume value="105" />
 		<sfxVolume value="117" />
 	</playerPrefs>
-	<player soulPoints="3006" hits="3" />
+	<player soulPoints="0" hits="3" />
 	<lvl1 played="true">
-		<enemy0 dead="false" x="5216" y="2529" />
-		<enemy1 dead="false" x="4640" y="908" />
-		<enemy2 dead="false" x="7519" y="3617" />
-		<enemy3 dead="false" x="7392" y="4513" />
-		<enemy4 dead="false" x="9632" y="1475" />
+		<enemy0 dead="false" x="5216" y="2528" />
+		<enemy1 dead="false" x="4640" y="928" />
+		<enemy2 dead="false" x="7519" y="3616" />
+		<enemy3 dead="false" x="7392" y="4512" />
+		<enemy4 dead="false" x="9632" y="1375" />
 		<checkPoint0 alight="true" x="" y="" />
 		<checkPoint1 alight="true" x="" y="" />
 		<enemy5 dead="false" x="5280" y="2272" />
-		<enemy6 dead="false" x="1208" y="3232" />
+		<enemy6 dead="false" x="1120" y="3232" />
 		<enemy7 dead="false" x="1120" y="3232" />
-		<player x="159" y="3423" />
+		<player x="159" y="3400" />
 	</lvl1>
 	<upgrades dash="true" charged="true" up0="false" up1="false" up2="false" up3="false" up4="false" up5="false" up6="false" up7="false" />
 	<lvl3 played="true">
-		<enemy0 dead="true" x="9907" y="8607" />
-		<enemy1 dead="false" x="9632" y="8543" />
+		<enemy0 dead="false" x="9824" y="8543" />
+		<enemy1 dead="false" x="9248" y="8543" />
 		<enemy2 dead="false" x="7647" y="7968" />
 		<enemy3 dead="false" x="8032" y="7968" />
 		<enemy4 dead="false" x="8416" y="6432" />
@@ -39,7 +39,7 @@
 		<enemy15 dead="false" x="7647" y="7968" />
 		<enemy16 dead="false" x="7647" y="7968" />
 		<enemy17 dead="false" x="7647" y="7968" />
-		<player x="10534" y="8607" />
+		<player x="9536" y="6969" />
 	</lvl3>
 	<lvl6 played="false" />
 	<lvl4 played="false">

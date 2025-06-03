@@ -39,6 +39,7 @@
 #include "DashParticle.h"
 #include "WallBrakerParticle.h"
 #include "MerchantMenu.h"
+#include "TextManager.h"
 
 
 #include "Intro.h"
@@ -167,12 +168,31 @@ bool Scene::Start()
 	{
 		LoadState(); 
 	}
-	else if (level!=LVL1)
+	else
+	{
+		if (configParameters.child("levelName").child(GetCurrentLevelString().c_str()))
+		{
+			signTexture = Engine::GetInstance().textures.get()->Load(configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("path").as_string());
+			signTextureW = configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("w").as_int();
+			signTextureH = configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("h").as_int();
+			signTextureY = configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("y").as_int();
+			signFont = TTF_OpenFont(configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("font").as_string(), configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("fontSize").as_int());
+			signKey = configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("text").as_string();
+			signTextY = configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("signTextY").as_int();
+			timeShowingSignText = configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("timeShowingSignText").as_int();
+			showSign = true;
+			timerShowSignText.Start();
+		}
+		else showSign = false;
+	}
+
+	if (!levelPlayed && level!=LVL1)
 	{
 		LoadTimeLivesCandies();
 	}
 	
 	SaveState();
+
 
 	musicNode = Engine::GetInstance().GetConfig().child("audio").child("music");
 	if (level == LVL1)Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl1Mus").attribute("path").as_string());
@@ -187,6 +207,7 @@ bool Scene::Start()
 	bossMusPlaying = false;
 	bossKilled = false;
 
+
 	//UI
 	heartsTexture = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("heartContainers").attribute("path").as_string());
 	piquetaNormal = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("piquetaNormal").attribute("path").as_string());
@@ -197,6 +218,8 @@ bool Scene::Start()
 	bgTutorial = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("bgTut").attribute("path").as_string());
 	bgCapa1 = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("bgCapa1").attribute("path").as_string());
 	kimHead = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("kimHead").attribute("path").as_string());
+
+	
 
 	return true;
 }
@@ -525,6 +548,26 @@ bool Scene::PostUpdate()
 				bt.second->active = false;
 		}
 
+		if (showSign && timerShowSignText.ReadSec() < timeShowingSignText)
+		{
+			render->DrawTextureBuffer(signTexture, -render->camera.x / window->scale + render->camera.w / 2 - signTextureW/2, -render->camera.y / window->scale + render->camera.h / 2 + signTextureY - signTextureH / 2, false, HUD);
+			int textW = 0, textH = 0;
+			std::string text = Engine::GetInstance().textManager.get()->GetText(signKey).c_str();
+
+			TTF_SizeUTF8(signFont, text.c_str(), &textW, &textH);
+
+			LOG("%d, %d", textW, textH);
+
+			Engine::GetInstance().render.get()->DrawTextToBuffer(
+				text.c_str(),
+				render->camera.w / 2 - textW/2,
+				render->camera.h / 2 - textH/2 + signTextureY + signTextY,
+				textW,
+				textH,
+				signFont,
+				{ 255, 255, 255, 255 }, HUD
+			);
+		}
 
 		if (help) render->DrawTextureBuffer(helpMenu, -render->camera.x / window->scale + helpPos.getX(), -render->camera.y / window->scale + helpPos.getY(), false ,MENUS);
 			

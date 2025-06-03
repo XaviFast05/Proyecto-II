@@ -155,4 +155,9 @@
 		<CA>PANTALLA COMPLETA</CA>
 		<EN>FULL SCREEN</EN>
 	</Text>
+	<Text id="SIGN_LAYER_1">
+		<ES>CAPA 1: NEGACIÓN</ES>
+		<CA>CAPA 1: NEGACIÓ</CA>
+		<EN>LAYER 1: DENIAL</EN>
+	</Text>
 </Texts>
