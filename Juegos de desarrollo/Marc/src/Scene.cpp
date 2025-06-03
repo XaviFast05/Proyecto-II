@@ -174,6 +174,7 @@ bool Scene::Start()
 	if (levelPlayed)
 	{
 		LoadState(); 
+		loadScene = false;
 	}
 	else
 	{
@@ -608,6 +609,7 @@ bool Scene::CleanUp()
 
 	enemies.clear();
 	checkPoints.clear();
+	destructibleWalls.clear();
 	soulRocks.clear();
 	allies.clear();
 

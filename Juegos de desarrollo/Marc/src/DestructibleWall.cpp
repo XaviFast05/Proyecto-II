@@ -86,6 +86,7 @@ void DestructibleWall::SaveData(pugi::xml_node itemNode)
 void DestructibleWall::LoadData(pugi::xml_node itemNode)
 {
 	destroy = itemNode.attribute("broke").as_bool();
+
 }
 
 void DestructibleWall::OnCollision(PhysBody* physA, PhysBody* physB) {
