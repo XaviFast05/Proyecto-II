@@ -206,8 +206,7 @@ bool Scene::Start()
 	kimHead = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("kimHead").attribute("path").as_string());
 
 	//ENVIRONEMT PARTICLES ON CAMERA
-
-	EnvironmentParticles* particle = (EnvironmentParticles*)Engine::GetInstance().entityManager->CreateEntity((EntityType)configParameters.child("entities").child("particles").child("environmentParticles").attribute("entityType").as_int());;
+	EnvironmentParticles* particle = (EnvironmentParticles*)Engine::GetInstance().entityManager->CreatePooledEntities((EntityType)configParameters.child("entities").child("particles").child("environmentParticles").attribute("entityType").as_int());;
 	particle->SetParameters(configParameters.child("entities").child("particles").child("environmentParticles"));
 	particle->Start();
 	particle->isCasted = true;
