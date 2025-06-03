@@ -19,6 +19,9 @@
  <tileset firstgid="357" name="Props" tilewidth="64" tileheight="64" tilecount="64" columns="8">
   <image source="props_Onirica.png" width="512" height="512"/>
  </tileset>
+ <tileset firstgid="421" name="IMG_8413" tilewidth="64" tileheight="64" tilecount="15" columns="5">
+  <image source="IMG_8413.PNG" width="322" height="192"/>
+ </tileset>
  <layer id="1" name="Capa de patrones 1" width="192" height="164">
   <properties>
    <property name="Draw" type="bool" value="true"/>
@@ -34207,8 +34210,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="18"/>
+   <tile gid="18"/>
    <tile/>
    <tile/>
    <tile/>
@@ -34399,7 +34402,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="18"/>
    <tile/>
    <tile/>
    <tile/>
@@ -34591,7 +34594,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="18"/>
    <tile/>
    <tile/>
    <tile/>
@@ -34783,6 +34786,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="18"/>
    <tile/>
    <tile/>
    <tile/>
@@ -34974,6 +34978,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="18"/>
    <tile/>
    <tile/>
    <tile/>
@@ -35165,9 +35170,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="18"/>
    <tile/>
    <tile/>
    <tile/>
@@ -35359,7 +35362,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="18"/>
    <tile/>
    <tile/>
    <tile/>
@@ -35551,7 +35554,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="18"/>
    <tile/>
    <tile/>
    <tile/>
@@ -35743,11 +35746,11 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
    <tile/>
    <tile/>
    <tile/>
@@ -35935,11 +35938,11 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="421"/>
+   <tile gid="422"/>
+   <tile gid="423"/>
+   <tile gid="424"/>
+   <tile gid="425"/>
    <tile/>
    <tile/>
    <tile/>
@@ -36127,11 +36130,11 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="426"/>
+   <tile gid="427"/>
+   <tile gid="428"/>
+   <tile gid="429"/>
+   <tile gid="430"/>
    <tile/>
    <tile/>
    <tile/>
@@ -36319,11 +36322,11 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="431"/>
+   <tile gid="432"/>
+   <tile gid="433"/>
+   <tile gid="434"/>
+   <tile gid="435"/>
    <tile/>
    <tile/>
    <tile/>
@@ -42202,13 +42205,13 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="26"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
    <tile/>
    <tile/>
    <tile/>
@@ -42389,11 +42392,11 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="421"/>
+   <tile gid="422"/>
+   <tile gid="423"/>
+   <tile gid="424"/>
+   <tile gid="425"/>
    <tile/>
    <tile/>
    <tile/>
@@ -42581,6 +42584,11 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="426"/>
+   <tile gid="427"/>
+   <tile gid="428"/>
+   <tile gid="429"/>
+   <tile gid="430"/>
    <tile/>
    <tile/>
    <tile/>
@@ -42768,16 +42776,11 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="431"/>
+   <tile gid="432"/>
+   <tile gid="433"/>
+   <tile gid="434"/>
+   <tile gid="435"/>
    <tile/>
    <tile/>
    <tile/>
@@ -42970,13 +42973,13 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
+   <tile gid="10"/>
    <tile/>
    <tile/>
    <tile/>

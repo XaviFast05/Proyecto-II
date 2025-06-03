@@ -13,6 +13,9 @@
  <tileset firstgid="293" name="Props" tilewidth="64" tileheight="64" tilecount="64" columns="8">
   <image source="props_Onirica.png" width="512" height="512"/>
  </tileset>
+ <tileset firstgid="357" name="efecte2" tilewidth="64" tileheight="64" tilecount="15" columns="5">
+  <image source="efecte2.PNG" width="322" height="192"/>
+ </tileset>
  <layer id="1" name="Capa de patrones 1" width="100" height="36">
   <properties>
    <property name="Draw" type="bool" value="true"/>
@@ -1102,7 +1105,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="8"/>
    <tile/>
    <tile/>
    <tile/>
@@ -1202,7 +1205,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="8"/>
    <tile/>
    <tile/>
    <tile/>
@@ -1302,7 +1305,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="8"/>
    <tile/>
    <tile/>
    <tile/>
@@ -2251,7 +2254,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="8"/>
    <tile/>
    <tile/>
    <tile/>
@@ -2351,7 +2354,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="8"/>
    <tile/>
    <tile/>
    <tile/>
@@ -2451,7 +2454,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="8"/>
    <tile/>
    <tile/>
    <tile/>
@@ -6216,15 +6219,15 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="25"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
    <tile/>
    <tile/>
    <tile/>
@@ -6320,11 +6323,11 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="357"/>
+   <tile gid="358"/>
+   <tile gid="359"/>
+   <tile gid="360"/>
+   <tile gid="361"/>
    <tile/>
    <tile/>
    <tile/>
@@ -6420,11 +6423,11 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="362"/>
+   <tile gid="363"/>
+   <tile gid="364"/>
+   <tile gid="365"/>
+   <tile gid="366"/>
    <tile/>
    <tile/>
    <tile/>
@@ -6520,11 +6523,11 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="367"/>
+   <tile gid="368"/>
+   <tile gid="369"/>
+   <tile gid="370"/>
+   <tile gid="371"/>
    <tile/>
    <tile/>
    <tile/>
