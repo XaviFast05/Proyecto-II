@@ -94,6 +94,7 @@ public:
 	Animation* currentAnimation = nullptr;
 	Animation idle;
 	Animation attack;
+	Animation land;
 	Animation hurt;
 	Animation death;
 	Animation jump;

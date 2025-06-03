@@ -33,7 +33,7 @@ bool JumpingEnemy::Start() {
 	idle.LoadAnimations(parameters.child("animations").child("idle"));
 	walk.LoadAnimations(parameters.child("animations").child("walk"));
 	jump.LoadAnimations(parameters.child("animations").child("jump")); 
-	attack.LoadAnimations(parameters.child("animations").child("attack"));
+	land.LoadAnimations(parameters.child("animations").child("land"));
 	death.LoadAnimations(parameters.child("animations").child("death"));
 
 	currentAnimation = &idle;
@@ -99,7 +99,7 @@ bool JumpingEnemy::Update(float dt) {
     }
 
     // Actualiza animación
-    currentAnimation = isBossJumping ? &jump : &walk;
+    currentAnimation = isBossJumping ? &jump : &idle;
     currentAnimation->Update();
 
     // Actualiza posición del sprite según Box2D
