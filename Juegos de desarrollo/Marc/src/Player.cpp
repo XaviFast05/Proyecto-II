@@ -179,11 +179,6 @@ bool Player::Update(float dt)
 	{
 		return true;
 	}
-	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_I) == KEY_DOWN) {
-		StartDialog("DIALOG04");
-	}
-
-
 
 	if (!Engine::GetInstance().scene.get()->paused) {
 
