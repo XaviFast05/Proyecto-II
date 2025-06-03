@@ -20056,6 +20056,6 @@
  </objectgroup>
  <objectgroup id="5" name="LevelChanger">
   <object id="74" x="2176" y="960" width="192" height="128"/>
-  <object id="79" x="4672" y="1920" width="128" height="192"/>
+  <object id="79" x="5312" y="1920" width="64" height="192"/>
  </objectgroup>
 </map>
