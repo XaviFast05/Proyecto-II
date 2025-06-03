@@ -22,9 +22,20 @@ bool CheckPoint::Awake() {
 
 bool CheckPoint::Start() {
 
-	
+	checkPointType = (CheckPointType)instanceParameters.attribute("checkPointType").as_int();
 	//initilize textures
-	texture = Engine::GetInstance().textures.get()->Load(parameters.child("properties").attribute("texture").as_string());
+	switch (checkPointType)
+	{
+	case CHECKPOINT_ORANGE:
+		texture = Engine::GetInstance().textures.get()->Load(parameters.child("properties").attribute("texture1").as_string());
+		break;
+	case CHECKPOINT_BLACK:
+		texture = Engine::GetInstance().textures.get()->Load(parameters.child("properties").attribute("texture2").as_string());
+		break;
+	default:
+		break;
+	}
+	
 	
 	/* L08 TODO 4: Add a physics to an item - initialize the physics body*/
 

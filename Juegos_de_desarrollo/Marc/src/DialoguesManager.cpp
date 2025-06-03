@@ -14,7 +14,12 @@ DialoguesManager::DialoguesManager()
 bool DialoguesManager::Start()
 {
 	configParameters = Engine::GetInstance().scene.get()->configParameters.child("dialogues");
-	rectangleTexture = Engine::GetInstance().textures.get()->Load(configParameters.child("dialoguePanel").attribute("path").as_string());
+	
+    rectangleTextures.clear();
+    for (pugi::xml_node node : configParameters.child("dialoguePanel").child("images").children())
+    {
+        rectangleTextures[node.attribute("name").as_string()] = Engine::GetInstance().textures.get()->Load(node.attribute("recuadroPath").as_string());
+    }
 	rectangleTextureW = configParameters.child("dialoguePanel").attribute("w").as_int();
 	rectangleTextureH = configParameters.child("dialoguePanel").attribute("h").as_int();
 	rectangleTextureX = configParameters.child("dialoguePanel").attribute("x").as_int();
@@ -33,7 +38,7 @@ bool DialoguesManager::Start()
     images.clear();
     for (pugi::xml_node node : configParameters.child("dialoguePanel").child("images").children())
     {
-        images[node.attribute("name").as_string()] = Engine::GetInstance().textures.get()->Load(node.attribute("path").as_string());
+        images[node.attribute("name").as_string()] = Engine::GetInstance().textures.get()->Load(node.attribute("fotoPath").as_string());
     }
     imageOffsetX = configParameters.child("dialoguePanel").child("images").attribute("offsetX").as_int();
     imageOffsetY = configParameters.child("dialoguePanel").child("images").attribute("offsetY").as_int();
@@ -117,7 +122,7 @@ bool DialoguesManager::Update(float dt)
             -(float)Engine::GetInstance().render.get()->camera.y + rectangleTextureY
         };
 
-        Engine::GetInstance().render.get()->DrawTextureBuffer(rectangleTexture, rectPos.getX(), rectPos.getY(), false, HUD);
+        Engine::GetInstance().render.get()->DrawTextureBuffer(rectangleTextures[vignetteParameters.attribute("talker").as_string()], rectPos.getX(), rectPos.getY(), false, HUD);
         Engine::GetInstance().render.get()->DrawTextureBuffer(images[vignetteParameters.attribute("talker").as_string()], rectPos.getX() + imageOffsetX, rectPos.getY() + imageOffsetY, false, HUD);
 
         int nameW = 0, nameH = 0;

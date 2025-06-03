@@ -30,6 +30,7 @@ class DeathMenu;
 class WinMenu;
 class FadeToBlack;
 class MerchantMenu;
+class CutscenePlayer;
 
 
 class Engine
@@ -131,6 +132,7 @@ public:
 	std::shared_ptr<DeathMenu> death;
 	std::shared_ptr<WinMenu> win;
 	std::shared_ptr<MerchantMenu> merchantMenu;
+	std::shared_ptr<CutscenePlayer> cutScene;
 
 
 private: 

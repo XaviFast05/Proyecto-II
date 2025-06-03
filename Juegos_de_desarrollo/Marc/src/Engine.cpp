@@ -24,6 +24,7 @@
 #include "UpgradesMenu.h"
 #include "TextManager.h"
 #include "MerchantMenu.h"
+#include "CutscenePlayer.h"
 
 // Constructor
 Engine::Engine() {
@@ -57,6 +58,7 @@ Engine::Engine() {
     death = std::make_shared<DeathMenu>(false);
     win = std::make_shared<WinMenu>(false);
     merchantMenu = std::make_shared<MerchantMenu>(true);
+	cutScene = std::make_shared<CutscenePlayer>(true);
 
 
     // Ordered for awake / Start / Update
@@ -79,7 +81,9 @@ Engine::Engine() {
     AddModule(std::static_pointer_cast<Module>(upgradesMenu));
     AddModule(std::static_pointer_cast<Module>(merchantMenu));
     AddModule(std::static_pointer_cast<Module>(fade));
+    AddModule(std::static_pointer_cast<Module>(cutScene));
     AddModule(std::static_pointer_cast<Module>(render));
+	
 
     LOG("Timer App Constructor: %f", timer.ReadMSec());
 }

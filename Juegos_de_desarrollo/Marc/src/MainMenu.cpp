@@ -219,7 +219,7 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control) {
 	case GuiControlId::NEW_GAME:
 		if(control->state == GuiControlState::PRESSED){
 			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)Engine::GetInstance().scene.get(), 30);
-			Engine::GetInstance().scene.get()->SetLoadState(false);
+			Engine::GetInstance().scene.get()->StartNewGame();
 			Engine::GetInstance().scene.get()->SetLevel(LVL1);
 			
 		}
