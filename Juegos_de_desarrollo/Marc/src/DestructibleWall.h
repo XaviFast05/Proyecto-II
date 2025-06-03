@@ -7,22 +7,16 @@
 #include <string.h>
 
 
+
 struct SDL_Texture;
 
 
-class CheckPoint : public Entity
+class DestructibleWall : public Entity
 {
-	enum CheckPointType
-	{
-		UNKNOWN,
-		CHECKPOINT_ORANGE,
-		CHECKPOINT_BLACK
-	};
-
 public:
 
-	CheckPoint();
-	virtual ~CheckPoint();
+	DestructibleWall();
+	virtual ~DestructibleWall();
 
 	bool Awake();
 
@@ -36,8 +30,6 @@ public:
 		this->parameters = _parameters;
 	}
 
-	void SetPlayer(Player* _player);
-
 	void SaveData(pugi::xml_node itemNode);
 	void LoadData(pugi::xml_node itemNode);
 
@@ -45,30 +37,20 @@ public:
 
 	void OnCollisionEnd(PhysBody* physA, PhysBody* physB);
 
-public:
-
-	
-	std::string name;
-
 private:
 	//L08 TODO 4: Add a physics to an item
 	PhysBody* pbody;
 
-	Player* player;
-
 	SDL_Texture* texture;
 	SDL_Rect currentFrame;
 
-	bool alight;
+	bool destructed;
 
 	int texW, texH;
-	Animation lit;
-	Animation unlit;
-	Animation* currentAnim = nullptr;
-
-	CheckPointType checkPointType;
 
 	pugi::xml_node parameters;
+
+	bool destroy;
 };
 
 

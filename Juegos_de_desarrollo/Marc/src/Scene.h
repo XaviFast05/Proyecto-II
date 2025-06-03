@@ -23,6 +23,7 @@ class BatEnemy;
 class GroundEnemy;
 class Enemy;
 class CheckPoint;
+class DestructibleWall;
 class EntityManager;
 class GuiControlButton;
 class GuiControlSlider;
@@ -42,6 +43,7 @@ enum Levels {
 	LVL4, //ZONA ONI 1
 	LVL5, //ZONA ONI 2
 	LVL6, //FINAL BOSS
+	LVL_COUNT
 };
 
 class Scene : public Module
@@ -77,6 +79,8 @@ public:
 	void LoadEnemy(Enemy* enemy, pugi::xml_node instanceNode);
 
 	void LoadItem(CheckPoint* checkPoint, pugi::xml_node instanceNode);
+	
+	void LoadItem(DestructibleWall* destructibleWall, pugi::xml_node instanceNode);
 
 	void LoadSoulRock(SoulRock* soulRocks, pugi::xml_node instanceNode);
 
@@ -117,6 +121,8 @@ public:
 	
 	std::string GetLevelString(Levels level);
 
+	void StartNewGame();
+
 public:
 
 	Levels level;
@@ -129,6 +135,7 @@ public:
 	bool stoppedTimer;
 
 	SDL_Texture* helpMenu;
+
 
 	GuiControlButton* resumeBt, * settingsBt, * backToTitleBt, * exitBt, *backBt;
 
@@ -159,6 +166,7 @@ private:
 
 	std::vector<Enemy*> enemies;
 	std::vector<CheckPoint*> checkPoints;
+	std::vector<DestructibleWall*> destructibleWalls;
 	std::vector<SoulRock*> soulRocks;
 	std::vector<Merchant*> allies;
 	pugi::xml_node musicNode;
@@ -168,6 +176,7 @@ private:
 	bool loadScene = false;
 	bool drawnMap = false;
 	bool changeLevel = false;
+	Timer changeLevelTimer;
 	bool startBossFight = false;
 	bool bossMusPlaying = false;
 	bool bossKilled = false;
@@ -177,4 +186,15 @@ private:
 	
 
 	Vector2D helpPos;
+
+	SDL_Texture* signTexture;
+	bool showSign;
+	int signTextureW;
+	int signTextureH;
+	int signTextureY;
+	TTF_Font* signFont;
+	std::string signKey;
+	int signTextY;
+	Timer timerShowSignText;
+	int timeShowingSignText;
 };
