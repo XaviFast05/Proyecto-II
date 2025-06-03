@@ -39,7 +39,9 @@
 		<enemy16 dead="false" x="7647" y="7968" />
 		<enemy17 dead="false" x="7647" y="7968" />
 	</lvl3>
-	<lvl6 />
+	<lvl6>
+		<enemy0 dead="false" x="3264" y="2110" />
+	</lvl6>
 	<lvl4 />
 	<lvl2 />
 </savedData>
