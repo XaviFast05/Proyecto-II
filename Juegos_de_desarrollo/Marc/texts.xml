@@ -190,4 +190,19 @@
 		<CA>CATALÀ</CA>
 		<EN>ENGLISH</EN>
 	</Text>
+	<text id="CONTROLLER">
+		<ES>MANDO</ES>
+		<CA>CONTROLADOR</CA>
+		<EN>CONTROLLER</EN>
+	</text>
+	<Text id="KEYBOARD">
+		<ES>TECLADO</ES>
+		<CA>TECLAT</CA>
+		<EN>KEYBOARD</EN>
+	</Text>
+	<Text id="CHANGE_CONTROLS">
+		<ES>CAMBIAR</ES>
+		<CA>CANVIAR</CA>
+		<EN>CHANGE</EN>
+	</Text>
 	</Texts>
