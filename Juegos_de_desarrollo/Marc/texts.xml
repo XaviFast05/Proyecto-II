@@ -205,4 +205,54 @@
 		<CA>CANVIAR</CA>
 		<EN>CHANGE</EN>
 	</Text>
+	<Text id="UPGRADE">
+		<ES>MEJORA</ES>
+		<CA>MILLORA</CA>
+		<EN>UPGRADE</EN>
+	</Text>
+	<Text id="VALUE">
+		<ES>VALOR</ES>
+		<CA>VALOR</CA>
+		<EN>VALUE</EN>
+	</Text>
+	<Text id="UPGRADE1_DESCRIPCION">
+		<ES>Saltas más alto</ES>
+		<CA>Saltes més alt</CA>
+		<EN>Jump higher</EN>
+	</Text>
+	<Text id="UPGRADE2_DESCRIPCION">
+		<ES>Dash más rápido</ES>
+		<CA>Dash més ràpid</CA>
+		<EN>Faster dash</EN>
+	</Text>
+	<Text id="UPGRADE3_DESCRIPCION">
+		<ES>Ataque cargado más rápido</ES>
+		<CA>Atac carregat més ràpid</CA>
+		<EN>Faster charged attack</EN>
+	</Text>
+	<Text id="UPGRADE4_DESCRIPCION">
+		<ES>Recuperación más rápida</ES>
+		<CA>Recuperació més ràpida</CA>
+		<EN>Faster pickaxe recovery</EN>
+	</Text>
+	<Text id="UPGRADE5_DESCRIPCION">
+		<ES>Más velocidad de movimiento</ES>
+		<CA>Més velocitat de moviment</CA>
+		<EN>Increased movement speed</EN>
+	</Text>
+	<Text id="UPGRADE6_DESCRIPCION">
+		<ES>Piquetas máximas aumentadas</ES>
+		<CA>Piques màximes augmentades</CA>
+		<EN>Increased maximum pickaxes</EN>
+	</Text>
+	<Text id="UPGRADE7_DESCRIPCION">
+		<ES>Haces más daño con 1 corazón</ES>
+		<CA>Fas més mal amb 1 cor</CA>
+		<EN>Deal more damage with 1 heart</EN>
+	</Text>
+	<Text id="UPGRADE8_DESCRIPCION">
+		<ES>Desbloquea habilidad especial</ES>
+		<CA>Desbloqueja habilitat especial</CA>
+		<EN>Unlock special ability</EN>
+	</Text>
 	</Texts>

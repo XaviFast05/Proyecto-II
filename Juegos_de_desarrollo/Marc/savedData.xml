@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
-<savedData saved="true" level="4" time="0">
+<savedData saved="true" level="1" time="0">
 	<playerPrefs>
 		<fullscreen toggle="0" />
-		<musicVolume value="47" />
-		<sfxVolume value="37" />
+		<musicVolume value="0" />
+		<sfxVolume value="48" />
 	</playerPrefs>
 	<player soulPoints="0" hits="3" />
 	<lvl1 played="true">
@@ -22,7 +22,7 @@
 		<destructibleWall0 broke="true" />
 	</lvl1>
 	<upgrades dash="false" charged="false" up0="false" up1="false" up2="false" up3="false" up4="false" up5="false" up6="false" up7="false" />
-	<lvl3 played="true">
+	<lvl3 played="false">
 		<enemy0 dead="false" x="9760" y="8534" />
 		<enemy1 dead="false" x="9780" y="8574" />
 		<enemy2 dead="false" x="8150" y="7969" />
@@ -44,7 +44,7 @@
 		<player x="5382" y="6431" />
 	</lvl3>
 	<lvl6 played="false" />
-	<lvl4 played="true">
+	<lvl4 played="false">
 		<player x="4032" y="1792" />
 		<enemy0 dead="false" x="3389" y="830" />
 	</lvl4>

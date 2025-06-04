@@ -59,8 +59,8 @@
 		<circle1 x="780" y="417" w="112" h="112"/>
 		<circle2 x="1002" y="331" w="112" h="112"/>
 	</upgradesMenu>
-	<merchantMenu>
-		<merchantPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/MenuMerchant/TIENDA 02/PNGS/interfaz_conbutton_exit_negro.png" />
+	<merchantMenu >
+		<merchantPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/MenuMerchant/TIENDA 02/PNGS/interfaz_conbutton_exit_negro.png" font="Assets/Fonts/PIXELADE.ttf" upgradeTextSize="60" valueTextSize="40" textSize="30" upgradeImageX="660" upgradeImageY="183" upgradeImageW="112" upgradeImageH="112 "/>
 		<firstUpgradeBt id="24" x="324" y="185" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg1_icon.png" />
 		<secondUpgradeBt id="25" x="464" y="185" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg2_icon.png" />
 		<thirdUpgradeBt id="26" x="324" y="300" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg3_icon.png" />
