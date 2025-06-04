@@ -43,6 +43,25 @@ bool UpgradesMenu::Start()
 	SDL_Texture* circleTex = Engine::GetInstance().textures.get()->Load(configParameters.child("sliders").attribute("texture").as_string());
 	SDL_Texture* barTex = Engine::GetInstance().textures.get()->Load(configParameters.child("sliders").attribute("barTexture").as_string());
 
+	u1 = Engine::GetInstance().textures.get()->Load(rootNode.child("upgradesMenu").child("upg1").attribute("texture").as_string());
+	u2 = Engine::GetInstance().textures.get()->Load(rootNode.child("upgradesMenu").child("upg2").attribute("texture").as_string());
+	u3 = Engine::GetInstance().textures.get()->Load(rootNode.child("upgradesMenu").child("upg3").attribute("texture").as_string());
+	u4 = Engine::GetInstance().textures.get()->Load(rootNode.child("upgradesMenu").child("upg4").attribute("texture").as_string());
+	u5 = Engine::GetInstance().textures.get()->Load(rootNode.child("upgradesMenu").child("upg5").attribute("texture").as_string());
+	u6 = Engine::GetInstance().textures.get()->Load(rootNode.child("upgradesMenu").child("upg6").attribute("texture").as_string());
+	u7 = Engine::GetInstance().textures.get()->Load(rootNode.child("upgradesMenu").child("upg7").attribute("texture").as_string());
+	u8 = Engine::GetInstance().textures.get()->Load(rootNode.child("upgradesMenu").child("upg8").attribute("texture").as_string());
+
+	circle1X = rootNode.child("upgradesMenu").child("circle1").attribute("x").as_int();
+	circle1Y = rootNode.child("upgradesMenu").child("circle1").attribute("y").as_int();
+	circle2X = rootNode.child("upgradesMenu").child("circle2").attribute("x").as_int();
+	circle2Y = rootNode.child("upgradesMenu").child("circle2").attribute("y").as_int();
+
+	circleRect.x = 0;
+	circleRect.y = 0;
+	circleRect.w = rootNode.child("upgradesMenu").child("circle2").attribute("w").as_int();
+	circleRect.h = rootNode.child("upgradesMenu").child("circle2").attribute("h").as_int();
+
 	backBt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, "backBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
 	SetGuiParameters(backBt, "backBt", configParameters);
 	changeMenuBt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, "changeMenuBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
@@ -71,6 +90,7 @@ bool UpgradesMenu::Start()
 	upgPanel = Engine::GetInstance().textures.get()->Load(configParameters.child("upgPanel").attribute("path").as_string());
 	upgPanelX = configParameters.child("upgPanel").attribute("x").as_int();
 	upgPanelY = configParameters.child("upgPanel").attribute("y").as_int();
+
 
 	LoadPrefs();
 
@@ -144,6 +164,17 @@ bool UpgradesMenu::Update(float dt)
 		upg6->Update(dt);
 		upg7->Update(dt);
 		upg8->Update(dt);
+
+		int used = 0;
+
+		if (upg1->isChecked) { Engine::GetInstance().render.get()->DrawTextureBuffer(u1, -camera.x / windowScale + (used == 0 ? circle1X : circle2X), -camera.y / windowScale + (used == 0 ? circle1Y : circle2Y), false, MENUS, &circleRect); used++; }
+		if (upg2->isChecked) { Engine::GetInstance().render.get()->DrawTextureBuffer(u2, -camera.x / windowScale + (used == 0 ? circle1X : circle2X), -camera.y / windowScale + (used == 0 ? circle1Y : circle2Y), false, MENUS, &circleRect); used++; }
+		if (upg3->isChecked) { Engine::GetInstance().render.get()->DrawTextureBuffer(u3, -camera.x / windowScale + (used == 0 ? circle1X : circle2X), -camera.y / windowScale + (used == 0 ? circle1Y : circle2Y), false, MENUS, &circleRect); used++; }
+		if (upg4->isChecked) { Engine::GetInstance().render.get()->DrawTextureBuffer(u4, -camera.x / windowScale + (used == 0 ? circle1X : circle2X), -camera.y / windowScale + (used == 0 ? circle1Y : circle2Y), false, MENUS, &circleRect); used++; }
+		if (upg5->isChecked) { Engine::GetInstance().render.get()->DrawTextureBuffer(u5, -camera.x / windowScale + (used == 0 ? circle1X : circle2X), -camera.y / windowScale + (used == 0 ? circle1Y : circle2Y), false, MENUS, &circleRect); used++; }
+		if (upg6->isChecked) { Engine::GetInstance().render.get()->DrawTextureBuffer(u6, -camera.x / windowScale + (used == 0 ? circle1X : circle2X), -camera.y / windowScale + (used == 0 ? circle1Y : circle2Y), false, MENUS, &circleRect); used++; }
+		if (upg7->isChecked) { Engine::GetInstance().render.get()->DrawTextureBuffer(u7, -camera.x / windowScale + (used == 0 ? circle1X : circle2X), -camera.y / windowScale + (used == 0 ? circle1Y : circle2Y), false, MENUS, &circleRect); used++; }
+		if (upg8->isChecked) { Engine::GetInstance().render.get()->DrawTextureBuffer(u8, -camera.x / windowScale + (used == 0 ? circle1X : circle2X), -camera.y / windowScale + (used == 0 ? circle1Y : circle2Y), false, MENUS, &circleRect); used++; }
 
 		backBt->Update(dt);
 		OnGuiMouseClickEvent(backBt);
