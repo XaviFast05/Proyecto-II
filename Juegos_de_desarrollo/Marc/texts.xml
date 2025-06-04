@@ -205,4 +205,24 @@
 		<CA>CANVIAR</CA>
 		<EN>CHANGE</EN>
 	</Text>
+	<Text id="CONTROLS_JUMP">
+		<ES>Saltar</ES>
+		<CA>Saltar</CA>
+		<EN>Jump</EN>
+	</Text>
+	<Text id="CONTROLS_PICK">
+		<ES>Lanzar piqueta</ES>
+		<CA>Llençar piqueta</CA>
+		<EN>Throw pickaxe</EN>
+	</Text>
+	<Text id="CONTROLS_ATTACK">
+		<ES>Atacar</ES>
+		<CA>Atacar</CA>
+		<EN>Attack</EN>
+	</Text>
+	<Text id="CONTROLS_MAP">
+		<ES>Abrir mapa</ES>
+		<CA>Obrir mapa</CA>
+		<EN>Open map</EN>
+	</Text>
 	</Texts>
