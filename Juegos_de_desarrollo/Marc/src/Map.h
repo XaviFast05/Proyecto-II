@@ -48,6 +48,7 @@ struct MapLayer
     int width;
     int height;
     std::vector<int> tiles;
+    std::vector<std::pair<int, int>> nonEmptyTiles;
     Properties properties;
 
     // L07: TODO 6: Short function to get the gid value of i,j
