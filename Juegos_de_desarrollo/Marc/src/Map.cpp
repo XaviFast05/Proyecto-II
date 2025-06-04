@@ -1,5 +1,6 @@
 
 #include "Engine.h"
+#include "Scene.h"
 #include "Render.h"
 #include "Textures.h"
 #include "Map.h"
@@ -62,39 +63,46 @@ bool Map::Update(float dt)
         // L07 TODO 5: Prepare the loop to draw all tiles in a layer + DrawTexture()
         // iterate all tiles in a layer
         for (const auto& mapLayer : mapData.layers) {
-            //Check if the property Draw exist get the value, if it's true draw the lawyer
-            if ((mapLayer->properties.GetProperty("PreDraw") != NULL && mapLayer->properties.GetProperty("PreDraw")->value == true) || 
-                (mapLayer->properties.GetProperty("Draw") != NULL && mapLayer->properties.GetProperty("Draw")->value == true) || 
-                (mapLayer->properties.GetProperty("PostDraw") != NULL && mapLayer->properties.GetProperty("PostDraw")->value == true)) {
-                for (int i = 0; i < mapData.width; i++) {
-                    for (int j = 0; j < mapData.height; j++) {
+            bool shouldDraw = false;
+            if ((mapLayer->properties.GetProperty("PreDraw") != NULL && mapLayer->properties.GetProperty("PreDraw")->value) ||
+                (mapLayer->properties.GetProperty("Draw") != NULL && mapLayer->properties.GetProperty("Draw")->value) ||
+                (mapLayer->properties.GetProperty("PostDraw") != NULL && mapLayer->properties.GetProperty("PostDraw")->value)) {
+                shouldDraw = true;
+            }
 
-                        // L07 TODO 9: Complete the draw function
+            if (!shouldDraw)
+                continue;
 
-                        Vector2D mapInWorld = MapToWorld(i,j);
-                        if (Engine::GetInstance().render.get()->InCameraView(mapInWorld.getX(), mapInWorld.getY(), mapData.tileWidth, mapData.tileHeight))
-                        {
-                            //Get the gid from tile
-                            int gid = mapLayer->Get(i, j);
-                            //Check if the gid is different from 0 - some tiles are empty
-                            if (gid != 0) {
-                                //L09: TODO 3: Obtain the tile set using GetTilesetFromTileId
-                                TileSet* tileSet = GetTilesetFromTileId(gid);
-                                if (tileSet != nullptr) {
-                                    //Get the Rect from the tileSetTexture;
-                                    SDL_Rect tileRect = tileSet->GetRect(gid);
-                                    //Get the screen coordinates from the tile coordinates
-                                    Vector2D mapCoord = MapToWorld(i, j);
-                                    //Draw the texture
-                                    RenderLayers layer = DEFAULT;
-                                    if (mapLayer->properties.GetProperty("Draw") != NULL) layer = MAP;
-                                    if (mapLayer->properties.GetProperty("PreDraw") != NULL) layer = BEHIND_MAP;
-                                    if (mapLayer->properties.GetProperty("PostDraw") != NULL) layer = FRONT;
-        
-                                    Engine::GetInstance().render->DrawTextureBuffer(tileSet->texture, mapCoord.getX(), mapCoord.getY(), false, layer, &tileRect);
-                                }
-                            }
-                        }
+            // --------------------------------------------------------------------------------
+            // En lugar de recorrer TODO el ancho x alto, recorremos SOLO las posiciones no vacías
+            for (const auto& coord : mapLayer->nonEmptyTiles) {
+                int i = coord.first;
+                int j = coord.second;
+
+                Vector2D mapInWorld = MapToWorld(i, j);
+
+                // Comprobamos si está dentro de cámara…
+                if (Engine::GetInstance().render->InCameraView(mapInWorld.getX(), mapInWorld.getY(),
+                    mapData.tileWidth, mapData.tileHeight)) {
+                    int gid = mapLayer->Get(i, j); // Ya sabemos que no es 0, pero lo reutilizamos
+                    TileSet* tileSet = GetTilesetFromTileId(gid);
+                    if (tileSet != nullptr) {
+                        SDL_Rect tileRect = tileSet->GetRect(gid);
+                        Vector2D mapCoord = mapInWorld; // ya calculado más arriba
+
+                        RenderLayers layer = DEFAULT;
+                        if (mapLayer->properties.GetProperty("Draw") != NULL) layer = MAP;
+                        if (mapLayer->properties.GetProperty("PreDraw") != NULL) layer = BEHIND_MAP;
+                        if (mapLayer->properties.GetProperty("PostDraw") != NULL) layer = FRONT;
+
+                        Engine::GetInstance().render->DrawTextureBuffer(
+                            tileSet->texture,
+                            mapCoord.getX(),
+                            mapCoord.getY(),
+                            false,
+                            layer,
+                            &tileRect
+                        );
                     }
                 }
             }
@@ -228,9 +236,18 @@ bool Map::Load(std::string path, std::string fileName)
             //L09: TODO 6 Call Load Layer Properties
             LoadProperties(layerNode, mapLayer->properties);
 
+            int idx = 0;
             //Iterate over all the tiles and assign the values in the data array
             for (pugi::xml_node tileNode = layerNode.child("data").child("tile"); tileNode != NULL; tileNode = tileNode.next_sibling("tile")) {
                 mapLayer->tiles.push_back(tileNode.attribute("gid").as_int());
+
+                int i = idx % mapLayer->width;
+                int j = idx / mapLayer->width;
+
+                if (tileNode.attribute("gid").as_int() != 0) {
+                    mapLayer->nonEmptyTiles.emplace_back(i, j);
+                }
+                ++idx;
             }
 
             //add the layer to the map
@@ -310,14 +327,6 @@ bool Map::Load(std::string path, std::string fileName)
                 {
                     PhysBody* c = Engine::GetInstance().physics.get()->CreateRectangle(object->x + object->width / 2, object->y + object->height / 2, object->width, object->height, STATIC);
                     c->ctype = ColliderType::MAPLIMITS;
-                }
-            }
-            if (objectGroup->name == "Ladder") {
-                for (Object* object : objectGroup->object)
-                {
-                    PhysBody* c = Engine::GetInstance().physics.get()->CreateRectangleSensor(object->x + object->width / 2, object->y + object->height / 2, object->width, object->height, STATIC);
-
-                    c->ctype = ColliderType::LADDER;
                 }
             }
             if (objectGroup->name == "Checkpoints") {

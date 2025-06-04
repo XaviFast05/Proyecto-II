@@ -32,12 +32,15 @@ public:
 
     void Reset()
     {
-        currentFrame = 0;
+        currentFrame = 0.0f;
+        loopCount = 0;
     }
 
-    bool HasFinished()
+    bool HasFinished() const
     {
-        return !loop && !pingpong && loopCount > 0;
+        if (totalFrames == 0) return true;          // sin frames
+        if (loop || pingpong)   return false;       // se repite
+        return (int)currentFrame >= totalFrames - 1;
     }
 
     void Update()

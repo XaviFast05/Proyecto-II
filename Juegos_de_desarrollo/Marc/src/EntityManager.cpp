@@ -20,6 +20,8 @@
 #include "DashParticle.h"
 #include "SoulRockParticle.h"
 #include "WallBrakerParticle.h"
+#include "EnvironmentParticles.h"
+#include "DestructibleWall.h"
 
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
 {
@@ -143,6 +145,12 @@ Entity* EntityManager::CreateEntity(EntityType bullet_direction)
 	case EntityType::WALLBRAKER_PARTICLE:
 		entity = new WallBrakerParticle();
 		break;
+	case EntityType::ENVIRONMENT_PARTICLES:
+		entity = new EnvironmentParticles();
+		break;
+	case EntityType::DESTRUCTIBLE_WALL:
+		entity = new DestructibleWall();
+		break;
 	default:
 		break;
 	}
@@ -215,6 +223,9 @@ std::list<Entity*> EntityManager::CreatePooledEntities(EntityType bullet_directi
 			break;
 		case EntityType::WALLBRAKER_PARTICLE:
 			entity = new WallBrakerParticle();
+			break;
+		case EntityType::ENVIRONMENT_PARTICLES:
+			entity = new EnvironmentParticles();
 			break;
 		default:
 			break;
@@ -290,6 +301,9 @@ Entity* EntityManager::CreatePooledEntities(EntityType bullet_direction)
 		break;
 	case EntityType::WALLBRAKER_PARTICLE:
 		entity = new WallBrakerParticle();
+		break;
+	case EntityType::ENVIRONMENT_PARTICLES:
+		entity = new EnvironmentParticles();
 		break;
 	default:
 		break;

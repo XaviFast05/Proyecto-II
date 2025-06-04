@@ -23,6 +23,7 @@ class BatEnemy;
 class GroundEnemy;
 class Enemy;
 class CheckPoint;
+class DestructibleWall;
 class EntityManager;
 class GuiControlButton;
 class GuiControlSlider;
@@ -42,6 +43,7 @@ enum Levels {
 	LVL4, //ZONA ONI 1
 	LVL5, //ZONA ONI 2
 	LVL6, //FINAL BOSS
+	LVL_COUNT
 };
 
 class Scene : public Module
@@ -77,10 +79,16 @@ public:
 	void LoadEnemy(Enemy* enemy, pugi::xml_node instanceNode);
 
 	void LoadItem(CheckPoint* checkPoint, pugi::xml_node instanceNode);
+	
+	void LoadItem(DestructibleWall* destructibleWall, pugi::xml_node instanceNode);
 
 	void LoadSoulRock(SoulRock* soulRocks, pugi::xml_node instanceNode);
 
 	void LoadAlly(Merchant* merchant, pugi::xml_node instanceNode);
+
+	void LoadParticle(Particle* particle, pugi::xml_node instanceNode);
+
+	//void LoadEnvironmentParticles(float areaX, float areaY, float areaW, float areaH);
 
 	void LoadState();
 
@@ -117,6 +125,8 @@ public:
 	
 	std::string GetLevelString(Levels level);
 
+	void StartNewGame();
+
 public:
 
 	Levels level;
@@ -129,6 +139,7 @@ public:
 	bool stoppedTimer;
 
 	SDL_Texture* helpMenu;
+
 
 	GuiControlButton* resumeBt, * settingsBt, * backToTitleBt, * exitBt, *backBt;
 
@@ -156,6 +167,11 @@ public:
 
 	bool cameraDirectionChangeActivation = false;
 
+	int camX = 0;
+	int camY = 0;
+	int camW = 0;
+	int camH = 0;
+
 private:
 	
 	//L03: TODO 3b: Declare a Player attribute
@@ -163,8 +179,10 @@ private:
 
 	std::vector<Enemy*> enemies;
 	std::vector<CheckPoint*> checkPoints;
+	std::vector<DestructibleWall*> destructibleWalls;
 	std::vector<SoulRock*> soulRocks;
 	std::vector<Merchant*> allies;
+	std::vector<Particle*> particles;
 	pugi::xml_node musicNode;
 
 	std::map<std::string, GuiControlButton*> pauseButtons;
@@ -172,6 +190,7 @@ private:
 	bool loadScene = false;
 	bool drawnMap = false;
 	bool changeLevel = false;
+	Timer changeLevelTimer;
 	bool startBossFight = false;
 	bool bossMusPlaying = false;
 	bool bossKilled = false;
@@ -180,4 +199,15 @@ private:
 	int transitionDisplace;
 	
 	Vector2D helpPos;
+
+	SDL_Texture* signTexture;
+	bool showSign;
+	int signTextureW;
+	int signTextureH;
+	int signTextureY;
+	TTF_Font* signFont;
+	std::string signKey;
+	int signTextY;
+	Timer timerShowSignText;
+	int timeShowingSignText;
 };

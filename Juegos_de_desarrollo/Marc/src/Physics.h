@@ -51,6 +51,7 @@ enum class ColliderType {
 	DIALOG_STARTER,
 	PARTICLE,
 	UNLOCKAREA,
+	DESTRUCTIBLE_WALL,
 	UNKNOWN
 };
 

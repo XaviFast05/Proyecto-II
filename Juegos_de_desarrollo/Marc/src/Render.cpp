@@ -55,7 +55,7 @@ bool Render::Awake()
 	TTF_Init();
 
 	//load a font into memory
-	font = TTF_OpenFont("Assets/Fonts/Corvid Conspirator v1.1.ttf", 25);
+	font = TTF_OpenFont("Assets/Fonts/PIXELADE.ttf", 25);
 
 	return ret;
 }

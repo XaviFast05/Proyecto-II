@@ -920,10 +920,16 @@ bool Player::HaveActiveUpgrade(int index) {
 	return haveUnlocked;
 }
 
-void Player::SaveData(pugi::xml_node playerNode, pugi::xml_node upgradesNode) {
+void Player::SaveData(pugi::xml_node playerNode, pugi::xml_node upgradesNode, pugi::xml_node levelNode) {
 	if (active) {
-		playerNode.attribute("x").set_value(pbody->GetPhysBodyWorldPosition().getX());
-		playerNode.attribute("y").set_value(pbody->GetPhysBodyWorldPosition().getY());
+		if (!levelNode.child("player"))
+		{
+			levelNode.append_child("player");
+			levelNode.child("player").append_attribute("x");
+			levelNode.child("player").append_attribute("y");
+		}
+		levelNode.child("player").attribute("x").set_value(pbody->GetPhysBodyWorldPosition().getX());
+		levelNode.child("player").attribute("y").set_value(pbody->GetPhysBodyWorldPosition().getY());
 		playerNode.attribute("hits").set_value(hits);
 		playerNode.attribute("soulPoints").set_value(currencyManager->GetCurrency());
 		upgradesNode.attribute("dash").set_value(unlockedDash);
@@ -965,10 +971,10 @@ void Player::SaveData(pugi::xml_node playerNode, pugi::xml_node upgradesNode) {
 	}
 }
 
-void Player::LoadData(pugi::xml_node playerNode, pugi::xml_node upgradesNode)
+void Player::LoadData(pugi::xml_node playerNode, pugi::xml_node upgradesNode, pugi::xml_node levelNode)
 {
-	position.setX(playerNode.attribute("x").as_int());
-	position.setY(playerNode.attribute("y").as_int());
+	position.setX(levelNode.child("player").attribute("x").as_int());
+	position.setY(levelNode.child("player").attribute("y").as_int());
 	currencyManager->SetCurrency(playerNode.attribute("soulPoints").as_int());
 	hits = playerNode.attribute("hits").as_int();
 	SetPosition(position);

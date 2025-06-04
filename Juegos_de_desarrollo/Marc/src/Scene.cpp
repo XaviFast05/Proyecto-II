@@ -38,7 +38,11 @@
 #include "SoulRockParticle.h"
 #include "DashParticle.h"
 #include "WallBrakerParticle.h"
+#include "EnvironmentParticles.h"
 #include "MerchantMenu.h"
+#include "CutscenePlayer.h"
+#include "TextManager.h"
+#include "DestructibleWall.h"
 
 
 #include "Intro.h"
@@ -54,6 +58,7 @@ Scene::Scene(bool startEnabled) : Module(startEnabled)
 // Destructor
 Scene::~Scene()
 {
+
 }
 
 // Called before render is available
@@ -102,7 +107,7 @@ bool Scene::Start()
 	//Load Enemies
 	for (pugi::xml_node enemyNode : configParameters.child("entities").child("enemies").child("instances").child(GetCurrentLevelString().c_str()).children())
 	{
-		Enemy* enemy = (GroundEnemy*)Engine::GetInstance().entityManager->CreateEntity((EntityType)enemyNode.attribute("entityType").as_int());;
+		Enemy* enemy = (Enemy*)Engine::GetInstance().entityManager->CreateEntity((EntityType)enemyNode.attribute("entityType").as_int());;
 		LoadEnemy(enemy, enemyNode);
 	}
 
@@ -110,6 +115,12 @@ bool Scene::Start()
 	{
 		CheckPoint* checkPoint = (CheckPoint*)Engine::GetInstance().entityManager->CreateEntity((EntityType)checkPointNode.attribute("entityType").as_int());;
 		LoadItem(checkPoint, checkPointNode);
+	}
+
+	for (pugi::xml_node destructibleWallNode : configParameters.child("entities").child("items").child("destructibleWalls").child("instances").child(GetCurrentLevelString().c_str()).children())
+	{
+		DestructibleWall* destructibleWall = (DestructibleWall*)Engine::GetInstance().entityManager->CreateEntity((EntityType)destructibleWallNode.attribute("entityType").as_int());;
+		LoadItem(destructibleWall, destructibleWallNode);
 	}
 
 	for (pugi::xml_node soulRockNode : configParameters.child("entities").child("items").child("soulRock").child("instances").child(GetCurrentLevelString().c_str()).children())
@@ -156,22 +167,43 @@ bool Scene::Start()
 	transitionDisplace = 0;
 
 
-	if (!loadScene)
+	pugi::xml_document saveFile;
+	pugi::xml_parse_result result = saveFile.load_file("savedData.xml");
+	bool levelPlayed = saveFile.child("savedData").child(GetCurrentLevelString().c_str()).attribute("played").as_bool();
+	LOG("%d", (int)levelPlayed);
+	saveFile.save_file("savedData.xml");
+
+	if (levelPlayed)
 	{
-		if (level != LVL1)
-		{
-			LoadTimeLivesCandies();
-		}
-		else
-		{
-			currentTime = 0;
-		}
-		SaveState();
+		LoadState(); 
+		loadScene = false;
 	}
 	else
 	{
-		LoadState();
+		if (configParameters.child("levelName").child(GetCurrentLevelString().c_str()))
+		{
+			signTexture = Engine::GetInstance().textures.get()->Load(configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("path").as_string());
+			signTextureW = configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("w").as_int();
+			signTextureH = configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("h").as_int();
+			signTextureY = configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("y").as_int();
+			signFont = TTF_OpenFont(configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("font").as_string(), configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("fontSize").as_int());
+			signKey = configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("text").as_string();
+			signTextY = configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("signTextY").as_int();
+			timeShowingSignText = configParameters.child("levelName").child(GetCurrentLevelString().c_str()).attribute("timeShowingSignText").as_int();
+			showSign = true;
+			timerShowSignText.Start();
+		}
+		else showSign = false;
+		SaveState();
 	}
+
+	if (!levelPlayed && level!=LVL1)
+	{
+		LoadTimeLivesCandies();
+	}
+	
+	
+
 
 	musicNode = Engine::GetInstance().GetConfig().child("audio").child("music");
 	if (level == LVL1)Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl1Mus").attribute("path").as_string());
@@ -200,6 +232,16 @@ bool Scene::Start()
 	kimHead = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("kimHead").attribute("path").as_string());
 
 	charge.LoadAnimations(configParameters.child("ui").child("pickaxes").child("animations").child("charging"));
+	//ENVIRONEMT PARTICLES ON CAMERA
+	EnvironmentParticles* particle = (EnvironmentParticles*)Engine::GetInstance().entityManager->CreatePooledEntities((EntityType)configParameters.child("entities").child("particles").child("environmentParticles").attribute("entityType").as_int());;
+	particle->SetParameters(configParameters.child("entities").child("particles").child("environmentParticles"));
+	particle->Start();
+	particle->isCasted = true;
+	particles.push_back(particle);
+	
+	changeLevelTimer.Start();
+
+
 	return true;
 }
 
@@ -228,6 +270,13 @@ void Scene::LoadItem(CheckPoint* checkPoint, pugi::xml_node instanceNode) {
 	checkPoints.push_back(checkPoint);
 }
 
+void Scene::LoadItem(DestructibleWall* destructibleWall, pugi::xml_node instanceNode) {
+
+	destructibleWall->SetParameters(configParameters.child("entities").child("items").child("destructibleWalls"));
+	destructibleWall->SetInstanceParameters(instanceNode);
+	destructibleWalls.push_back(destructibleWall);
+}
+
 void Scene::LoadAlly(Merchant* merchant, pugi::xml_node instanceNode) {
 
 	merchant->SetPlayer(player);
@@ -235,6 +284,13 @@ void Scene::LoadAlly(Merchant* merchant, pugi::xml_node instanceNode) {
 	merchant->SetInstanceParameters(instanceNode);
 	allies.push_back(merchant);
 
+}
+
+void Scene::LoadParticle(Particle* particle, pugi::xml_node instanceNode)
+{
+	particle->SetParameters(configParameters.child("entities").child("particles").child(instanceNode.attribute("particleType").as_string()));
+	particle->SetInstanceParameters(instanceNode);
+	particles.push_back(particle);
 }
 
 
@@ -257,17 +313,6 @@ bool Scene::Update(float dt)
 	ZoneScoped;
 
 	_dt = dt;
-
-	//if (player->lives <= 0 && player->respawnTimer.ReadSec() > player->respawnTime-1) {
-	//	/*Engine::GetInstance().death.get()->Enable();*/
-
-	//	Engine::GetInstance().death.get()->finalCandyNum = player->pickedCandies;
-	//	Engine::GetInstance().fade.get()->Fade((Module*)this, Engine::GetInstance().death.get());
-	//	
-
-	//	
-	//	return true;
-	//}
 
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)
 	{
@@ -312,6 +357,7 @@ bool Scene::Update(float dt)
 		changeLevel = false;
 		if (level == LVL1)
 		{
+			Engine::GetInstance().cutScene->ConvertPixels(0, 1);
 			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
 			level = LVL3;
 		}
@@ -359,7 +405,7 @@ bool Scene::Update(float dt)
 			}
 			else if (playerPOSY < 1600)
 			{
-				Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)Engine::GetInstance().mainMenu.get(), 30);
+				Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)Engine::GetInstance().win.get(), 30);
 				level = LVL3;
 			}
 		}
@@ -384,6 +430,12 @@ bool Scene::Update(float dt)
 
 	if (!paused) {
 		currentTime += dt / 1000.0f;
+
+		//CAM VARIABLES
+		camX = -Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->GetScale();
+		camY = -Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->GetScale();
+		camW = Engine::GetInstance().window.get()->width;
+		camH = Engine::GetInstance().window.get()->height;
 
 		//CAMERA X
 		ChangeDirectionCameraX();
@@ -462,6 +514,10 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
+	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+		Engine::GetInstance().cutScene->ConvertPixels(0, 1);
+
+
 	if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 	{
 		SaveState();
@@ -530,6 +586,24 @@ bool Scene::PostUpdate()
 				bt.second->active = false;
 		}
 
+		if (showSign && timerShowSignText.ReadSec() < timeShowingSignText)
+		{
+			render->DrawTextureBuffer(signTexture, -render->camera.x / window->scale + render->camera.w / 2 - signTextureW/2, -render->camera.y / window->scale + render->camera.h / 2 + signTextureY - signTextureH / 2, false, HUD);
+			int textW = 0, textH = 0;
+			std::string text = Engine::GetInstance().textManager.get()->GetText(signKey).c_str();
+
+			TTF_SizeUTF8(signFont, text.c_str(), &textW, &textH);
+
+			Engine::GetInstance().render.get()->DrawTextToBuffer(
+				text.c_str(),
+				render->camera.w / 2 - textW/2,
+				render->camera.h / 2 - textH/2 + signTextureY + signTextY,
+				textW,
+				textH,
+				signFont,
+				{ 255, 255, 255, 255 }, HUD
+			);
+		}
 
 		if (help) render->DrawTextureBuffer(helpMenu, -render->camera.x / window->scale + helpPos.getX(), -render->camera.y / window->scale + helpPos.getY(), false ,MENUS);
 			
@@ -556,6 +630,7 @@ bool Scene::CleanUp()
 
 	enemies.clear();
 	checkPoints.clear();
+	destructibleWalls.clear();
 	soulRocks.clear();
 	allies.clear();
 
@@ -592,6 +667,7 @@ void Scene::SaveState()
 	saveFile.child("savedData").attribute("saved").set_value(true);
 	saveFile.child("savedData").attribute("level").set_value((int)level);
 	saveFile.child("savedData").attribute("time").set_value(currentTime);
+	savedDataNode.attribute("played").set_value(true);
 
 	if (result == NULL)
 	{
@@ -603,7 +679,7 @@ void Scene::SaveState()
 
 	//Save info to XML 
 	//Player 
-	player->SaveData(saveFile.child("savedData").child("player"), upgradesNode);
+	player->SaveData(saveFile.child("savedData").child("player"), upgradesNode, savedDataNode);
 
 	//Enemies
 	for (int i = 0; i < enemies.size(); i++)
@@ -630,11 +706,23 @@ void Scene::SaveState()
 		if (!parent) {
 			parent = savedDataNode.append_child(nodeChar.c_str());
 			parent.append_attribute("alight");
-			parent.append_attribute("x");
-			parent.append_attribute("y");
 		}
 
 		checkPoints[i]->SaveData(parent);
+	}
+
+	//BreakableWalls
+	for (int i = 0; i < destructibleWalls.size(); i++)
+	{
+		std::string nodeChar = "destructibleWall" + std::to_string(i);
+		pugi::xml_node parent = savedDataNode.child(nodeChar.c_str());
+
+		if (!parent) {
+			parent = savedDataNode.append_child(nodeChar.c_str());
+			parent.append_attribute("broke");
+		}
+
+		destructibleWalls[i]->SaveData(parent);
 	}
 
 	////SoulRocks
@@ -674,7 +762,7 @@ void Scene::LoadState() {
 	startBossFight = savedDataNode.attribute("startBossFight").as_bool();
 	bossKilled = savedDataNode.attribute("bossKilled").as_bool();
 
-	player->LoadData(loadFile.child("savedData").child("player"), upgradesNode);
+	player->LoadData(loadFile.child("savedData").child("player"), upgradesNode, savedDataNode);
 
 	//TODO: add an attribute to tell enemies from first and second level apart
 	for (int i = 0; i < enemies.size(); i++)
@@ -694,6 +782,16 @@ void Scene::LoadState() {
 		if (parent)
 		{
 			checkPoints[i]->LoadData(parent);
+		}
+	}
+
+	for (int i = 0; i < destructibleWalls.size(); i++)
+	{
+		std::string nodeChar = "destructibleWall" + std::to_string(i);
+		pugi::xml_node parent = savedDataNode.child(nodeChar.c_str());
+		if (parent)
+		{
+			destructibleWalls[i]->LoadData(parent);
 		}
 	}
 
@@ -775,7 +873,11 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control) {
 
 void Scene::ChangeLevel()
 {
-	changeLevel = true;
+	if (changeLevelTimer.ReadSec() > 3)
+	{
+		SaveState();
+		changeLevel = true;
+	}
 }
 
 
@@ -962,4 +1064,26 @@ void Scene::DrawMap()
 	default:
 		break;
 	}
+}
+
+void Scene::StartNewGame()
+{
+	loadScene = false;
+
+	pugi::xml_document saveFile;
+	pugi::xml_parse_result result = saveFile.load_file("savedData.xml");
+
+	for (int i = 0; i < LVL_COUNT; ++i) {
+		
+		Levels level = static_cast<Levels>(i);
+		
+		if (level == UNKNOWN) continue;
+
+		if (!saveFile.child("savedData").child(GetLevelString(level).c_str())) saveFile.child("savedData").append_child(GetLevelString(level).c_str());
+		if (!saveFile.child("savedData").child(GetLevelString(level).c_str()).attribute("played")) saveFile.child("savedData").child(GetLevelString(level).c_str()).append_attribute("played");
+
+		saveFile.child("savedData").child(GetLevelString(level).c_str()).attribute("played").set_value(false);
+	}
+
+	saveFile.save_file("savedData.xml");
 }
