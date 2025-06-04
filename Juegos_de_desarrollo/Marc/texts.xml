@@ -155,4 +155,54 @@
 		<CA>PANTALLA COMPLETA</CA>
 		<EN>FULL SCREEN</EN>
 	</Text>
-</Texts>
+	<Text id="NEW_GAME">
+		<ES>NUEVA PARTIDA</ES>
+		<CA>NOVA PARTIDA</CA>
+		<EN>NEW GAME</EN>
+	</Text>
+	<Text id="CONTROLS">
+		<ES>CONTROLES</ES>
+		<CA>CONTROLS</CA>
+		<EN>CONTROLS</EN>
+	</Text>
+	<Text id="RESUME">
+		<ES>REANUDAR</ES>
+		<CA>REPRENDRE</CA>
+		<EN>RESUME</EN>
+	</Text>
+	<Text id="UPGRADES">
+		<ES>MEJORAS</ES>
+		<CA>MILLORES</CA>
+		<EN>UPGRADES</EN>
+	</Text>
+	<Text id="BACK_TO_TITLE">
+		<ES>VOLVER AL TÍTULO</ES>
+		<CA>TORNAR AL TÍTOL</CA>
+		<EN>BACK TO TITLE</EN>
+	</Text>
+	<Text id="SIGN_LAYER_1">
+		<ES>CAPA 1: NEGACIÓN</ES>
+		<CA>CAPA 1: NEGACIÓ</CA>
+		<EN>LAYER 1: DENIAL</EN>
+	</Text>
+	<Text id="LANGUAGE">
+		<ES>ESPAÑOL</ES>
+		<CA>CATALÀ</CA>
+		<EN>ENGLISH</EN>
+	</Text>
+	<text id="CONTROLLER">
+		<ES>MANDO</ES>
+		<CA>CONTROLADOR</CA>
+		<EN>CONTROLLER</EN>
+	</text>
+	<Text id="KEYBOARD">
+		<ES>TECLADO</ES>
+		<CA>TECLAT</CA>
+		<EN>KEYBOARD</EN>
+	</Text>
+	<Text id="CHANGE_CONTROLS">
+		<ES>CAMBIAR</ES>
+		<CA>CANVIAR</CA>
+		<EN>CHANGE</EN>
+	</Text>
+	</Texts>

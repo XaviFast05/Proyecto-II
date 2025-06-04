@@ -153,6 +153,7 @@
     <ClCompile Include="src\ChildEnemy.cpp" />
     <ClCompile Include="src\CutscenePlayer.cpp" />
     <ClCompile Include="src\DashParticle.cpp" />
+    <ClCompile Include="src\DestructibleWall.cpp" />
     <ClCompile Include="src\DialoguesManager.cpp" />
     <ClCompile Include="src\CurrencyOrb.cpp" />
     <ClCompile Include="src\CurrencyManager.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="src\ChildEnemy.h" />
     <ClInclude Include="src\CutscenePlayer.h" />
     <ClInclude Include="src\DashParticle.h" />
+    <ClInclude Include="src\DestructibleWall.h" />
     <ClInclude Include="src\DialoguesManager.h" />
     <ClInclude Include="src\CurrencyOrb.h" />
     <ClInclude Include="src\CurrencyManager.h" />

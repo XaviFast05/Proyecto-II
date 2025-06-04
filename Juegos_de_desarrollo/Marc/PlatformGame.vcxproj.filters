@@ -54,6 +54,7 @@
     <ClCompile Include="src\CutscenePlayer.cpp">
       <Filter>CutsceneManager</Filter>
     </ClCompile>
+    <ClCompile Include="src\DestructibleWall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Ally.h" />
@@ -113,6 +114,7 @@
     <ClInclude Include="src\CutscenePlayer.h">
       <Filter>CutsceneManager</Filter>
     </ClInclude>
+    <ClInclude Include="src\DestructibleWall.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="config.xml" />
