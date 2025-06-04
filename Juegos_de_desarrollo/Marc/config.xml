@@ -757,11 +757,10 @@
 							<instance entityType="2" x="9792" y="3272" checkPointType = "1"/>
 						</lvl1>
 						<lvl3>
-							<instance entityType="2" x="7364" y="8524" checkPointType="2"/>
+							<instance entityType="2" x="7364" y="8514" checkPointType="2"/>
 							<instance entityType="2" x="16327" y="6490" checkPointType="2"/>
 							<instance entityType="2" x="9461" y="3142" checkPointType="2"/>
 							<instance entityType="2" x="16327" y="11036" checkPointType="2"/>
-							<instance entityType="2" x="7364" y="8524" checkPointType="2"/>
 						</lvl3>
 					</instances>
 					<animations>
