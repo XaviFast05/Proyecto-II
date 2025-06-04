@@ -29,7 +29,6 @@
 #include "MainMenu.h"
 #include "FadeToBlack.h"
 #include "Settings.h"
-#include "DeathMenu.h"
 #include "WinMenu.h"
 #include "PickaxeManager.h"
 #include "CurrencyManager.h"
@@ -38,10 +37,12 @@
 #include "SoulRockParticle.h"
 #include "DashParticle.h"
 #include "WallBrakerParticle.h"
+#include "EnvironmentParticles.h"
 #include "MerchantMenu.h"
 #include "CutscenePlayer.h"
 #include "TextManager.h"
 #include "DestructibleWall.h"
+#include "VideoPlayer.h"
 
 
 #include "Intro.h"
@@ -106,7 +107,7 @@ bool Scene::Start()
 	//Load Enemies
 	for (pugi::xml_node enemyNode : configParameters.child("entities").child("enemies").child("instances").child(GetCurrentLevelString().c_str()).children())
 	{
-		Enemy* enemy = (GroundEnemy*)Engine::GetInstance().entityManager->CreateEntity((EntityType)enemyNode.attribute("entityType").as_int());;
+		Enemy* enemy = (Enemy*)Engine::GetInstance().entityManager->CreateEntity((EntityType)enemyNode.attribute("entityType").as_int());;
 		LoadEnemy(enemy, enemyNode);
 	}
 
@@ -206,11 +207,17 @@ bool Scene::Start()
 
 	musicNode = Engine::GetInstance().GetConfig().child("audio").child("music");
 	if (level == LVL1)Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl1Mus").attribute("path").as_string());
-	else if (level == LVL2) {
-		Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl2Mus").attribute("path").as_string());
-	}
 	else if (level == LVL3) {
 		Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl2Mus").attribute("path").as_string());
+	}
+	else if (level == LVL4) {
+		Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl3Mus").attribute("path").as_string());
+	}
+	else if (level == LVL5) {
+		Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl3Mus").attribute("path").as_string());
+	}
+	else if (level == LVL6) {
+		Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl3Mus").attribute("path").as_string());
 	}
 
 	startBossFight = false;
@@ -222,6 +229,7 @@ bool Scene::Start()
 	heartsTexture = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("heartContainers").attribute("path").as_string());
 	piquetaNormal = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("piquetaNormal").attribute("path").as_string());
 	piquetaGastada = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("piquetaGastada").attribute("path").as_string());
+	piquetaReload = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("piquetaRecarga").attribute("path").as_string());
 	barraPiqueta = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("barraPiqueta").attribute("path").as_string());
 	barraRoja = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("barraRoja").attribute("path").as_string());
 	orbSoul = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("orbSoul").attribute("path").as_string());
@@ -229,6 +237,14 @@ bool Scene::Start()
 	bgCapa1 = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("bgCapa1").attribute("path").as_string());
 	kimHead = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("kimHead").attribute("path").as_string());
 
+	charge.LoadAnimations(configParameters.child("ui").child("pickaxes").child("animations").child("charging"));
+	//ENVIRONEMT PARTICLES ON CAMERA
+	EnvironmentParticles* particle = (EnvironmentParticles*)Engine::GetInstance().entityManager->CreatePooledEntities((EntityType)configParameters.child("entities").child("particles").child("environmentParticles").attribute("entityType").as_int());;
+	particle->SetParameters(configParameters.child("entities").child("particles").child("environmentParticles"));
+	particle->Start();
+	particle->isCasted = true;
+	particles.push_back(particle);
+	
 	changeLevelTimer.Start();
 
 
@@ -276,6 +292,13 @@ void Scene::LoadAlly(Merchant* merchant, pugi::xml_node instanceNode) {
 
 }
 
+void Scene::LoadParticle(Particle* particle, pugi::xml_node instanceNode)
+{
+	particle->SetParameters(configParameters.child("entities").child("particles").child(instanceNode.attribute("particleType").as_string()));
+	particle->SetInstanceParameters(instanceNode);
+	particles.push_back(particle);
+}
+
 
 int Scene::GetLevel()
 {
@@ -318,7 +341,9 @@ bool Scene::Update(float dt)
 
 	if (level != LVL3 && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
-		level = LVL3;
+		//LVL3 CAPA 1
+		//LVL5 onirica dash
+		level = LVL5;
 		loadScene = false;
 		Engine::GetInstance().fade.get()->Fade(this, this);
 	}
@@ -338,9 +363,12 @@ bool Scene::Update(float dt)
 		changeLevel = false;
 		if (level == LVL1)
 		{
-			Engine::GetInstance().cutScene->ConvertPixels(0, 1);
-			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
+			Engine::GetInstance().videoPlayer.get()->SetVideoNum(0);
+			Engine::GetInstance().videoPlayer.get()->SetVideoPlayed(false);
+			Engine::GetInstance().videoPlayer.get()->SetModuleToGo((Module*)this);
 			level = LVL3;
+			Engine::GetInstance().fade.get()->Fade((Module*)this, Engine::GetInstance().videoPlayer.get(), 30);
+			
 		}
 		else if (level == LVL3)
 		{
@@ -358,23 +386,15 @@ bool Scene::Update(float dt)
 				level = LVL6;
 			}
 		}
-		else if (level == LVL4)
+		else if (level == LVL4 && enemies[0]->dead)
 		{
 			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
 			level = LVL3;
 		}
-		else if (level == LVL5)
+		else if (level == LVL5 && enemies[0]->dead)
 		{
-			if (playerPOSY < 1500)
-			{
-				Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
-				level = LVL3;
-			}
-			else if (playerPOSY > 1600)
-			{
-				Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
-				level = LVL3;
-			}
+			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
+			level = LVL3;
 		}
 		else if (level == LVL6)
 		{
@@ -410,6 +430,12 @@ bool Scene::Update(float dt)
 
 	if (!paused) {
 		currentTime += dt / 1000.0f;
+
+		//CAM VARIABLES
+		camX = -Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->GetScale();
+		camY = -Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->GetScale();
+		camW = Engine::GetInstance().window.get()->width;
+		camH = Engine::GetInstance().window.get()->height;
 
 		//CAMERA X
 		ChangeDirectionCameraX();
@@ -949,6 +975,23 @@ void Scene::DrawPickaxesUI()
 				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 10, false, HUD    // Posici�n Y
 			);
 		}
+		else if (i == (numPickaxes)) {
+			if (player->projectileManager->pickaxeRecollectCount > 2) charge.speed = 0.122;
+			else charge.speed = 0.122 * 2;
+
+			if (!charging) {
+				currentAnim = &charge;
+				currentAnim->Reset();
+				charging = true;
+			}
+			currentFrame = currentAnim->GetCurrentFrame();
+			Engine::GetInstance().render.get()->DrawTextureBuffer(
+				piquetaReload,
+				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (i * spacing), // Posici�n X
+				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 10, false, HUD, &currentFrame  // Posici�n Y
+			);
+			currentAnim->Update();
+		}
 		// Si no, dibuja una piqueta gastada
 		else {
 			Engine::GetInstance().render.get()->DrawTextureBuffer(
@@ -956,21 +999,20 @@ void Scene::DrawPickaxesUI()
 				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (i * spacing), // Posici�n X
 				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 10 , false, HUD  // Posici�n Y
 			);
-			Engine::GetInstance().render.get()->DrawTextureBuffer(
-				barraPiqueta,
-				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (numPickaxes * spacing), // Posici�n X
-				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 80 , false , HUD   // Posici�n Y
-			);
-			int redBars = player->projectileManager->GetNumRed();
-			int drawRedSpacing = 0;
-			for (int i = 0; i < redBars; i++) {
-				Engine::GetInstance().render.get()->DrawTextureBuffer(
-					barraRoja,
-					-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (numPickaxes * spacing) + drawRedSpacing, // Posici�n X
-					-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 80 , false , HUD   // Posici�n Y
-				);
-				drawRedSpacing += spacingRed;
-			}
+			//Engine::GetInstance().render.get()->DrawTextureBuffer(
+			//	barraPiqueta,
+			//	-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (numPickaxes * spacing), // Posici�n X
+			//	-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 80 , false , HUD   // Posici�n Y
+			//);
+			//int redBars = player->projectileManager->GetNumRed();
+			//int drawRedSpacing = 0;
+			//for (int i = 0; i < redBars; i++) {
+			//	Engine::GetInstance().render.get()->DrawTextureBuffer(
+			//		barraRoja,
+			//		-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 200 + (numPickaxes * spacing) + drawRedSpacing, // Posici�n X
+			//		-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + 80 , false , HUD   // Posici�n Y
+			//	);
+			//	drawRedSpacing += spacingRed;
 		}
 	}
 }
@@ -997,8 +1039,6 @@ void Scene::DrawCurrencyUI()
 
 void Scene::DrawMap()
 {
-	// 3 x 68.465
-
 	float posX = player->pbody->body->GetPosition().x;
 	float posY = player->pbody->body->GetPosition().y;
 	int centerX = -Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + (Engine::GetInstance().window.get()->width / 2) - 360;
@@ -1012,7 +1052,7 @@ void Scene::DrawMap()
 		break;
 	case LVL3:
 		Engine::GetInstance().render.get()->DrawTextureBuffer(bgCapa1, centerX, centerY, false, MENUS);
-		Engine::GetInstance().render.get()->DrawTextureBuffer(kimHead, centerX + (posX * 720 / 225 - 10), centerY + (posY * 360 / 96 - 25), false, MENUS);
+		Engine::GetInstance().render.get()->DrawTextureBuffer(kimHead, centerX + (posX * 720 / 311 - 155), centerY + (posY * 360 / 163 - 50), false, MENUS);
 		break;
 	case LVL4:
 		break;

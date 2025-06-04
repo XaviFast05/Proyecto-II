@@ -102,7 +102,7 @@ bool CurrencyOrb::Update(float dt)
         
     position.setX(pbody->GetPhysBodyWorldPosition().getX() - texW/2);
     position.setY(pbody->GetPhysBodyWorldPosition().getY() - texH/2);
-    Engine::GetInstance().render.get()->DrawTextureBuffer(texture, position.getX(), position.getY(), false, ENTITIES);
+    Engine::GetInstance().render.get()->DrawTextureBuffer(texture, position.getX(), position.getY(), false, DEFAULT);
 
     if (disable)
     {

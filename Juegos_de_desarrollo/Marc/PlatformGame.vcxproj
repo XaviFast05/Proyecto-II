@@ -157,13 +157,14 @@
     <ClCompile Include="src\DialoguesManager.cpp" />
     <ClCompile Include="src\CurrencyOrb.cpp" />
     <ClCompile Include="src\CurrencyManager.cpp" />
+    <ClCompile Include="src\EnvironmentParticles.cpp" />
     <ClCompile Include="src\FinalBoss.cpp" />
     <ClCompile Include="src\JumpingEnemy.cpp" />
     <ClCompile Include="src\Merchant.cpp" />
     <ClCompile Include="src\ParticleManager.cpp" />
     <ClCompile Include="src\PickaxeManager.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
-    <ClCompile Include="src\DeathMenu.cpp" />
+    <ClCompile Include="src\VideoPlayer.cpp" />
     <ClCompile Include="src\GroundEnemy.cpp" />
     <ClCompile Include="src\BatEnemy.cpp" />
     <ClCompile Include="src\Audio.cpp" />
@@ -211,6 +212,7 @@
     <ClInclude Include="src\DialoguesManager.h" />
     <ClInclude Include="src\CurrencyOrb.h" />
     <ClInclude Include="src\CurrencyManager.h" />
+    <ClInclude Include="src\EnvironmentParticles.h" />
     <ClInclude Include="src\FinalBoss.h" />
     <ClInclude Include="src\JumpingEnemy.h" />
     <ClInclude Include="src\Merchant.h" />
@@ -218,7 +220,7 @@
     <ClInclude Include="src\ParticleManager.h" />
     <ClInclude Include="src\PickaxeManager.h" />
     <ClInclude Include="src\Bullet.h" />
-    <ClInclude Include="src\DeathMenu.h" />
+    <ClInclude Include="src\VideoPlayer.h" />
     <ClInclude Include="src\GroundEnemy.h" />
     <ClInclude Include="src\BatEnemy.h" />
     <ClInclude Include="src\Animation.h" />

@@ -1,5 +1,6 @@
 
 #include "Engine.h"
+#include "Scene.h"
 #include "Render.h"
 #include "Textures.h"
 #include "Map.h"
@@ -295,6 +296,15 @@ bool Map::Load(std::string path, std::string fileName)
                 }
             }
 
+            if (objectGroup->name == "Unlock")
+            {
+                for (Object* object : objectGroup->object)
+                {
+                    PhysBody* c = Engine::GetInstance().physics.get()->CreateRectangleSensor(object->x + object->width / 2, object->y + object->height / 2, object->width, object->height, STATIC);
+                    c->ctype = ColliderType::UNLOCKAREA;
+                }
+            }
+
             if (objectGroup->name == "Spikes")
             {
                 for (Object* object : objectGroup->object)
@@ -317,14 +327,6 @@ bool Map::Load(std::string path, std::string fileName)
                 {
                     PhysBody* c = Engine::GetInstance().physics.get()->CreateRectangle(object->x + object->width / 2, object->y + object->height / 2, object->width, object->height, STATIC);
                     c->ctype = ColliderType::MAPLIMITS;
-                }
-            }
-            if (objectGroup->name == "Ladder") {
-                for (Object* object : objectGroup->object)
-                {
-                    PhysBody* c = Engine::GetInstance().physics.get()->CreateRectangleSensor(object->x + object->width / 2, object->y + object->height / 2, object->width, object->height, STATIC);
-
-                    c->ctype = ColliderType::LADDER;
                 }
             }
             if (objectGroup->name == "Checkpoints") {

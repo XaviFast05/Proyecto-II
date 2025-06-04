@@ -75,8 +75,8 @@ bool SoulRock::Start() {
 	hitSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("swordSFX").attribute("path").as_string());
 	brokenSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("skeletonDeathSFX").attribute("path").as_string());
 
-	diffPosX = 24.0f;
-	diffPosY = 24.0f;
+	diffPosX = 18.0f;
+	diffPosY = 22.0f;
 
 	return true;
 }
@@ -129,10 +129,10 @@ bool SoulRock::Update(float dt) {
 
 
 			if (dir == LEFT) {
-				Engine::GetInstance().render.get()->DrawTextureBuffer(texture, (int)position.getX(), (int)position.getY(), false, ENTITIES, &currentAnimation->GetCurrentFrame());
+				Engine::GetInstance().render.get()->DrawTextureBuffer(texture, (int)position.getX(), (int)position.getY() + 5, false, DEFAULT, &currentAnimation->GetCurrentFrame());
 			}
 			else if (dir == RIGHT) {
-				Engine::GetInstance().render.get()->DrawTextureBuffer(texture, (int)position.getX(), (int)position.getY(),true, ENTITIES ,&currentAnimation->GetCurrentFrame());
+				Engine::GetInstance().render.get()->DrawTextureBuffer(texture, (int)position.getX(), (int)position.getY() + 5,true, DEFAULT ,&currentAnimation->GetCurrentFrame());
 			}
 		}
 
@@ -143,6 +143,7 @@ bool SoulRock::Update(float dt) {
 
 bool SoulRock::CleanUp()
 {
+	delete currencyManager;
 	return true;
 }
 
@@ -264,12 +265,14 @@ void SoulRock::ParticleUse() {
 
 			if (collidePos.getX() < METERS_TO_PIXELS(pbody->body->GetPosition().x))
 			{
-				particle1->SetPosition(p1); particle2->SetPosition(p2);
+				particle1->SetPosition(p1); 
+				particle2->SetPosition(p2);
 
 			}
 			else
 			{
-				particle1->SetPosition(p3); particle2->SetPosition(p4);
+				particle1->SetPosition(p3); 
+				particle2->SetPosition(p4);
 			}
 		}
 		else if (FRACTURED)

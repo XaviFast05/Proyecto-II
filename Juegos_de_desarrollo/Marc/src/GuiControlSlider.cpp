@@ -29,6 +29,7 @@ GuiControlSlider::~GuiControlSlider()
 
 bool GuiControlSlider::Update(float dt)
 {
+    ZoneScoped;
     minValue = sliderBounds.x + 10;
     maxValue = sliderBounds.x + sliderBounds.w - 45;
    
@@ -93,7 +94,6 @@ bool GuiControlSlider::Update(float dt)
 
 
     volumeValue = ((sliderPosX - minValue) / (float)(maxValue - minValue)) * MIX_MAX_VOLUME;
-    /*volumeValue = std::max(0.0f, std::min(100.0f, volumeValue));*/
 
     return false;
 }

@@ -86,6 +86,10 @@ public:
 
 	void LoadAlly(Merchant* merchant, pugi::xml_node instanceNode);
 
+	void LoadParticle(Particle* particle, pugi::xml_node instanceNode);
+
+	//void LoadEnvironmentParticles(float areaX, float areaY, float areaW, float areaH);
+
 	void LoadState();
 
 	void LoadTimeLivesCandies();
@@ -142,8 +146,12 @@ public:
 	GuiControlCheckBox* fullScreenCheckBox;
 	SDL_Texture* pausePanel;
 	
-	SDL_Texture* heartsTexture, * piquetaNormal, * piquetaGastada, * barraPiqueta, * barraRoja, * orbSoul, *bgTutorial, * bgCapa1, *bgLvl1, *kimHead;
-	
+	SDL_Texture* heartsTexture, * piquetaNormal, * piquetaGastada, * barraPiqueta, * barraRoja, * orbSoul, *bgTutorial, * bgCapa1, *bgLvl1, *kimHead, *piquetaReload;
+	Animation charge;
+	Animation* currentAnim = nullptr;
+	SDL_Rect currentFrame;
+	bool charging = true;
+
 	Vector2D pausePos;
 
 	int finalCandyNum;
@@ -159,6 +167,11 @@ public:
 
 	bool cameraDirectionChangeActivation = false;
 
+	int camX = 0;
+	int camY = 0;
+	int camW = 0;
+	int camH = 0;
+
 private:
 	
 	//L03: TODO 3b: Declare a Player attribute
@@ -169,6 +182,7 @@ private:
 	std::vector<DestructibleWall*> destructibleWalls;
 	std::vector<SoulRock*> soulRocks;
 	std::vector<Merchant*> allies;
+	std::vector<Particle*> particles;
 	pugi::xml_node musicNode;
 
 	std::map<std::string, GuiControlButton*> pauseButtons;
@@ -184,7 +198,6 @@ private:
 	
 	int transitionDisplace;
 	
-
 	Vector2D helpPos;
 
 	SDL_Texture* signTexture;

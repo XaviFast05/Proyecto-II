@@ -30,7 +30,8 @@ enum state {
 	CHARGED,
 	HURT,
 	DEAD,
-	TALK
+	TALK,
+	UPGRADING
 };
 
 enum Direction {
@@ -156,6 +157,7 @@ public:
 	Animation throwPixUp;
 	Animation dash;
 	Animation charged;
+	Animation upgrading;
 
 	bool resetAnimation = false;
 
@@ -196,12 +198,15 @@ public:
 	bool damageBoost = false;
 	bool damageSmallBoost = false;
 
+	Timer unlockTimer;
+	float unlockTimerMax = 3; //XAVI aqui cambia el tiempo q estas en la animacion pa q se ajuste
+
 	std::vector <int> upgrades;
 	std::vector <int> unlockedUpgrades;
 	int maxUpgrades = 2;
 
-	bool unlockedDash = true;
-	bool unlockedCharged = true;
+	bool unlockedDash = false;
+	bool unlockedCharged = false;
 
 	PhysBody* meleeArea;
 	Timer meleeTimer;

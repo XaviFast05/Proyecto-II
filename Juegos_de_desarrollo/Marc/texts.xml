@@ -100,7 +100,7 @@
 		<CA>Gràcies, Flo. Sóc la Kim, per cert. M’endinsaré una mica més, a veure si trobo alguna pista sobre on pot estar el meu pare. Ens veiem!</CA>
 		<EN>Thanks, Flo. I’m Kim, by the way. I’ll go a bit further and see if I can find a clue about where my father might be. See you!</EN>
 	</Text>
-	<Text id="DIALOG05_1">
+	<Text id="DIALOG05_01">
 		<ES>No tienes suficiente dinero, vuelve cuando lo tengas.</ES>
 		<CA>No tens prou diners, torna quan en tinguis.</CA>
 		<EN>You don’t have enough money, come back when you do.</EN>

@@ -29,8 +29,12 @@
 	</mainmenu>
 	<settings>
 		<optPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/settings-panel-empty.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="OPTIONS" textVerticalDisplacement="-250"/>
-		<controlsKeyboardPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/INTERFAZ_TECLADO_SIN_FONDO.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="KEYBOARD" textVerticalDisplacement="-250"/>
-		<controlsControllerPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/controles mando.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="CONTROLLER" textVerticalDisplacement="-250"/>
+		<controlsKeyboardPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/INTERFAZ_TECLADO_SIN_FONDO_ESP.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="KEYBOARD" textVerticalDisplacement="-250"/>
+		<controlsKeyboard2Panel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/INTERFAZ_TECLADO_SIN_FONDO_CAT.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="KEYBOARD" textVerticalDisplacement="-250"/>
+		<controlsKeyboard3Panel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/INTERFAZ_TECLADO_SIN_FONDO_ENG.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="KEYBOARD" textVerticalDisplacement="-250"/>
+		<controlsControllerPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/controles mando_esp.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="CONTROLLER" textVerticalDisplacement="-250"/>
+		<controlsController2Panel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/controles mando_cat.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="CONTROLLER" textVerticalDisplacement="-250"/>
+		<controlsController3Panel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/controles mando_eng.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="CONTROLLER" textVerticalDisplacement="-250"/>
 		<sliders barW="384" barH="40" barTexture="Assets/Textures/Menus/Options/slider.png" circleW="70" circleH="70" texture="Assets/Textures/Menus/Options/pumpkinBt.png">
 			<musicSlider id="7" barX="448" circleX="450" barY="226" circleY="221" text="MUSIC" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" verticalDisplacement="-50" textVerticalDisplacement="-65"/>
 			<sfxSlider id="8" barX="448" circleX="450" barY="354" circleY="349" text="SOUND_EFFECTS" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" verticalDisplacement="-50" textVerticalDisplacement="-65"/>
@@ -52,6 +56,8 @@
 		<upg6 id="21" x="361" y="338" w="112" h="112" texture="Assets/Textures/Menus/MenuUpgrades/buttons/upg6_icon.png" />
 		<upg7 id="22" x="216" y="456" w="112" h="112" texture="Assets/Textures/Menus/MenuUpgrades/buttons/upg7_icon.png" />
 		<upg8 id="23" x="361" y="456" w="112" h="112" texture="Assets/Textures/Menus/MenuUpgrades/buttons/upg8_icon.png" />
+		<circle1 x="780" y="417" w="112" h="112"/>
+		<circle2 x="1002" y="331" w="112" h="112"/>
 	</upgradesMenu>
 	<merchantMenu>
 		<merchantPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/MenuMerchant/TIENDA 02/PNGS/interfaz_conbutton_exit_negro.png" />
@@ -70,12 +76,38 @@
 			<heartContainers path="Assets/Textures/UI/lifeSimp.png" />
 			<piquetaNormal path="Assets/Textures/UI/piqueta_normal.png" />
 			<piquetaGastada path="Assets/Textures/UI/piqueta_gastada.png" />
+			<piquetaRecarga path="Assets/Textures/UI/piqueta_recarga.png" />
 			<barraPiqueta path="Assets/Textures/UI/barra.png" />
 			<barraRoja path="Assets/Textures/UI/barra_roja.png" />
 			<orbSoul path="Assets/Textures/UI/orbSoul.png" />
 			<bgTut path="Assets/Maps/fondo_tut.png" />
 			<bgCapa1 path="Assets/Maps/fondo_capa1.png" />
 			<kimHead path="Assets/Textures/kim.png" />
+			<pickaxes>
+				<animations x="0" y="0" w="64" h="64" rad="6" texture="Assets/Textures/UI/piqueta_recarga.png">
+					<charging loop="true" speed="0.1f">
+						<frame x="0" y="0" w="64" h="64" />
+						<frame x="64" y="0" w="64" h="64" />
+						<frame x="128" y="0" w="64" h="64" />
+						<frame x="192" y="0" w="64" h="64" />
+						<frame x="256" y="0" w="64" h="64" />
+						<frame x="320" y="0" w="64" h="64" />
+						<frame x="384" y="0" w="64" h="64" />
+						<frame x="448" y="0" w="64" h="64" />
+						<frame x="512" y="0" w="64" h="64" />
+						<frame x="576" y="0" w="64" h="64" />
+						<frame x="640" y="0" w="64" h="64" />
+						<frame x="704" y="0" w="64" h="64" />
+						<frame x="768" y="0" w="64" h="64" />
+						<frame x="832" y="0" w="64" h="64" />
+						<frame x="896" y="0" w="64" h="64" />
+						<frame x="960" y="0" w="64" h="64" />
+						<frame x="1024" y="0" w="64" h="64" />
+						<frame x="1088" y="0" w="64" h="64" />
+						<frame x="1152" y="0" w="64" h="64" />
+					</charging>
+				</animations>
+			</pickaxes>
 		</ui>
 		<levelName>
 			<lvl3 path="Assets/Textures/UI/letrero_capa_1.png" text="SIGN_LAYER_1" w="668" h="222" y="210" fontSize="70" font="Assets/Fonts/PIXELADE.ttf" signTextY ="10" timeShowingSignText="5"/>
@@ -264,13 +296,25 @@
 						<frame x="832" y="800" w="64" h="80" offsetX="0" offsetY="-15" />
 						<frame x="896" y="800" w="64" h="80" offsetX="0" offsetY="-15" />
 					</charged>
+					<upgrading loop="true" speed="0.2f">
+						<frame x="0" y="880" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="64" y="880" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="128" y="880" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="192" y="880" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="256" y="880" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="320" y="880" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="384" y="880" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="448" y="880" w="64" h="80" offsetX="0" offsetY="-15" />
+					</upgrading>
 				</animations>
 			</player>
 			<particles>
-				<soulRockParticle x="0" y="0" w="64" h="64" rad="6" texture="Assets/Textures/balaJumper.png">
+				<soulRockParticle x="0" y="0" w="64" h="64" rad="6" texture="Assets/Textures/Particles/SoulRockParticle.png">
 					<animations>
 						<idle loop="true" speed="0.2f">
-							<frame x="0" y="0" w="64" h="64" />
+							<frame x="64" y="0" w="64" h="64" />
+							<frame x="128" y="0" w="64" h="64" />
+							<frame x="192" y="0" w="64" h="64" />
 						</idle>
 					</animations>
 				</soulRockParticle>
@@ -295,6 +339,77 @@
 						</idle>
 					</animations>
 				</wallBrakerParticle>
+				<environmentParticles  w="64" h="64" entityType="20" texture="Assets/Textures/Particles/environmentParticles.png">
+					<animations>
+						<idle loop="true" speed="0.1f">
+							<frame x="0" y="0" w="64" h="64" />
+							<frame x="64" y="0" w="64" h="64" />
+							<frame x="128" y="0" w="64" h="64" />
+							<frame x="192" y="0" w="64" h="64" />
+						</idle>
+						<idle2 loop="true" speed="0.1f">
+							<frame x="0" y="64" w="64" h="64" />
+							<frame x="64" y="64" w="64" h="64" />
+							<frame x="128" y="64" w="64" h="64" />
+							<frame x="192" y="64" w="64" h="64" />
+							<frame x="256" y="64" w="64" h="64" />
+							<frame x="320" y="64" w="64" h="64" />
+						</idle2>
+						<idle3 loop="true" speed="0.1f">
+							<frame x="0" y="128" w="64" h="64" />
+							<frame x="64" y="128" w="64" h="64" />
+							<frame x="128" y="128" w="64" h="64" />
+							<frame x="192" y="128" w="64" h="64" />
+							<frame x="256" y="128" w="64" h="64" />
+							<frame x="320" y="128" w="64" h="64" />
+							<frame x="384" y="128" w="64" h="64" />
+							<frame x="448" y="128" w="64" h="64" />
+						</idle3>
+						<leaf loop="true" speed="0.1f">
+							<frame x="0" y="192" w="64" h="64" />
+							<frame x="64" y="192" w="64" h="64" />
+							<frame x="128" y="192" w="64" h="64" />
+							<frame x="192" y="192" w="64" h="64" />
+							<frame x="256" y="192" w="64" h="64" />
+							<frame x="320" y="192" w="64" h="64" />
+							<frame x="384" y="192" w="64" h="64" />
+							<frame x="448" y="192" w="64" h="64" />
+							<frame x="512" y="192" w="64" h="64" />
+							<frame x="576" y="192" w="64" h="64" />
+							<frame x="640" y="192" w="64" h="64" />
+							<frame x="704" y="192" w="64" h="64" />
+							<frame x="768" y="192" w="64" h="64" />
+							<frame x="832" y="192" w="64" h="64" />
+							<frame x="896" y="192" w="64" h="64" />
+							<frame x="960" y="192" w="64" h="64" />
+							<frame x="1024" y="192" w="64" h="64" />
+							<frame x="1088" y="192" w="64" h="64" />
+							<frame x="1152" y="192" w="64" h="64" />
+							<frame x="1216" y="192" w="64" h="64" />
+							<frame x="1280" y="192" w="64" h="64" />
+						</leaf>
+					</animations>
+				</environmentParticles>
+				<instances>
+					<lvl1>
+
+					</lvl1>
+					<lvl2>
+	
+					</lvl2>
+					<lvl3>
+
+					</lvl3>
+					<lvl4>
+
+					</lvl4>
+					<lvl5>
+
+					</lvl5>
+					<lvl6>
+
+					</lvl6>
+				</instances>
 			</particles>
 			<enemies>
 				<skeleton x="100" y="420" w="64" h="64" texture="Assets/Textures/Enemies/Fantasma/Fantasma_spriteSheet.png">
@@ -665,14 +780,21 @@
 						</lvl1>
 					</instances>
 					<animations>
-						<idle loop="true" speed="0.1f">
+						<idle loop="true" speed="0.09f">
 							<frame x="0" y="0" w="64" h="64" />
 						</idle>
 						<fractured loop="true" speed="0.1f">
-							<frame x="64" y="0" w="64" h="64" />
+							<frame x="0" y="64" w="64" h="64" />
+							<frame x="64" y="64" w="64" h="64" />
+							<frame x="128" y="64" w="64" h="64" />
+							<frame x="192" y="64" w="64" h="64" />
+							<frame x="256" y="64" w="64" h="64" />
+							<frame x="320" y="64" w="64" h="64" />
+							<frame x="384" y="64" w="64" h="64" />
+							<frame x="448" y="64" w="64" h="64" />
 						</fractured>
 						<broken loop="true" speed="0.1f">
-							<frame x="128" y="0" w="64" h="64" />
+							<frame x="0" y="128" w="64" h="64" />
 						</broken>
 					</animations>
 				</soulRock>
@@ -854,15 +976,16 @@
 				<text textId="DIALOG04_14" talker="Kim" />
 			</DIALOG04>
 			<DIALOG05>
-				<text textId="DIALOG04_01" talker="Flo" />
+				<text textId="DIALOG05_01" talker="Flo" />
 			</DIALOG05>
 		</dialogues>
 	</scene>
 	<audio>
 		<music>
-			<menuMus path="Assets/Audio/Music/menu_intro.wav" />
-			<lvl1Mus path="Assets/Audio/Music/lvl_1-5_music.wav" />
-			<lvl2Mus path="Assets/Audio/Music/lvl_6-11_music.wav" />
+			<menuMus path="Assets/Audio/Music/menu_FINAL.wav" />
+			<lvl1Mus path="Assets/Audio/Music/Tutorial_FINAL.wav" />
+			<lvl2Mus path="Assets/Audio/Music/Capa-1_FINAL.wav" />
+			<lvl3Mus path="Assets/Audio/Music/Onirica_FINAL.wav" />
 			<winMus path="Assets/Audio/Music/ending.wav" />
 			<loseMus path="Assets/Audio/Music/died.wav" />
 			<bossMus path="Assets/Audio/Music/final_boss.wav" />

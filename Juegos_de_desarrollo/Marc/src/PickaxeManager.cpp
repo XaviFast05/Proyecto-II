@@ -1,5 +1,5 @@
 #include "PickaxeManager.h"
-
+#include "tracy/Tracy.hpp"   
 
 ProjectileManager::ProjectileManager()
 {
@@ -27,6 +27,7 @@ bool ProjectileManager::Start()
 
 bool ProjectileManager::Update(float dt)
 {
+	ZoneScoped;
 	//PICKAXE LOGIC
 	if (pickaxeCount < maxPickaxes && not recollectingPickaxes) {
 		pickaxeRecollectTimer.Start();

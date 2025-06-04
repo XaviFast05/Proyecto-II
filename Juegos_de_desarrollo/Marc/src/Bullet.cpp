@@ -10,6 +10,7 @@
 #include "EntityManager.h"
 #include "Player.h"
 #include "Scene.h"
+#include "tracy/Tracy.hpp"   
 
 Bullet::Bullet(BulletType bulletType, BulletDirection bullet_direction)
     : Entity(EntityType::SHOT),
@@ -97,6 +98,7 @@ bool Bullet::Start() {
 }
 
 bool Bullet::Update(float dt) {
+    ZoneScoped;
     if (pbody == nullptr) {
         LOG("Error: PhysBody creation failed!");
         return false;
@@ -109,7 +111,7 @@ bool Bullet::Update(float dt) {
     }
 
     if (bullet_type == BulletType::PICKAXE) {
-        if ((onPlayer && player->onPickaxe && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_S) ||(SDL_GameControllerGetAxis(Engine::GetInstance().input.get()->controller, SDL_CONTROLLER_AXIS_LEFTY) > 6000 ) ) && isActive) {
+        if ((onPlayer && player->onPickaxe && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_DOWN) ||(SDL_GameControllerGetAxis(Engine::GetInstance().input.get()->controller, SDL_CONTROLLER_AXIS_LEFTY) > 6000 ) ) && isActive) {
             inactiveTimer.Start();
             fixture = pbody->body->GetFixtureList();
             if (fixture) {

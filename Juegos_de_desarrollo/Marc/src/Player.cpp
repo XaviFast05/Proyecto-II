@@ -63,6 +63,7 @@ bool Player::Start() {
 	throwPixUp.LoadAnimations(parameters.child("animations").child("throwPixUp"));
 	dash.LoadAnimations(parameters.child("animations").child("dash"));
 	charged.LoadAnimations(parameters.child("animations").child("charged"));
+	upgrading.LoadAnimations(parameters.child("animations").child("upgrading"));
 
 	jumpForce = parameters.child("propierties").attribute("gJumpForce").as_float();
 	pushForce = parameters.child("propierties").attribute("pushForce").as_float();
@@ -174,6 +175,7 @@ void Player::Restart()
 
 bool Player::Update(float dt)
 {
+	ZoneScoped;
 	//FRUSTRUM
 	if (!Engine::GetInstance().render.get()->InCameraView(pbody->GetPosition().getX() - texW, pbody->GetPosition().getY() - texH, texW, texH))
 	{
@@ -253,7 +255,7 @@ bool Player::Update(float dt)
 			else if (damageBoost && hits != 1 && !damageSmallBoost) damageAdded = 0;
 
 			//CHANGERS
-			if (playerState == DEAD || playerState == CHARGED) {
+			if (playerState == DEAD || playerState == CHARGED || playerState == UPGRADING) {
 			}
 			else if (playerState == HURT) {
 				if (hurtTimer.ReadSec() >= hurtTime) playerState = IDLE;
@@ -309,6 +311,7 @@ bool Player::Update(float dt)
 				else projectileManager->ThrowPickaxe(GetDirection(), pbody->GetPhysBodyWorldPosition());
 
 				stateTimer.Start();
+				Engine::GetInstance().scene.get()->charging = false;
 				playerState = THROW;
 			}
 			else if ((Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_LSHIFT) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) == KEY_DOWN)
@@ -333,6 +336,11 @@ bool Player::Update(float dt)
 
 				dialoguesManager->StartDialogue("DIALOG04");
 				playerState = TALK;
+			}
+
+			//UPGRADING LOGIC
+			if (playerState == UPGRADING) {
+				if (unlockTimer.ReadSec() > unlockTimerMax) playerState = IDLE;
 			}
 
 			//COYOTE TIME LOGIC
@@ -624,6 +632,13 @@ bool Player::Update(float dt)
 			resetAnimation = false;
 		}
 		break;
+	case UPGRADING:
+		currentAnim = &upgrading; 
+		if (resetAnimation == true) {
+			currentAnim->Reset();
+			resetAnimation = false;
+		}
+		break;
 	case HURT:
 		currentAnim = &hurt;
 		if (resetAnimation == true) {
@@ -674,6 +689,9 @@ bool Player::CleanUp()
 	LOG("Cleanup player");
 
 	active = false;
+	delete dialoguesManager;
+	delete currencyManager;
+	delete projectileManager;
 
 	
 	return true;
@@ -728,6 +746,18 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 				pbody->body->ApplyLinearImpulseToCenter(pushVec, true);
 			}
 
+		}
+		break;
+	case ColliderType::UNLOCKAREA:
+		if (Engine::GetInstance().scene.get()->level == LVL5 && !unlockedDash) {
+			unlockedDash = true;
+			playerState = UPGRADING;
+			unlockTimer.Start();
+		}
+		if (Engine::GetInstance().scene.get()->level == LVL4 && !unlockedCharged) {
+			unlockedCharged = true;
+			playerState = UPGRADING;
+			unlockTimer.Start();
 		}
 		break;
 	case ColliderType::ENEMY:
@@ -953,6 +983,7 @@ void Player::LoadData(pugi::xml_node playerNode, pugi::xml_node upgradesNode, pu
 	currencyManager->SetCurrency(playerNode.attribute("soulPoints").as_int());
 	hits = playerNode.attribute("hits").as_int();
 	SetPosition(position);
+
 	unlockedDash = upgradesNode.attribute("dash").as_bool();
 	unlockedCharged = upgradesNode.attribute("charged").as_bool();
 

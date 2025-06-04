@@ -21,7 +21,6 @@ Input::Input(bool startEnabled) : Module(startEnabled)
 // Destructor
 Input::~Input()
 {
-	delete[] keyboard;
 }
 
 // Called before render is available
@@ -183,6 +182,7 @@ bool Input::CleanUp()
 {
 	LOG("Quitting SDL event subsystem");
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
+	delete keyboard;
 	
 	if (controller != nullptr) {
 		SDL_GameControllerClose(controller);

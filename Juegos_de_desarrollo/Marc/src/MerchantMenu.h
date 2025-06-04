@@ -81,6 +81,8 @@ public:
 
 	bool hasOpened = false;
 	bool showOnceUpgrade[8] = { false, false, false, false, false, false, false, false };
+
+	bool leaveMenu;
 	//std::map<std::string, GuiControlButton*> buttons;
 
 };

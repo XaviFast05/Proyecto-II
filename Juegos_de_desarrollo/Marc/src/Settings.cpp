@@ -35,9 +35,6 @@ bool Settings::Awake()
 // Called before the first frame
 bool Settings::Start()
 {
-
-	
-
 	pugi::xml_parse_result result = configFile.load_file("config.xml");
 	rootNode = configFile.child("config");
 
@@ -59,7 +56,7 @@ bool Settings::Start()
 
 	backBt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, "backBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
 	backBt->SetGuiParameters("backBt", configParameters);
-	
+
 	settingsGUI.push_back(backBt);
 
 	// Language buttons
@@ -70,7 +67,7 @@ bool Settings::Start()
 	controlsBt->SetGuiParameters("controlsBt", configParameters);
 
 	settingsGUI.push_back(controlsBt);
-	
+
 	fullScreenBox = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "fullScreenBox", "", { 0,0,0,0 }, this, { 0,0,0,0 });
 	fullScreenBox->SetGuiParameters("fullScreenBox", configParameters);
 	settingsGUI.push_back(fullScreenBox);
@@ -89,6 +86,8 @@ bool Settings::Start()
 	settingsGUI.push_back(changeControlBt);
 
 	controlsControllerPanel = Engine::GetInstance().textures.get()->Load(configParameters.child("controlsControllerPanel").attribute("path").as_string());
+	controlsController2Panel = Engine::GetInstance().textures.get()->Load(configParameters.child("controlsController2Panel").attribute("path").as_string());
+	controlsController3Panel = Engine::GetInstance().textures.get()->Load(configParameters.child("controlsController3Panel").attribute("path").as_string());
 	controlsControllerPanelX = configParameters.child("controlsControllerPanel").attribute("x").as_int();
 	controlsControllerPanelY = configParameters.child("controlsControllerPanel").attribute("y").as_int();
 	controlsControllerPanelW = configParameters.child("controlsControllerPanel").attribute("w").as_int();
@@ -106,12 +105,32 @@ bool Settings::Start()
 	controlsText = configParameters.child("controlsKeyboardPanel").attribute("text").as_string();
 	controlsVerticalDisplacement = configParameters.child("controlsKeyboardPanel").attribute("textVerticalDisplacement").as_int();
 
-	musicSlider->sliderPosX = musicSlider->sliderBounds.x + musicSlider->sliderBounds.w/2 - musicSlider->bounds.w/2;
-	sfxSlider->sliderPosX = sfxSlider->sliderBounds.x + sfxSlider->sliderBounds.w/2 - sfxSlider->bounds.w/2;
+	controlsKeyboard2Panel = Engine::GetInstance().textures.get()->Load(configParameters.child("controlsKeyboard2Panel").attribute("path").as_string());
+	controlsKeyboard2PanelX = configParameters.child("controlsKeyboard2Panel").attribute("x").as_int();
+	controlsKeyboard2PanelY = configParameters.child("controlsKeyboard2Panel").attribute("y").as_int();
+	controlsKeyboard2PanelW = configParameters.child("controlsKeyboard2Panel").attribute("w").as_int();
+	controlsKeyboard2PanelH = configParameters.child("controlsKeyboard2Panel").attribute("h").as_int();
+	controlsK2Font = TTF_OpenFont(configParameters.child("controlsKeyboard2Panel").attribute("font").as_string(), configParameters.child("controlsKeyboard2Panel").attribute("fontSize").as_int());
+	controlsK2Text = configParameters.child("controlsKeyboard2Panel").attribute("text").as_string();
+	controlsVerticalDisplacement = configParameters.child("controlsKeyboard2Panel").attribute("textVerticalDisplacement").as_int();
+
+	controlsKeyboard3Panel = Engine::GetInstance().textures.get()->Load(configParameters.child("controlsKeyboard3Panel").attribute("path").as_string());
+	controlsKeyboard3PanelX = configParameters.child("controlsKeyboard3Panel").attribute("x").as_int();
+	controlsKeyboard3PanelY = configParameters.child("controlsKeyboard3Panel").attribute("y").as_int();
+	controlsKeyboard3PanelW = configParameters.child("controlsKeyboard3Panel").attribute("w").as_int();
+	controlsKeyboard3PanelH = configParameters.child("controlsKeyboard3Panel").attribute("h").as_int();
+	controlsK3Font = TTF_OpenFont(configParameters.child("controlsKeyboard3Panel").attribute("font").as_string(), configParameters.child("controlsKeyboard3Panel").attribute("fontSize").as_int());
+	controlsK3Text = configParameters.child("controlsKeyboard3Panel").attribute("text").as_string();
+	controlsVerticalDisplacement = configParameters.child("controlsKeyboard3Panel").attribute("textVerticalDisplacement").as_int();
+
+	musicSlider->sliderPosX = musicSlider->sliderBounds.x + musicSlider->sliderBounds.w / 2 - musicSlider->bounds.w / 2;
+	sfxSlider->sliderPosX = sfxSlider->sliderBounds.x + sfxSlider->sliderBounds.w / 2 - sfxSlider->bounds.w / 2;
 
 	LoadPrefs();
 
 	settingsOpen = false;
+	controlsOpen = false;
+	xbox = false;
 	return true;
 }
 
@@ -124,20 +143,19 @@ bool Settings::PreUpdate()
 // Called each loop iteration
 bool Settings::Update(float dt)
 {
+	ZoneScoped;
 	SDL_Rect camera = Engine::GetInstance().render.get()->camera;
 	int windowScale = Engine::GetInstance().window.get()->GetScale();
-	if (settingsOpen){
+	if (settingsOpen) {
 		int screenWidth = rootNode.child("window").child("resolution").attribute("width").as_int();
 		int screenHeight = rootNode.child("window").child("resolution").attribute("height").as_int();
-		
-		
-		
+
 		for (GuiControl* gui : settingsGUI) {
 			if (gui->active == false) {
 				gui->active = true;
 			}
 		}
-		
+
 		if (controlsOpen == false)
 		{
 			Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
@@ -176,66 +194,148 @@ bool Settings::Update(float dt)
 		{
 
 			if (!xbox) {
-				Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
-				Engine::GetInstance().render.get()->DrawTextureBuffer(controlsKeyboardPanel, -camera.x / windowScale + controlsKeyboardPanelX, -camera.y / windowScale + controlsKeyboardPanelY, false, MENUS);
-				if (controlsText != "")
-				{
-					int textW = 0, textH = 0;
-					TTF_SizeUTF8(controlsFont, Engine::GetInstance().textManager.get()->GetText(controlsText).c_str(), &textW, &textH);
+				if (Engine::GetInstance().textManager.get()->GetLanguage() == 0) { // Assuming 0 = ESP, 1 = CAT, 2 = ENG
+					Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
+					Engine::GetInstance().render.get()->DrawTextureBuffer(controlsKeyboardPanel, -camera.x / windowScale + controlsKeyboardPanelX, -camera.y / windowScale + controlsKeyboardPanelY, false, MENUS);
+					if (controlsText != "")
+					{
+						int textW = 0, textH = 0;
+						TTF_SizeUTF8(controlsFont, Engine::GetInstance().textManager.get()->GetText(controlsText).c_str(), &textW, &textH);
 
-					Engine::GetInstance().render.get()->DrawTextToBuffer(
-						Engine::GetInstance().textManager.get()->GetText(controlsText).c_str(),
-						controlsKeyboardPanelX + (controlsKeyboardPanelW / 2) - textW / 2,
-						controlsKeyboardPanelY + (controlsKeyboardPanelH / 2) - textH / 2 + titleVerticalDisplacement,
-						textW,
-						textH,
-						controlsFont,
-						{ 255, 255, 255, 255 }, MENUS
-					);
+						Engine::GetInstance().render.get()->DrawTextToBuffer(
+							Engine::GetInstance().textManager.get()->GetText(controlsText).c_str(),
+							controlsKeyboardPanelX + (controlsKeyboardPanelW / 2) - textW / 2,
+							controlsKeyboardPanelY + (controlsKeyboardPanelH / 2) - textH / 2 + titleVerticalDisplacement,
+							textW,
+							textH,
+							controlsFont,
+							{ 255, 255, 255, 255 }, MENUS
+						);
+					}
 				}
+				else if (Engine::GetInstance().textManager.get()->GetLanguage() == 1) {
+					Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
+					Engine::GetInstance().render.get()->DrawTextureBuffer(controlsKeyboard2Panel, -camera.x / windowScale + controlsKeyboard2PanelX, -camera.y / windowScale + controlsKeyboard2PanelY, false, MENUS);
+					if (controlsText != "")
+					{
+						int textW = 0, textH = 0;
+						TTF_SizeUTF8(controlsFont, Engine::GetInstance().textManager.get()->GetText(controlsText).c_str(), &textW, &textH);
+
+						Engine::GetInstance().render.get()->DrawTextToBuffer(
+							Engine::GetInstance().textManager.get()->GetText(controlsText).c_str(),
+							controlsKeyboard2PanelX + (controlsKeyboard2PanelW / 2) - textW / 2,
+							controlsKeyboard2PanelY + (controlsKeyboard2PanelH / 2) - textH / 2 + titleVerticalDisplacement,
+							textW,
+							textH,
+							controlsFont,
+							{ 255, 255, 255, 255 }, MENUS
+						);
+					}
+				}
+				else {
+					Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
+					Engine::GetInstance().render.get()->DrawTextureBuffer(controlsKeyboard3Panel, -camera.x / windowScale + controlsKeyboardPanelX, -camera.y / windowScale + controlsKeyboardPanelY, false, MENUS);
+					if (controlsText != "")
+					{
+						int textW = 0, textH = 0;
+						TTF_SizeUTF8(controlsFont, Engine::GetInstance().textManager.get()->GetText(controlsText).c_str(), &textW, &textH);
+
+						Engine::GetInstance().render.get()->DrawTextToBuffer(
+							Engine::GetInstance().textManager.get()->GetText(controlsText).c_str(),
+							controlsKeyboardPanelX + (controlsKeyboardPanelW / 2) - textW / 2,
+							controlsKeyboardPanelY + (controlsKeyboardPanelH / 2) - textH / 2 + titleVerticalDisplacement,
+							textW,
+							textH,
+							controlsFont,
+							{ 255, 255, 255, 255 }, MENUS
+						);
+					}
+				}
+
 			}
 			else {
-				Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
-				Engine::GetInstance().render.get()->DrawTextureBuffer(controlsControllerPanel, -camera.x / windowScale + controlsControllerPanelX, -camera.y / windowScale + controlsControllerPanelY, false, MENUS);
-				if (controls2Text != "")
-				{
-					int textW = 0, textH = 0;
-					TTF_SizeUTF8(controls2Font, Engine::GetInstance().textManager.get()->GetText(controls2Text).c_str(), &textW, &textH);
+				if (Engine::GetInstance().textManager.get()->GetLanguage() == 0) { // Assuming 0 = ESP, 1 = CAT, 2 = ENG
+					Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
+					Engine::GetInstance().render.get()->DrawTextureBuffer(controlsControllerPanel, -camera.x / windowScale + controlsControllerPanelX, -camera.y / windowScale + controlsControllerPanelY, false, MENUS);
+					if (controls2Text != "")
+					{
+						int textW = 0, textH = 0;
+						TTF_SizeUTF8(controls2Font, Engine::GetInstance().textManager.get()->GetText(controls2Text).c_str(), &textW, &textH);
 
-					Engine::GetInstance().render.get()->DrawTextToBuffer(
-						Engine::GetInstance().textManager.get()->GetText(controls2Text).c_str(),
-						controlsControllerPanelX + (controlsControllerPanelW / 2) - textW / 2,
-						controlsControllerPanelY + (controlsControllerPanelH / 2) - textH / 2 + titleVerticalDisplacement,
-						textW,
-						textH,
-						controls2Font,
-						{ 255, 255, 255, 255 }, MENUS
-					);
+						Engine::GetInstance().render.get()->DrawTextToBuffer(
+							Engine::GetInstance().textManager.get()->GetText(controls2Text).c_str(),
+							controlsControllerPanelX + (controlsControllerPanelW / 2) - textW / 2,
+							controlsControllerPanelY + (controlsControllerPanelH / 2) - textH / 2 + titleVerticalDisplacement,
+							textW,
+							textH,
+							controls2Font,
+							{ 255, 255, 255, 255 }, MENUS
+						);
+					}
 				}
+				else if (Engine::GetInstance().textManager.get()->GetLanguage() == 1) {
+					Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
+					Engine::GetInstance().render.get()->DrawTextureBuffer(controlsController2Panel, -camera.x / windowScale + controlsControllerPanelX, -camera.y / windowScale + controlsControllerPanelY, false, MENUS);
+					if (controls2Text != "")
+					{
+						int textW = 0, textH = 0;
+						TTF_SizeUTF8(controls2Font, Engine::GetInstance().textManager.get()->GetText(controls2Text).c_str(), &textW, &textH);
+
+						Engine::GetInstance().render.get()->DrawTextToBuffer(
+							Engine::GetInstance().textManager.get()->GetText(controls2Text).c_str(),
+							controlsControllerPanelX + (controlsControllerPanelW / 2) - textW / 2,
+							controlsControllerPanelY + (controlsControllerPanelH / 2) - textH / 2 + titleVerticalDisplacement,
+							textW,
+							textH,
+							controls2Font,
+							{ 255, 255, 255, 255 }, MENUS
+						);
+					}
+				}
+				else {
+					Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
+					Engine::GetInstance().render.get()->DrawTextureBuffer(controlsController3Panel, -camera.x / windowScale + controlsControllerPanelX, -camera.y / windowScale + controlsControllerPanelY, false, MENUS);
+					if (controls2Text != "")
+					{
+						int textW = 0, textH = 0;
+						TTF_SizeUTF8(controls2Font, Engine::GetInstance().textManager.get()->GetText(controls2Text).c_str(), &textW, &textH);
+
+						Engine::GetInstance().render.get()->DrawTextToBuffer(
+							Engine::GetInstance().textManager.get()->GetText(controls2Text).c_str(),
+							controlsControllerPanelX + (controlsControllerPanelW / 2) - textW / 2,
+							controlsControllerPanelY + (controlsControllerPanelH / 2) - textH / 2 + titleVerticalDisplacement,
+							textW,
+							textH,
+							controls2Font,
+							{ 255, 255, 255, 255 }, MENUS
+						);
+					}
+				}
+				
 			}
 			changeControlBt->Update(dt);
 			OnGuiMouseClickEvent(changeControlBt);
 		}
-		
+
 		backBt->Update(dt);
 		OnGuiMouseClickEvent(backBt);
-		
-		
+
+
 	}
 	else {
 		for (GuiControl* gui : settingsGUI) {
 			gui->active = false;
 		}
-		
+
 	}
-	
+
 	return true;
 }
 
 // Called each loop iteration
 bool Settings::PostUpdate()
 {
-	
+
 	return true;
 }
 
@@ -252,15 +352,13 @@ bool Settings::CleanUp()
 
 bool Settings::OnGuiMouseClickEvent(GuiControl* control) {
 
-	saved = rootNode.child("scene").child("savedData").attribute("saved").as_bool();
-
 	switch (control->id) {
 	case GuiControlId::MUSIC:
 		musicVolume = SetVolume((GuiControlSlider*)control);
 		Mix_VolumeMusic(musicVolume);
 		break;
 	case GuiControlId::SFX:
-		
+
 		sfxVolume = SetVolume((GuiControlSlider*)control);
 		Engine::GetInstance().audio.get()->PlayFx(testSound);
 		break;
@@ -284,6 +382,7 @@ bool Settings::OnGuiMouseClickEvent(GuiControl* control) {
 				settingsOpen = false;
 				for (const auto& bt : Engine::GetInstance().mainMenu.get()->buttons) {
 					bt.second->state = GuiControlState::NORMAL;
+					bool saved = Engine::GetInstance().mainMenu.get()->saved;
 					if (!saved) {
 						Engine::GetInstance().mainMenu.get()->buttons["continueBt"]->state = GuiControlState::DISABLED;
 					}
@@ -296,7 +395,7 @@ bool Settings::OnGuiMouseClickEvent(GuiControl* control) {
 		if (control->state == GuiControlState::PRESSED && settingsOpen) {
 			controlsOpen = true;
 		}
-		
+
 		break;
 
 	case GuiControlId::ESP:
@@ -361,5 +460,6 @@ void Settings::LoadPrefs()
 		SDL_SetWindowFullscreen(Engine::GetInstance().window.get()->window, SDL_WINDOW_FULLSCREEN);
 	}
 	musicSlider->SetVolumeValue(musicVolume);
+	Mix_VolumeMusic(musicVolume);
 	sfxSlider->SetVolumeValue(sfxVolume);
 }
