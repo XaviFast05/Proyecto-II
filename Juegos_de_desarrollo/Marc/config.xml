@@ -32,10 +32,10 @@
 		<controlsKeyboardPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/INTERFAZ_TECLADO_SIN_FONDO.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="KEYBOARD" textVerticalDisplacement="-250"/>
 		<controlsControllerPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/controles mando.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="CONTROLLER" textVerticalDisplacement="-250"/>
 		<sliders barW="384" barH="40" barTexture="Assets/Textures/Menus/Options/slider.png" circleW="70" circleH="70" texture="Assets/Textures/Menus/Options/pumpkinBt.png">
-			<musicSlider id="7" barX="448" circleX="450" barY="236" circleY="221" text="MUSIC" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" verticalDisplacement="-50" textVerticalDisplacement="-65"/>
-			<sfxSlider id="8" barX="448" circleX="450" barY="364" circleY="349" text="SOUND_EFFECTS" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" verticalDisplacement="-50" textVerticalDisplacement="-65"/>
+			<musicSlider id="7" barX="448" circleX="450" barY="226" circleY="221" text="MUSIC" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" verticalDisplacement="-50" textVerticalDisplacement="-65"/>
+			<sfxSlider id="8" barX="448" circleX="450" barY="354" circleY="349" text="SOUND_EFFECTS" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" verticalDisplacement="-50" textVerticalDisplacement="-65"/>
 		</sliders>
-		<fullScreenBox id="9" x="605" y="490" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" text="FULL_SCREEN" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" textVerticalDisplacement="-75"/>
+		<fullScreenBox id="9" x="605" y="470" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" text="FULL_SCREEN" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" textVerticalDisplacement="-65"/>
 		<backBt id="6" x="288" y="47" w="80" h="80" texture="Assets/Textures/Menus/Options/Button_exit_solo.png" />
 		<controlsBt id="32" x="348" y="564" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Credits Button Sheet Background.png" text="CONTROLS" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
 		<changeControlBt id="33" x="448" y="584" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Credits Button Sheet Background.png" text="CHANGE_CONTROLS" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />

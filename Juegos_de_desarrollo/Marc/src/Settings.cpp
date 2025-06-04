@@ -337,9 +337,9 @@ void Settings::SavePrefs()
 
 	pugi::xml_node playerPrefsNode = saveFile.child("savedData").child("playerPrefs");
 
-	playerPrefsNode.child("playerPrefs").child("fullscreen").attribute("toggle").set_value((int)fullScreenBox->isChecked);
-	playerPrefsNode.child("playerPrefs").child("musicVolume").attribute("value").set_value(musicVolume);
-	playerPrefsNode.child("playerPrefs").child("sfxVolume").attribute("value").set_value(sfxVolume);
+	playerPrefsNode.child("fullscreen").attribute("toggle").set_value((int)fullScreenBox->isChecked);
+	playerPrefsNode.child("musicVolume").attribute("value").set_value(musicVolume);
+	playerPrefsNode.child("sfxVolume").attribute("value").set_value(sfxVolume);
 
 	//Saves the modifications to the XML 
 	saveFile.save_file("savedData.xml");
