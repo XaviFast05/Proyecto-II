@@ -29,7 +29,6 @@
 #include "MainMenu.h"
 #include "FadeToBlack.h"
 #include "Settings.h"
-#include "DeathMenu.h"
 #include "WinMenu.h"
 #include "PickaxeManager.h"
 #include "CurrencyManager.h"
@@ -43,6 +42,7 @@
 #include "CutscenePlayer.h"
 #include "TextManager.h"
 #include "DestructibleWall.h"
+#include "VideoPlayer.h"
 
 
 #include "Intro.h"
@@ -357,9 +357,12 @@ bool Scene::Update(float dt)
 		changeLevel = false;
 		if (level == LVL1)
 		{
-			Engine::GetInstance().cutScene->ConvertPixels(0, 1);
-			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
+			Engine::GetInstance().videoPlayer.get()->SetVideoNum(0);
+			Engine::GetInstance().videoPlayer.get()->SetVideoPlayed(false);
+			Engine::GetInstance().videoPlayer.get()->SetModuleToGo((Module*)this);
 			level = LVL3;
+			Engine::GetInstance().fade.get()->Fade((Module*)this, Engine::GetInstance().videoPlayer.get(), 30);
+			
 		}
 		else if (level == LVL3)
 		{
@@ -377,24 +380,15 @@ bool Scene::Update(float dt)
 				level = LVL6;
 			}
 		}
-		else if (level == LVL4)
+		else if (level == LVL4 && enemies[0]->dead)
 		{
-
-			//Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
-			//level = LVL3;
+			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
+			level = LVL3;
 		}
-		else if (level == LVL5)
+		else if (level == LVL5 && enemies[0]->dead)
 		{
-			if (playerPOSY < 1500)
-			{
-				Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
-				level = LVL3;
-			}
-			else if (playerPOSY > 1600)
-			{
-				Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
-				level = LVL3;
-			}
+			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
+			level = LVL3;
 		}
 		else if (level == LVL6)
 		{

@@ -7,6 +7,7 @@
 #include "GuiControlCheckBox.h"
 #include "GuiControl.h" 
 #include "Player.h" 
+#include "Engine.h"
 
 
 #include <list>
@@ -46,11 +47,17 @@ public:
 	pugi::xml_node rootNode;
 	SDL_Texture* bgTex, * btTex, * upgPanel, * pausePanel;
 
+	SDL_Texture* u1, * u2, * u3, * u4, * u5, * u6, * u7, * u8;
+
 	TTF_Font* btFont;
 	bool upgradesOpen = false;
 	bool saved;
 
 	int upgPanelX, upgPanelY;
+	int circle1X, circle1Y;
+	int circle2X, circle2Y;
+	SDL_Rect circleRect;
+	
 	float _dt;
 
 	GuiControlButton* backBt;

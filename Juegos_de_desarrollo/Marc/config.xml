@@ -56,6 +56,8 @@
 		<upg6 id="21" x="361" y="338" w="112" h="112" texture="Assets/Textures/Menus/MenuUpgrades/buttons/upg6_icon.png" />
 		<upg7 id="22" x="216" y="456" w="112" h="112" texture="Assets/Textures/Menus/MenuUpgrades/buttons/upg7_icon.png" />
 		<upg8 id="23" x="361" y="456" w="112" h="112" texture="Assets/Textures/Menus/MenuUpgrades/buttons/upg8_icon.png" />
+		<circle1 x="780" y="417" w="112" h="112"/>
+		<circle2 x="1002" y="331" w="112" h="112"/>
 	</upgradesMenu>
 	<merchantMenu>
 		<merchantPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/MenuMerchant/TIENDA 02/PNGS/interfaz_conbutton_exit_negro.png" />
@@ -964,7 +966,7 @@
 				<text textId="DIALOG04_14" talker="Kim" />
 			</DIALOG04>
 			<DIALOG05>
-				<text textId="DIALOG04_01" talker="Flo" />
+				<text textId="DIALOG05_01" talker="Flo" />
 			</DIALOG05>
 		</dialogues>
 	</scene>

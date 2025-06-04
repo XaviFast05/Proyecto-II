@@ -31,6 +31,7 @@ class WinMenu;
 class FadeToBlack;
 class MerchantMenu;
 class CutscenePlayer;
+class VideoPlayer;
 
 
 class Engine
@@ -129,10 +130,10 @@ public:
 	std::shared_ptr<Settings> settings;
 	std::shared_ptr<UpgradesMenu> upgradesMenu;
 	std::shared_ptr<FadeToBlack> fade;
-	std::shared_ptr<DeathMenu> death;
 	std::shared_ptr<WinMenu> win;
 	std::shared_ptr<MerchantMenu> merchantMenu;
 	std::shared_ptr<CutscenePlayer> cutScene;
+	std::shared_ptr<VideoPlayer> videoPlayer;
 
 
 private: 
