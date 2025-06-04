@@ -44,26 +44,41 @@ public:
 	// The scene sprite sheet loaded into an SDL_Texture
 	pugi::xml_document configFile;
 	pugi::xml_node rootNode;
-	SDL_Texture* bgTex, * btTex, * optPanel, * pausePanel;
+	SDL_Texture* bgTex, * btTex, * optPanel, * pausePanel, * controlsKeyboardPanel, * controlsControllerPanel;
 
 	TTF_Font* btFont;
 	TTF_Font* titleFont;
+	TTF_Font* controlsFont;
+	TTF_Font* controls2Font;
 	std::string titleText;
+	std::string controlsText;
+	std::string controls2Text;
 	bool settingsOpen = false;
 	bool fullScreen;
 	bool saved;
 
 	int musicVolume, sfxVolume;
 	int optPanelX, optPanelY, optPanelW, optPanelH;
+	int controlsKeyboardPanelX, controlsKeyboardPanelY, controlsKeyboardPanelW, controlsKeyboardPanelH;
+	int controlsControllerPanelX, controlsControllerPanelY, controlsControllerPanelW, controlsControllerPanelH;
 	float _dt;
 
+	bool controlsOpen = false;
+	bool xbox = false;
 
 	GuiControlSlider* musicSlider, * sfxSlider;
 	GuiControlCheckBox* fullScreenBox;
 	GuiControlButton* backBt;
+	GuiControlButton* controlsBt;
+	GuiControlButton* espBt;
+	GuiControlButton* changeControlBt;
+
+	int currentLanguage = 1;
 
 	int testSound;
 	int titleVerticalDisplacement;
+	int controlsVerticalDisplacement;
+	int controls2VerticalDisplacement;
 
 	std::list<GuiControl*> settingsGUI;
 

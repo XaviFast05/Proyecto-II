@@ -61,6 +61,15 @@ bool Settings::Start()
 	backBt->SetGuiParameters("backBt", configParameters);
 	
 	settingsGUI.push_back(backBt);
+
+	// Language buttons
+	espBt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, "espBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	espBt->SetGuiParameters("espBt", configParameters);
+
+	controlsBt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, "controlsBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	controlsBt->SetGuiParameters("controlsBt", configParameters);
+
+	settingsGUI.push_back(controlsBt);
 	
 	fullScreenBox = (GuiControlCheckBox*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::CHECKBOX, "fullScreenBox", "", { 0,0,0,0 }, this, { 0,0,0,0 });
 	fullScreenBox->SetGuiParameters("fullScreenBox", configParameters);
@@ -74,6 +83,28 @@ bool Settings::Start()
 	titleFont = TTF_OpenFont(configParameters.child("optPanel").attribute("font").as_string(), configParameters.child("optPanel").attribute("fontSize").as_int());
 	titleText = configParameters.child("optPanel").attribute("text").as_string();
 	titleVerticalDisplacement = configParameters.child("optPanel").attribute("textVerticalDisplacement").as_int();
+
+	changeControlBt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, "changeControlBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	changeControlBt->SetGuiParameters("changeControlBt", configParameters);
+	settingsGUI.push_back(changeControlBt);
+
+	controlsControllerPanel = Engine::GetInstance().textures.get()->Load(configParameters.child("controlsControllerPanel").attribute("path").as_string());
+	controlsControllerPanelX = configParameters.child("controlsControllerPanel").attribute("x").as_int();
+	controlsControllerPanelY = configParameters.child("controlsControllerPanel").attribute("y").as_int();
+	controlsControllerPanelW = configParameters.child("controlsControllerPanel").attribute("w").as_int();
+	controlsControllerPanelH = configParameters.child("controlsControllerPanel").attribute("h").as_int();
+	controls2Font = TTF_OpenFont(configParameters.child("controlsControllerPanel").attribute("font").as_string(), configParameters.child("controlsControllerPanel").attribute("fontSize").as_int());
+	controls2Text = configParameters.child("controlsControllerPanel").attribute("text").as_string();
+	controls2VerticalDisplacement = configParameters.child("controlsControllerPanel").attribute("textVerticalDisplacement").as_int();
+
+	controlsKeyboardPanel = Engine::GetInstance().textures.get()->Load(configParameters.child("controlsKeyboardPanel").attribute("path").as_string());
+	controlsKeyboardPanelX = configParameters.child("controlsKeyboardPanel").attribute("x").as_int();
+	controlsKeyboardPanelY = configParameters.child("controlsKeyboardPanel").attribute("y").as_int();
+	controlsKeyboardPanelW = configParameters.child("controlsKeyboardPanel").attribute("w").as_int();
+	controlsKeyboardPanelH = configParameters.child("controlsKeyboardPanel").attribute("h").as_int();
+	controlsFont = TTF_OpenFont(configParameters.child("controlsKeyboardPanel").attribute("font").as_string(), configParameters.child("controlsKeyboardPanel").attribute("fontSize").as_int());
+	controlsText = configParameters.child("controlsKeyboardPanel").attribute("text").as_string();
+	controlsVerticalDisplacement = configParameters.child("controlsKeyboardPanel").attribute("textVerticalDisplacement").as_int();
 
 	musicSlider->sliderPosX = musicSlider->sliderBounds.x + musicSlider->sliderBounds.w/2 - musicSlider->bounds.w/2;
 	sfxSlider->sliderPosX = sfxSlider->sliderBounds.x + sfxSlider->sliderBounds.w/2 - sfxSlider->bounds.w/2;
@@ -99,9 +130,7 @@ bool Settings::Update(float dt)
 		int screenWidth = rootNode.child("window").child("resolution").attribute("width").as_int();
 		int screenHeight = rootNode.child("window").child("resolution").attribute("height").as_int();
 		
-		Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
-		Engine::GetInstance().render.get()->DrawTextureBuffer(optPanel, -camera.x / windowScale + optPanelX, -camera.y / windowScale + optPanelY, false, MENUS);
-
+		
 		
 		for (GuiControl* gui : settingsGUI) {
 			if (gui->active == false) {
@@ -109,35 +138,89 @@ bool Settings::Update(float dt)
 			}
 		}
 		
+		if (controlsOpen == false)
+		{
+			Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
+			Engine::GetInstance().render.get()->DrawTextureBuffer(optPanel, -camera.x / windowScale + optPanelX, -camera.y / windowScale + optPanelY, false, MENUS);
+
+			fullScreenBox->Update(dt);
+
+			musicSlider->Update(dt);
+			OnGuiMouseClickEvent(musicSlider);
+
+			sfxSlider->Update(dt);
+			OnGuiMouseClickEvent(sfxSlider);
+
+			espBt->Update(dt);
+			OnGuiMouseClickEvent(espBt);
+
+			controlsBt->Update(dt);
+			OnGuiMouseClickEvent(controlsBt);
+			if (titleText != "")
+			{
+				int textW = 0, textH = 0;
+				TTF_SizeUTF8(titleFont, Engine::GetInstance().textManager.get()->GetText(titleText).c_str(), &textW, &textH);
+
+				Engine::GetInstance().render.get()->DrawTextToBuffer(
+					Engine::GetInstance().textManager.get()->GetText(titleText).c_str(),
+					optPanelX + (optPanelW / 2) - textW / 2,
+					optPanelY + (optPanelH / 2) - textH / 2 + titleVerticalDisplacement,
+					textW,
+					textH,
+					titleFont,
+					{ 255, 255, 255, 255 }, MENUS
+				);
+			}
+		}
+		else
+		{
+
+			if (!xbox) {
+				Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
+				Engine::GetInstance().render.get()->DrawTextureBuffer(controlsKeyboardPanel, -camera.x / windowScale + controlsKeyboardPanelX, -camera.y / windowScale + controlsKeyboardPanelY, false, MENUS);
+				if (controlsText != "")
+				{
+					int textW = 0, textH = 0;
+					TTF_SizeUTF8(controlsFont, Engine::GetInstance().textManager.get()->GetText(controlsText).c_str(), &textW, &textH);
+
+					Engine::GetInstance().render.get()->DrawTextToBuffer(
+						Engine::GetInstance().textManager.get()->GetText(controlsText).c_str(),
+						controlsKeyboardPanelX + (controlsKeyboardPanelW / 2) - textW / 2,
+						controlsKeyboardPanelY + (controlsKeyboardPanelH / 2) - textH / 2 + titleVerticalDisplacement,
+						textW,
+						textH,
+						controlsFont,
+						{ 255, 255, 255, 255 }, MENUS
+					);
+				}
+			}
+			else {
+				Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
+				Engine::GetInstance().render.get()->DrawTextureBuffer(controlsControllerPanel, -camera.x / windowScale + controlsControllerPanelX, -camera.y / windowScale + controlsControllerPanelY, false, MENUS);
+				if (controls2Text != "")
+				{
+					int textW = 0, textH = 0;
+					TTF_SizeUTF8(controls2Font, Engine::GetInstance().textManager.get()->GetText(controls2Text).c_str(), &textW, &textH);
+
+					Engine::GetInstance().render.get()->DrawTextToBuffer(
+						Engine::GetInstance().textManager.get()->GetText(controls2Text).c_str(),
+						controlsControllerPanelX + (controlsControllerPanelW / 2) - textW / 2,
+						controlsControllerPanelY + (controlsControllerPanelH / 2) - textH / 2 + titleVerticalDisplacement,
+						textW,
+						textH,
+						controls2Font,
+						{ 255, 255, 255, 255 }, MENUS
+					);
+				}
+			}
+			changeControlBt->Update(dt);
+			OnGuiMouseClickEvent(changeControlBt);
+		}
+		
 		backBt->Update(dt);
 		OnGuiMouseClickEvent(backBt);
-
-		fullScreenBox->Update(dt);
-
 		
-		musicSlider->Update(dt);
-		OnGuiMouseClickEvent(musicSlider);
 		
-		sfxSlider->Update(dt);
-		
-		if (titleText != "")
-		{
-			int textW = 0, textH = 0;
-			TTF_SizeUTF8(titleFont, Engine::GetInstance().textManager.get()->GetText(titleText).c_str(), &textW, &textH);
-
-			Engine::GetInstance().render.get()->DrawTextToBuffer(
-				Engine::GetInstance().textManager.get()->GetText(titleText).c_str(),
-				optPanelX + (optPanelW / 2) - textW / 2,
-				optPanelY + (optPanelH / 2) - textH / 2 + titleVerticalDisplacement,
-				textW,
-				textH,
-				titleFont,
-				{ 255, 255, 255, 255 }, MENUS
-			);
-		}
-
-	
-
 	}
 	else {
 		for (GuiControl* gui : settingsGUI) {
@@ -194,17 +277,43 @@ bool Settings::OnGuiMouseClickEvent(GuiControl* control) {
 		break;
 	case GuiControlId::BACK:
 		if (control->state == GuiControlState::PRESSED && settingsOpen) {
-			settingsOpen = false;
-			for (const auto& bt : Engine::GetInstance().mainMenu.get()->buttons) {
-				bt.second->state = GuiControlState::NORMAL;
-				if (!saved) {
-					Engine::GetInstance().mainMenu.get()->buttons["continueBt"]->state = GuiControlState::DISABLED;
-				}
+			if (controlsOpen == true) {
+				controlsOpen = false;
 			}
-			SavePrefs();
+			else {
+				settingsOpen = false;
+				for (const auto& bt : Engine::GetInstance().mainMenu.get()->buttons) {
+					bt.second->state = GuiControlState::NORMAL;
+					if (!saved) {
+						Engine::GetInstance().mainMenu.get()->buttons["continueBt"]->state = GuiControlState::DISABLED;
+					}
+				}
+				SavePrefs();
+			}
+		}
+		break;
+	case GuiControlId::CONTROLS:
+		if (control->state == GuiControlState::PRESSED && settingsOpen) {
+			controlsOpen = true;
 		}
 		
 		break;
+
+	case GuiControlId::ESP:
+		if (control->state == GuiControlState::PRESSED) {
+			Engine::GetInstance().textManager.get()->ChangeIdiom(currentLanguage++);
+			if (currentLanguage > 2) { // Assuming 0 = ESP, 1 = CAT, 2 = ENG
+				currentLanguage = 0;
+			}
+		}
+		break;
+
+	case GuiControlId::CHANGE_CONTROLS:
+		if (control->state == GuiControlState::PRESSED) {
+			xbox = !xbox;
+		}
+		break;
+
 	}
 
 
@@ -228,9 +337,9 @@ void Settings::SavePrefs()
 
 	pugi::xml_node playerPrefsNode = saveFile.child("savedData").child("playerPrefs");
 
-	playerPrefsNode.child("playerPrefs").child("fullscreen").attribute("toggle").set_value((int)fullScreenBox->isChecked);
-	playerPrefsNode.child("playerPrefs").child("musicVolume").attribute("value").set_value(musicVolume);
-	playerPrefsNode.child("playerPrefs").child("sfxVolume").attribute("value").set_value(sfxVolume);
+	playerPrefsNode.child("fullscreen").attribute("toggle").set_value((int)fullScreenBox->isChecked);
+	playerPrefsNode.child("musicVolume").attribute("value").set_value(musicVolume);
+	playerPrefsNode.child("sfxVolume").attribute("value").set_value(sfxVolume);
 
 	//Saves the modifications to the XML 
 	saveFile.save_file("savedData.xml");
