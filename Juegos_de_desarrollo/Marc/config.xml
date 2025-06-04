@@ -756,19 +756,30 @@
 					</animations>
 				</checkPoints>
 				<destructibleWalls>
-					<properties w="64" h="192" texture="Assets/Textures/Objects/Roca rompible Onirica.png" />
+					<properties w="64" h="192" texture1="Assets/Textures/Objects/Roca rompible Capa1 Spritesheet.png" texture2="Assets/Textures/Objects/Roca rompible Onirica Spritesheet.png"  timeToDestroy="1"/>
 					<instances>
 						<lvl1>
+							<instance entityType="21" x="350" y="3392" destructibleWallType = "2"/>
 						</lvl1>
 					</instances>
 					<animations>
-						<unlit>
-							<frame x="0" y="0" w="128" h="128" />
-						</unlit>
-						<lit loop="true" speed="0.3f">
-							<frame x="128" y="0" w="128" h="128" />
-							<frame x="256" y="0" w="128" h="128" />
-						</lit>
+						<idle loop="false" speed="0.2f">
+							<frame x="0" y="0" w="64" h="192" />
+						</idle>
+						<destroying loop="false" speed="0.3f">
+							<frame x="0" y="192" w="64" h="192" />
+							<frame x="64" y="192" w="64" h="192" />
+							<frame x="128" y="192" w="64" h="192" />
+							<frame x="192" y="192" w="64" h="192" />
+							<frame x="256" y="192" w="64" h="192" />
+							<frame x="320" y="192" w="64" h="192" />
+							<frame x="384" y="192" w="64" h="192" />
+							<frame x="448" y="192" w="64" h="192" />
+							<frame x="512" y="192" w="64" h="192" />
+							<frame x="576" y="192" w="64" h="192" />
+							<frame x="640" y="192" w="64" h="192" />
+							<frame x="704" y="192" w="64" h="192" />
+						</destroying>
 					</animations>
 				</destructibleWalls>
 				<soulRock>

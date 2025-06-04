@@ -529,9 +529,8 @@ bool Player::Update(float dt)
 			{
 				pbody->body->SetLinearVelocity(b2Vec2(0, 0));
 				if (respawnTimer.ReadSec() >= respawnTime) {
-					Engine::GetInstance().scene.get()->LoadState();
-					playerState = IDLE;
-					hits = 3;
+					Engine::GetInstance().scene.get()->SetLoadState(true);
+					Engine::GetInstance().fade.get()->Fade(Engine::GetInstance().scene.get(), Engine::GetInstance().scene.get(), 30);
 				}
 				break;
 			}
@@ -785,7 +784,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		if (!godMode) {
 			/*playerState = DEAD;*/
 
-			pbody->body->SetGravityScale(0);
 			pbody->body->SetGravityScale(0);
 			respawnTimer.Start();
 		}

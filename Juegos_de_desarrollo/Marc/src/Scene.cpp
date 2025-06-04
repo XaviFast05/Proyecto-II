@@ -421,13 +421,6 @@ bool Scene::Update(float dt)
 	//	return true;
 	//}
 
-	if (loadScene)
-	{
-		//LOG("ENTRO");
-		LoadState();
-		loadScene = false;
-	}
-
 	if (!paused) {
 		currentTime += dt / 1000.0f;
 

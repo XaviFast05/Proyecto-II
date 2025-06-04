@@ -283,7 +283,7 @@ bool MerchantMenu::CleanUp()
 	LOG("Freeing MerchantMenu");
 
 	for (GuiControl* gui : merchantGUI) {
-		gui->active = false;
+		if (!gui) gui->active = false;
 	}
 	return true;
 }

@@ -23,12 +23,20 @@ bool DestructibleWall::Awake() {
 
 bool DestructibleWall::Start() {
 
-
 	//initilize textures
-	texture = Engine::GetInstance().textures.get()->Load(parameters.child("properties").attribute("texture").as_string());
-	LOG(parameters.child("properties").attribute("texture").as_string());
-
-	/* L08 TODO 4: Add a physics to an item - initialize the physics body*/
+	destructibleWallType = (DestructibleWallType)instanceParameters.attribute("destructibleWallType").as_int();
+	//initilize textures
+	switch (destructibleWallType)
+	{
+	case LAYER1:
+		texture = Engine::GetInstance().textures.get()->Load(parameters.child("properties").attribute("texture1").as_string());
+		break;
+	case ONIRIC:
+		texture = Engine::GetInstance().textures.get()->Load(parameters.child("properties").attribute("texture2").as_string());
+		break;
+	default:
+		break;
+	}
 
 	position.setX(instanceParameters.attribute("x").as_float());
 	position.setY(instanceParameters.attribute("y").as_float());
@@ -36,13 +44,18 @@ bool DestructibleWall::Start() {
 	texW = parameters.child("properties").attribute("w").as_float();
 	texH = parameters.child("properties").attribute("h").as_float();
 
+	timeToDestroy = parameters.child("properties").attribute("timeToDestroy").as_int();
 
 	pbody = Engine::GetInstance().physics.get()->CreateRectangle((int)position.getX() + texW / 2, (int)position.getY() + texH / 2, texW, texH, bodyType::STATIC);
 	pbody->listener = this;
 
-	destroy = false;
+	idle.LoadAnimations(parameters.child("animations").child("idle"));
+	destroying.LoadAnimations(parameters.child("animations").child("destroying"));
+	currentAnim = &idle;
 
-	// L08 TODO 7: Assign collider type
+	destroy = false;
+	toDestroy = false;
+
 	pbody->ctype = ColliderType::DESTRUCTIBLE_WALL;
 
 	return true;
@@ -56,8 +69,9 @@ bool DestructibleWall::Update(float dt)
 		return true;
 	}
 
-	if (destroy)
+	if ((timerToDestroy.ReadSec() > timeToDestroy && toDestroy)|| destroy)
 	{
+		destroy = true;
 		pbody->body->SetEnabled(false);
 		active = false;
 	}
@@ -67,7 +81,9 @@ bool DestructibleWall::Update(float dt)
 		position.setX(METERS_TO_PIXELS(pbodyPos.p.x) - texW / 2);
 		position.setY(METERS_TO_PIXELS(pbodyPos.p.y) - texH / 2);
 
-		Engine::GetInstance().render.get()->DrawTextureBuffer(texture, (int)position.getX(), (int)position.getY(), false, MAP);
+		currentFrame = currentAnim->GetCurrentFrame();
+		Engine::GetInstance().render.get()->DrawTextureBuffer(texture, (int)position.getX(), (int)position.getY(), false, MAP, &currentFrame);
+		currentAnim->Update();
 	}
 
 	return true;
@@ -95,7 +111,10 @@ void DestructibleWall::OnCollision(PhysBody* physA, PhysBody* physB) {
 	switch (physB->ctype)
 	{
 	case ColliderType::MELEE_AREA_CHARGED:
-		destroy = true;
+		timerToDestroy.Start();
+		toDestroy = true;
+		destroying.Reset();
+		currentAnim = &destroying;
 		break;
 	case ColliderType::UNKNOWN:
 
