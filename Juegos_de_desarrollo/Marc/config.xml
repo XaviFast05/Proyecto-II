@@ -983,7 +983,7 @@
 	<audio>
 		<music>
 			<menuMus path="Assets/Audio/Music/menu_FINAL.wav" />
-			<lvl1Mus path="Assets/Audio/Music/lvl_1-5_music.wav" />
+			<lvl1Mus path="Assets/Audio/Music/Tutorial_FINAL.wav" />
 			<lvl2Mus path="Assets/Audio/Music/Capa-1_FINAL.wav" />
 			<lvl3Mus path="Assets/Audio/Music/Onirica_FINAL.wav" />
 			<winMus path="Assets/Audio/Music/ending.wav" />
