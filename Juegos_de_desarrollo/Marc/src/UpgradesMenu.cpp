@@ -254,6 +254,8 @@ bool UpgradesMenu::OnGuiMouseClickEvent(GuiControl* control) {
 			break;
 	}
 
+	control->state = GuiControlState::NORMAL;
+
 	return true;
 }
 

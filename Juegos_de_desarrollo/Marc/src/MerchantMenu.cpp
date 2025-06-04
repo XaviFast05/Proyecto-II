@@ -438,6 +438,8 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 		break;
 	}
 
+	control->state = GuiControlState::NORMAL;
+
 	return true;
 }
 
