@@ -13213,7 +13213,7 @@
    <tile/>
   </data>
  </layer>
- <objectgroup id="3" name="ClimbingWall">
+ <objectgroup id="3" name="ClimbingWall" visible="0">
   <object id="36" x="3456" y="640" width="64" height="320"/>
   <object id="37" x="3712" y="832" width="64" height="320"/>
   <object id="38" x="3456" y="1152" width="64" height="384"/>
@@ -13221,7 +13221,7 @@
   <object id="41" x="1856" y="1600" width="64" height="128"/>
   <object id="44" x="1600" y="1344" width="64" height="512"/>
  </objectgroup>
- <objectgroup id="2" name="Collisions">
+ <objectgroup id="2" name="Collisions" visible="0">
   <object id="1" x="1664" y="1856" width="5184" height="64"/>
   <object id="2" x="3648" y="1600" width="64" height="64"/>
   <object id="3" x="3712" y="1536" width="64" height="64"/>
