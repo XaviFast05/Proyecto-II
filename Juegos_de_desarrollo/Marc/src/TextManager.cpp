@@ -58,3 +58,8 @@ std::string TextManager::GetText(std::string id)
         return "";
     return idToText[id][languageIndex];
 }
+
+int TextManager::GetLanguage()
+{
+	return languageIndex;
+}

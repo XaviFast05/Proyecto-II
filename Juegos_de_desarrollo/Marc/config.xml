@@ -29,8 +29,12 @@
 	</mainmenu>
 	<settings>
 		<optPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/settings-panel-empty.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="OPTIONS" textVerticalDisplacement="-250"/>
-		<controlsKeyboardPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/INTERFAZ_TECLADO_SIN_FONDO.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="KEYBOARD" textVerticalDisplacement="-250"/>
-		<controlsControllerPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/controles mando.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="CONTROLLER" textVerticalDisplacement="-250"/>
+		<controlsKeyboardPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/INTERFAZ_TECLADO_SIN_FONDO_ESP.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="KEYBOARD" textVerticalDisplacement="-250"/>
+		<controlsKeyboard2Panel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/INTERFAZ_TECLADO_SIN_FONDO_CAT.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="KEYBOARD" textVerticalDisplacement="-250"/>
+		<controlsKeyboard3Panel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/INTERFAZ_TECLADO_SIN_FONDO_ENG.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="KEYBOARD" textVerticalDisplacement="-250"/>
+		<controlsControllerPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/controles mando_esp.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="CONTROLLER" textVerticalDisplacement="-250"/>
+		<controlsController2Panel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/controles mando_cat.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="CONTROLLER" textVerticalDisplacement="-250"/>
+		<controlsController3Panel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/controles mando_eng.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="CONTROLLER" textVerticalDisplacement="-250"/>
 		<sliders barW="384" barH="40" barTexture="Assets/Textures/Menus/Options/slider.png" circleW="70" circleH="70" texture="Assets/Textures/Menus/Options/pumpkinBt.png">
 			<musicSlider id="7" barX="448" circleX="450" barY="226" circleY="221" text="MUSIC" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" verticalDisplacement="-50" textVerticalDisplacement="-65"/>
 			<sfxSlider id="8" barX="448" circleX="450" barY="354" circleY="349" text="SOUND_EFFECTS" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" verticalDisplacement="-50" textVerticalDisplacement="-65"/>

@@ -24,5 +24,6 @@ public:
     bool Update(float dt);
 
     void ChangeIdiom(int idiom);
+	int GetLanguage();
     std::string GetText(std::string id);
 };
