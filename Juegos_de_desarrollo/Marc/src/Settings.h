@@ -55,7 +55,6 @@ public:
 	std::string controls2Text;
 	bool settingsOpen = false;
 	bool fullScreen;
-	bool saved;
 
 	int musicVolume, sfxVolume;
 	int optPanelX, optPanelY, optPanelW, optPanelH;

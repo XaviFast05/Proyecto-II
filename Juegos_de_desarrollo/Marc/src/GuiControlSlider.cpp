@@ -93,7 +93,6 @@ bool GuiControlSlider::Update(float dt)
 
 
     volumeValue = ((sliderPosX - minValue) / (float)(maxValue - minValue)) * MIX_MAX_VOLUME;
-    /*volumeValue = std::max(0.0f, std::min(100.0f, volumeValue));*/
 
     return false;
 }
