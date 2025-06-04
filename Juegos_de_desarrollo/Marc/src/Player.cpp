@@ -109,6 +109,7 @@ bool Player::Start() {
 	dashSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("dashSFX").attribute("path").as_string());
 	chargedSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("chargedSFX").attribute("path").as_string());
 	dieSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("dieSFX").attribute("path").as_string());
+	pointSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("pointSFX").attribute("path").as_string());
 
 	currentAnim = &idle;
 
@@ -855,6 +856,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	
 	case ColliderType::ORB:
+		Engine::GetInstance().audio.get()->PlayFx(pointSFX);
 		if (physB->width == 4) soulAmount = rand() % 4 + 1;
 		else if (physB->width == 7) soulAmount = rand() % 4 + 5;
 		else if (physB->width == 10) soulAmount = rand() % 5 + 10;

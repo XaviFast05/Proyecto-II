@@ -237,6 +237,7 @@ public:
 	int dashSFX;
 	int chargedSFX;
 	int dieSFX;
+	int pointSFX;
 
 	bool playSound = true;
 

@@ -1000,6 +1000,7 @@
 			<dashSFX path="Assets/Audio/Fx/dash.wav" />
 			<chargedSFX path="Assets/Audio/Fx/charged.wav" />
 			<dieSFX path="Assets/Audio/Fx/death.wav" />
+			<pointSFX path="Assets/Audio/Fx/point.wav" />
 			<checkpointSFX path="Assets/Audio/Fx/checkpoint.wav" />
 			<gDeathSFX path="Assets/Audio/Fx/SinkOMO.ogg" />
 			<pickCandy path="Assets/Audio/Fx/OMO_pickedItem.ogg" />
