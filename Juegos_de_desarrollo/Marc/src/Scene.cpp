@@ -380,24 +380,15 @@ bool Scene::Update(float dt)
 				level = LVL6;
 			}
 		}
-		else if (level == LVL4)
+		else if (level == LVL4 && enemies[0]->dead)
 		{
-
-			//Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
-			//level = LVL3;
+			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
+			level = LVL3;
 		}
-		else if (level == LVL5)
+		else if (level == LVL5 && enemies[0]->dead)
 		{
-			if (playerPOSY < 1500)
-			{
-				Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
-				level = LVL3;
-			}
-			else if (playerPOSY > 1600)
-			{
-				Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
-				level = LVL3;
-			}
+			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
+			level = LVL3;
 		}
 		else if (level == LVL6)
 		{
