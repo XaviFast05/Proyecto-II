@@ -5,6 +5,7 @@
 #include "Input.h"
 #include "Render.h"
 #include "Scene.h"
+#include "Window.h"
 #include "Log.h"
 #include "Pathfinding.h"
 #include "Physics.h"
@@ -812,6 +813,39 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		}
 		
 		break;
+	case ColliderType::FIXED_CAMERA:
+		/*physB->body->GetFixtureList()->GetAABB(0).lowerBound.*/
+		aabb = physB->body->GetFixtureList()->GetAABB(0);
+		bottomY_m = aabb.lowerBound.y;
+		bottomY_px = METERS_TO_PIXELS(bottomY_m);
+
+		desiredDifference = 224;
+		windowHeight = Engine::GetInstance().window.get()->height;
+
+		fixedY = bottomY_px - desiredDifference + windowHeight/2;
+
+		cameraBottom = fixedY - windowHeight;
+
+		actualDifference = bottomY_px - cameraBottom;
+
+		if (actualDifference > desiredDifference)
+		{
+			fixedY -= (actualDifference - desiredDifference);
+		}
+		else if (actualDifference < desiredDifference)
+		{
+			fixedY += (desiredDifference - actualDifference);
+		}
+
+		Engine::GetInstance().scene.get()->fixedCamY = fixedY;
+		Engine::GetInstance().scene.get()->startFixedCamera = true;
+		Engine::GetInstance().scene.get()->startFreeCamera = false;
+		break;
+		
+		//printf("DHDHHD %i", METERS_TO_PIXELS(physB->body->GetFixtureList()->GetAABB(0).lowerBound.y));
+		//Engine::GetInstance().scene.get()->startFixedCamera = true;
+		//Engine::GetInstance().scene.get()->startFreeCamera = false;
+		//break;
 
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");
@@ -851,6 +885,10 @@ void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 		LOG("End Collision LADDER");
 		canClimb = false;
 		pbody->body->SetGravityScale(godMode == true || canClimb == true /*|| playerState == DEAD ? 0 : gravity*/);
+		break;
+	case ColliderType::FIXED_CAMERA:
+		Engine::GetInstance().scene.get()->startFreeCamera = true;
+		Engine::GetInstance().scene.get()->startFixedCamera = false;
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("End Collision UNKNOWN");

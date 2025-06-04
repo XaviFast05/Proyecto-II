@@ -50,6 +50,7 @@ enum class ColliderType {
 	FINALBOSS,
 	DIALOG_STARTER,
 	PARTICLE,
+	FIXED_CAMERA,
 	UNKNOWN
 };
 

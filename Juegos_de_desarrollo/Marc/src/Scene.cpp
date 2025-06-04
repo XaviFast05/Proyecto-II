@@ -396,36 +396,36 @@ bool Scene::Update(float dt)
 	if (!paused) {
 		currentTime += dt / 1000.0f;
 
-		//CAM VARIABLES
+		//Camera info
 		camX = -Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->GetScale();
 		camY = -Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->GetScale();
 		camW = Engine::GetInstance().window.get()->width;
 		camH = Engine::GetInstance().window.get()->height;
 
-		//CAMERA X
+		//Camera X
 		ChangeDirectionCameraX();
 
-		//CAMERA Y
-		Engine::GetInstance().render.get()->camera.y = (METERS_TO_PIXELS(player->pbody->body->GetPosition().y) + CAM_EXTRA_DISPLACEMENT_Y) * -Engine::GetInstance().window.get()->scale;
+		//Camera Y
+		ChangeFixedCameraY();
 
-	
+		//Camera limits
 		if (level == LVL1)
 		{
-			//CAMERA LIMITS X
+			//Camera limits X
 			if (Engine::GetInstance().render.get()->camera.x < -9980) Engine::GetInstance().render.get()->camera.x = -9980;
 			else if (Engine::GetInstance().render.get()->camera.x > -35) Engine::GetInstance().render.get()->camera.x = -35;
 
-			//CAMERA LIMITS Y
+			//Camera limits Y
 			if (Engine::GetInstance().render.get()->camera.y < -4088) Engine::GetInstance().render.get()->camera.y = -4088;
 			else if (Engine::GetInstance().render.get()->camera.y > 0) Engine::GetInstance().render.get()->camera.y = 0;
 		}
 		else if (level == LVL2)
 		{
-			//CAMERA LIMITS X
+			//Camera limits X
 			if (Engine::GetInstance().render.get()->camera.x < -9980) Engine::GetInstance().render.get()->camera.x = -9980;
 			else if (Engine::GetInstance().render.get()->camera.x > -35) Engine::GetInstance().render.get()->camera.x = -35;
 
-			//CAMERA LIMITS Y
+			//Camera limits Y
 			if (Engine::GetInstance().render.get()->camera.y < -4088) Engine::GetInstance().render.get()->camera.y = -4088;
 			else if (Engine::GetInstance().render.get()->camera.y > 0) Engine::GetInstance().render.get()->camera.y = 0;
 		}
@@ -844,6 +844,27 @@ void Scene::ChangeDirectionCameraX()
 	else {
 		int finalDisplace = (player->dir == RIGHT) ? CAM_EXTRA_DISPLACEMENT_X : 0;
 		Engine::GetInstance().render.get()->camera.x = (METERS_TO_PIXELS(player->pbody->body->GetPosition().x) - (Engine::GetInstance().window.get()->width / 2) + finalDisplace) * -Engine::GetInstance().window.get()->scale;
+	}
+
+}
+
+void Scene::ChangeFixedCameraY()
+{
+	if (startFixedCamera && player->grounded) {
+		//Engine::GetInstance().render.get()->camera.y = -(fixedCamY);
+		cameraFixed = true;
+	}
+	else if (cameraFixed && startFixedCamera) {
+		Engine::GetInstance().render.get()->camera.y = -(fixedCamY);
+	}
+	else if (startFreeCamera && player->grounded) {
+		cameraFixed = false;
+	}
+	else if (!cameraFixed && startFreeCamera) {
+		Engine::GetInstance().render.get()->camera.y = (METERS_TO_PIXELS(player->pbody->body->GetPosition().y) + CAM_EXTRA_DISPLACEMENT_Y) * -Engine::GetInstance().window.get()->scale;
+	}
+	else if (startFixedCamera) {
+		Engine::GetInstance().render.get()->camera.y = (METERS_TO_PIXELS(player->pbody->body->GetPosition().y) + CAM_EXTRA_DISPLACEMENT_Y) * -Engine::GetInstance().window.get()->scale;
 	}
 
 }

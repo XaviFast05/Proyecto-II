@@ -106,6 +106,8 @@ public:
 	void SetBossFightKilled(bool b);
 
 	void ChangeDirectionCameraX();
+
+	void ChangeFixedCameraY();
 	
 	void SetLevel(Levels level);
 
@@ -160,6 +162,11 @@ public:
 	int camY = 0;
 	int camW = 0;
 	int camH = 0;
+
+	bool cameraFixed = true;
+	int fixedCamY = 0;
+	bool startFixedCamera = false;
+	bool startFreeCamera = false;
 
 private:
 	

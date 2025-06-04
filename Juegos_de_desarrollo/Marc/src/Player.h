@@ -232,4 +232,22 @@ public:
 
 	bool respawnHeal = false;
 	Direction dir;
+
+	//CAMERA
+	b2AABB aabb;
+	float bottomY_m = 0.0f;
+	int bottomY_px = 0;
+
+	int desiredDifference = 0;
+	int windowHeight = 0;
+
+	// Calcular fixedY base
+	int fixedY = 0;
+
+	// Borde inferior real de la cámara
+	int cameraBottom = 0;
+
+	// Comprobar y corregir si hay diferencia
+	int actualDifference = 0;
+
 };
