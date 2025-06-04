@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "Pathfinding.h"
 #include "Audio.h"
+#include "tracy/Tracy.hpp"
 
 Ally::Ally() : Entity(EntityType::ALLY)
 {
@@ -58,13 +59,12 @@ bool Ally::Start() {
 
 bool Ally::Update(float dt)
 {
+	ZoneScoped;
 	return true;
 }
 
 bool Ally::CleanUp()
 {
-	pathfinding->CleanUp();
-	delete pathfinding;
 	return true;
 }
 
@@ -79,11 +79,6 @@ Vector2D Ally::GetPosition() {
 	return pos;
 }
 
-void Ally::ResetPath() {
-	Vector2D pos = GetPosition();
-	Vector2D tilePos = Engine::GetInstance().map.get()->WorldToMap(pos.getX(), pos.getY());
-	pathfinding->ResetPath(tilePos);
-}
 
 void Ally::AddAnimation(Animation& anim, int startPosY, int frameSize, int numFrames)
 {
@@ -104,30 +99,6 @@ void Ally::SetPlayer(Player* _player)
 	player = _player;
 }
 
-void Ally::SetPath(pugi::xml_node pathNode)
-{
-	route.clear();
-
-	if (pathNode)
-	{
-		for (pugi::xml_node pointNode : pathNode.children("point")) {
-
-			float x = pointNode.attribute("x").as_float();
-			float y = pointNode.attribute("y").as_float();
-
-			route.emplace_back(x, y);
-		}
-
-		for (int i = 0; i < route.size(); i++)
-		{
-			route[i] = Engine::GetInstance().map.get()->WorldToWorldCenteredOnTile(route[i].getX(), route[i].getY());
-		}
-
-		routeDestinationIndex = 0;
-		destinationPoint = route[routeDestinationIndex];
-	}
-}
-
 
 void Ally::SaveData(pugi::xml_node AllyNode)
 {
@@ -146,11 +117,9 @@ void Ally::LoadData(pugi::xml_node AllyNode)
 
 void Ally::Restart()
 {
-	pbody->SetPhysPositionWithWorld(route[0].getX(), route[0].getY());
 	state = PATROL;
 	pbody->body->SetEnabled(true);
 
-	ResetPath();
 }
 
 void Ally::OnCollision(PhysBody* physA, PhysBody* physB) {

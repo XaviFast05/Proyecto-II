@@ -5,6 +5,7 @@
 #include "Textures.h"
 #include "log.h"
 #include "Scene.h"
+#include "tracy/Tracy.hpp"   
 
 DashParticle::DashParticle()
 {
@@ -43,6 +44,7 @@ bool DashParticle::Start() {
 
 bool DashParticle::Update(float dt)
 {
+	ZoneScoped;
 	bool ret = true;
 
 	if (isCasted)

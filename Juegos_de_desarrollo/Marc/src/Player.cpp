@@ -175,6 +175,7 @@ void Player::Restart()
 
 bool Player::Update(float dt)
 {
+	ZoneScoped;
 	//FRUSTRUM
 	if (!Engine::GetInstance().render.get()->InCameraView(pbody->GetPosition().getX() - texW, pbody->GetPosition().getY() - texH, texW, texH))
 	{
@@ -688,6 +689,9 @@ bool Player::CleanUp()
 	LOG("Cleanup player");
 
 	active = false;
+	delete dialoguesManager;
+	delete currencyManager;
+	delete projectileManager;
 
 	
 	return true;

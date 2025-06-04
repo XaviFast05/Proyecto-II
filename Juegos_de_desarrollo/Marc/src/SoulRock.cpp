@@ -143,6 +143,7 @@ bool SoulRock::Update(float dt) {
 
 bool SoulRock::CleanUp()
 {
+	delete currencyManager;
 	return true;
 }
 

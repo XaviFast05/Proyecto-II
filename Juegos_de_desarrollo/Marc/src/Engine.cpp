@@ -1,3 +1,6 @@
+
+
+
 #include "Engine.h"
 #include <iostream>
 #include <sstream>
@@ -204,7 +207,6 @@ bool Engine::CleanUp() {
     }
 
     LOG("Timer App CleanUp(): %f", timer.ReadMSec());
-
     return result;
 }
 

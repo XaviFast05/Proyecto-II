@@ -10,6 +10,7 @@
 #include "EntityManager.h"
 #include "Player.h"
 #include "Scene.h"
+#include "tracy/Tracy.hpp"   
 
 Bullet::Bullet(BulletType bulletType, BulletDirection bullet_direction)
     : Entity(EntityType::SHOT),
@@ -97,6 +98,7 @@ bool Bullet::Start() {
 }
 
 bool Bullet::Update(float dt) {
+    ZoneScoped;
     if (pbody == nullptr) {
         LOG("Error: PhysBody creation failed!");
         return false;

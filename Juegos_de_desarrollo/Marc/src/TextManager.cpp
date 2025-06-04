@@ -1,4 +1,5 @@
 #include "TextManager.h"
+#include "tracy/Tracy.hpp"   
 
 TextManager::TextManager(bool startEnabled) : Module(startEnabled)
 {
@@ -34,6 +35,7 @@ bool TextManager::Awake()
 
 bool TextManager::Update(float dt)
 {
+    ZoneScoped;
     if (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
     {
         languageIndex--;

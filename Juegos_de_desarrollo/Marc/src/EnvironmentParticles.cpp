@@ -5,6 +5,7 @@
 #include "Textures.h"
 #include "log.h"
 #include "Scene.h"
+#include "tracy/Tracy.hpp"   
 
 EnvironmentParticles::EnvironmentParticles()
 {
@@ -46,6 +47,7 @@ bool EnvironmentParticles::Start() {
 
 bool EnvironmentParticles::Update(float dt)
 {
+	ZoneScoped;
 	bool ret = true;
 
 	//Cam details

@@ -107,6 +107,7 @@ bool UpgradesMenu::PreUpdate()
 // Called each loop iteration
 bool UpgradesMenu::Update(float dt)
 {
+	ZoneScoped;
 	SDL_Rect camera = Engine::GetInstance().render.get()->camera;
 	int windowScale = Engine::GetInstance().window.get()->GetScale();
 	if (upgradesOpen) {
