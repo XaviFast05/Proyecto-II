@@ -103,6 +103,12 @@ bool Player::Start() {
 	playerAttack1SFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("atk1SFX").attribute("path").as_string());
 	playerAttack2SFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("atk2SFX").attribute("path").as_string());
 	playerThrowSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("throwSFX").attribute("path").as_string());
+	playerHurtSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("hurtSFX").attribute("path").as_string());
+	playerHurtSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("hurtSFX").attribute("path").as_string());
+	checkpointSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("checkpointSFX").attribute("path").as_string());
+	dashSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("dashSFX").attribute("path").as_string());
+	chargedSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("chargedSFX").attribute("path").as_string());
+	dieSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("dieSFX").attribute("path").as_string());
 
 	currentAnim = &idle;
 
@@ -388,6 +394,7 @@ bool Player::Update(float dt)
 			}
 			if (playerState == CHARGED && (meleeTimerOn == false && (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_UP || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_X) == KEY_UP) || chargeAttackTimer.ReadSec() > chargeAttackTimerMax)) {
 				meleeTimer.Start();
+
 				meleeTimerOn = true;
 			}
 
@@ -502,6 +509,7 @@ bool Player::Update(float dt)
 				{
 					if (charging == true && chargedCooldown == false && unlockedCharged == true) {
 						playerState = CHARGED;
+						Engine::GetInstance().audio.get()->PlayFx(chargedSFX);
 						chargeAttackTimer.Start();
 						break;
 					}
@@ -527,6 +535,10 @@ bool Player::Update(float dt)
 				break;
 			case DEAD:
 			{
+				if (playSound == true) {
+					Engine::GetInstance().audio.get()->PlayFx(dieSFX);
+					playSound = false;
+				}
 				pbody->body->SetLinearVelocity(b2Vec2(0, 0));
 				if (respawnTimer.ReadSec() >= respawnTime) {
 					Engine::GetInstance().scene.get()->LoadState();
@@ -537,6 +549,7 @@ bool Player::Update(float dt)
 			}
 			case CHARGED:
 				if (chargeAttackTimer.ReadSec() > chargeAttackTimerMax || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_UP) {
+
 					chargedCooldownTimer.Start();
 					chargedCooldown = true;
 					playerState = IDLE;
@@ -552,7 +565,14 @@ bool Player::Update(float dt)
 				break;
 			}
 
-			if (playerState == DASH) velocity = { pbody->body->GetLinearVelocity().x, 0 };
+			if (playerState == DASH) {
+				if (playSound == true) {
+					Engine::GetInstance().audio.get()->PlayFx(dashSFX);
+					playSound = false;
+				}
+				velocity = { pbody->body->GetLinearVelocity().x, 0 };
+			}
+
 			else velocity = { velocity.x, pbody->body->GetLinearVelocity().y };
 			pbody->body->SetLinearVelocity(velocity);
 
@@ -640,6 +660,10 @@ bool Player::Update(float dt)
 		}
 		break;
 	case HURT:
+		if (playSound == true) {
+			Engine::GetInstance().audio.get()->PlayFx(playerHurtSFX);
+			playSound = false;
+		}
 		currentAnim = &hurt;
 		if (resetAnimation == true) {
 			currentAnim->Reset();
@@ -798,6 +822,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision LADDER");
 		break;
 	case ColliderType::CHECKPOINT:
+		if (playSound == true) {
+			Engine::GetInstance().audio.get()->PlayFx(checkpointSFX);
+			playSound = false;
+		}
 		reachedCheckPoint = true;
 		hits = 3;
 		Engine::GetInstance().scene.get()->SaveState();

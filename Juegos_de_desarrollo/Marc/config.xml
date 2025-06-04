@@ -996,7 +996,11 @@
 			<atk1SFX path="Assets/Audio/Fx/King/Land/king_splat.wav" />
 			<atk2SFX path="Assets/Audio/Fx/King/Land/king_bump.wav" />
 			<throwSFX path="Assets/Audio/Fx/King/Ice/king_jump.wav" />
-			<hurtSFX path="Assets/Audio/Fx/SquidHit.ogg" />
+			<hurtSFX path="Assets/Audio/Fx/hurt_kim.wav" />
+			<dashSFX path="Assets/Audio/Fx/dash.wav" />
+			<chargedSFX path="Assets/Audio/Fx/charged.wav" />
+			<dieSFX path="Assets/Audio/Fx/death.wav" />
+			<checkpointSFX path="Assets/Audio/Fx/checkpoint.wav" />
 			<gDeathSFX path="Assets/Audio/Fx/SinkOMO.ogg" />
 			<pickCandy path="Assets/Audio/Fx/OMO_pickedItem.ogg" />
 			<pourCandy path="Assets/Audio/Fx/candyPour.ogg" />
@@ -1005,7 +1009,7 @@
 			<loadGame path="Assets/Audio/Fx/LoadGame.ogg" />
 			<godModeSFX path="Assets/Audio/Fx/i-am-a-god.ogg" />
 			<batWingsSFX path="Assets/Audio/Fx/BatWings.ogg" />
-			<farBatWings path="Assets/Audio/Fx/FarBatWings.ogg" />
+			<farBatWings path="Assets/Audio/Fx/Firefly_Son_Flying.wav" />
 			<batDeathSFX path="Assets/Audio/Fx/BatDeath.ogg" />
 			<swordSFX path="Assets/Audio/Fx/SwordSlash.ogg" />
 			<skeletonDeathSFX path="Assets/Audio/Fx/SkeletonDeath.ogg" />
