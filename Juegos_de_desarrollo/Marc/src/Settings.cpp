@@ -35,9 +35,6 @@ bool Settings::Awake()
 // Called before the first frame
 bool Settings::Start()
 {
-
-	
-
 	pugi::xml_parse_result result = configFile.load_file("config.xml");
 	rootNode = configFile.child("config");
 
@@ -112,6 +109,8 @@ bool Settings::Start()
 	LoadPrefs();
 
 	settingsOpen = false;
+	controlsOpen = false;
+	xbox = false;
 	return true;
 }
 
@@ -129,8 +128,6 @@ bool Settings::Update(float dt)
 	if (settingsOpen){
 		int screenWidth = rootNode.child("window").child("resolution").attribute("width").as_int();
 		int screenHeight = rootNode.child("window").child("resolution").attribute("height").as_int();
-		
-		
 		
 		for (GuiControl* gui : settingsGUI) {
 			if (gui->active == false) {
@@ -252,8 +249,6 @@ bool Settings::CleanUp()
 
 bool Settings::OnGuiMouseClickEvent(GuiControl* control) {
 
-	saved = rootNode.child("scene").child("savedData").attribute("saved").as_bool();
-
 	switch (control->id) {
 	case GuiControlId::MUSIC:
 		musicVolume = SetVolume((GuiControlSlider*)control);
@@ -284,6 +279,7 @@ bool Settings::OnGuiMouseClickEvent(GuiControl* control) {
 				settingsOpen = false;
 				for (const auto& bt : Engine::GetInstance().mainMenu.get()->buttons) {
 					bt.second->state = GuiControlState::NORMAL;
+					bool saved = Engine::GetInstance().mainMenu.get()->saved;
 					if (!saved) {
 						Engine::GetInstance().mainMenu.get()->buttons["continueBt"]->state = GuiControlState::DISABLED;
 					}
@@ -361,5 +357,6 @@ void Settings::LoadPrefs()
 		SDL_SetWindowFullscreen(Engine::GetInstance().window.get()->window, SDL_WINDOW_FULLSCREEN);
 	}
 	musicSlider->SetVolumeValue(musicVolume);
+	Mix_VolumeMusic(musicVolume);
 	sfxSlider->SetVolumeValue(sfxVolume);
 }

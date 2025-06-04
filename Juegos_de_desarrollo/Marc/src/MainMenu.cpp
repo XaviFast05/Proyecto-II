@@ -151,7 +151,6 @@ bool MainMenu::CleanUp() {
 
 bool MainMenu::OnGuiMouseClickEvent(GuiControl* control) {
 	
-	saved = rootNode.child("scene").child("savedData").attribute("saved").as_bool();
 	switch (control->id) {
 	case GuiControlId::NEW_GAME:
 		if(control->state == GuiControlState::PRESSED){
