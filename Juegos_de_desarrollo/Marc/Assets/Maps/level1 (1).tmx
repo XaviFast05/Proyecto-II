@@ -32,7 +32,7 @@
   <image source="Luz.PNG" width="1280" height="720"/>
  </tileset>
  <tileset firstgid="1027" name="IMG_8407" tilewidth="64" tileheight="64" tilecount="220" columns="20">
-  <image source="IMG_8407.PNG" width="1280" height="720"/>
+  <image source="LuzTutorial.PNG" width="1280" height="720"/>
  </tileset>
  <layer id="13" name="Props2" width="405" height="147">
   <properties>
@@ -238203,7 +238203,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="12" name="Navigation" width="405" height="147">
+ <layer id="12" name="Navigation" width="405" height="147" visible="0">
   <properties>
    <property name="Navigation" type="bool" value="true"/>
   </properties>
