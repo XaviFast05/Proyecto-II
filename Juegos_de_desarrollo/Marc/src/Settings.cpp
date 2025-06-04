@@ -84,6 +84,19 @@ bool Settings::Start()
 	titleText = configParameters.child("optPanel").attribute("text").as_string();
 	titleVerticalDisplacement = configParameters.child("optPanel").attribute("textVerticalDisplacement").as_int();
 
+	changeControlBt = (GuiControlButton*)Engine::GetInstance().guiManager.get()->CreateGuiControl(GuiControlType::BUTTON, "changeControlBt", "", { 0,0,0,0 }, this, { 0,0,0,0 });
+	changeControlBt->SetGuiParameters("changeControlBt", configParameters);
+	settingsGUI.push_back(changeControlBt);
+
+	controlsControllerPanel = Engine::GetInstance().textures.get()->Load(configParameters.child("controlsControllerPanel").attribute("path").as_string());
+	controlsControllerPanelX = configParameters.child("controlsControllerPanel").attribute("x").as_int();
+	controlsControllerPanelY = configParameters.child("controlsControllerPanel").attribute("y").as_int();
+	controlsControllerPanelW = configParameters.child("controlsControllerPanel").attribute("w").as_int();
+	controlsControllerPanelH = configParameters.child("controlsControllerPanel").attribute("h").as_int();
+	controls2Font = TTF_OpenFont(configParameters.child("controlsControllerPanel").attribute("font").as_string(), configParameters.child("controlsControllerPanel").attribute("fontSize").as_int());
+	controls2Text = configParameters.child("controlsControllerPanel").attribute("text").as_string();
+	controls2VerticalDisplacement = configParameters.child("controlsControllerPanel").attribute("textVerticalDisplacement").as_int();
+
 	controlsKeyboardPanel = Engine::GetInstance().textures.get()->Load(configParameters.child("controlsKeyboardPanel").attribute("path").as_string());
 	controlsKeyboardPanelX = configParameters.child("controlsKeyboardPanel").attribute("x").as_int();
 	controlsKeyboardPanelY = configParameters.child("controlsKeyboardPanel").attribute("y").as_int();
@@ -161,23 +174,47 @@ bool Settings::Update(float dt)
 		}
 		else
 		{
-			Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
-			Engine::GetInstance().render.get()->DrawTextureBuffer(controlsKeyboardPanel, -camera.x / windowScale + controlsKeyboardPanelX, -camera.y / windowScale + controlsKeyboardPanelY, false, MENUS);
-			if (controlsText != "")
-			{
-				int textW = 0, textH = 0;
-				TTF_SizeUTF8(controlsFont, Engine::GetInstance().textManager.get()->GetText(controlsText).c_str(), &textW, &textH);
 
-				Engine::GetInstance().render.get()->DrawTextToBuffer(
-					Engine::GetInstance().textManager.get()->GetText(controlsText).c_str(),
-					controlsKeyboardPanelX + (controlsKeyboardPanelW / 2) - textW / 2,
-					controlsKeyboardPanelY + (controlsKeyboardPanelH / 2) - textH / 2 + titleVerticalDisplacement,
-					textW,
-					textH,
-					controlsFont,
-					{ 255, 255, 255, 255 }, MENUS
-				);
+			if (!xbox) {
+				Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
+				Engine::GetInstance().render.get()->DrawTextureBuffer(controlsKeyboardPanel, -camera.x / windowScale + controlsKeyboardPanelX, -camera.y / windowScale + controlsKeyboardPanelY, false, MENUS);
+				if (controlsText != "")
+				{
+					int textW = 0, textH = 0;
+					TTF_SizeUTF8(controlsFont, Engine::GetInstance().textManager.get()->GetText(controlsText).c_str(), &textW, &textH);
+
+					Engine::GetInstance().render.get()->DrawTextToBuffer(
+						Engine::GetInstance().textManager.get()->GetText(controlsText).c_str(),
+						controlsKeyboardPanelX + (controlsKeyboardPanelW / 2) - textW / 2,
+						controlsKeyboardPanelY + (controlsKeyboardPanelH / 2) - textH / 2 + titleVerticalDisplacement,
+						textW,
+						textH,
+						controlsFont,
+						{ 255, 255, 255, 255 }, MENUS
+					);
+				}
 			}
+			else {
+				Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
+				Engine::GetInstance().render.get()->DrawTextureBuffer(controlsControllerPanel, -camera.x / windowScale + controlsControllerPanelX, -camera.y / windowScale + controlsControllerPanelY, false, MENUS);
+				if (controls2Text != "")
+				{
+					int textW = 0, textH = 0;
+					TTF_SizeUTF8(controls2Font, Engine::GetInstance().textManager.get()->GetText(controls2Text).c_str(), &textW, &textH);
+
+					Engine::GetInstance().render.get()->DrawTextToBuffer(
+						Engine::GetInstance().textManager.get()->GetText(controls2Text).c_str(),
+						controlsControllerPanelX + (controlsControllerPanelW / 2) - textW / 2,
+						controlsControllerPanelY + (controlsControllerPanelH / 2) - textH / 2 + titleVerticalDisplacement,
+						textW,
+						textH,
+						controls2Font,
+						{ 255, 255, 255, 255 }, MENUS
+					);
+				}
+			}
+			changeControlBt->Update(dt);
+			OnGuiMouseClickEvent(changeControlBt);
 		}
 		
 		backBt->Update(dt);
@@ -271,17 +308,12 @@ bool Settings::OnGuiMouseClickEvent(GuiControl* control) {
 		}
 		break;
 
-	case GuiControlId::CAT:
+	case GuiControlId::CHANGE_CONTROLS:
 		if (control->state == GuiControlState::PRESSED) {
-			Engine::GetInstance().textManager.get()->ChangeIdiom(1);
+			xbox = !xbox;
 		}
 		break;
 
-	case GuiControlId::ENG:
-		if (control->state == GuiControlState::PRESSED) {
-			Engine::GetInstance().textManager.get()->ChangeIdiom(2);
-		}
-		break;
 	}
 
 
@@ -305,9 +337,9 @@ void Settings::SavePrefs()
 
 	pugi::xml_node playerPrefsNode = saveFile.child("savedData").child("playerPrefs");
 
-	playerPrefsNode.child("playerPrefs").child("fullscreen").attribute("toggle").set_value((int)fullScreenBox->isChecked);
-	playerPrefsNode.child("playerPrefs").child("musicVolume").attribute("value").set_value(musicVolume);
-	playerPrefsNode.child("playerPrefs").child("sfxVolume").attribute("value").set_value(sfxVolume);
+	playerPrefsNode.child("fullscreen").attribute("toggle").set_value((int)fullScreenBox->isChecked);
+	playerPrefsNode.child("musicVolume").attribute("value").set_value(musicVolume);
+	playerPrefsNode.child("sfxVolume").attribute("value").set_value(sfxVolume);
 
 	//Saves the modifications to the XML 
 	saveFile.save_file("savedData.xml");
