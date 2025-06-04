@@ -64,14 +64,7 @@ bool WinMenu::Start()
 	candyCount.clear();
 	screenTex = Engine::GetInstance().textures.get()->Load(rootNode.child("scene").child("winMenu").child("bg").attribute("path").as_string());
 	candyIcon = Engine::GetInstance().textures.get()->Load(rootNode.child("scene").child("winMenu").child("icons").child("candy").attribute("path").as_string());
-	candyRect.x = rootNode.child("scene").child("winMenu").child("icons").child("candy").attribute("x").as_int();
-	candyRect.y = rootNode.child("scene").child("winMenu").child("icons").child("candy").attribute("y").as_int();
-	candyRect.w = rootNode.child("scene").child("winMenu").child("icons").child("candy").attribute("w").as_int();
-	candyRect.h = rootNode.child("scene").child("winMenu").child("icons").child("candy").attribute("h").as_int();
-	textRect.x = rootNode.child("scene").child("winMenu").child("icons").child("candy").attribute("textX").as_int();
-	textRect.y = rootNode.child("scene").child("winMenu").child("icons").child("candy").attribute("textY").as_int();
-	textRect.w = rootNode.child("scene").child("winMenu").child("icons").child("candy").attribute("textW").as_int();
-	textRect.h = rootNode.child("scene").child("winMenu").child("icons").child("candy").attribute("textH").as_int();
+
 
 	return ret;
 }

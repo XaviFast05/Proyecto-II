@@ -18,36 +18,40 @@
 	<mainmenu>
 		<bg path="Assets/Textures/Menus/Title Screen/title screen pixel bg.png" />
 		<buttons defaultTex="Assets/Textures/Menus/Title Screen/DefaultButton.png">
-			<newGameBt id="1" x="448" y="230" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="TUTORIAL" font="Assets/Fonts/Crang.ttf" fontSize="30" />
-			<continueBt id="2" x="448" y="326" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="CONTINUE" font="Assets/Fonts/Crang.ttf" fontSize="30" />
-			<optionsBt id="3" x="448" y="422" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="OPTIONS" font="Assets/Fonts/Crang.ttf" fontSize="30" />
-			<creditsBt id="4" x="448" y="518" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/DefaultButton.png" text="CREDITS" font="Assets/Fonts/Crang.ttf" fontSize="30" />
-			<exitBt id="5" x="448" y="614" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/RedButton.png" text="EXIT" font="Assets/Fonts/Crang.ttf" fontSize="30" />
-			<backBt id="6" x="448" y="614" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/RedButton.png" text="BACK" font="Assets/Fonts/Crang.ttf" fontSize="30" />
+			<newGameBt id="1" x="448" y="230" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/New Game Button Sheet Background.png" text="NEW_GAME" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
+			<continueBt id="2" x="448" y="326" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Continue Button Sheet Background.png" text="CONTINUE" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
+			<optionsBt id="3" x="448" y="422" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Options Button Sheet Background.png" text="OPTIONS" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
+			<creditsBt id="4" x="448" y="518" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Credits Button Sheet Background.png" text="CREDITS" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
+			<exitBt id="5" x="448" y="614" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/RedButton.png" text="EXIT" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
+			<backBt id="6" x="448" y="614" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/RedButton.png" text="BACK" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
 		</buttons>
 		<credits path="Assets/Textures/Menus/Title Screen/credits screen.png" />
 	</mainmenu>
 	<settings>
-		<optPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/settings-panel-empty.png"  fontSize="50" font="Assets/Fonts/Crang.ttf" text="OPTIONS" textVerticalDisplacement="-250"/>
+		<optPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/settings-panel-empty.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="OPTIONS" textVerticalDisplacement="-250"/>
+		<controlsKeyboardPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/INTERFAZ_TECLADO_SIN_FONDO.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="KEYBOARD" textVerticalDisplacement="-250"/>
+		<controlsControllerPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/controles mando.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="CONTROLLER" textVerticalDisplacement="-250"/>
 		<sliders barW="384" barH="40" barTexture="Assets/Textures/Menus/Options/slider.png" circleW="70" circleH="70" texture="Assets/Textures/Menus/Options/pumpkinBt.png">
-			<musicSlider id="7" barX="448" circleX="450" barY="236" circleY="221" text="MUSIC" fontSize="30" font="Assets/Fonts/Crang.ttf" verticalDisplacement="-50" textVerticalDisplacement="-60"/>
-			<sfxSlider id="8" barX="448" circleX="450" barY="364" circleY="349" text="SOUND_EFFECTS" fontSize="30" font="Assets/Fonts/Crang.ttf" verticalDisplacement="-50" textVerticalDisplacement="-60"/>
+			<musicSlider id="7" barX="448" circleX="450" barY="226" circleY="221" text="MUSIC" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" verticalDisplacement="-50" textVerticalDisplacement="-65"/>
+			<sfxSlider id="8" barX="448" circleX="450" barY="354" circleY="349" text="SOUND_EFFECTS" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" verticalDisplacement="-50" textVerticalDisplacement="-65"/>
 		</sliders>
-		<fullScreenBox id="9" x="605" y="490" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" text="FULL_SCREEN" fontSize="30" font="Assets/Fonts/Crang.ttf" textVerticalDisplacement="-60"/>
-		<backBt id="6" x="448" y="587" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/RedButton.png" text="BACK" fontSize="30" font="Assets/Fonts/Crang.ttf"/>
+		<fullScreenBox id="9" x="605" y="470" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" text="FULL_SCREEN" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" textVerticalDisplacement="-65"/>
+		<backBt id="6" x="288" y="47" w="80" h="80" texture="Assets/Textures/Menus/Options/Button_exit_solo.png" />
+		<controlsBt id="32" x="348" y="564" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Credits Button Sheet Background.png" text="CONTROLS" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
+		<changeControlBt id="33" x="448" y="584" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Credits Button Sheet Background.png" text="CHANGE_CONTROLS" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
+		<espBt id="34" x="748" y="564" w="224" h="64" texture="Assets/Textures/Menus/Options/language.png" text="LANGUAGE" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
 	</settings>
 	<upgradesMenu>
-		<upgPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/settings-panel.png" />
-		<changeMenuBt id="15" x="100" y="490" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
-		<backBt id="6" x="448" y="587" w="384" h="64" texture="Assets/Textures/Menus/Options/back.png" />
-		<upg1 id="16" x="100" y="100" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg1_icon.png" />
-		<upg2 id="17" x="300" y="100" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg2_icon.png" />
-		<upg3 id="18" x="100" y="200" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg3_icon.png" />
-		<upg4 id="19" x="300" y="200" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg4_icon.png" />
-		<upg5 id="20" x="100" y="300" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg5_icon.png" />
-		<upg6 id="21" x="300" y="300" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg6_icon.png" />
-		<upg7 id="22" x="100" y="400" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg7_icon.png" />
-		<upg8 id="23" x="300" y="400" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg8_icon.png" />
+		<upgPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/MenuUpgrades/pngs_interfaz_completa/Interfaz_mejoras_completo.png" />
+		<changeMenuBt id="15" x="20" y="4" w="80" h="80" texture="Assets/Textures/Menus/MenuMerchant/TIENDA 02/PNGS/Button_exit_solo.png" />
+		<upg1 id="16" x="216" y="103" w="112" h="112" texture="Assets/Textures/Menus/MenuUpgrades/buttons/upg1_icon.png" />
+		<upg2 id="17" x="361" y="103" w="112" h="112" texture="Assets/Textures/Menus/MenuUpgrades/buttons/upg2_icon.png" />
+		<upg3 id="18" x="216" y="220" w="112" h="112" texture="Assets/Textures/Menus/MenuUpgrades/buttons/upg3_icon.png" />
+		<upg4 id="19" x="361" y="220" w="112" h="112" texture="Assets/Textures/Menus/MenuUpgrades/buttons/upg4_icon.png" />
+		<upg5 id="20" x="216" y="338" w="112" h="112" texture="Assets/Textures/Menus/MenuUpgrades/buttons/upg5_icon.png" />
+		<upg6 id="21" x="361" y="338" w="112" h="112" texture="Assets/Textures/Menus/MenuUpgrades/buttons/upg6_icon.png" />
+		<upg7 id="22" x="216" y="456" w="112" h="112" texture="Assets/Textures/Menus/MenuUpgrades/buttons/upg7_icon.png" />
+		<upg8 id="23" x="361" y="456" w="112" h="112" texture="Assets/Textures/Menus/MenuUpgrades/buttons/upg8_icon.png" />
 	</upgradesMenu>
 	<merchantMenu>
 		<merchantPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/MenuMerchant/TIENDA 02/PNGS/interfaz_conbutton_exit_negro.png" />
@@ -73,6 +77,9 @@
 			<bgCapa1 path="Assets/Maps/fondo_capa1.png" />
 			<kimHead path="Assets/Textures/kim.png" />
 		</ui>
+		<levelName>
+			<lvl3 path="Assets/Textures/UI/letrero_capa_1.png" text="SIGN_LAYER_1" w="668" h="222" y="210" fontSize="70" font="Assets/Fonts/PIXELADE.ttf" signTextY ="10" timeShowingSignText="5"/>
+		</levelName>
 		<map>
 			<paths>
 				<lvl1 path="Assets/Maps/" name="Tutorial.tmx" />
@@ -407,17 +414,16 @@
 						</death>
 					</animations>
 				</skeleton>
-				<bat x="250" y="350" w="64" h="64" texture="Assets/Textures/Enemies/Fantasma/fantasmavolador.png">
+				<bat x="250" y="350" w="64" h="64" texture="Assets/Textures/Enemies/Luciernaga/luciernaga_vomitahijos.png">
 					<properties speed="2" chaseArea="400" deathTime="1.0f" lives="10" pushForce="1" pushFriction="5" lootAmount="1" canPush="true" />
 					<animations>
 						<idle loop="true" speed="0.2f">
-							<frame x="0" y="64" w="64" h="64" />
-							<frame x="64" y="64" w="64" h="64" />
-							<frame x="128" y="64" w="64" h="64" />
-							<frame x="192" y="64" w="64" h="64" />
-							<frame x="256" y="64" w="64" h="64" />
-							<frame x="320" y="64" w="64" h="64" />
-							<frame x="384" y="64" w="64" h="64" />
+							<frame x="0" y="0" w="64" h="64" />
+							<frame x="64" y="0" w="64" h="64" />
+							<frame x="128" y="0" w="64" h="64" />
+							<frame x="192" y="0" w="64" h="64" />
+							<frame x="256" y="0" w="64" h="64" />
+							<frame x="320" y="0" w="64" h="64" />
 						</idle>
 						<attack loop="true" speed="0.2f">
 							<frame x="0" y="64" w="64" h="64" />
@@ -426,19 +432,23 @@
 							<frame x="192" y="64" w="64" h="64" />
 							<frame x="256" y="64" w="64" h="64" />
 							<frame x="320" y="64" w="64" h="64" />
-							<frame x="384" y="64" w="64" h="64" />
 						</attack>
 						<hurt loop=" false" speed="0.2f">
-							<frame x="0" y="0" w="64" h="64" />
-						</hurt>
-						<death loop=" false" speed="0.1f">
 							<frame x="0" y="128" w="64" h="64" />
 							<frame x="64" y="128" w="64" h="64" />
 							<frame x="128" y="128" w="64" h="64" />
 							<frame x="192" y="128" w="64" h="64" />
 							<frame x="256" y="128" w="64" h="64" />
 							<frame x="320" y="128" w="64" h="64" />
-							<frame x="384" y="128" w="64" h="64" />
+						</hurt>
+						<death loop=" false" speed="0.1f">
+							<frame x="0" y="192" w="64" h="64" />
+							<frame x="64" y="192" w="64" h="64" />
+							<frame x="128" y="192" w="64" h="64" />
+							<frame x="192" y="192" w="64" h="64" />
+							<frame x="256" y="192" w="64" h="64" />
+							<frame x="320" y="192" w="64" h="64" />
+							<frame x="384" y="192" w="64" h="64" />
 						</death>
 					</animations>
 				</bat>
@@ -593,6 +603,12 @@
 						</instance>
 					</lvl2>
 					<lvl3>
+						<instance enemyType="bat" entityType="4">
+							<point x="9792" y="8512" />
+						</instance>
+						<instance enemyType="child" entityType="9">
+							<point x="9216" y="8512" />
+						</instance>
 						<instance enemyType="skeleton" entityType="5">
 							<point x="7616" y="7936" />
 							<point x="7617" y="7936" />
@@ -680,11 +696,11 @@
 			</enemies>
 			<items>
 				<checkPoints>
-					<properties w="128" h="128" texture="Assets/Textures/Objects/checkpoint.png" />
+					<properties w="128" h="128" texture1="Assets/Textures/Objects/checkpoint.png" texture2="Assets/Textures/Objects/checkpoint_capa1.png"/>
 					<instances>
 						<lvl1>
-							<instance entityType="2" x="3568" y="2432" />
-							<instance entityType="2" x="9792" y="3392" />
+							<instance entityType="2" x="3568" y="2432" checkPointType = "1"/>
+							<instance entityType="2" x="9792" y="3392" checkPointType = "1"/>
 						</lvl1>
 					</instances>
 					<animations>
@@ -697,6 +713,22 @@
 						</lit>
 					</animations>
 				</checkPoints>
+				<destructibleWalls>
+					<properties w="64" h="192" texture="Assets/Textures/Objects/Roca rompible Onirica.png" />
+					<instances>
+						<lvl1>
+						</lvl1>
+					</instances>
+					<animations>
+						<unlit>
+							<frame x="0" y="0" w="128" h="128" />
+						</unlit>
+						<lit loop="true" speed="0.3f">
+							<frame x="128" y="0" w="128" h="128" />
+							<frame x="256" y="0" w="128" h="128" />
+						</lit>
+					</animations>
+				</destructibleWalls>
 				<soulRock>
 					<properties w="64" h="64" texture="Assets/Textures/Objects/SoulRock.png" />
 					<instances>
@@ -839,11 +871,11 @@
 		<pauseMenu>
 			<pausePanel x="0" y="0" w="1280" h="720" texture="Assets/Textures/Menus/Pause/pause-panel.png" />
 			<buttons>
-				<resumeBt id="10" x="448" y="223" w="384" h="64" texture="Assets/Textures/Menus/Pause/resume resized.png" />
-				<optionsBt id="3" x="448" y="319" w="384" h="64" texture="Assets/Textures/Menus/Pause/options resized.png" />
-				<backToTitleBt id="11" x="448" y="415" w="384" h="64" texture="Assets/Textures/Menus/Pause/back to title.png" />
-				<exitBt id="5" x="448" y="511" w="384" h="64" texture="Assets/Textures/Menus/Pause/exit centered.png" />
-				<changeMenuBt id="15" x="900" y="490" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" />
+				<resumeBt id="10" x="448" y="223" w="384" h="64" texture="Assets/Textures/Menus/Pause/resume resized.png" text="RESUME" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
+				<optionsBt id="3" x="448" y="375" w="384" h="64" texture="Assets/Textures/Menus/Pause/options resized.png" text="OPTIONS" font="Assets/Fonts/PIXELADE.ttf" fontSize="65"  />
+				<backToTitleBt id="11" x="448" y="451" w="384" h="64" texture="Assets/Textures/Menus/Pause/back to title.png" text="BACK_TO_TITLE" font="Assets/Fonts/PIXELADE.ttf" fontSize="55"  />
+				<exitBt id="5" x="448" y="527" w="384" h="64" texture="Assets/Textures/Menus/Pause/exit centered.png" text="EXIT" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
+				<changeMenuBt id="15" x="448" y="299" w="384" h="64" texture="Assets/Textures/Menus/Pause/resume resized.png" text="UPGRADES" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
 			</buttons>
 		</pauseMenu>
 		<deathMenu>
@@ -859,13 +891,9 @@
 		</deathMenu>
 		<winMenu>
 			<bg path="Assets/Textures/Menus/Win-Lose/winScreen.png" />
-			<icons>
-				<candy x="24" y="17" w="38" h="33" textX="70" textY="22" textW="19" textH="23" path="Assets/Textures/Menus/Win-Lose/candy icon.png" />
-			</icons>
 			<buttons>
-				<replayBt id="12" x="379" y="125" w="233" h="39" texture="Assets/Textures/Menus/Win-Lose/Replay Button Sheet resized.png" />
-				<backToTitleBt id="11" x="379" y="180" w="233" h="39" texture="Assets/Textures/Menus/Win-Lose/back to title.png" />
-				<exitBt id="5" x="379" y="236" w="233" h="39" texture="Assets/Textures/Menus/Win-Lose/exit centered.png" />
+				<backToTitleBt id="11" x="448" y="400" w="384" h="64" texture="Assets/Textures/Menus/Pause/back to title.png" text="BACK_TO_TITLE" font="Assets/Fonts/PIXELADE.ttf" fontSize="55"  />
+				<exitBt id="5" x="448" y="544" w="384" h="64" texture="Assets/Textures/Menus/Pause/exit centered.png" text="EXIT" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
 			</buttons>
 		</winMenu>
 		<dialogues>
@@ -873,8 +901,8 @@
 				<name maxW="620" maxH="167" offsetX="197" offsetY="10" font="Assets/Fonts/ttf_pixolde_bold.ttf" pointSize="50" />
 				<text maxW="620" maxH="167" offsetX="197" offsetY="58" font="Assets/Fonts/ttf_pixolde_bold.ttf" pointSize="30" />
 				<images w="160" h="160" offsetX="23" offsetY="21">
-					<image name="Kim" path="Assets/Textures/Menus/Dialogues/KIM.png" />
-					<image name="Flo" path="Assets/Textures/Menus/Dialogues/FLO.png" />
+					<image name="Kim" fotoPath="Assets/Textures/Menus/Dialogues/KIM.png" recuadroPath="Assets/Textures/Menus/Dialogues/RecuadroKim.png"/>
+					<image name="Flo" fotoPath="Assets/Textures/Menus/Dialogues/FLO.png" recuadroPath="Assets/Textures/Menus/Dialogues/RecuadroFlo.png"/>
 				</images>
 			</dialoguePanel>
 			<DIALOG01>
@@ -953,5 +981,6 @@
 		<halloweenpixels path="Assets/Fonts/Halloweenpixels.ttf" />
 		<CorvidConspiratorpath path="Assets/Fonts/Corvid Conspirator v1.1.ttf" />
 		<Crang path="Assets/Fonts/Crang.ttf" />
+		<PIXELADE path="Assets/Fonts/PIXELADE.ttf" />
 	</fonts>
 </config>

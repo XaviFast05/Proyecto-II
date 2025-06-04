@@ -48,7 +48,6 @@ private:
 	pugi::xml_node vignetteParameters;
 
 	//RECTANGLE
-	SDL_Texture* rectangleTexture;
 	int rectangleTextureW;
 	int rectangleTextureH;
 	int rectangleTextureX;
@@ -56,6 +55,8 @@ private:
 
 	//IMAGES
 	std::map<std::string, SDL_Texture*> images;
+	std::map<std::string, SDL_Texture*> rectangleTextures;
+
 	int imageOffsetX;
 	int imageOffsetY;
 

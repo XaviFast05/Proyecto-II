@@ -5,7 +5,8 @@
     "sdl2",
     "sdl2-image",
     "sdl2-mixer",
+    "sdl2-ttf",
     "tracy",
-    "sdl2-ttf"
+    "ffmpeg"
   ]
 }
