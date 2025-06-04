@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Log.h"
 #include "Physics.h"
+#include "tracy/Tracy.hpp"   
 
 CheckPoint::CheckPoint() : Entity(EntityType::CHECKPOINT)
 {
@@ -64,6 +65,8 @@ bool CheckPoint::Start() {
 
 bool CheckPoint::Update(float dt)
 {
+
+	ZoneScoped;
 	currentFrame = currentAnim->GetCurrentFrame();
 
 	if (!Engine::GetInstance().render.get()->InCameraView(pbody->GetPosition().getX() - texW, pbody->GetPosition().getY() - texH, texW, texH))

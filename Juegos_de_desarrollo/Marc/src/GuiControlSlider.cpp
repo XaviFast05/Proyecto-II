@@ -29,6 +29,7 @@ GuiControlSlider::~GuiControlSlider()
 
 bool GuiControlSlider::Update(float dt)
 {
+    ZoneScoped;
     minValue = sliderBounds.x + 10;
     maxValue = sliderBounds.x + sliderBounds.w - 45;
    

@@ -147,6 +147,7 @@ bool MerchantMenu::PreUpdate()
 // Called each loop iteration
 bool MerchantMenu::Update(float dt)
 {
+	ZoneScoped;
 	SDL_Rect camera = Engine::GetInstance().render.get()->camera;
 	int windowScale = Engine::GetInstance().window.get()->GetScale();
 	
@@ -302,7 +303,6 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 			else {
 				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost1);
 				Engine::GetInstance().scene.get()->player->UnlockUpgrade(0);
-				leaveMenu = true;
 				firstUpgradeBt->state == GuiControlState::DISABLED;
 				hasOpened = true;
 			}
@@ -319,7 +319,6 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 			else {
 				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost2);
 				Engine::GetInstance().scene.get()->player->UnlockUpgrade(1);
-				leaveMenu = true;
 				secondUpgradeBt->state == GuiControlState::DISABLED;
 				hasOpened = true;
 			}
@@ -337,7 +336,6 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 			else {
 				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost3);
 				Engine::GetInstance().scene.get()->player->UnlockUpgrade(2);
-				leaveMenu = true;
 				thirdUpgradeBt->state == GuiControlState::DISABLED;
 				hasOpened = true;
 			}
@@ -355,7 +353,6 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 			else {
 				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost4);
 				Engine::GetInstance().scene.get()->player->UnlockUpgrade(3);
-				leaveMenu = true;
 				fourthUpgradeBt->state == GuiControlState::DISABLED;
 				hasOpened = true;
 			}
@@ -372,7 +369,6 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 			else {
 				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost5);
 				Engine::GetInstance().scene.get()->player->UnlockUpgrade(4);
-				leaveMenu = true;
 				fifthUpgradeBt->state == GuiControlState::DISABLED;
 				hasOpened = true;
 			}
@@ -389,7 +385,6 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 			else {
 				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost6);
 				Engine::GetInstance().scene.get()->player->UnlockUpgrade(5);
-				leaveMenu = true;
 				sixthUpgradeBt->state == GuiControlState::DISABLED;
 				hasOpened = true;
 			}
@@ -406,7 +401,6 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 			else {
 				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost7);
 				Engine::GetInstance().scene.get()->player->UnlockUpgrade(6);
-				leaveMenu = true;
 				seventhUpgradeBt->state == GuiControlState::DISABLED;
 				hasOpened = true;
 			}
@@ -423,7 +417,6 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 			else {
 				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost8);
 				Engine::GetInstance().scene.get()->player->UnlockUpgrade(7);
-				leaveMenu = true;
 				eighthUpgradeBt->state == GuiControlState::DISABLED;
 				hasOpened = true;
 			}

@@ -22,6 +22,7 @@
 #include "WallBrakerParticle.h"
 #include "EnvironmentParticles.h"
 #include "DestructibleWall.h"
+#include "tracy/Tracy.hpp"   
 
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
 {
@@ -348,6 +349,7 @@ void EntityManager::AddEntity(Entity* entity)
 
 bool EntityManager::Update(float dt)
 {
+	ZoneScoped;
 	bool ret = true;
 	for(const auto entity : entities)
 	{

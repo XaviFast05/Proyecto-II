@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Log.h"
 #include "Physics.h"
+#include "tracy/Tracy.hpp"   
 
 DestructibleWall::DestructibleWall() : Entity(EntityType::CHECKPOINT)
 {
@@ -49,7 +50,7 @@ bool DestructibleWall::Start() {
 
 bool DestructibleWall::Update(float dt)
 {
-
+	ZoneScoped;
 	if (!Engine::GetInstance().render.get()->InCameraView(pbody->GetPosition().getX() - texW, pbody->GetPosition().getY() - texH, texW, texH))
 	{
 		return true;

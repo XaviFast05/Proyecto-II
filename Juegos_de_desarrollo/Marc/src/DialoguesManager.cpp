@@ -4,7 +4,8 @@
 #include "Textures.h"
 #include "vector"
 #include "TextManager.h"
-
+#include "tracy/Tracy.hpp"   
+#include "tracy/Tracy.hpp"   
 
 DialoguesManager::DialoguesManager()
 {
@@ -50,6 +51,7 @@ bool DialoguesManager::Start()
 
 bool DialoguesManager::Update(float dt)
 {
+    ZoneScoped;
     if (onDialogue)
     {
         textToShow = Engine::GetInstance().textManager.get()->GetText(vignetteParameters.attribute("textId").as_string());

@@ -5,6 +5,7 @@
 #include "Window.h"
 #include "Audio.h"
 #include "Log.h"
+#include "tracy/Tracy.hpp"   
 
 #include "SDL2/SDL_render.h"
 
@@ -52,6 +53,7 @@ bool FadeToBlack::PreUpdate()
 
 bool FadeToBlack::Update(float dt)
 {
+	ZoneScoped;
 	// Exit this function if we are not performing a fade
 	if (currentStep == Fade_Step::NONE) return true;
 

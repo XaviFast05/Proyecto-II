@@ -71,7 +71,7 @@ bool WinMenu::Start()
 
 bool WinMenu::Update(float dt)
 {
-	
+	ZoneScoped;
 	Engine::GetInstance().render.get()->DrawTextureBuffer(screenTex, 0, 0, false , MENUS);
 	Engine::GetInstance().render.get()->DrawTextureBuffer(candyIcon, candyRect.x, candyRect.y, false, MENUS);
 

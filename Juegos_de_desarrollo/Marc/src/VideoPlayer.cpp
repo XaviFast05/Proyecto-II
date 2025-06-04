@@ -51,6 +51,7 @@ bool VideoPlayer::Start()
 
 bool VideoPlayer::Update(float dt)
 {
+	ZoneScoped;
 	if (!videoPlayed)
 	{
 		Engine::GetInstance().cutScene->ConvertPixels(videoNum, 1);

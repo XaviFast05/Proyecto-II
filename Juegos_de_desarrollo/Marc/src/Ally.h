@@ -45,15 +45,12 @@ public:
 
 	Vector2D GetPosition();
 
-	void ResetPath();
 
 	void AddAnimation(Animation& anim, int startPosY, int frameSize, int numFrames);
 
 	bool CheckIfTwoPointsNear(Vector2D point1, Vector2D point2, float nearDistance);
 
 	void SetPlayer(Player* player);
-
-	void SetPath(pugi::xml_node pathNode);
 
 	virtual void SaveData(pugi::xml_node enemyNode);
 
@@ -83,8 +80,6 @@ public:
 	Animation walk;
 
 	//PATH
-	Pathfinding* pathfinding;
-	std::vector<Vector2D> route;
 	int routeDestinationIndex;
 	Vector2D destinationPoint;
 
