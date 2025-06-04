@@ -63,6 +63,7 @@ bool Player::Start() {
 	throwPixUp.LoadAnimations(parameters.child("animations").child("throwPixUp"));
 	dash.LoadAnimations(parameters.child("animations").child("dash"));
 	charged.LoadAnimations(parameters.child("animations").child("charged"));
+	upgrading.LoadAnimations(parameters.child("animations").child("upgrading"));
 
 	jumpForce = parameters.child("propierties").attribute("gJumpForce").as_float();
 	pushForce = parameters.child("propierties").attribute("pushForce").as_float();
@@ -631,7 +632,7 @@ bool Player::Update(float dt)
 		}
 		break;
 	case UPGRADING:
-		currentAnim = &charged; //XAVI AQUI PON LA ANIM DE UPGRADE HOLA
+		currentAnim = &upgrading; 
 		if (resetAnimation == true) {
 			currentAnim->Reset();
 			resetAnimation = false;

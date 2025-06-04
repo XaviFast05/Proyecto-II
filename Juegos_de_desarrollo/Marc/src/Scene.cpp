@@ -207,11 +207,17 @@ bool Scene::Start()
 
 	musicNode = Engine::GetInstance().GetConfig().child("audio").child("music");
 	if (level == LVL1)Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl1Mus").attribute("path").as_string());
-	else if (level == LVL2) {
-		Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl2Mus").attribute("path").as_string());
-	}
 	else if (level == LVL3) {
 		Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl2Mus").attribute("path").as_string());
+	}
+	else if (level == LVL4) {
+		Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl3Mus").attribute("path").as_string());
+	}
+	else if (level == LVL5) {
+		Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl3Mus").attribute("path").as_string());
+	}
+	else if (level == LVL6) {
+		Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl3Mus").attribute("path").as_string());
 	}
 
 	startBossFight = false;
