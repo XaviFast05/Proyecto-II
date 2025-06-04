@@ -33,16 +33,16 @@ MainMenu::~MainMenu()
 bool MainMenu::Start()
 {
 	LOG("Loading background assets");
-	
+
 	bool ret = true;
 	configFile.load_file("config.xml");
-	
+
 	pugi::xml_parse_result configResult = configFile.load_file("config.xml");
 	if (configResult == NULL) {
 		LOG("Error loading config.xml");
 		return false;
 	}
-	rootNode = configFile.child("config");	
+	rootNode = configFile.child("config");
 	pugi::xml_node musicNode = rootNode.child("audio").child("music");
 
 	credits = Engine::GetInstance().textures.get()->Load(configParameters.child("credits").attribute("path").as_string());
@@ -63,13 +63,13 @@ bool MainMenu::Start()
 		bt->SetGuiParameters(buttonName, buttonNode);
 		buttons.push_back(bt);
 	}
-	
+
 	Engine::GetInstance().render.get()->camera.x = 0;
 	Engine::GetInstance().render.get()->camera.y = 0;
 
 	Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("menuMus").attribute("path").as_string(), 0.5f);
 
-	bgTex = Engine::GetInstance().textures.get()->Load(configParameters.child("bg").attribute("path").as_string());	
+	bgTex = Engine::GetInstance().textures.get()->Load(configParameters.child("bg").attribute("path").as_string());
 
 
 	pugi::xml_document loadFile;
@@ -102,7 +102,17 @@ bool MainMenu::Update(float dt)
 
 	Engine::GetInstance().render.get()->DrawTextureBuffer(bgTex, 0, 0, false, MENUS);
 	Vector2D currentMousePos = Engine::GetInstance().input.get()->GetMousePosition();
-	mouseMoved = (currentMousePos.getX() != prevMousePos.getX() || currentMousePos.getY() != prevMousePos.getY());
+	if (currentMousePos.getX() != prevMousePos.getX() || currentMousePos.getY() != prevMousePos.getY())
+	{
+		mouseMoved = true;
+		mandoMoved = false;
+	}
+	else if (Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_DPAD_DOWN) == KEY_DOWN || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_DPAD_UP) == KEY_DOWN)
+	{
+		mouseMoved = false;
+		mandoMoved = true;
+	}
+	
 
 	if (creditsOpen)
 	{
@@ -127,7 +137,7 @@ bool MainMenu::Update(float dt)
 		prevMousePos = currentMousePos;
 		return true;
 	}
-
+	
 	//Mouse 
 	if (mouseMoved)
 	{
@@ -138,8 +148,9 @@ bool MainMenu::Update(float dt)
 			OnGuiMouseClickEvent(bt);
 		}
 	}
+	
 	//Gamepad
-	else
+	else if (mandoMoved)
 	{
 		if (Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_DPAD_DOWN) == KEY_DOWN)
 		{
@@ -249,7 +260,6 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control) {
 		if (control->state == GuiControlState::PRESSED && creditsOpen) {
 			creditsOpen = false;
 			buttons[4]->active = true;
-			
 		}
 		break;
 	case GuiControlId::QUIT:
@@ -274,7 +284,7 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control) {
 			Engine::GetInstance().scene.get()->SetLevel(LVL3);
 		}
 	}
+	control->state = GuiControlState::NORMAL;
 
-	
 	return true;
 }

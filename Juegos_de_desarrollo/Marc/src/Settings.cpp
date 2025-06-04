@@ -112,6 +112,7 @@ bool Settings::Start()
 	LoadPrefs();
 
 	settingsOpen = false;
+	controlsOpen = false;
 	return true;
 }
 
@@ -291,6 +292,7 @@ bool Settings::OnGuiMouseClickEvent(GuiControl* control) {
 				SavePrefs();
 			}
 		}
+		backBt->state = GuiControlState::NORMAL;
 		break;
 	case GuiControlId::CONTROLS:
 		if (control->state == GuiControlState::PRESSED && settingsOpen) {

@@ -65,6 +65,7 @@ public:
 	std::vector<GuiControlButton*> buttons;
 	Vector2D prevMousePos = { -1, -1 };
 	bool mouseMoved = false;
+	bool mandoMoved = false;
 	bool canClickBack = false;
 
 };
