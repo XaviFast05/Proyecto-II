@@ -5,6 +5,17 @@
 #include "Timer.h"
 #include <vector>
 
+const std::vector<SDL_FPoint> directions = {
+	{ 0.f, -1.f},  // N
+	{ 1.f, -1.f},  // NE
+	{ 1.f,  0.f},  // E
+	{ 1.f,  1.f},  // SE
+	{ 0.f,  1.f},  // S
+	{-1.f,  1.f},  // SW
+	{-1.f,  0.f},  // W
+	{-1.f, -1.f}   // NW
+};
+
 struct ParticleInstance
 {
 	SDL_FPoint position;
@@ -15,6 +26,8 @@ struct ParticleInstance
 	bool finished = false;
 	float life = 0.0f;      
 	float maxLife = 2.0f;
+	Timer movementTimer;
+	float movementInterval = 3.3f;
 };
 
 class EnvironmentParticles : public Particle
@@ -41,6 +54,7 @@ private:
 	std::vector<ParticleInstance> particles;
 	Animation idle2;
 	Animation idle3;
+	Animation leaf;
 
 
 };

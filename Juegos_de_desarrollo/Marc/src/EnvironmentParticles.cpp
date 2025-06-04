@@ -26,6 +26,7 @@ bool EnvironmentParticles::Start() {
 	idle.LoadAnimations(sceneNode.child("entities").child("particles").child("environmentParticles").child("animations").child("idle"));
 	idle2.LoadAnimations(sceneNode.child("entities").child("particles").child("environmentParticles").child("animations").child("idle2"));
 	idle3.LoadAnimations(sceneNode.child("entities").child("particles").child("environmentParticles").child("animations").child("idle3"));
+	leaf.LoadAnimations(sceneNode.child("entities").child("particles").child("environmentParticles").child("animations").child("leaf"));
 	pbody = Engine::GetInstance().physics.get()->CreateRectangleSensor((int)position.getX(), (int)position.getY(), areaW , areaH, bodyType::STATIC);
 
 	pbody->body->SetGravityScale(0);
@@ -53,74 +54,159 @@ bool EnvironmentParticles::Update(float dt)
 	int camW = Engine::GetInstance().scene.get()->camW;
 	int camH = Engine::GetInstance().scene.get()->camH;
 
-
-	//Update each particle
-	for (auto& p : particles)
-	{
-		if (p.finished) continue;
-
-		//Compares particle delay time creation with global paticle timer
-		if (particleTimer.ReadSec() >= p.startDelay)
+	if (Engine::GetInstance().scene.get()->GetLevel() == 1) {
+		//Update each particle
+		for (auto& p : particles)
 		{
-			// Particle creation
-			if (!p.started)
+			if (p.finished) continue;
+
+			//Compares particle delay time creation with global paticle timer
+			if (particleTimer.ReadSec() >= p.startDelay)
 			{
-				p.started = true;
-				p.anim.Reset();
-				p.life = 0.0f;
+				// Particle creation
+				if (!p.started)
+				{
+					p.started = true;
+					p.anim.Reset();
+					p.life = 0.0f;
+				}
+
+				p.life += 0.005f;
+
+				//Moves or stays 
+				if (rand() % 15 == 0)
+				{
+					//Chance to move in one direction
+					int dirIndex = rand() % 8;
+					float speed = 0.3f;
+					p.position.x += directions[dirIndex].x * speed;
+					p.position.y += directions[dirIndex].y * speed;
+				}
+
+
+				p.anim.Update();
+
+				//Draw particle at his fixed position
+				Engine::GetInstance().render.get()->DrawTextureBuffer(texture, (int)p.position.x, (int)p.position.y, false, BETWEEN_MAP, &p.anim.GetCurrentFrame());
+
+				//Particle lifetime finishes
+				if (p.life > p.maxLife)
+				{
+					p.finished = true;
+				}
+
 			}
+		}
 
-			p.life += 0.005f;
-			p.anim.Update();
+		//Erase particles that have finished
+		particles.erase(std::remove_if(particles.begin(), particles.end(), [](auto const& q) { return q.finished; }), particles.end());
 
-			//Draw particle at his fixed position
-			Engine::GetInstance().render.get()->DrawTextureBuffer(texture, (int)p.position.x, (int)p.position.y, false, BETWEEN_MAP, &p.anim.GetCurrentFrame());
-
-			//Particle lifetime finishes
-			if (p.life > p.maxLife)
+		//Particles left creation
+		int alive = (int)particles.size();
+		int left = maxParticles - alive;
+		for (int i = 0; i < left; ++i)
+		{
+			ParticleInstance newParticle;
+			newParticle.position.x = float((rand() % camW) + camX);
+			newParticle.position.y = float((rand() % camH) + camY);
+			int animChoice = rand() % 3;
+			switch (animChoice)
 			{
-				p.finished = true;
+			case 0: newParticle.anim = idle;
+				break;
+			case 1: newParticle.anim = idle2;
+				break;
+			case 2: newParticle.anim = idle3;
+				break;
 			}
-
+			newParticle.anim.Reset();
+			newParticle.startDelay = (rand() % 9) * 0.1f;
+			switch (animChoice)
+			{
+			case 0: newParticle.maxLife = 0.2f;
+				break;
+			case 1: newParticle.maxLife = 0.3f;
+				break;
+			case 2: newParticle.maxLife = 0.4f;
+				break;
+			}
+			newParticle.started = false;
+			newParticle.finished = false;
+			particles.push_back(newParticle);
 		}
+		
 	}
+	else {
 
-	//Erase particles that have finished
-	particles.erase(std::remove_if(particles.begin(), particles.end(),[](auto const& q) { return q.finished; }),particles.end());
+		//Update each particle
+		for (auto& p : particles)
+		{
+			if (p.finished) continue;
 
-    //Particles left creation
-	int alive = (int)particles.size();
-	int left = maxParticles - alive;
-	for (int i = 0; i < left; ++i)
-	{
-		ParticleInstance newParticle;
-		newParticle.position.x = float((rand() % camW) + camX);
-		newParticle.position.y = float((rand() % camH) + camY);
-		int animChoice = rand() % 3;
-		switch (animChoice)
-		{
-			case 0: newParticle.anim = idle; 
-				break;
-			case 1: newParticle.anim = idle2; 
-				break;
-			case 2: newParticle.anim = idle3; 
-				break;
+			//Compares particle delay time creation with global paticle timer
+			if (particleTimer.ReadSec() >= p.startDelay)
+			{
+				//Particle creation
+				if (!p.started)
+				{
+					p.position.x = float((rand() % camW) + camX);
+					p.position.y = float((rand() % camH) + camY);
+					p.started = true;
+					p.anim.Reset();
+					p.life = 0.0f;
+					p.movementTimer.Start(); 
+				}
+
+				p.life += 0.005f;
+
+				//Particle movement
+				if (p.movementTimer.ReadSec() >= p.movementInterval)
+				{
+					p.position.y += 64.0f;
+					p.movementTimer.Start();
+				}
+
+				p.anim.Update();
+
+				//Draw particle at his fixed position
+				Engine::GetInstance().render.get()->DrawTextureBuffer(texture, (int)p.position.x, (int)p.position.y, false, BETWEEN_MAP, &p.anim.GetCurrentFrame());
+				
+				//Particle lifetime finishes
+				if (p.position.y + texH >= camY + camH || p.position.x + texW < camX || p.position.x > camX + camW || p.position.y + texH < camY)
+				{
+					p.position.x = float((rand() % camW) + camX); 
+					p.position.y = float((rand() % 200) + camY - texH + 100);         
+
+					p.life = 0.0f;
+					p.started = false;
+					p.startDelay = (rand() % 9) * 0.1f;
+					p.movementTimer.Start();
+					p.anim.Reset();
+				}
+
+			}
 		}
-		newParticle.anim.Reset();
-		newParticle.startDelay = (rand() % 9) * 0.1f;   
-		switch (animChoice)
+
+
+		//Particles left creation
+		int alive = (int)particles.size();
+		int left = 3 * maxParticles - alive;
+		for (int i = 0; i < left; ++i)
 		{
-		case 0: newParticle.maxLife = 0.2f;
-			break;
-		case 1: newParticle.maxLife = 0.3f;
-			break;
-		case 2: newParticle.maxLife = 0.4f;
-			break;
+			ParticleInstance newParticle;
+			newParticle.position.x = float((rand() % camW) + camX); 
+			newParticle.position.y = float((rand() % camH) + camY);
+			newParticle.anim = leaf;
+			newParticle.anim.Reset();
+			newParticle.startDelay = (rand() % 9) * 0.1f;
+			newParticle.maxLife = 12.0f;
+			newParticle.started = false;
+			newParticle.finished = false;
+			particles.push_back(newParticle);
 		}
-		newParticle.started = false;
-		newParticle.finished = false;
-		particles.push_back(newParticle);
+
 	}
+	
 
 	return ret;
 }
