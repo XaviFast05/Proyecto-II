@@ -12,13 +12,13 @@
 
 struct SDL_Texture;
 
-class DeathMenu : public Module
+class VideoPlayer : public Module
 {
 public:
 
-	DeathMenu(bool startEnabled);
+	VideoPlayer(bool startEnabled);
 
-	~DeathMenu();
+	~VideoPlayer();
 
 	bool Start() override;
 
@@ -29,28 +29,19 @@ public:
 
 	bool PostUpdate() override;
 
-	bool OnGuiMouseClickEvent(GuiControl* control);
-
 	void SetGuiParameters(GuiControl* bt, std::string btName, pugi::xml_node buttonParameters);
 
+	void SetVideoNum(int videoNum);
 
+	void SetVideoPlayed(bool videoPlayed);
 
+	void SetModuleToGo(Module* module);
 public:
 
+	
 	pugi::xml_document configFile;
 	pugi::xml_node rootNode;
-	SDL_Texture* screenTex, *candyIcon;
-	SDL_Rect candyRect, textRect;
-
-	TTF_Font* halloweenPixels, *corvidConspirator;
-	bool quit = false;
-	int finalCandyNum;
-
-	float _dt;
-	std::string candyCount;
-
-	GuiControlButton* retryBt, *backToTitleBt, *exitBt;
-
-	std::map<std::string, GuiControlButton*> deathButtons;
-
+	int videoNum;
+	bool videoPlayed;
+	Module* moduleToGo;
 };
