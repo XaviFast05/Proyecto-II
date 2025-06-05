@@ -22,7 +22,9 @@
 #include "WallBrakerParticle.h"
 #include "EnvironmentParticles.h"
 #include "DestructibleWall.h"
+#include "Villager.h"
 #include "tracy/Tracy.hpp"   
+
 
 EntityManager::EntityManager(bool startEnabled) : Module(startEnabled)
 {
@@ -152,6 +154,9 @@ Entity* EntityManager::CreateEntity(EntityType bullet_direction)
 	case EntityType::DESTRUCTIBLE_WALL:
 		entity = new DestructibleWall();
 		break;
+	case EntityType::VILLAGER:
+		entity = new Villager();
+		break;
 	default:
 		break;
 	}
@@ -227,6 +232,9 @@ std::list<Entity*> EntityManager::CreatePooledEntities(EntityType bullet_directi
 			break;
 		case EntityType::ENVIRONMENT_PARTICLES:
 			entity = new EnvironmentParticles();
+			break;
+		case EntityType::VILLAGER:
+			entity = new Villager();
 			break;
 		default:
 			break;
@@ -305,6 +313,9 @@ Entity* EntityManager::CreatePooledEntities(EntityType bullet_direction)
 		break;
 	case EntityType::ENVIRONMENT_PARTICLES:
 		entity = new EnvironmentParticles();
+		break;
+	case EntityType::VILLAGER:
+		entity = new Villager();
 		break;
 	default:
 		break;

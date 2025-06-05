@@ -542,9 +542,8 @@ bool Player::Update(float dt)
 				}
 				pbody->body->SetLinearVelocity(b2Vec2(0, 0));
 				if (respawnTimer.ReadSec() >= respawnTime) {
-					Engine::GetInstance().scene.get()->LoadState();
-					playerState = IDLE;
-					hits = 3;
+					Engine::GetInstance().scene.get()->SetLoadState(true);
+					Engine::GetInstance().fade.get()->Fade(Engine::GetInstance().scene.get(), Engine::GetInstance().scene.get(), 30);
 				}
 				break;
 			}
@@ -751,14 +750,30 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision PICKAXE");
 		break;
 	case ColliderType::SPYKE:
+		if (!godMode || !canHurt) {
+			if (playerState != DEAD && playerState != HURT) {
+				//HURT LOGIC
+				if (hits >= 1) DamagePlayer();
+				if (hits == 0) KillPlayer();
+				//PUSHING THE PLAYER WHEN HURT
+				b2Vec2 pushVec((physA->body->GetPosition().x - physB->body->GetPosition().x),
+					(physA->body->GetPosition().y - physB->body->GetPosition().y));
+				pushVec.Normalize();
+				pushVec *= pushForce;
+				pushVec.x *= 6;
+
+				pbody->body->SetLinearVelocity(b2Vec2(0, 0));
+				pbody->body->ApplyLinearImpulseToCenter(pushVec, true);
+			}
+		}
 		LOG("Collision SPYKE");
 		break;
 	case ColliderType::JUMP:
 		LOG("Collision BULLET");
 		if (!godMode || !canHurt) {
-			if (playerState != DEAD) {
+			if (playerState != DEAD && playerState != HURT) {
 				//HURT LOGIC
-				if (hits >= 1 && playerState != HURT) DamagePlayer();
+				if (hits >= 1) DamagePlayer();
 				if (hits == 0) KillPlayer();
 				//PUSHING THE PLAYER WHEN HURT
 				b2Vec2 pushVec((physA->body->GetPosition().x - physB->body->GetPosition().x),
@@ -788,9 +803,9 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::ENEMY:
 		LOG("Collision ENEMY");
 		if (!godMode || !canHurt) {
-			if (playerState != DEAD) {
+			if (playerState != DEAD && playerState != HURT) {
 				//HURT LOGIC
-				if (hits >= 1 && playerState != HURT) DamagePlayer();
+				if (hits >= 1) DamagePlayer();
 				if (hits == 0) KillPlayer();
 				//PUSHING THE PLAYER WHEN HURT
 				b2Vec2 pushVec((physA->body->GetPosition().x - physB->body->GetPosition().x),
@@ -810,7 +825,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		if (!godMode) {
 			/*playerState = DEAD;*/
 
-			pbody->body->SetGravityScale(0);
 			pbody->body->SetGravityScale(0);
 			respawnTimer.Start();
 		}

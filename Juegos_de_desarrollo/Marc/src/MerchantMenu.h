@@ -46,6 +46,11 @@ public:
 	pugi::xml_document configFile;
 	pugi::xml_node rootNode;
 	SDL_Texture* bgTex, * btTex, * merchantPanel;
+	
+	SDL_Texture* u1, * u2,* u3,* u4,* u5,* u6,* u7,* u8, * currentTexture;
+	int upgradeImageX, upgradeImageY, upgradeImageW, upgradeImageH;
+	SDL_Rect upgradeTextRect;
+
 
 	TTF_Font* btFont;
 	bool merchantPanelOpen = false;
@@ -82,8 +87,12 @@ public:
 	bool hasOpened = false;
 	bool showOnceUpgrade[8] = { false, false, false, false, false, false, false, false };
 
-	bool leaveMenu;
-	//std::map<std::string, GuiControlButton*> buttons;
+	TTF_Font* upgradeFont;
+	TTF_Font* valueFont;
+	TTF_Font* textFont;
 
+	bool leaveMenu;
+
+	//std::map<std::string, GuiControlButton*> buttons;
 };
 
