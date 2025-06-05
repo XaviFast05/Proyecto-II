@@ -85,6 +85,8 @@ public:
 
 	void LoadUpgrades();
 
+	void LoadUpgrades(pugi::xml_node upgradesNode);
+
 	void UnlockUpgrade(int num);
 
 	void AddUpgrade(int num);

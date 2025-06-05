@@ -90,6 +90,8 @@
 			<bgTut path="Assets/Maps/fondo_tut.png" />
 			<bgCapa1 path="Assets/Maps/fondo_capa1.png" />
 			<kimHead path="Assets/Textures/kim.png" />
+			<dashBg path="Assets/Textures/Dash.png" />
+			<chargedBg path="Assets/Textures/charged_attack.png" />
 			<pickaxes>
 				<animations x="0" y="0" w="64" h="64" rad="6" texture="Assets/Textures/UI/piqueta_recarga.png">
 					<charging loop="true" speed="0.1f">
@@ -896,7 +898,7 @@
 							<instance entityType="21" x="15680" y="2690" destructibleWallType="1"/>
 						</lvl3>
 						<lvl4>
-							<instance entityType="21" x="2142" y="1468" destructibleWallType="2"/>
+							<instance entityType="21" x="2142" y="1404" destructibleWallType="2"/>
 							<instance entityType="21" x="5410" y="640" destructibleWallType="2"/>
 						</lvl4>
 					</instances>

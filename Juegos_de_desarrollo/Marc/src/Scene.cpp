@@ -213,7 +213,8 @@ bool Scene::Start()
 	pugi::xml_parse_result result = saveFile.load_file("savedData.xml");
 	bool levelPlayed = saveFile.child("savedData").child(GetCurrentLevelString().c_str()).attribute("played").as_bool();
 	LOG("%d", (int)levelPlayed);
-	saveFile.save_file("savedData.xml");
+	saveFile.save_file("savedData.xml"); 
+	showUpg = false;
 
 	if (levelPlayed)
 	{
@@ -236,13 +237,15 @@ bool Scene::Start()
 			timerShowSignText.Start();
 		}
 		else showSign = false;
-		SaveState();
+		
 	}
 
 	if (!levelPlayed && level!=LVL1)
 	{
 		LoadTimeLivesCandies();
 	}
+
+	SaveState();
 
 	musicNode = Engine::GetInstance().GetConfig().child("audio").child("music");
 	if (level == LVL1)Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl1Mus").attribute("path").as_string());
@@ -274,6 +277,9 @@ bool Scene::Start()
 	bgTutorial = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("bgTut").attribute("path").as_string());
 	bgCapa1 = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("bgCapa1").attribute("path").as_string());
 	kimHead = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("kimHead").attribute("path").as_string());
+	dashBg = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("dashBg").attribute("path").as_string());
+	chargedBg = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("chargedBg").attribute("path").as_string());
+
 
 	charge.LoadAnimations(configParameters.child("ui").child("pickaxes").child("animations").child("charging"));
 	//ENVIRONEMT PARTICLES ON CAMERA
@@ -532,6 +538,36 @@ bool Scene::Update(float dt)
 	}
 
 	DrawTutorial();
+
+	if (player->playerState == UPGRADING) {
+		if (player->unlockTimer.ReadSec() > player->unlockTimerMax)
+		{
+			showUpg = true;
+			upgTimer.Start();
+		}
+	}
+
+	if (showUpg == true && upgTimer.ReadSec() < upgTimerMax)
+	{
+		if (level == LVL4)
+		{
+			Engine::GetInstance().render.get()->DrawTextureBuffer(
+				chargedBg,
+				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 10, // Posici�n X
+				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale - 50,    // Posici�n Y
+				false, MENUS
+			);
+		}
+		else if (level == LVL5)
+		{
+			Engine::GetInstance().render.get()->DrawTextureBuffer(
+				dashBg,
+				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 10, // Posici�n X
+				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale - 50,    // Posici�n Y
+				false, MENUS
+			);
+		}
+	}
 
 	//livesText = "hits left: " + std::to_string((int)player->hits);
 	//Engine::GetInstance().render.get()->DrawText(livesText.c_str(), 800, 90, 200, 18);
@@ -847,6 +883,10 @@ void Scene::LoadTimeLivesCandies() {
 	
 	player->hits = saveFile.child("savedData").child("player").attribute("hits").as_int();
 	player->currencyManager->SetCurrency(saveFile.child("savedData").child("player").attribute("soulPoints").as_int());
+
+	pugi::xml_node upgradesNode = saveFile.child("savedData").child("upgrades");
+	player->LoadUpgrades(upgradesNode);
+
 
 	saveFile.save_file("savedData.xml");
 }

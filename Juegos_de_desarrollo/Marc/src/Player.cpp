@@ -1162,6 +1162,21 @@ void Player::LoadUpgrades() {
 	}
 }
 
+void Player::LoadUpgrades(pugi::xml_node upgradesNode) {
+	
+	unlockedDash = upgradesNode.attribute("dash").as_bool();
+	unlockedCharged = upgradesNode.attribute("charged").as_bool();
+
+	if (upgradesNode.attribute("up0").as_bool() == true) unlockedUpgrades.push_back(0);
+	if (upgradesNode.attribute("up1").as_bool() == true) unlockedUpgrades.push_back(1);
+	if (upgradesNode.attribute("up2").as_bool() == true) unlockedUpgrades.push_back(2);
+	if (upgradesNode.attribute("up3").as_bool() == true) unlockedUpgrades.push_back(3);
+	if (upgradesNode.attribute("up4").as_bool() == true) unlockedUpgrades.push_back(4);
+	if (upgradesNode.attribute("up5").as_bool() == true) unlockedUpgrades.push_back(5);
+	if (upgradesNode.attribute("up6").as_bool() == true) unlockedUpgrades.push_back(6);
+	if (upgradesNode.attribute("up7").as_bool() == true) unlockedUpgrades.push_back(7);
+}
+
 void Player::UnlockUpgrade(int num) {
 	bool canAdd = true;
 	if (!upgrades.empty()) {
