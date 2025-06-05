@@ -50,6 +50,7 @@ public:
 	TTF_Font* titleFont;
 	TTF_Font* controlsFont;
 	TTF_Font* controls2Font;
+
 	std::string titleText;
 	std::string controlsText;
 	std::string controls2Text;
@@ -60,6 +61,7 @@ public:
 	int optPanelX, optPanelY, optPanelW, optPanelH;
 	int controlsKeyboardPanelX, controlsKeyboardPanelY, controlsKeyboardPanelW, controlsKeyboardPanelH;
 	int controlsControllerPanelX, controlsControllerPanelY, controlsControllerPanelW, controlsControllerPanelH;
+
 	float _dt;
 
 	bool controlsOpen = false;
@@ -69,6 +71,7 @@ public:
 	GuiControlCheckBox* fullScreenBox;
 	GuiControlButton* backBt;
 	GuiControlButton* controlsBt;
+
 	GuiControlButton* espBt;
 	GuiControlButton* changeControlBt;
 

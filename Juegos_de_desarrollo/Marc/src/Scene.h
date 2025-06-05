@@ -127,6 +127,8 @@ public:
 
 	void StartNewGame();
 
+	void DrawTutorial(int num);
+
 public:
 
 	Levels level;
@@ -184,6 +186,14 @@ private:
 	std::vector<Merchant*> allies;
 	std::vector<Particle*> particles;
 	pugi::xml_node musicNode;
+
+	SDL_Texture* tutorialJump, * tutorialThrow, * tutorialAttack, * tutorialMap;
+	std::string tutorialJumpText, tutorialThrowText, tutorialAttackText, tutorialMapText;
+	int tutorialJumpX, tutorialJumpY, tutorialJumpW, tutorialJumpH, tutorialJumpHorizontal;
+	int tutorialThrowX, tutorialThrowY, tutorialThrowW, tutorialThrowH, tutorialThrowHorizontal;
+	int tutorialAttackX, tutorialAttackY, tutorialAttackW, tutorialAttackH, tutorialAttackHorizontal;
+	int tutorialMapX, tutorialMapY, tutorialMapW, tutorialMapH, tutorialMapHorizontal;
+	TTF_Font* tutorialFont;
 
 	std::map<std::string, GuiControlButton*> pauseButtons;
 	

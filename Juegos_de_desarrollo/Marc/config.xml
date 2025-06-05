@@ -38,6 +38,7 @@
 		<fullScreenBox id="9" x="605" y="470" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" text="FULL_SCREEN" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" textVerticalDisplacement="-65"/>
 		<backBt id="6" x="288" y="47" w="80" h="80" texture="Assets/Textures/Menus/Options/Button_exit_solo.png" />
 		<controlsBt id="32" x="348" y="564" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Credits Button Sheet Background.png" text="CONTROLS" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
+		
 		<changeControlBt id="33" x="448" y="584" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Credits Button Sheet Background.png" text="CHANGE_CONTROLS" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
 		<espBt id="34" x="748" y="564" w="224" h="64" texture="Assets/Textures/Menus/Options/language.png" text="LANGUAGE" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
 	</settings>
@@ -66,6 +67,12 @@
 		<backBt id="6" x="237" y="80" w="80" h="80" texture="Assets/Textures/Menus/MenuMerchant/TIENDA 02/PNGS/Button_exit_solo.png" />
 	</merchantMenu>
 	<scene>
+		<tutorials>
+			<tutorialJump id="35" x="14" y="72" w="81" h="28" texture="Assets/Textures/UI/tut_saltar.png" text="CONTROLS_JUMP" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" textVerticalDisplacement="-65"/>
+			<tutorialThrow id="36" x="45" y="71" w="82" h="28" texture="Assets/Textures/UI/tut_lanzar.png" text="CONTROLS_PICK" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" textVerticalDisplacement="-65"/>
+			<tutorialAttack id="37" x="97" y="53" w="81" h="28" texture="Assets/Textures/UI/tut_atacar.png" text="CONTROLS_ATTACK" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" textVerticalDisplacement="-65"/>
+			<tutorialMap id="38" x="73" y="57" w="91" h="28" texture="Assets/Textures/UI/tut_map.png" text="CONTROLS_MAP" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" textVerticalDisplacement="-65"/>
+		</tutorials>
 		<ui>
 			<heartContainers path="Assets/Textures/UI/lifeSimp.png" />
 			<piquetaNormal path="Assets/Textures/UI/piqueta_normal.png" />
