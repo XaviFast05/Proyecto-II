@@ -108,6 +108,11 @@
 					</charging>
 				</animations>
 			</pickaxes>
+			<dashBg path="Assets/Textures/Dash.png" />
+			<chargedBg path="Assets/Textures/charged attack.png" />
+			<buttons>
+				<backBt id="6" x="288" y="47" w="80" h="80" texture="Assets/Textures/Menus/Options/Button_exit_solo.png" />
+			</buttons>
 		</ui>
 		<levelName>
 			<lvl3 path="Assets/Textures/UI/letrero_capa_1.png" text="SIGN_LAYER_1" w="668" h="222" y="210" fontSize="70" font="Assets/Fonts/PIXELADE.ttf" signTextY ="10" timeShowingSignText="5"/>

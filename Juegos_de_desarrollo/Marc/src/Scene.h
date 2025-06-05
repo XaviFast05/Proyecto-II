@@ -146,11 +146,12 @@ public:
 	GuiControlCheckBox* fullScreenCheckBox;
 	SDL_Texture* pausePanel;
 	
-	SDL_Texture* heartsTexture, * piquetaNormal, * piquetaGastada, * barraPiqueta, * barraRoja, * orbSoul, *bgTutorial, * bgCapa1, *bgLvl1, *kimHead, *piquetaReload;
+	SDL_Texture* heartsTexture, * piquetaNormal, * piquetaGastada, * barraPiqueta, * barraRoja, * orbSoul, *bgTutorial, * bgCapa1, *bgLvl1, *kimHead, *piquetaReload, * dashBg, * chargedBg;
 	Animation charge;
 	Animation* currentAnim = nullptr;
 	SDL_Rect currentFrame;
 	bool charging = true;
+	bool showUpg = false;
 
 	Vector2D pausePos;
 
@@ -186,6 +187,9 @@ private:
 	pugi::xml_node musicNode;
 
 	std::map<std::string, GuiControlButton*> pauseButtons;
+	
+	Timer upgTimer;
+	float upgTimerMax = 3;
 	
 	bool loadScene = false;
 	bool drawnMap = false;

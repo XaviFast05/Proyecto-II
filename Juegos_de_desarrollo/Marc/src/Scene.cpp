@@ -237,6 +237,8 @@ bool Scene::Start()
 	bgTutorial = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("bgTut").attribute("path").as_string());
 	bgCapa1 = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("bgCapa1").attribute("path").as_string());
 	kimHead = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("kimHead").attribute("path").as_string());
+	dashBg = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("dashBg").attribute("path").as_string());
+	chargedBg = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("chargedBg").attribute("path").as_string());
 
 	charge.LoadAnimations(configParameters.child("ui").child("pickaxes").child("animations").child("charging"));
 	//ENVIRONEMT PARTICLES ON CAMERA
@@ -499,6 +501,37 @@ bool Scene::Update(float dt)
 
 	//currencyText = "currency: " + std::to_string((int)player->currencyManager->GetCurrency());
 	//Engine::GetInstance().render.get()->DrawText(currencyText.c_str(), 800, 110, 200, 18);
+
+	if (player->playerState == UPGRADING) {
+		if (player->unlockTimer.ReadSec() > player->unlockTimerMax)
+		{
+			showUpg = true;
+			upgTimer.Start();
+		}
+	}
+
+	if (showUpg == true && upgTimer.ReadSec() < upgTimerMax)
+	{
+		if (level == LVL4)
+		{
+			Engine::GetInstance().render.get()->DrawTextureBuffer(
+				chargedBg,
+				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 10, // Posici�n X
+				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale - 50,    // Posici�n Y
+				false, MENUS
+			);
+		}
+		else if (level == LVL5)
+		{
+			Engine::GetInstance().render.get()->DrawTextureBuffer(
+				dashBg,
+				-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + 10, // Posici�n X
+				-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale - 50,    // Posici�n Y
+				false, MENUS
+			);
+		}
+	}
+	
 
 	return true;
 }
