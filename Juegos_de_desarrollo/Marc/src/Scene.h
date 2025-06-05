@@ -154,6 +154,7 @@ public:
 	Animation* currentAnim = nullptr;
 	SDL_Rect currentFrame;
 	bool charging = true;
+	bool showUpg = false;
 
 	Vector2D pausePos;
 
@@ -200,6 +201,9 @@ private:
 	TTF_Font* tutorialFont;
 
 	std::map<std::string, GuiControlButton*> pauseButtons;
+	
+	Timer upgTimer;
+	float upgTimerMax = 3;
 	
 	bool loadScene = false;
 	bool drawnMap = false;

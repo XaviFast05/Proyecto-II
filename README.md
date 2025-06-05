@@ -1,4 +1,4 @@
-# Kim's underworld
+# Kim's underworld: RELEASE GOLD (DEMO)
 Un Metroidvania que trata sobre adentrarte en las profundidades del inframundo para reunirte con tu difunto padre.
 
 ## Integrantes del grupo:
@@ -46,6 +46,10 @@ En esta versión ALPHA, nos hemos centrado en un prototipo de una demo jugable d
 - Minimapa que muestra la posición del jugador
 - Cambios en la lógica del render para mejorar el apartado visual (ahora las piquetas se muestran mejor clavadas y el jugador aparece al frente de los checkpoints)
 - Implementación de movimiento mediante mando de Xbox
+
+## GOLD
+Finalmente, hemos realizado una demo completa de la primera capa: negación, junto a dos zonas oníricas con sus respectivos bosses y una zona con el boss final. Asimismo, Existe un tutorial que actua como zona introductoria para enseñar al jugador los controles.
+Se han realizado nuevos assets para crear una sensación de pulido en el juego, junto a bug fixes que permiten tener una jugabilidad completa hasta el final de la Demo.
 
 ## Controles
 ### Movimiento

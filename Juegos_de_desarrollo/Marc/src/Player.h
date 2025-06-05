@@ -201,7 +201,7 @@ public:
 	bool damageSmallBoost = false;
 
 	Timer unlockTimer;
-	float unlockTimerMax = 3; //XAVI aqui cambia el tiempo q estas en la animacion pa q se ajuste
+	float unlockTimerMax = 3; //aqui cambia el tiempo q estas en la animacion pa q se ajuste
 
 	std::vector <int> upgrades;
 	std::vector <int> unlockedUpgrades;
