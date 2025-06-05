@@ -36,8 +36,6 @@ bool Settings::Awake()
 bool Settings::Start()
 {
 
-	
-
 	pugi::xml_parse_result result = configFile.load_file("config.xml");
 	rootNode = configFile.child("config");
 
@@ -111,6 +109,7 @@ bool Settings::Start()
 
 	LoadPrefs();
 
+	prevMousePos = Engine::GetInstance().input.get()->GetMousePosition();
 	settingsOpen = false;
 	controlsOpen = false;
 	return true;
@@ -125,26 +124,98 @@ bool Settings::PreUpdate()
 // Called each loop iteration
 bool Settings::Update(float dt)
 {
+
 	SDL_Rect camera = Engine::GetInstance().render.get()->camera;
 	int windowScale = Engine::GetInstance().window.get()->GetScale();
-	if (settingsOpen){
+
+	if (settingsOpen) {
+		
 		int screenWidth = rootNode.child("window").child("resolution").attribute("width").as_int();
 		int screenHeight = rootNode.child("window").child("resolution").attribute("height").as_int();
-		
-		
-		
+
+		//Buttons activation
 		for (GuiControl* gui : settingsGUI) {
-			if (gui->active == false) {
-				gui->active = true;
+			if (!gui->active) gui->active = true;
+		}
+
+		//Movement
+		if (!controlsOpen) {
+			if (Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_DPAD_DOWN) == KEY_DOWN) {
+				selectedIndex++;
+				if (selectedIndex > 5) selectedIndex = 0;
+				mandoMoved = true;
+			}
+			else if (Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_DPAD_UP) == KEY_DOWN) {
+				selectedIndex--;
+				if (selectedIndex < 0) selectedIndex = 5;
+				mandoMoved = true;
 			}
 		}
 		
-		if (controlsOpen == false)
-		{
+		//Music slider
+		if (selectedIndex == 0) { 
+			if (Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_DPAD_RIGHT) == KEY_REPEAT) {
+				musicSlider->sliderPosX += 2;
+			}
+			else if (Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_DPAD_LEFT) == KEY_REPEAT) {
+				musicSlider->sliderPosX -= 2;
+			}
+			if (musicSlider->sliderPosX > musicSlider->maxValue)
+				musicSlider->sliderPosX = musicSlider->maxValue;
+			musicSlider->volumeValue = ((musicSlider->sliderPosX - musicSlider->minValue) / (float)(musicSlider->maxValue - musicSlider->minValue)) * MIX_MAX_VOLUME;
+			musicSlider->NotifyObserver();
+		}
+		
+		//FX slider
+		if (selectedIndex == 1) { 
+			if (Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_DPAD_RIGHT) == KEY_REPEAT) {
+				sfxSlider->sliderPosX += 2;
+
+
+			}
+			else if (Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_DPAD_LEFT) == KEY_REPEAT) {
+				sfxSlider->sliderPosX -= 2;
+			}
+			if (sfxSlider->sliderPosX > sfxSlider->maxValue)
+				sfxSlider->sliderPosX = sfxSlider->maxValue;
+
+			sfxSlider->volumeValue = ((sfxSlider->sliderPosX - sfxSlider->minValue) / (float)(sfxSlider->maxValue - sfxSlider->minValue)) * MIX_MAX_VOLUME;
+			sfxSlider->NotifyObserver();
+		}
+
+		//State machine
+		if (mandoMoved && !controlsOpen) {
+			musicSlider->state = (selectedIndex == 0) ? GuiControlState::FOCUSED : GuiControlState::NORMAL;
+			sfxSlider->state = (selectedIndex == 1) ? GuiControlState::FOCUSED : GuiControlState::NORMAL;
+			fullScreenBox->state = (selectedIndex == 2) ? GuiControlState::FOCUSED : GuiControlState::NORMAL;
+			controlsBt->state = (selectedIndex == 3) ? GuiControlState::FOCUSED : GuiControlState::NORMAL;
+			espBt->state = (selectedIndex == 4) ? GuiControlState::FOCUSED : GuiControlState::NORMAL;
+			backBt->state = (selectedIndex == 5) ? GuiControlState::FOCUSED : GuiControlState::NORMAL;
+
+			//Actions using A
+			if (Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_A) == KEY_DOWN) {
+				switch (selectedIndex) {
+				case 0: musicSlider->state = GuiControlState::PRESSED; OnGuiMouseClickEvent(musicSlider); break;
+				case 1: sfxSlider->state = GuiControlState::PRESSED; OnGuiMouseClickEvent(sfxSlider); break;
+				case 2:
+					fullScreenBox->isChecked = !fullScreenBox->isChecked;
+					fullScreenBox->state = GuiControlState::PRESSED;
+					OnGuiMouseClickEvent(fullScreenBox);
+					break;
+				case 3: controlsBt->state = GuiControlState::PRESSED; OnGuiMouseClickEvent(controlsBt); break;
+				case 4: espBt->state = GuiControlState::PRESSED; OnGuiMouseClickEvent(espBt); break;
+				case 5: backBt->state = GuiControlState::PRESSED; OnGuiMouseClickEvent(backBt); break;
+				}
+			}
+		}
+
+		//Render UI settings
+		if (!controlsOpen) {
 			Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
 			Engine::GetInstance().render.get()->DrawTextureBuffer(optPanel, -camera.x / windowScale + optPanelX, -camera.y / windowScale + optPanelY, false, MENUS);
 
 			fullScreenBox->Update(dt);
+			OnGuiMouseClickEvent(fullScreenBox);
 
 			musicSlider->Update(dt);
 			OnGuiMouseClickEvent(musicSlider);
@@ -157,8 +228,8 @@ bool Settings::Update(float dt)
 
 			controlsBt->Update(dt);
 			OnGuiMouseClickEvent(controlsBt);
-			if (titleText != "")
-			{
+
+			if (titleText != "") {
 				int textW = 0, textH = 0;
 				TTF_SizeUTF8(titleFont, Engine::GetInstance().textManager.get()->GetText(titleText).c_str(), &textW, &textH);
 
@@ -173,14 +244,12 @@ bool Settings::Update(float dt)
 				);
 			}
 		}
-		else
-		{
+		else {
+			Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
 
 			if (!xbox) {
-				Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
 				Engine::GetInstance().render.get()->DrawTextureBuffer(controlsKeyboardPanel, -camera.x / windowScale + controlsKeyboardPanelX, -camera.y / windowScale + controlsKeyboardPanelY, false, MENUS);
-				if (controlsText != "")
-				{
+				if (controlsText != "") {
 					int textW = 0, textH = 0;
 					TTF_SizeUTF8(controlsFont, Engine::GetInstance().textManager.get()->GetText(controlsText).c_str(), &textW, &textH);
 
@@ -196,10 +265,8 @@ bool Settings::Update(float dt)
 				}
 			}
 			else {
-				Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
 				Engine::GetInstance().render.get()->DrawTextureBuffer(controlsControllerPanel, -camera.x / windowScale + controlsControllerPanelX, -camera.y / windowScale + controlsControllerPanelY, false, MENUS);
-				if (controls2Text != "")
-				{
+				if (controls2Text != "") {
 					int textW = 0, textH = 0;
 					TTF_SizeUTF8(controls2Font, Engine::GetInstance().textManager.get()->GetText(controls2Text).c_str(), &textW, &textH);
 
@@ -214,20 +281,48 @@ bool Settings::Update(float dt)
 					);
 				}
 			}
+
+			
+			//Controls panel movement
+			if (Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_DPAD_DOWN) == KEY_DOWN) {
+				miniIndex++;
+				if (miniIndex > 1) miniIndex = 0;
+				mandoMoved = true;
+			}
+			else if (Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_DPAD_UP) == KEY_DOWN) {
+				miniIndex--;
+				if (miniIndex < 0) miniIndex = 1;
+				mandoMoved = true;
+			}
+
+			//Controls panel state machine
+			if (mandoMoved) {
+				changeControlBt->state = (miniIndex == 0) ? GuiControlState::FOCUSED : GuiControlState::NORMAL;
+				backBt->state = (miniIndex == 1) ? GuiControlState::FOCUSED : GuiControlState::NORMAL;
+
+				if (Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_A) == KEY_DOWN) {
+					if (miniIndex == 0) {
+						changeControlBt->state = GuiControlState::PRESSED;
+						OnGuiMouseClickEvent(changeControlBt);
+					}
+					else {
+						backBt->state = GuiControlState::PRESSED;
+						OnGuiMouseClickEvent(backBt);
+					}
+				}
+			}
+
 			changeControlBt->Update(dt);
 			OnGuiMouseClickEvent(changeControlBt);
 		}
-		
+
 		backBt->Update(dt);
 		OnGuiMouseClickEvent(backBt);
-		
-		
 	}
 	else {
 		for (GuiControl* gui : settingsGUI) {
 			gui->active = false;
 		}
-		
 	}
 	
 	return true;
@@ -280,6 +375,8 @@ bool Settings::OnGuiMouseClickEvent(GuiControl* control) {
 		if (control->state == GuiControlState::PRESSED && settingsOpen) {
 			if (controlsOpen == true) {
 				controlsOpen = false;
+				selectedIndex = 3; 
+				mandoMoved = true;
 			}
 			else {
 				settingsOpen = false;
@@ -292,11 +389,14 @@ bool Settings::OnGuiMouseClickEvent(GuiControl* control) {
 				SavePrefs();
 			}
 		}
-		backBt->state = GuiControlState::NORMAL;
 		break;
 	case GuiControlId::CONTROLS:
 		if (control->state == GuiControlState::PRESSED && settingsOpen) {
-			controlsOpen = true;
+			if (!controlsOpen) {
+				controlsOpen = true;
+				miniIndex = 0;
+				mandoMoved = true;
+			}
 		}
 
 		break;
@@ -304,7 +404,8 @@ bool Settings::OnGuiMouseClickEvent(GuiControl* control) {
 	case GuiControlId::ESP:
 		if (control->state == GuiControlState::PRESSED) {
 			Engine::GetInstance().textManager.get()->ChangeIdiom(currentLanguage++);
-			if (currentLanguage > 2) { // Assuming 0 = ESP, 1 = CAT, 2 = ENG
+			// Assuming 0 = ESP, 1 = CAT, 2 = ENG
+			if (currentLanguage > 2) { 
 				currentLanguage = 0;
 			}
 		}
@@ -314,10 +415,12 @@ bool Settings::OnGuiMouseClickEvent(GuiControl* control) {
 		if (control->state == GuiControlState::PRESSED) {
 			xbox = !xbox;
 		}
+		control->state = GuiControlState::NORMAL;
 		break;
 
 	}
 
+	control->state = GuiControlState::NORMAL;
 
 	return true;
 }

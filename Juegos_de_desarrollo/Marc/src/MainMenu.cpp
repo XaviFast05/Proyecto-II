@@ -152,6 +152,7 @@ bool MainMenu::Update(float dt)
 	//Gamepad
 	else if (mandoMoved)
 	{
+		// Movement
 		if (Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_DPAD_DOWN) == KEY_DOWN)
 		{
 			do {
@@ -246,8 +247,9 @@ bool MainMenu::OnGuiMouseClickEvent(GuiControl* control) {
 		break;
 	case GuiControlId::OPTIONS:
 		if (control->state == GuiControlState::PRESSED) {
-			if (!Engine::GetInstance().settings.get()->settingsOpen) 
+			if (!Engine::GetInstance().settings.get()->settingsOpen) {
 				Engine::GetInstance().settings.get()->settingsOpen = true;
+			}			
 		}
 		break;
 	case GuiControlId::CREDITS:

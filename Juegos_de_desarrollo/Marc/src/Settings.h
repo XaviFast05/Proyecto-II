@@ -82,6 +82,12 @@ public:
 
 	std::list<GuiControl*> settingsGUI;
 
+	Vector2D prevMousePos = { -1, -1 };
+    bool mouseMoved   = false;
+    bool mandoMoved   = false;
+    int  selectedIndex = 0;
+	int miniIndex = 0;
+
 	//std::map<std::string, GuiControlButton*> buttons;
 
 };
