@@ -344,9 +344,9 @@ bool Settings::CleanUp()
 {
 	LOG("Freeing UI");
 
-	for (GuiControl* gui : settingsGUI) {
-		gui->active = false;
-	}
+	//for (GuiControl* gui : settingsGUI) {
+	//	gui->active = false;
+	//}
 	return true;
 }
 

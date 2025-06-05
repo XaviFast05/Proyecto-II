@@ -160,7 +160,7 @@
 				<startPositions>
 					<lvl1 x="160" y="3400" />
 					<lvl2 x="160" y="3400" />
-					<lvl3 x="9536" y="6970" />
+					<lvl3 x="9536" y="6970"/>
 					<lvl4 x="4032" y="1792" />
 					<lvl5 x="2240" y="1600" />
 					<lvl6 x="4096" y="2048" />
@@ -606,12 +606,12 @@
 				<instances>
 					<lvl1>
 						<instance enemyType="skeleton" entityType="5">
-							<point x="5210" y=" 2530" />
-							<point x="5270" y=" 2530" />
+							<point x="4575" y=" 1320" />
+							<point x="4800" y=" 1320" />
 						</instance>
 						<instance enemyType="skeleton" entityType="5">
-							<point x="4642" y=" 920" />
-							<point x="4242" y=" 920" />
+							<point x="5210" y=" 2530" />
+							<point x="5270" y=" 2530" />
 						</instance>
 						<instance enemyType="skeleton" entityType="5">
 							<point x="7530" y="3625" />
@@ -754,13 +754,12 @@
 					<instances>
 						<lvl1>
 							<instance entityType="2" x="3568" y="2625" checkPointType = "1"/>
-							<instance entityType="2" x="9792" y="3272" checkPointType = "1"/>
+							<instance entityType="2" x="9762" y="3395" checkPointType = "1"/>
 						</lvl1>
 						<lvl3>
+							<instance entityType="2" x="16327" y="6465" checkPointType="2"/>
 							<instance entityType="2" x="7364" y="8514" checkPointType="2"/>
-							<instance entityType="2" x="16327" y="6490" checkPointType="2"/>
 							<instance entityType="2" x="9461" y="3142" checkPointType="2"/>
-							<instance entityType="2" x="16327" y="11036" checkPointType="2"/>
 						</lvl3>
 					</instances>
 					<animations>
@@ -777,16 +776,16 @@
 					<properties w="64" h="192" texture1="Assets/Textures/Objects/Roca rompible Capa1 Spritesheet.png" texture2="Assets/Textures/Objects/Roca rompible Onirica Spritesheet.png"  timeToDestroy="1"/>
 					<instances>
 						<lvl3>
-							<instance entityType="21" x="13824" y="6156"/>
-							<instance entityType="21" x="13376" y="4748"/>
-							<instance entityType="21" x="15710" y="2690"/>
-							<instance entityType="21" x="10843" y="3840"/>
-							<instance entityType="21" x="7773" y="5884"/>
-							<instance entityType="21" x="8192" y="3520"/>
+							<instance entityType="21" x="7753" y="5825" destructibleWallType="1"/>
+							<instance entityType="21" x="8192" y="3520" destructibleWallType="1"/>
+							<instance entityType="21" x="10817" y="3840" destructibleWallType="1"/>
+							<instance entityType="21" x="13376" y="4737" destructibleWallType="1"/>
+							<instance entityType="21" x="13824" y="6145" destructibleWallType="1"/>
+							<instance entityType="21" x="15680" y="2690" destructibleWallType="1"/>
 						</lvl3>
 						<lvl4>
-							<instance entityType="21" x="2142" y="1408"/>
-							<instance entityType="21" x="5410" y="640"/>
+							<instance entityType="21" x="2142" y="1468" destructibleWallType="2"/>
+							<instance entityType="21" x="5410" y="640" destructibleWallType="2"/>
 						</lvl4>
 					</instances>
 					<animations>
@@ -813,19 +812,19 @@
 					<properties w="64" h="64" texture="Assets/Textures/Objects/SoulRock.png" />
 					<instances>
 						<lvl1>
-							<instance entityType="8" x="4235" y="876" flipped="true" />
+							<instance entityType="8" x="4575" y="1325" flipped="true" />
 							<instance entityType="8" x="8931" y="4524" flipped="false" />
 						</lvl1>
 						<lvl3>
-							<instance entityType="8" x="11393" y="7805" flipped="true" />
-							<instance entityType="8" x="12874" y="7346" flipped="false" />
-							<instance entityType="8" x="13190" y="7680" flipped="false" />
-							<instance entityType="8" x="14085" y="6336" flipped="false" />
-							<instance entityType="8" x="16380" y="5302" flipped="false" />
-							<instance entityType="8" x="16061" y="2875" flipped="false" />
-							<instance entityType="8" x="14784" y="3007" flipped="false" />
-							<instance entityType="8" x="11136" y="4032" flipped="false" />
-							<instance entityType="8" x="8064" y="6015" flipped="false" />
+							<instance entityType="8" x="11392" y="7794" flipped="true" />
+							<instance entityType="8" x="12874" y="7343" flipped="false" />
+							<instance entityType="8" x="13190" y="7660" flipped="true" />
+							<instance entityType="8" x="14085" y="6316" flipped="false" />
+							<instance entityType="8" x="16380" y="5292" flipped="false" />
+							<instance entityType="8" x="16061" y="2864" flipped="false" />
+							<instance entityType="8" x="14784" y="2990" flipped="true" />
+							<instance entityType="8" x="11136" y="4012" flipped="false" />
+							<instance entityType="8" x="8064" y="5997" flipped="false" />
 						</lvl3>
 					</instances>
 					<animations>
@@ -985,7 +984,6 @@
 				</villager>
 				<instances>
 					<lvl1>
-						<instance allyType ="merchant" entityType="15" x="576" y="3392" movementArea="300"/>
 					</lvl1>
 					<lvl3>
 						<instance allyType ="merchant" entityType="15" x="9536" y="1920" movementArea="300" dialog="DIALOG09" />
