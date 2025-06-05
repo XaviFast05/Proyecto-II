@@ -15,6 +15,13 @@ class DestructibleWall : public Entity
 {
 public:
 
+	enum DestructibleWallType
+	{
+		UNKNOWN,
+		LAYER1,
+		ONIRIC
+	};
+
 	DestructibleWall();
 	virtual ~DestructibleWall();
 
@@ -46,11 +53,21 @@ private:
 
 	bool destructed;
 
+	Animation idle;
+	Animation destroying;
+	Animation* currentAnim = nullptr;
+
+	Timer timerToDestroy;
+	int timeToDestroy;
+
 	int texW, texH;
 
 	pugi::xml_node parameters;
 
+	DestructibleWallType destructibleWallType;
+
 	bool destroy;
+	bool toDestroy;
 };
 
 

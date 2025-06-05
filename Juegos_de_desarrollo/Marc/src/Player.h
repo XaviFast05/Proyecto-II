@@ -157,6 +157,7 @@ public:
 	Animation throwPixUp;
 	Animation dash;
 	Animation charged;
+	Animation upgrading;
 
 	bool resetAnimation = false;
 

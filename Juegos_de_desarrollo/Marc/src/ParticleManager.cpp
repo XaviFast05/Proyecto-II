@@ -10,6 +10,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "Audio.h"
+#include "tracy/Tracy.hpp"   
 
 Particle::Particle() : Entity(EntityType::PARTICLE)
 {
@@ -49,6 +50,7 @@ bool Particle::Start() {
 
 bool Particle::Update(float dt)
 {
+	ZoneScoped;
 	return true;
 }
 

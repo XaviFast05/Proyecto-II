@@ -63,6 +63,7 @@ bool Player::Start() {
 	throwPixUp.LoadAnimations(parameters.child("animations").child("throwPixUp"));
 	dash.LoadAnimations(parameters.child("animations").child("dash"));
 	charged.LoadAnimations(parameters.child("animations").child("charged"));
+	upgrading.LoadAnimations(parameters.child("animations").child("upgrading"));
 
 	jumpForce = parameters.child("propierties").attribute("gJumpForce").as_float();
 	pushForce = parameters.child("propierties").attribute("pushForce").as_float();
@@ -175,6 +176,7 @@ void Player::Restart()
 
 bool Player::Update(float dt)
 {
+	ZoneScoped;
 	//FRUSTRUM
 	if (!Engine::GetInstance().render.get()->InCameraView(pbody->GetPosition().getX() - texW, pbody->GetPosition().getY() - texH, texW, texH))
 	{
@@ -528,9 +530,8 @@ bool Player::Update(float dt)
 			{
 				pbody->body->SetLinearVelocity(b2Vec2(0, 0));
 				if (respawnTimer.ReadSec() >= respawnTime) {
-					Engine::GetInstance().scene.get()->LoadState();
-					playerState = IDLE;
-					hits = 3;
+					Engine::GetInstance().scene.get()->SetLoadState(true);
+					Engine::GetInstance().fade.get()->Fade(Engine::GetInstance().scene.get(), Engine::GetInstance().scene.get(), 30);
 				}
 				break;
 			}
@@ -632,7 +633,7 @@ bool Player::Update(float dt)
 		}
 		break;
 	case UPGRADING:
-		currentAnim = &charged; //XAVI AQUI PON LA ANIM DE UPGRADE HOLA
+		currentAnim = &upgrading; 
 		if (resetAnimation == true) {
 			currentAnim->Reset();
 			resetAnimation = false;
@@ -688,6 +689,9 @@ bool Player::CleanUp()
 	LOG("Cleanup player");
 
 	active = false;
+	delete dialoguesManager;
+	delete currencyManager;
+	delete projectileManager;
 
 	
 	return true;
@@ -722,14 +726,30 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision PICKAXE");
 		break;
 	case ColliderType::SPYKE:
+		if (!godMode || !canHurt) {
+			if (playerState != DEAD && playerState != HURT) {
+				//HURT LOGIC
+				if (hits >= 1) DamagePlayer();
+				if (hits == 0) KillPlayer();
+				//PUSHING THE PLAYER WHEN HURT
+				b2Vec2 pushVec((physA->body->GetPosition().x - physB->body->GetPosition().x),
+					(physA->body->GetPosition().y - physB->body->GetPosition().y));
+				pushVec.Normalize();
+				pushVec *= pushForce;
+				pushVec.x *= 6;
+
+				pbody->body->SetLinearVelocity(b2Vec2(0, 0));
+				pbody->body->ApplyLinearImpulseToCenter(pushVec, true);
+			}
+		}
 		LOG("Collision SPYKE");
 		break;
 	case ColliderType::JUMP:
 		LOG("Collision BULLET");
 		if (!godMode || !canHurt) {
-			if (playerState != DEAD) {
+			if (playerState != DEAD && playerState != HURT) {
 				//HURT LOGIC
-				if (hits >= 1 && playerState != HURT) DamagePlayer();
+				if (hits >= 1) DamagePlayer();
 				if (hits == 0) KillPlayer();
 				//PUSHING THE PLAYER WHEN HURT
 				b2Vec2 pushVec((physA->body->GetPosition().x - physB->body->GetPosition().x),
@@ -759,9 +779,9 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	case ColliderType::ENEMY:
 		LOG("Collision ENEMY");
 		if (!godMode || !canHurt) {
-			if (playerState != DEAD) {
+			if (playerState != DEAD && playerState != HURT) {
 				//HURT LOGIC
-				if (hits >= 1 && playerState != HURT) DamagePlayer();
+				if (hits >= 1) DamagePlayer();
 				if (hits == 0) KillPlayer();
 				//PUSHING THE PLAYER WHEN HURT
 				b2Vec2 pushVec((physA->body->GetPosition().x - physB->body->GetPosition().x),
@@ -781,7 +801,6 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		if (!godMode) {
 			/*playerState = DEAD;*/
 
-			pbody->body->SetGravityScale(0);
 			pbody->body->SetGravityScale(0);
 			respawnTimer.Start();
 		}

@@ -1,3 +1,6 @@
+
+
+
 #include "Engine.h"
 #include <iostream>
 #include <sstream>
@@ -18,13 +21,13 @@
 #include "GuiManager.h"
 #include "MainMenu.h"
 #include "tracy/Tracy.hpp"
-#include "DeathMenu.h"
 #include "WinMenu.h"
 #include "Settings.h"
 #include "UpgradesMenu.h"
 #include "TextManager.h"
 #include "MerchantMenu.h"
 #include "CutscenePlayer.h"
+#include "VideoPlayer.h"
 
 // Constructor
 Engine::Engine() {
@@ -55,7 +58,7 @@ Engine::Engine() {
     intro = std::make_shared<Intro>(false);
     settings = std::make_shared<Settings>(true);
 	upgradesMenu = std::make_shared<UpgradesMenu>(true);
-    death = std::make_shared<DeathMenu>(false);
+    videoPlayer = std::make_shared<VideoPlayer>(false);
     win = std::make_shared<WinMenu>(false);
     merchantMenu = std::make_shared<MerchantMenu>(true);
 	cutScene = std::make_shared<CutscenePlayer>(true);
@@ -75,7 +78,7 @@ Engine::Engine() {
     AddModule(std::static_pointer_cast<Module>(textManager));
     AddModule(std::static_pointer_cast<Module>(intro));
     AddModule(std::static_pointer_cast<Module>(guiManager));
-    AddModule(std::static_pointer_cast<Module>(death));
+    AddModule(std::static_pointer_cast<Module>(videoPlayer));
     AddModule(std::static_pointer_cast<Module>(win));
     AddModule(std::static_pointer_cast<Module>(settings));
     AddModule(std::static_pointer_cast<Module>(upgradesMenu));
@@ -204,7 +207,6 @@ bool Engine::CleanUp() {
     }
 
     LOG("Timer App CleanUp(): %f", timer.ReadMSec());
-
     return result;
 }
 

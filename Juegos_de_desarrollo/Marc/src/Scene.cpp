@@ -29,7 +29,6 @@
 #include "MainMenu.h"
 #include "FadeToBlack.h"
 #include "Settings.h"
-#include "DeathMenu.h"
 #include "WinMenu.h"
 #include "PickaxeManager.h"
 #include "CurrencyManager.h"
@@ -43,6 +42,9 @@
 #include "CutscenePlayer.h"
 #include "TextManager.h"
 #include "DestructibleWall.h"
+#include "VideoPlayer.h"
+#include "Villager.h"
+
 
 
 #include "Intro.h"
@@ -129,10 +131,9 @@ bool Scene::Start()
 		LoadSoulRock(soulRock, soulRockNode);
 	}
 
-	for (pugi::xml_node alliesNode : configParameters.child("entities").child("allies").child("merchant").child("instances").child(GetCurrentLevelString().c_str()).children())
+	for (pugi::xml_node alliesNode : configParameters.child("entities").child("allies").child("instances").child(GetCurrentLevelString().c_str()).children())
 	{
-
-		Merchant* ally = (Merchant*)Engine::GetInstance().entityManager->CreateEntity((EntityType)alliesNode.attribute("entityType").as_int());;
+		Ally* ally = (Ally*)Engine::GetInstance().entityManager->CreateEntity((EntityType)alliesNode.attribute("entityType").as_int());;
 		LoadAlly(ally, alliesNode);
 	}
 
@@ -235,11 +236,17 @@ bool Scene::Start()
 
 	musicNode = Engine::GetInstance().GetConfig().child("audio").child("music");
 	if (level == LVL1)Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl1Mus").attribute("path").as_string());
-	else if (level == LVL2) {
-		Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl2Mus").attribute("path").as_string());
-	}
 	else if (level == LVL3) {
 		Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl2Mus").attribute("path").as_string());
+	}
+	else if (level == LVL4) {
+		Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl3Mus").attribute("path").as_string());
+	}
+	else if (level == LVL5) {
+		Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl3Mus").attribute("path").as_string());
+	}
+	else if (level == LVL6) {
+		Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl3Mus").attribute("path").as_string());
 	}
 
 	startBossFight = false;
@@ -304,12 +311,12 @@ void Scene::LoadItem(DestructibleWall* destructibleWall, pugi::xml_node instance
 	destructibleWalls.push_back(destructibleWall);
 }
 
-void Scene::LoadAlly(Merchant* merchant, pugi::xml_node instanceNode) {
+void Scene::LoadAlly(Ally* ally, pugi::xml_node instanceNode) {
 
-	merchant->SetPlayer(player);
-	merchant->SetParameters(configParameters.child("entities").child("allies").child("merchant"));
-	merchant->SetInstanceParameters(instanceNode);
-	allies.push_back(merchant);
+	ally->SetPlayer(player);
+	ally->SetParameters(configParameters.child("entities").child("allies").child(instanceNode.attribute("allyType").as_string()));
+	ally->SetInstanceParameters(instanceNode);
+	allies.push_back(ally);
 
 }
 
@@ -384,9 +391,12 @@ bool Scene::Update(float dt)
 		changeLevel = false;
 		if (level == LVL1)
 		{
-			Engine::GetInstance().cutScene->ConvertPixels(0, 1);
-			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
+			Engine::GetInstance().videoPlayer.get()->SetVideoNum(0);
+			Engine::GetInstance().videoPlayer.get()->SetVideoPlayed(false);
+			Engine::GetInstance().videoPlayer.get()->SetModuleToGo((Module*)this);
 			level = LVL3;
+			Engine::GetInstance().fade.get()->Fade((Module*)this, Engine::GetInstance().videoPlayer.get(), 30);
+			
 		}
 		else if (level == LVL3)
 		{
@@ -404,24 +414,15 @@ bool Scene::Update(float dt)
 				level = LVL6;
 			}
 		}
-		else if (level == LVL4)
+		else if (level == LVL4 && enemies[0]->dead)
 		{
-
-			//Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
-			//level = LVL3;
+			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
+			level = LVL3;
 		}
-		else if (level == LVL5)
+		else if (level == LVL5 && enemies[0]->dead)
 		{
-			if (playerPOSY < 1500)
-			{
-				Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
-				level = LVL3;
-			}
-			else if (playerPOSY > 1600)
-			{
-				Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
-				level = LVL3;
-			}
+			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
+			level = LVL3;
 		}
 		else if (level == LVL6)
 		{
@@ -447,13 +448,6 @@ bool Scene::Update(float dt)
 	//	
 	//	return true;
 	//}
-
-	if (loadScene)
-	{
-		//LOG("ENTRO");
-		LoadState();
-		loadScene = false;
-	}
 
 	if (!paused) {
 		currentTime += dt / 1000.0f;

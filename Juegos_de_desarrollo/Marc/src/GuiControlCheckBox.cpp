@@ -5,6 +5,7 @@
 #include "Audio.h"
 #include "Input.h"
 #include "TextManager.h"
+#include "tracy/Tracy.hpp"   
 
 GuiControlCheckBox::GuiControlCheckBox(const char* name, SDL_Rect bounds, const char* text, SDL_Texture* boxTex) : GuiControl(GuiControlType::CHECKBOX, id, name)
 {
@@ -28,7 +29,7 @@ GuiControlCheckBox::~GuiControlCheckBox()
 
 bool GuiControlCheckBox::Update(float dt)
 {
-
+	ZoneScoped;
 	// L16: TODO 3: Update the state of the GUiButton according to the mouse position
 	if (state != GuiControlState::DISABLED) {
 		if (state != GuiControlState::OVERLOADED) {

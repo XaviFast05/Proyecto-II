@@ -5,6 +5,7 @@
 #include "Textures.h"
 #include "log.h"
 #include "Scene.h"
+#include "tracy/Tracy.hpp"   
 
 WallBrakerParticle::WallBrakerParticle()
 {
@@ -47,6 +48,7 @@ bool WallBrakerParticle::Start() {
 
 bool WallBrakerParticle::Update(float dt)
 {
+	ZoneScoped;
 	bool ret = true;
 	if (isCasted)
 	{

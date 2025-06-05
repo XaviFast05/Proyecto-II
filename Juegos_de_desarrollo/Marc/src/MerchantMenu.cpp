@@ -10,6 +10,7 @@
 #include "MainMenu.h"
 #include "Scene.h"
 #include "Window.h"
+#include "TextManager.h"
 
 
 MerchantMenu::MerchantMenu(bool startEnabled) : Module(startEnabled)
@@ -40,6 +41,24 @@ bool MerchantMenu::Start()
 	rootNode = configFile.child("config");
 
 	testSound = Engine::GetInstance().audio.get()->LoadFx(rootNode.child("audio").child("fx").child("testSound").attribute("path").as_string());
+
+	upgradeFont = TTF_OpenFont(configParameters.child("merchantPanel").attribute("font").as_string(), configParameters.child("merchantPanel").attribute("upgradeTextSize").as_int());
+	valueFont = TTF_OpenFont(configParameters.child("merchantPanel").attribute("font").as_string(), configParameters.child("merchantPanel").attribute("valueTextSize").as_int());
+	textFont = TTF_OpenFont(configParameters.child("merchantPanel").attribute("font").as_string(), configParameters.child("merchantPanel").attribute("textSize").as_int());
+
+	u1 = Engine::GetInstance().GetInstance().textures.get()->Load(configParameters.child("firstUpgradeBt").attribute("texture").as_string());
+	u2 = Engine::GetInstance().GetInstance().textures.get()->Load(configParameters.child("secondUpgradeBt").attribute("texture").as_string());
+	u3 = Engine::GetInstance().GetInstance().textures.get()->Load(configParameters.child("thirdUpgradeBt").attribute("texture").as_string());
+	u4 = Engine::GetInstance().GetInstance().textures.get()->Load(configParameters.child("fourthUpgradeBt").attribute("texture").as_string());
+	u5 = Engine::GetInstance().GetInstance().textures.get()->Load(configParameters.child("fifthUpgradeBt").attribute("texture").as_string());
+	u6 = Engine::GetInstance().GetInstance().textures.get()->Load(configParameters.child("sixthUpgradeBt").attribute("texture").as_string());
+	u7 = Engine::GetInstance().GetInstance().textures.get()->Load(configParameters.child("seventhUpgradeBt").attribute("texture").as_string());
+	u8 = Engine::GetInstance().GetInstance().textures.get()->Load(configParameters.child("eighthUpgradeBt").attribute("texture").as_string());
+	upgradeImageX = configParameters.child("merchantPanel").attribute("upgradeImageX").as_int();
+	upgradeImageY = configParameters.child("merchantPanel").attribute("upgradeImageY").as_int();
+	upgradeImageW = configParameters.child("merchantPanel").attribute("upgradeImageW").as_int();
+	upgradeImageH = configParameters.child("merchantPanel").attribute("upgradeImageH").as_int();
+	upgradeTextRect = { 0,0, upgradeImageW, upgradeImageH };
 
 	/*SDL_Texture* circleTex = Engine::GetInstance().textures.get()->Load(configParameters.child("sliders").attribute("texture").as_string());*/
 	//SDL_Texture* barTex = Engine::GetInstance().textures.get()->Load(configParameters.child("sliders").attribute("barTexture").as_string());
@@ -134,6 +153,7 @@ bool MerchantMenu::Start()
 	LoadPrefs();
 
 	merchantPanelOpen = false;
+	leaveMenu = false;
 	return true;
 }
 
@@ -146,6 +166,7 @@ bool MerchantMenu::PreUpdate()
 // Called each loop iteration
 bool MerchantMenu::Update(float dt)
 {
+	ZoneScoped;
 	SDL_Rect camera = Engine::GetInstance().render.get()->camera;
 	int windowScale = Engine::GetInstance().window.get()->GetScale();
 	
@@ -184,7 +205,7 @@ bool MerchantMenu::Update(float dt)
 
 
 		Engine::GetInstance().render.get()->DrawRectangle({ 0 , 0, screenWidth, screenHeight }, 0, 0, 0, 200, true, false);
-		Engine::GetInstance().render.get()->DrawTextureBuffer(merchantPanel, -camera.x / windowScale + merchantPanelX, -camera.y / windowScale + merchantPanelY);
+		Engine::GetInstance().render.get()->DrawTextureBuffer(merchantPanel, -camera.x / windowScale + merchantPanelX, -camera.y / windowScale + merchantPanelY, false, MENUS);
 
 
 		for (GuiControl* gui : merchantGUI) {
@@ -281,7 +302,7 @@ bool MerchantMenu::CleanUp()
 	LOG("Freeing MerchantMenu");
 
 	for (GuiControl* gui : merchantGUI) {
-		gui->active = false;
+		if (!gui) gui->active = false;
 	}
 	return true;
 }
@@ -295,13 +316,12 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 		if (firstUpgradeBt->isChecked) {
 			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost1)
 			{
-				LOG("POBRE DE MIERDA");
+				leaveMenu = true;
 				firstUpgradeBt->SetChecked(false);
 			}
 			else {
 				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost1);
 				Engine::GetInstance().scene.get()->player->UnlockUpgrade(0);
-				LOG("GRACIAS POR COMPRAR");
 				firstUpgradeBt->state == GuiControlState::DISABLED;
 				hasOpened = true;
 			}
@@ -312,13 +332,12 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 		if (secondUpgradeBt->isChecked) {
 			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost2)
 			{
-				LOG("POBRE DE MIERDA");
+				leaveMenu = true;
 				secondUpgradeBt->SetChecked(false);
 			}
 			else {
 				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost2);
 				Engine::GetInstance().scene.get()->player->UnlockUpgrade(1);
-				LOG("GRACIAS POR COMPRAR");
 				secondUpgradeBt->state == GuiControlState::DISABLED;
 				hasOpened = true;
 			}
@@ -330,13 +349,12 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 		if (thirdUpgradeBt->isChecked) {
 			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost3)
 			{
-				LOG("POBRE DE MIERDA");
+				leaveMenu = true;
 				thirdUpgradeBt->SetChecked(false);
 			}
 			else {
 				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost3);
 				Engine::GetInstance().scene.get()->player->UnlockUpgrade(2);
-				LOG("GRACIAS POR COMPRAR");
 				thirdUpgradeBt->state == GuiControlState::DISABLED;
 				hasOpened = true;
 			}
@@ -348,13 +366,12 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 		if (fourthUpgradeBt->isChecked) {
 			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost4)
 			{
-				LOG("POBRE DE MIERDA");
+				leaveMenu = true;
 				fourthUpgradeBt->SetChecked(false);
 			}
 			else {
 				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost4);
 				Engine::GetInstance().scene.get()->player->UnlockUpgrade(3);
-				LOG("GRACIAS POR COMPRAR");
 				fourthUpgradeBt->state == GuiControlState::DISABLED;
 				hasOpened = true;
 			}
@@ -365,13 +382,12 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 		if (fifthUpgradeBt->isChecked) {
 			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost5)
 			{
-				LOG("POBRE DE MIERDA");
+				leaveMenu = true;
 				fifthUpgradeBt->SetChecked(false);
 			}
 			else {
 				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost5);
 				Engine::GetInstance().scene.get()->player->UnlockUpgrade(4);
-				LOG("GRACIAS POR COMPRAR");
 				fifthUpgradeBt->state == GuiControlState::DISABLED;
 				hasOpened = true;
 			}
@@ -382,13 +398,12 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 		if (sixthUpgradeBt->isChecked) {
 			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost6)
 			{
-				LOG("POBRE DE MIERDA");
+				leaveMenu = true;
 				sixthUpgradeBt->SetChecked(false);
 			}
 			else {
 				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost6);
 				Engine::GetInstance().scene.get()->player->UnlockUpgrade(5);
-				LOG("GRACIAS POR COMPRAR");
 				sixthUpgradeBt->state == GuiControlState::DISABLED;
 				hasOpened = true;
 			}
@@ -399,13 +414,12 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 		if (seventhUpgradeBt->isChecked) {
 			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost7)
 			{
-				LOG("POBRE DE MIERDA");
+				leaveMenu = true;
 				seventhUpgradeBt->SetChecked(false);
 			}
 			else {
 				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost7);
 				Engine::GetInstance().scene.get()->player->UnlockUpgrade(6);
-				LOG("GRACIAS POR COMPRAR");
 				seventhUpgradeBt->state == GuiControlState::DISABLED;
 				hasOpened = true;
 			}
@@ -416,13 +430,12 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 		if (eighthUpgradeBt->isChecked) {
 			if (Engine::GetInstance().scene.get()->player->currencyManager->GetCurrency() < cost8)
 			{
-				LOG("POBRE DE MIERDA");
+				leaveMenu = true;
 				eighthUpgradeBt->SetChecked(false);
 			}
 			else {
 				Engine::GetInstance().scene.get()->player->currencyManager->SumCurrency(-cost8);
 				Engine::GetInstance().scene.get()->player->UnlockUpgrade(7);
-				LOG("GRACIAS POR COMPRAR");
 				eighthUpgradeBt->state == GuiControlState::DISABLED;
 				hasOpened = true;
 			}
@@ -436,6 +449,15 @@ bool MerchantMenu::OnGuiMouseClickEvent(GuiControl* control) {
 			SavePrefs();
 		}
 		break;
+	}
+
+	if (leaveMenu)
+	{
+		Engine::GetInstance().scene.get()->player->StartDialog("DIALOG05");
+		merchantPanelOpen = false;
+		leaveMenu = false;
+		Engine::GetInstance().scene.get()->player->pbody->body->SetEnabled(true);
+		SavePrefs();
 	}
 
 	return true;
@@ -495,64 +517,90 @@ void MerchantMenu::LoadPrefs()
 void MerchantMenu::ShowInfo(int id)
 {
 	std::string nameText, valueText, descriptionText;
+	nameText = Engine::GetInstance().textManager.get()->GetText("UPGRADE");
 
+	currentTexture = nullptr;
 
 	switch (id) {
 	case (int)GuiControlId::FIRST_UPGRADE:
-		nameText = "Upgrade 1";
-		valueText = "Valor: 100";
-		descriptionText = "Saltas más alto";
+		currentTexture = u1;
+		nameText += " 1";
+		valueText += "100";
+		descriptionText = Engine::GetInstance().textManager.get()->GetText("UPGRADE1_DESCRIPCION");
 		break;
 
 	case (int)GuiControlId::SECOND_UPGRADE:
-		nameText = "Upgrade 2";
-		valueText = "Valor: 200";
-		descriptionText = "Dash más rapido";
+		currentTexture = u2;
+		nameText += " 2";
+		valueText += "200";
+		descriptionText = Engine::GetInstance().textManager.get()->GetText("UPGRADE2_DESCRIPCION");
 		break;
 
 	case (int)GuiControlId::THIRD_UPGRADE:
-		nameText = "Upgrade 3";
-		valueText = "Valor: 300";
-		descriptionText = "Ataque cargado mas rapido";
+		currentTexture = u3;
+		nameText += " 3";
+		valueText += "300";
+		descriptionText = Engine::GetInstance().textManager.get()->GetText("UPGRADE3_DESCRIPCION");
 		break;
 
 	case (int)GuiControlId::FOURTH_UPGRADE:
-		nameText = "Upgrade 4";
-		valueText = "Valor: 400";
-		descriptionText = "Recuperacion de piquetas mas rapida";
+		currentTexture = u4;
+		nameText += " 4";
+		valueText += "400";
+		descriptionText = Engine::GetInstance().textManager.get()->GetText("UPGRADE4_DESCRIPCION");
 		break;
 
 	case (int)GuiControlId::FIFTH_UPGRADE:
-		nameText = "Upgrade 5";
-		valueText = "Valor: 500";
-		descriptionText = "Más velocidad de movimiento";
+		currentTexture = u5;
+		nameText += " 5";
+		valueText += "500";
+		descriptionText = Engine::GetInstance().textManager.get()->GetText("UPGRADE5_DESCRIPCION");
 		break;
 
 	case (int)GuiControlId::SIXTH_UPGRADE:
-		nameText = "Upgrade 6";
-		valueText = "Valor: 600";
-		descriptionText = "Piquetas maximas aumentadas";
+		currentTexture = u6;
+		nameText += " 6";
+		valueText += "600";
+		descriptionText = Engine::GetInstance().textManager.get()->GetText("UPGRADE6_DESCRIPCION");
 		break;
 
 	case (int)GuiControlId::SEVENTH_UPGRADE:
-		nameText = "Upgrade 7";
-		valueText = "Valor: 700";
-		descriptionText = "Haces mas dano con 1 corazon";
+		currentTexture = u7;
+		nameText += " 7";
+		valueText += "700";
+		descriptionText = Engine::GetInstance().textManager.get()->GetText("UPGRADE7_DESCRIPCION");
 		break;
 
 	case (int)GuiControlId::EIGHTH_UPGRADE:
-		nameText = "Upgrade 8";
-		valueText = "Valor: 800";
-		descriptionText = "Desbloquea habilidad especial";
+		currentTexture = u8;
+		nameText += " 8";
+		valueText += "800";
+		descriptionText = Engine::GetInstance().textManager.get()->GetText("UPGRADE8_DESCRIPCION");
 		break;
-
 	}
 
+	int nameTextW = 0, nameTextH = 0;
+	int valueTextW = 0, valueTextH = 0;
+	int descriptionTextW = 0, descriptionTextH = 0;
+	TTF_SizeUTF8(upgradeFont, nameText.c_str(), &nameTextW, &nameTextH);
+	TTF_SizeUTF8(valueFont, valueText.c_str(), &valueTextW, &valueTextH);
+	TTF_SizeUTF8(textFont, descriptionText.c_str(), &descriptionTextW, &descriptionTextH);
+
 	// Render
-	Engine::GetInstance().render.get()->DrawTextToBuffer(nameText.c_str(), 789, 210, 150, 48, Engine::GetInstance().render.get()->font, { 255,255,255,255 }, MENUS);
+	if (currentTexture)
+	{
+		Engine::GetInstance().render.get()->DrawTextureBuffer(currentTexture, 
+		(-Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->GetScale()) + upgradeImageX,
+		(-Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->GetScale()) + upgradeImageY,
+		false,
+		MENUS,
+		&upgradeTextRect);
+	}
+	
+	Engine::GetInstance().render.get()->DrawTextToBuffer(nameText.c_str(), 789, 210, nameTextW, nameTextH, upgradeFont, { 255,255,255,255 }, MENUS);
 
-	Engine::GetInstance().render.get()->DrawTextToBuffer(valueText.c_str(), 918, 433, 48, 32, Engine::GetInstance().render.get()->font, { 255,255,255,255 }, MENUS);
+	Engine::GetInstance().render.get()->DrawTextToBuffer(valueText.c_str(), 918, 423, valueTextW, valueTextH, valueFont, { 255,255,255,255 }, MENUS);
 
-	Engine::GetInstance().render.get()->DrawTextToBuffer(descriptionText.c_str(), 672, 304, 64, 32, Engine::GetInstance().render.get()->font, { 255,255,255,255 }, MENUS);
+	Engine::GetInstance().render.get()->DrawTextToBuffer(descriptionText.c_str(), 672, 304, descriptionTextW, descriptionTextH, textFont, { 255,255,255,255 }, MENUS);
 
 }

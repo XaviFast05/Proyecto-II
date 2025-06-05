@@ -63,6 +63,7 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType bullet_direction, const 
 
 bool GuiManager::Update(float dt)
 {
+	ZoneScoped;
 	for (const auto& control : guiControlsList)
 	{
 		/*if(control->type != GuiControlType::CHECKBOX)*/

@@ -12,6 +12,7 @@
 #include "Audio.h"
 #include "CurrencyManager.h"
 #include "CurrencyOrb.h"
+#include "tracy/Tracy.hpp"   
 
 Enemy::Enemy() : Entity(EntityType::ENEMY)
 {
@@ -64,6 +65,7 @@ bool Enemy::Start() {
 
 bool Enemy::Update(float dt)
 {
+	ZoneScoped;
 	return true;
 }
 

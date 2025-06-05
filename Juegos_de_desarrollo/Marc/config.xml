@@ -29,8 +29,12 @@
 	</mainmenu>
 	<settings>
 		<optPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/settings-panel-empty.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="OPTIONS" textVerticalDisplacement="-250"/>
-		<controlsKeyboardPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/INTERFAZ_TECLADO_SIN_FONDO.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="KEYBOARD" textVerticalDisplacement="-250"/>
-		<controlsControllerPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/controles mando.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="CONTROLLER" textVerticalDisplacement="-250"/>
+		<controlsKeyboardPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/INTERFAZ_TECLADO_SIN_FONDO_ESP.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="KEYBOARD" textVerticalDisplacement="-250"/>
+		<controlsKeyboard2Panel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/INTERFAZ_TECLADO_SIN_FONDO_CAT.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="KEYBOARD" textVerticalDisplacement="-250"/>
+		<controlsKeyboard3Panel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/INTERFAZ_TECLADO_SIN_FONDO_ENG.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="KEYBOARD" textVerticalDisplacement="-250"/>
+		<controlsControllerPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/controles mando_esp.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="CONTROLLER" textVerticalDisplacement="-250"/>
+		<controlsController2Panel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/controles mando_cat.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="CONTROLLER" textVerticalDisplacement="-250"/>
+		<controlsController3Panel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/Options/controles mando_eng.png"  fontSize="100" font="Assets/Fonts/PIXELADE.ttf" text="CONTROLLER" textVerticalDisplacement="-250"/>
 		<sliders barW="384" barH="40" barTexture="Assets/Textures/Menus/Options/slider.png" circleW="70" circleH="70" texture="Assets/Textures/Menus/Options/pumpkinBt.png">
 			<musicSlider id="7" barX="448" circleX="450" barY="226" circleY="221" text="MUSIC" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" verticalDisplacement="-50" textVerticalDisplacement="-65"/>
 			<sfxSlider id="8" barX="448" circleX="450" barY="354" circleY="349" text="SOUND_EFFECTS" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" verticalDisplacement="-50" textVerticalDisplacement="-65"/>
@@ -53,9 +57,11 @@
 		<upg6 id="21" x="361" y="338" w="112" h="112" texture="Assets/Textures/Menus/MenuUpgrades/buttons/upg6_icon.png" />
 		<upg7 id="22" x="216" y="456" w="112" h="112" texture="Assets/Textures/Menus/MenuUpgrades/buttons/upg7_icon.png" />
 		<upg8 id="23" x="361" y="456" w="112" h="112" texture="Assets/Textures/Menus/MenuUpgrades/buttons/upg8_icon.png" />
+		<circle1 x="780" y="417" w="112" h="112"/>
+		<circle2 x="1002" y="331" w="112" h="112"/>
 	</upgradesMenu>
-	<merchantMenu>
-		<merchantPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/MenuMerchant/TIENDA 02/PNGS/interfaz_conbutton_exit_negro.png" />
+	<merchantMenu >
+		<merchantPanel x="0" y="0" w="1280" h="720" path="Assets/Textures/Menus/MenuMerchant/TIENDA 02/PNGS/interfaz_conbutton_exit_negro.png" font="Assets/Fonts/PIXELADE.ttf" upgradeTextSize="60" valueTextSize="40" textSize="30" upgradeImageX="660" upgradeImageY="183" upgradeImageW="112" upgradeImageH="112 "/>
 		<firstUpgradeBt id="24" x="324" y="185" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg1_icon.png" />
 		<secondUpgradeBt id="25" x="464" y="185" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg2_icon.png" />
 		<thirdUpgradeBt id="26" x="324" y="300" w="112" h="112" texture="Assets/Textures/Menus/MenuMerchant/png/upg3_icon.png" />
@@ -297,6 +303,16 @@
 						<frame x="832" y="800" w="64" h="80" offsetX="0" offsetY="-15" />
 						<frame x="896" y="800" w="64" h="80" offsetX="0" offsetY="-15" />
 					</charged>
+					<upgrading loop="true" speed="0.2f">
+						<frame x="0" y="880" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="64" y="880" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="128" y="880" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="192" y="880" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="256" y="880" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="320" y="880" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="384" y="880" w="64" h="80" offsetX="0" offsetY="-15" />
+						<frame x="448" y="880" w="64" h="80" offsetX="0" offsetY="-15" />
+					</upgrading>
 				</animations>
 			</player>
 			<particles>
@@ -747,19 +763,30 @@
 					</animations>
 				</checkPoints>
 				<destructibleWalls>
-					<properties w="64" h="192" texture="Assets/Textures/Objects/Roca rompible Onirica.png" />
+					<properties w="64" h="192" texture1="Assets/Textures/Objects/Roca rompible Capa1 Spritesheet.png" texture2="Assets/Textures/Objects/Roca rompible Onirica Spritesheet.png"  timeToDestroy="1"/>
 					<instances>
 						<lvl1>
+							<!--<instance entityType="21" x="350" y="3392" destructibleWallType = "2"/>-->
 						</lvl1>
 					</instances>
 					<animations>
-						<unlit>
-							<frame x="0" y="0" w="128" h="128" />
-						</unlit>
-						<lit loop="true" speed="0.3f">
-							<frame x="128" y="0" w="128" h="128" />
-							<frame x="256" y="0" w="128" h="128" />
-						</lit>
+						<idle loop="false" speed="0.2f">
+							<frame x="0" y="0" w="64" h="192" />
+						</idle>
+						<destroying loop="false" speed="0.3f">
+							<frame x="0" y="192" w="64" h="192" />
+							<frame x="64" y="192" w="64" h="192" />
+							<frame x="128" y="192" w="64" h="192" />
+							<frame x="192" y="192" w="64" h="192" />
+							<frame x="256" y="192" w="64" h="192" />
+							<frame x="320" y="192" w="64" h="192" />
+							<frame x="384" y="192" w="64" h="192" />
+							<frame x="448" y="192" w="64" h="192" />
+							<frame x="512" y="192" w="64" h="192" />
+							<frame x="576" y="192" w="64" h="192" />
+							<frame x="640" y="192" w="64" h="192" />
+							<frame x="704" y="192" w="64" h="192" />
+						</destroying>
 					</animations>
 				</destructibleWalls>
 				<soulRock>
@@ -791,23 +818,9 @@
 				</soulRock>
 			</items>
 			<allies>
-				<merchant x="400" y="3400" w="64" h="64" texture="Assets/Textures/Allies/merchant_idle.png">
-					<properties speed="0.8" movementArea="300" detectionArea="200" />
-					<instances>
-						<lvl1>
-							<instance entityType="15" x="576" y="3392" />
-						</lvl1>
-						<lvl3>
-							<instance entityType="15" x="9024" y="1920" dialog="DIALOG04" />
-						</lvl3>
-					</instances>
+				<merchant w="64" h="64" texture="Assets/Textures/Allies/Merchant.png">
+					<properties speed="0.8" detectionArea="200" />
 					<animations>
-						<idle loop="true" speed="0.04f">
-							<frame x="0" y="0" w="64" h="64" />
-							<frame x="64" y="0" w="64" h="64" />
-							<frame x="128" y="0" w="64" h="64" />
-							<frame x="192" y="0" w="64" h="64" />
-						</idle>
 						<walk loop="true" speed="0.2f">
 							<frame x="0" y="64" w="64" h="64" />
 							<frame x="64" y="64" w="64" h="64" />
@@ -815,10 +828,151 @@
 							<frame x="192" y="64" w="64" h="64" />
 							<frame x="256" y="64" w="64" h="64" />
 							<frame x="320" y="64" w="64" h="64" />
-							<frame x="384" y="64" w="64" h="64" />
 						</walk>
+						<idle loop="true" speed="0.04f">
+							<frame x="0" y="0" w="64" h="64" />
+							<frame x="64" y="0" w="64" h="64" />
+							<frame x="128" y="0" w="64" h="64" />
+							<frame x="192" y="0" w="64" h="64" />
+						</idle>
 					</animations>
 				</merchant>
+				<villager w="64" h="64" texture="Assets/Textures/Allies/Villagers.png">
+					<properties speed="0.8" detectionArea="200" />
+					<animations>
+						<idleGrandma loop="true" speed="0.2f">
+							<frame x="0" y="0" w="64" h="96" />
+							<frame x="64" y="0" w="64" h="96" />
+							<frame x="128" y="0" w="64" h="96" />
+							<frame x="192" y="0" w="64" h="96" />
+							<frame x="256" y="0" w="64" h="96" />
+							<frame x="320" y="0" w="64" h="96" />
+							<frame x="384" y="0" w="64" h="96" />
+							<frame x="448" y="0" w="64" h="96" />
+							<frame x="512" y="0" w="64" h="96" />
+						</idleGrandma>
+						<walkGrandma loop="true" speed="0.2f">
+							<frame x="0" y="96" w="64" h="96" />
+							<frame x="64" y="96" w="64" h="96" />
+							<frame x="128" y="96" w="64" h="96" />
+							<frame x="192" y="96" w="64" h="96" />
+							<frame x="256" y="96" w="64" h="96" />
+							<frame x="320" y="96" w="64" h="96" />
+						</walkGrandma>
+						<walkBeard loop="true" speed="0.2f">
+							<frame x="0" y="192" w="64" h="96" />
+							<frame x="64" y="192" w="64" h="96" />
+							<frame x="128" y="192" w="64" h="96" />
+							<frame x="192" y="192" w="64" h="96" />
+							<frame x="256" y="192" w="64" h="96" />
+							<frame x="320" y="192" w="64" h="96" />
+						</walkBeard>
+						<idleHeadset loop="true" speed="0.2f">
+							<frame x="0" y="288" w="64" h="96" />
+							<frame x="64" y="288" w="64" h="96" />
+							<frame x="128" y="288" w="64" h="96" />
+							<frame x="192" y="288" w="64" h="96" />
+							<frame x="256" y="288" w="64" h="96" />
+							<frame x="320" y="288" w="64" h="96" />
+						</idleHeadset>
+						<walkHeadset loop="true" speed="0.2f">
+							<frame x="0" y="384" w="64" h="96" />
+							<frame x="64" y="384" w="64" h="96" />
+							<frame x="128" y="384" w="64" h="96" />
+							<frame x="192" y="384" w="64" h="96" />
+							<frame x="256" y="384" w="64" h="96" />
+							<frame x="320" y="384" w="64" h="96" />
+							<frame x="384" y="384" w="64" h="96" />
+							<frame x="448" y="384" w="64" h="96" />
+						</walkHeadset>
+						<walkFlower loop="true" speed="0.2f">
+							<frame x="0" y="480" w="64" h="96" />
+							<frame x="64" y="480" w="64" h="96" />
+							<frame x="128" y="480" w="64" h="96" />
+							<frame x="192" y="480" w="64" h="96" />
+							<frame x="256" y="480" w="64" h="96" />
+							<frame x="320" y="480" w="64" h="96" />
+						</walkFlower>
+						<walkHat loop="true" speed="0.2f">
+							<frame x="0" y="576" w="64" h="96" />
+							<frame x="64" y="576" w="64" h="96" />
+							<frame x="128" y="576" w="64" h="96" />
+							<frame x="192" y="576" w="64" h="96" />
+							<frame x="256" y="576" w="64" h="96" />
+							<frame x="320" y="576" w="64" h="96" />
+							<frame x="384" y="576" w="64" h="96" />
+							<frame x="448" y="576" w="64" h="96" />
+							<frame x="512" y="576" w="64" h="96" />
+							<frame x="576" y="576" w="64" h="96" />
+						</walkHat>
+						<walkGlasses loop="true" speed="0.2f">
+							<frame x="0" y="672" w="64" h="96" />
+							<frame x="64" y="672" w="64" h="96" />
+							<frame x="128" y="672" w="64" h="96" />
+							<frame x="192" y="672" w="64" h="96" />
+							<frame x="256" y="672" w="64" h="96" />
+							<frame x="320" y="672" w="64" h="96" />
+							<frame x="384" y="672" w="64" h="96" />
+							<frame x="448" y="672" w="64" h="96" />
+							<frame x="512" y="672" w="64" h="96" />
+							<frame x="576" y="672" w="64" h="96" />
+						</walkGlasses>
+						<walkSunGlasses loop="true" speed="0.2f">
+							<frame x="0" y="768" w="64" h="96" />
+							<frame x="64" y="768" w="64" h="96" />
+							<frame x="128" y="768" w="64" h="96" />
+							<frame x="192" y="768" w="64" h="96" />
+							<frame x="256" y="768" w="64" h="96" />
+							<frame x="320" y="768" w="64" h="96" />
+						</walkSunGlasses>
+						<walkLarge loop="true" speed="0.2f">
+							<frame x="0" y="864" w="64" h="96" />
+							<frame x="64" y="864" w="64" h="96" />
+							<frame x="128" y="864" w="64" h="96" />
+							<frame x="192" y="864" w="64" h="96" />
+							<frame x="256" y="864" w="64" h="96" />
+							<frame x="320" y="864" w="64" h="96" />
+						</walkLarge>
+						<walkBigHead loop="true" speed="0.2f">
+							<frame x="0" y="960" w="64" h="96" />
+							<frame x="64" y="960" w="64" h="96" />
+							<frame x="128" y="960" w="64" h="96" />
+							<frame x="192" y="960" w="64" h="96" />
+							<frame x="256" y="960" w="64" h="96" />
+							<frame x="320" y="960" w="64" h="96" />
+							<frame x="384" y="960" w="64" h="96" />
+						</walkBigHead>
+						<walkDog loop="true" speed="0.2f">
+							<frame x="0" y="1056" w="64" h="96" />
+							<frame x="64" y="1056" w="64" h="96" />
+							<frame x="128" y="1056" w="64" h="96" />
+							<frame x="192" y="1056" w="64" h="96" />
+							<frame x="256" y="1056" w="64" h="96" />
+							<frame x="320" y="1056" w="64" h="96" />
+						</walkDog>
+					</animations>
+				</villager>
+				<instances>
+					<lvl1>
+						<instance allyType ="merchant" entityType="15" x="576" y="3392" movementArea="300"/>
+					</lvl1>
+					<lvl3>
+						<instance allyType ="merchant" entityType="15" x="9536" y="1920" movementArea="300" dialog="DIALOG09" />
+						<instance allyType ="villager" entityType="22" x="8320" y="1920" movementArea="200" movementType ="1" villagerType="3" dialog="DIALOG08"/>
+						<instance allyType ="villager" entityType="22" x="9280" y="1920" movementArea="100" movementType ="1" villagerType="1" dialog="DIALOG07"/>
+						<instance allyType ="villager" entityType="22" x="9856" y="8576" movementType ="2" villagerType="5" dialog="DIALOG04"/>
+						<instance allyType ="villager" entityType="22" x="5952" y="6400" movementType ="2" villagerType="7" dialog="DIALOG11"/>
+						<instance allyType ="villager" entityType="22" x="16768" y="5696" movementType ="2" villagerType="4" dialog="DIALOG10"/>
+						<instance allyType ="villager" entityType="22" x="9984" y="2368" movementArea="200" movementType ="1" villagerType="2"/>
+						<instance allyType ="villager" entityType="22" x="10176" y="1920" movementArea="200" movementType ="1" villagerType="9"/>
+						<instance allyType ="villager" entityType="22" x="9920" y="1920" movementType ="2" villagerType="6"/>
+						<instance allyType ="villager" entityType="22" x="8640" y="1920" movementType ="2" villagerType="10"/>
+						<instance allyType ="villager" entityType="22" x="8832" y="1920" movementType ="2" villagerType="8"/>
+						<instance allyType ="villager" entityType="22" x="10368" y="2368" movementType ="2" villagerType="8"/>
+						<instance allyType ="villager" entityType="22" x="9728" y="2368" movementType ="2" villagerType="9"/>
+						<instance allyType ="villager" entityType="22" x="10496" y="2368" movementType ="2" villagerType="10"/>
+					</lvl3>
+				</instances>
 			</allies>
 			<currencyOrb>
 				<orbSmall x="0" y="0" w="64" h="64" texture="Assets/Textures/Objects/soulOrb.png">
@@ -935,7 +1089,12 @@
 				<text maxW="620" maxH="167" offsetX="197" offsetY="58" font="Assets/Fonts/ttf_pixolde_bold.ttf" pointSize="30" />
 				<images w="160" h="160" offsetX="23" offsetY="21">
 					<image name="Kim" fotoPath="Assets/Textures/Menus/Dialogues/KIM.png" recuadroPath="Assets/Textures/Menus/Dialogues/RecuadroKim.png"/>
-					<image name="Flo" fotoPath="Assets/Textures/Menus/Dialogues/FLO.png" recuadroPath="Assets/Textures/Menus/Dialogues/RecuadroFlo.png"/>
+					<image name="Flo"  recuadroPath="Assets/Textures/Menus/Dialogues/Recuadro.png"/>
+					<image name="Mike"  recuadroPath="Assets/Textures/Menus/Dialogues/Recuadro.png"/>
+					<image name="Fiona"  recuadroPath="Assets/Textures/Menus/Dialogues/Recuadro.png"/>
+					<image name="Jack"  recuadroPath="Assets/Textures/Menus/Dialogues/Recuadro.png"/>
+					<image name="Margaret" recuadroPath="Assets/Textures/Menus/Dialogues/RecuadroMargaret.png"/>
+					<image name="Merc" fotoPath="Assets/Textures/Menus/Dialogues/FLO.png" recuadroPath="Assets/Textures/Menus/Dialogues/Recuadro.png"/>
 				</images>
 			</dialoguePanel>
 			<DIALOG01>
@@ -967,15 +1126,60 @@
 				<text textId="DIALOG04_14" talker="Kim" />
 			</DIALOG04>
 			<DIALOG05>
-				<text textId="DIALOG04_01" talker="Flo" />
+				<text textId="DIALOG05_01" talker="Merc" />
 			</DIALOG05>
+			<DIALOG06>
+				<text textId="DIALOG06_01" talker="Kim" />
+			</DIALOG06>
+			<DIALOG07>
+				<text textId="DIALOG07_01" talker="Margaret" />
+				<text textId="DIALOG07_02" talker="Kim" />
+			</DIALOG07>
+			<DIALOG08>
+				<text textId="DIALOG08_01" talker="Jack" />
+				<text textId="DIALOG08_02" talker="Kim" />
+				<text textId="DIALOG08_03" talker="Jack" />
+				<text textId="DIALOG08_04" talker="Jack" />
+				<text textId="DIALOG08_05" talker="Jack" />
+				<text textId="DIALOG08_06" talker="Kim" />
+				<text textId="DIALOG08_07" talker="Jack" />
+				<text textId="DIALOG08_08" talker="Jack" />
+				<text textId="DIALOG08_09" talker="Kim" />
+			</DIALOG08>
+			<DIALOG09>
+				<text textId="DIALOG09_01" talker="Merc" />
+				<text textId="DIALOG09_02" talker="Kim" />
+				<text textId="DIALOG09_03" talker="Merc" />
+				<text textId="DIALOG09_04" talker="Merc" />
+				<text textId="DIALOG09_05" talker="Kim" />
+				<text textId="DIALOG09_06" talker="Merc" />
+				<text textId="DIALOG09_07" talker="Merc" />
+				<text textId="DIALOG09_08" talker="Kim" />
+				<text textId="DIALOG09_09" talker="Kim" />
+			</DIALOG09>
+			<DIALOG10>
+				<text textId="DIALOG10_01" talker="Fiona" />
+				<text textId="DIALOG10_02" talker="Fiona" />
+				<text textId="DIALOG10_03" talker="Fiona" />
+				<text textId="DIALOG10_04" talker="Fiona" />
+				<text textId="DIALOG10_05" talker="Fiona" />
+			</DIALOG10>
+			<DIALOG11>
+				<text textId="DIALOG11_01" talker="Mike" />
+				<text textId="DIALOG11_02" talker="Mike" />
+				<text textId="DIALOG11_03" talker="Mike" />
+				<text textId="DIALOG11_04" talker="Mike" />
+				<text textId="DIALOG11_05" talker="Mike" />
+				<text textId="DIALOG11_06" talker="Mike" />
+			</DIALOG11>
 		</dialogues>
 	</scene>
 	<audio>
 		<music>
-			<menuMus path="Assets/Audio/Music/menu_intro.wav" />
-			<lvl1Mus path="Assets/Audio/Music/lvl_1-5_music.wav" />
-			<lvl2Mus path="Assets/Audio/Music/lvl_6-11_music.wav" />
+			<menuMus path="Assets/Audio/Music/menu_FINAL.wav" />
+			<lvl1Mus path="Assets/Audio/Music/Tutorial_FINAL.wav" />
+			<lvl2Mus path="Assets/Audio/Music/Capa-1_FINAL.wav" />
+			<lvl3Mus path="Assets/Audio/Music/Onirica_FINAL.wav" />
 			<winMus path="Assets/Audio/Music/ending.wav" />
 			<loseMus path="Assets/Audio/Music/died.wav" />
 			<bossMus path="Assets/Audio/Music/final_boss.wav" />

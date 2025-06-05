@@ -6,6 +6,7 @@
 #include "MainMenu.h"
 #include "Window.h"
 #include "TextManager.h"
+#include "tracy/Tracy.hpp"   
 
 GuiControlButton::GuiControlButton(const char* name, SDL_Rect bounds, const char* text, SDL_Texture* btTex) : GuiControl(GuiControlType::BUTTON, id, name)
 {
@@ -29,6 +30,7 @@ GuiControlButton::~GuiControlButton()
 
 bool GuiControlButton::Update(float dt)
 {
+	ZoneScoped;
 	/*if (state != GuiControlState::DISABLED)*/
 	
 	// L16: TODO 3: Update the state of the GUiButton according to the mouse position

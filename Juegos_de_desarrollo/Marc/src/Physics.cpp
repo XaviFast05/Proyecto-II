@@ -42,6 +42,7 @@ bool Physics::Start()
 // 
 bool Physics::PreUpdate()
 {
+	ZoneScoped;
 	bool ret = true;
 
 	// Step (update) the World

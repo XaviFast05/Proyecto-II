@@ -5,6 +5,7 @@
 #include "Textures.h"
 #include "log.h"
 #include "Scene.h"
+#include "tracy/Tracy.hpp"   
 
 SoulRockParticle::SoulRockParticle()
 {
@@ -47,6 +48,7 @@ bool SoulRockParticle::Start() {
 
 bool SoulRockParticle::Update(float dt)
 {
+	ZoneScoped;
 	bool ret = true;
 	if (isCasted)
 	{

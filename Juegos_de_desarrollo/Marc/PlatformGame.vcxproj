@@ -164,7 +164,7 @@
     <ClCompile Include="src\ParticleManager.cpp" />
     <ClCompile Include="src\PickaxeManager.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
-    <ClCompile Include="src\DeathMenu.cpp" />
+    <ClCompile Include="src\VideoPlayer.cpp" />
     <ClCompile Include="src\GroundEnemy.cpp" />
     <ClCompile Include="src\BatEnemy.cpp" />
     <ClCompile Include="src\Audio.cpp" />
@@ -199,6 +199,7 @@
     <ClCompile Include="src\UpgradesMenu.cpp" />
     <ClCompile Include="src\MerchantMenu.cpp" />
     <ClCompile Include="src\Vector2D.cpp" />
+    <ClCompile Include="src\Villager.cpp" />
     <ClCompile Include="src\WallBrakerParticle.cpp" />
     <ClCompile Include="src\Window.cpp" />
     <ClCompile Include="src\WinMenu.cpp" />
@@ -220,7 +221,7 @@
     <ClInclude Include="src\ParticleManager.h" />
     <ClInclude Include="src\PickaxeManager.h" />
     <ClInclude Include="src\Bullet.h" />
-    <ClInclude Include="src\DeathMenu.h" />
+    <ClInclude Include="src\VideoPlayer.h" />
     <ClInclude Include="src\GroundEnemy.h" />
     <ClInclude Include="src\BatEnemy.h" />
     <ClInclude Include="src\Animation.h" />
@@ -258,6 +259,7 @@
     <ClInclude Include="src\Timer.h" />
     <ClInclude Include="src\UpgradesMenu.h" />
     <ClInclude Include="src\Vector2D.h" />
+    <ClInclude Include="src\Villager.h" />
     <ClInclude Include="src\WallBrakerParticle.h" />
     <ClInclude Include="src\Window.h" />
     <ClInclude Include="src\WinMenu.h" />

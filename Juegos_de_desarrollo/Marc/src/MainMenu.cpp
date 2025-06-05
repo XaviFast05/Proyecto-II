@@ -94,6 +94,7 @@ bool MainMenu::Start()
 
 bool MainMenu::Update(float dt)
 {
+	ZoneScoped;
 	_dt = dt;
 
 	Engine::GetInstance().render.get()->DrawTextureBuffer(bgTex, 0, 0, false, MENUS);

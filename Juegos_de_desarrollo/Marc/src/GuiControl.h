@@ -7,6 +7,7 @@
 #include "Vector2D.h"
 #include "Textures.h"
 #include "Engine.h"
+#include "tracy/Tracy.hpp"   
 
 enum class GuiControlType
 {
@@ -100,6 +101,7 @@ public:
 	// Called each loop iteration
 	virtual bool Update(float dt)
 	{
+		ZoneScoped;
 		return true;
 	}
 
