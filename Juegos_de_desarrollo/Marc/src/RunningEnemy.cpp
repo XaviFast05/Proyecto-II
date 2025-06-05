@@ -17,8 +17,6 @@ bool RunningEnemy::Start() {
     position.setY(parameters.attribute("y").as_float());
     texW = parameters.attribute("w").as_float();
     texH = parameters.attribute("h").as_float();
-    drawOffsetX = 0;
-    drawOffsetY = 0;
     chaseArea = parameters.child("properties").attribute("chaseArea").as_float();
     deathTime = parameters.child("properties").attribute("deathTime").as_float();
 
@@ -33,7 +31,6 @@ bool RunningEnemy::Start() {
     tired.LoadAnimations(parameters.child("animations").child("tired"));
     death.LoadAnimations(parameters.child("animations").child("death"));
     currentAnimation = &idle;
-
 
     pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), 60, bodyType::DYNAMIC);
     pbody->ctype = ColliderType::ENEMY;
@@ -55,8 +52,6 @@ bool RunningEnemy::Start() {
     pugi::xml_document audioFile;
     pugi::xml_parse_result result = audioFile.load_file("config.xml");
     audioNode = audioFile.child("config").child("audio").child("fx");
-
-    LOG("RunningEnemy creado en posición X: %.2f, Y: %.2f", position.getX(), position.getY());
 
     return true;
 }

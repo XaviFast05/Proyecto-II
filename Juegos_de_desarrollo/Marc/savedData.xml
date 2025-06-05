@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
-
 <savedData saved="true" level="1" time="0">
 	<playerPrefs>
 		<fullscreen toggle="0" />
 		<musicVolume value="0" />
 		<sfxVolume value="48" />
 	</playerPrefs>
-	<player soulPoints="74" hits="3" />
+	<player soulPoints="0" hits="3" />
 	<lvl1 played="true">
 		<enemy0 dead="false" x="5216" y="2528" />
 		<enemy1 dead="false" x="4640" y="928" />
@@ -15,62 +14,39 @@
 		<enemy4 dead="false" x="9632" y="1375" />
 		<checkPoint0 alight="true" x="" y="" />
 		<checkPoint1 alight="true" x="" y="" />
-		<enemy5 dead="false" x="5390" y="2333" />
-		<enemy6 dead="false" x="1174" y="3296" />
+		<enemy5 dead="false" x="5280" y="2272" />
+		<enemy6 dead="false" x="1120" y="3232" />
 		<enemy7 dead="false" x="1120" y="3232" />
 		<player x="159" y="3400" />
 		<checkPoint2 alight="true" />
 		<destructibleWall0 broke="true" />
 	</lvl1>
-	<upgrades dash="false" charged="true" up0="false" up1="false" up2="false" up3="false" up4="false" up5="false" up6="false" up7="false" />
-	<lvl3 played="true">
-		<enemy0 dead="false" x="7606" y="7965" />
-		<enemy1 dead="false" x="9462" y="6436" />
-		<enemy2 dead="false" x="13536" y="7518" />
-		<enemy3 dead="false" x="14190" y="8135" />
-		<enemy4 dead="false" x="15520" y="5747" />
-		<enemy5 dead="false" x="15967" y="5681" />
-		<enemy6 dead="false" x="13412" y="6030" />
-		<enemy7 dead="false" x="8800" y="2592" />
-		<enemy8 dead="false" x="6028" y="3991" />
-		<enemy9 dead="false" x="6278" y="6232" />
-		<enemy10 dead="false" x="7393" y="7337" />
-		<enemy11 dead="false" x="10912" y="5944" />
-		<enemy12 dead="false" x="12235" y="5921" />
-		<enemy13 dead="false" x="12714" y="5893" />
-		<enemy14 dead="false" x="15136" y="4768" />
-		<enemy15 dead="false" x="14816" y="5984" />
-		<enemy16 dead="false" x="14752" y="2848" />
-		<enemy17 dead="false" x="13087" y="3040" />
-		<player x="16320" y="6517" />
-		<enemy18 dead="false" x="12955" y="3452" />
-		<enemy19 dead="false" x="13023" y="5135" />
-		<enemy20 dead="false" x="10335" y="5858" />
-		<enemy21 dead="false" x="10787" y="5825" />
-		<enemy22 dead="false" x="10402" y="3271" />
-		<enemy23 dead="false" x="9693" y="3166" />
-		<enemy24 dead="false" x="6360" y="4511" />
-		<checkPoint0 alight="true" />
-		<checkPoint1 alight="true" />
-		<checkPoint2 alight="true" />
-		<checkPoint3 alight="true" />
-		<checkPoint4 alight="true" />
-		<destructibleWall0 broke="false" />
-		<destructibleWall1 broke="false" />
-		<destructibleWall2 broke="false" />
-		<destructibleWall3 broke="false" />
-		<destructibleWall4 broke="false" />
-		<destructibleWall5 broke="true" />
+	<upgrades dash="false" charged="false" up0="false" up1="false" up2="false" up3="false" up4="false" up5="false" up6="false" up7="false" />
+	<lvl3 played="false">
+		<enemy0 dead="false" x="9760" y="8534" />
+		<enemy1 dead="false" x="9780" y="8574" />
+		<enemy2 dead="false" x="8150" y="7969" />
+		<enemy3 dead="false" x="8417" y="7969" />
+		<enemy4 dead="false" x="8416" y="6433" />
+		<enemy5 dead="false" x="14623" y="3809" />
+		<enemy6 dead="false" x="14944" y="3809" />
+		<enemy7 dead="false" x="11743" y="7393" />
+		<enemy8 dead="false" x="12256" y="8097" />
+		<enemy9 dead="false" x="14880" y="7329" />
+		<enemy10 dead="false" x="16159" y="6561" />
+		<enemy11 dead="false" x="14367" y="3809" />
+		<enemy12 dead="false" x="15008" y="3809" />
+		<enemy13 dead="false" x="8440" y="7891" />
+		<enemy14 dead="false" x="8358" y="7969" />
+		<enemy15 dead="false" x="7652" y="7969" />
+		<enemy16 dead="false" x="7600" y="7936" />
+		<enemy17 dead="false" x="7652" y="7906" />
+		<player x="5382" y="6431" />
 	</lvl3>
-	<lvl6 played="true">
-		<player x="5307" y="2037" />
-		<enemy0 dead="false" x="2825" y="2051" />
-	</lvl6>
-	<lvl4 played="true">
-		<player x="6463" y="1776" />
-		<enemy0 dead="true" x="3962" y="771" />
-		<destructibleWall0 broke="true" />
-		<destructibleWall1 broke="true" />
+	<lvl6 played="false" />
+	<lvl4 played="false">
+		<player x="4032" y="1792" />
+		<enemy0 dead="false" x="3389" y="830" />
 	</lvl4>
 	<lvl2 played="false" />
 	<lvl5 played="false">
