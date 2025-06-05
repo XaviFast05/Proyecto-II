@@ -728,11 +728,11 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	//Colision de los sensores
 	if (physA == leftSensor || physA == rightSensor)
 	{
-		if (physA == leftSensor && physB->ctype == ColliderType::PLATFORM || physA == leftSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == leftSensor && physB->ctype == ColliderType::PICKAXE)
+		if (physA == leftSensor && physB->ctype == ColliderType::PLATFORM || physA == leftSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == leftSensor && physB->ctype == ColliderType::PICKAXE || physA == leftSensor && physB->ctype == ColliderType::DESTRUCTIBLE_WALL)
 		{
 			leftBlocked = true;
 		}
-		else if (physA == rightSensor && physB->ctype == ColliderType::PLATFORM || physA == rightSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == rightSensor && physB->ctype == ColliderType::PICKAXE)
+		else if (physA == rightSensor && physB->ctype == ColliderType::PLATFORM || physA == rightSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == rightSensor && physB->ctype == ColliderType::PICKAXE || physA == leftSensor && physB->ctype == ColliderType::DESTRUCTIBLE_WALL)
 		{
 			rightBlocked = true;
 		}
@@ -899,12 +899,12 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 {
 	//Colision de los sensores
-	if (physA == leftSensor && physB->ctype == ColliderType::PLATFORM || physA == leftSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == leftSensor && physB->ctype == ColliderType::PICKAXE)
+	if (physA == leftSensor && physB->ctype == ColliderType::PLATFORM || physA == leftSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == leftSensor && physB->ctype == ColliderType::PICKAXE || physA == leftSensor && physB->ctype == ColliderType::DESTRUCTIBLE_WALL)
 	{
 		leftBlocked = false;
 	}
 
-	if (physA == rightSensor && physB->ctype == ColliderType::PLATFORM || physA == rightSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == rightSensor && physB->ctype == ColliderType::PICKAXE)
+	if (physA == rightSensor && physB->ctype == ColliderType::PLATFORM || physA == rightSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == rightSensor && physB->ctype == ColliderType::PICKAXE || physA == leftSensor && physB->ctype == ColliderType::DESTRUCTIBLE_WALL)
 	{
 		rightBlocked = false;
 	}

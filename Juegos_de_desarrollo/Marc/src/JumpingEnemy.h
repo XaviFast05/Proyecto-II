@@ -24,7 +24,7 @@ private:
     
     // Render & animación
     int drawOffsetX = 0, drawOffsetY = 0;
-    Animation idle, walk, jump, attack, death;
+    Animation idle, walk, jump, attack, death, land;
     Animation* currentAnimation = nullptr;
 
     // Movimiento / física

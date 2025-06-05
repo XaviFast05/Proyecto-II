@@ -524,36 +524,41 @@
 						</death>
 					</animations>
 				</child>
-				<jumper x="250" y="350" w="64" h="64" texture="Assets/Textures/Enemies/Jumper/saltador.png">
+				<jumper x="250" y="350" w="128" h="128" texture="Assets/Textures/Enemies/Jumper/saltador.png">
 					<properties speed="4" chaseArea="600" deathTime="1.0f" lives="40" pushForce="1" pushFriction="5" lootAmount="5" canPush="false" />
 					<animations>
 						<idle loop="true" speed="0.1f">
-							<frame x="0" y="0" w="64" h="64" />
-							<frame x="64" y="0" w="64" h="64" />
-							<frame x="128" y="0" w="64" h="64" />
-							<frame x="192" y="0" w="64" h="64" />
+							<frame x="0" y="0" w="128" h="128" offsetX="0" offsetY="15" />
+							<frame x="128" y="0" w="128" h="128" offsetX="0" offsetY="15" />
+							<frame x="256" y="0" w="128" h="128" offsetX="0" offsetY="15" />
+							<frame x="384" y="0" w="128" h="128" offsetX="0" offsetY="15" />
 						</idle>
-						<walk loop="true" speed="0.1f">
-							<frame x="0" y="0" w="64" h="64" />
-							<frame x="64" y="0" w="64" h="64" />
-							<frame x="128" y="0" w="64" h="64" />
-							<frame x="192" y="0" w="64" h="64" />
-						</walk>
-						<jump loop="false" speed="0.2f">
-							<frame x="0" y="128" w="64" h="64" />
+						<jump loop="true" speed="0.1f">
+							<frame x="0" y="128" w="128" h="128" offsetX="0" offsetY="15" />
 						</jump>
+						<land loop="false" speed="0.2f">
+							<frame x="0" y="256" w="128" h="128" offsetX="0" offsetY="15" />
+							<frame x="128" y="256" w="128" h="128" offsetX="0" offsetY="15" />
+							<frame x="256" y="256" w="128" h="128" offsetX="0" offsetY="15" />
+						</land>
 						<attack loop="true" speed="0.2f">
-							<frame x="0" y="64" w="64" h="64" />
+							<frame x="0" y="128" w="64" h="64" offsetX="0" offsetY="15" />
 						</attack>
 						<hurt loop=" false" speed="0.2f">
-							<frame x="0" y="64" w="64" h="64" />
+							<frame x="0" y="128" w="128" h="128" offsetX="0" offsetY="15" />
 						</hurt>
 						<death loop=" false" speed="0.1f">
-							<frame x="64" y="64" w="64" h="64" />
+							<frame x="0" y="384" w="128" h="128" offsetX="0" offsetY="15" />
+							<frame x="128" y="384" w="128" h="128" offsetX="0" offsetY="15" />
+							<frame x="256" y="384" w="128" h="128" offsetX="0" offsetY="15" />
+							<frame x="384" y="384" w="128" h="128" offsetX="0" offsetY="15" />
+							<frame x="512" y="384" w="128" h="128" offsetX="0" offsetY="15"/>
+							<frame x="640" y="384" w="128" h="128" offsetX="0" offsetY="15" />
+							<frame x="768" y="384" w="128" h="128" offsetX="0" offsetY="15" />
+							<frame x="896" y="384" w="128" h="128" offsetX="0" offsetY="15" />
 						</death>
 					</animations>
-				</jumper>
-				<runner x="3390" y="830" w="64" h="64" texture="Assets/Textures/Enemies/Runner/cabra.png">
+				</jumper>				<runner x="3390" y="830" w="64" h="64" texture="Assets/Textures/Enemies/Runner/cabra.png">
 					<properties speed="9" chaseArea="700" deathTime="1.0f" lives="10" pushForce="1" pushFriction="5" lootAmount="5" canPush="false" />
 					<animations>
 						<idle loop="true" speed="0.1f">
