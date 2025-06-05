@@ -55,6 +55,8 @@
       <Filter>CutsceneManager</Filter>
     </ClCompile>
     <ClCompile Include="src\DestructibleWall.cpp" />
+    <ClCompile Include="src\EnvironmentParticles.cpp" />
+    <ClCompile Include="src\Villager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Ally.h" />
@@ -115,6 +117,8 @@
       <Filter>CutsceneManager</Filter>
     </ClInclude>
     <ClInclude Include="src\DestructibleWall.h" />
+    <ClInclude Include="src\EnvironmentParticles.h" />
+    <ClInclude Include="src\Villager.h" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="config.xml" />
