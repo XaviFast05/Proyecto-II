@@ -400,7 +400,7 @@ bool Scene::Update(float dt)
 
 	}
 
-	if (changeLevel || level == LVL1 && Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+	if (changeLevel )
 	{
 		int playerPOSX = player->GetPosition().getX();
 		int playerPOSY = player->GetPosition().getY();
@@ -440,7 +440,7 @@ bool Scene::Update(float dt)
 			Engine::GetInstance().fade.get()->Fade((Module*)this, (Module*)this, 30);
 			level = LVL3;
 		}
-		else if (level == LVL6)
+		else if (level == LVL6 && enemies[0]->dead)
 		{
 			if (playerPOSY > 1500)
 			{

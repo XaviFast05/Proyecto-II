@@ -847,23 +847,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		Engine::GetInstance().scene.get()->SaveState();
 		break;
 	case ColliderType::LEVEL_CHANGER:
-		if (Engine::GetInstance().scene.get()->level == LVL1) {
-			Engine::GetInstance().scene.get()->ChangeLevel();
-		}
-		else if (Engine::GetInstance().scene.get()->level == LVL2) {
-		}
-		else if (Engine::GetInstance().scene.get()->level == LVL3) {
-			Engine::GetInstance().scene.get()->ChangeLevel();
-		}
-		else if (Engine::GetInstance().scene.get()->level == LVL4) {
-			Engine::GetInstance().scene.get()->ChangeLevel();
-		}
-		else if (Engine::GetInstance().scene.get()->level == LVL5) {
-			Engine::GetInstance().scene.get()->ChangeLevel();
-		}
-		else if (Engine::GetInstance().scene.get()->level == LVL6) {
-			Engine::GetInstance().scene.get()->ChangeLevel();
-		}
+		Engine::GetInstance().scene.get()->ChangeLevel();
 		break;
 	
 	case ColliderType::BOSS_STARTER:

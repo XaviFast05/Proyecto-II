@@ -16,9 +16,9 @@
 		<EN>Wow, I can't jump and reach the top of this wall... Well, it's time to pull out the picks! That way I’ll be able to climb much higher.</EN>
 	</Text>
 	<Text id="DIALOG02_02">
-		<ES>A ver las instrucciones… “Pulsa el botón C para lanzar, y X para atacar”. Vaya, no recuerdo que funcionaran así. De todas formas, me alegro de que las haya traído.</ES>
-		<CA>A veure les instruccions... "Prem el botó C per llançar, i X per atacar". Vaja, no recordava que funcionessin així. En tot cas, m’alegro d’haver-les portat.</CA>
-		<EN>Let’s check the instructions... “Press the C button to throw, and X to attack.” Huh, I don’t remember them working like that. Anyway, I’m glad I brought them.</EN>
+		<ES>Gracias por enseñarme, papá</ES>
+		<CA>Gràcies per ensenyar-me, pare.</CA>
+		<EN>Thank you for teaching me, dad.</EN>
 	</Text>
 	<Text id="DIALOG03_01">
 		<ES>Guau, qué foso tan profundo, me da miedo de solo pensar qué habrá abajo… ¿Papá realmente está ahí abajo?</ES>

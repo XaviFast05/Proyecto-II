@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<savedData saved="true" level="4" time="0">
+<savedData saved="true" level="1" time="0">
 	<playerPrefs>
 		<fullscreen toggle="0" />
 		<musicVolume value="0" />
@@ -22,8 +22,8 @@
 		<destructibleWall0 broke="true" />
 	</lvl1>
 	<upgrades dash="false" charged="false" up0="false" up1="false" up2="false" up3="false" up4="false" up5="false" up6="false" up7="false" />
-	<lvl3 played="true">
-		<enemy0 dead="false" x="7654" y="7948" />
+	<lvl3 played="false">
+		<enemy0 dead="false" x="7647" y="7968" />
 		<enemy1 dead="false" x="9440" y="6432" />
 		<enemy2 dead="false" x="13536" y="7519" />
 		<enemy3 dead="false" x="14112" y="8160" />
@@ -32,8 +32,8 @@
 		<enemy6 dead="false" x="13408" y="6048" />
 		<enemy7 dead="false" x="8800" y="2592" />
 		<enemy8 dead="false" x="5984" y="3936" />
-		<enemy9 dead="false" x="6091" y="6166" />
-		<enemy10 dead="false" x="7340" y="7326" />
+		<enemy9 dead="false" x="6176" y="6176" />
+		<enemy10 dead="false" x="7392" y="7328" />
 		<enemy11 dead="false" x="10975" y="5919" />
 		<enemy12 dead="false" x="12256" y="6112" />
 		<enemy13 dead="false" x="12639" y="6112" />
@@ -41,7 +41,7 @@
 		<enemy15 dead="false" x="14816" y="5984" />
 		<enemy16 dead="false" x="14752" y="2848" />
 		<enemy17 dead="false" x="13087" y="3040" />
-		<player x="5381" y="6431" />
+		<player x="9736" y="6969" />
 		<enemy18 dead="false" x="13087" y="3488" />
 		<enemy19 dead="false" x="13023" y="5280" />
 		<enemy20 dead="false" x="10272" y="5792" />
@@ -65,11 +65,11 @@
 		<player x="4096" y="2048" />
 		<enemy0 dead="false" x="3264" y="2110" />
 	</lvl6>
-	<lvl4 played="true">
-		<player x="4032" y="1792" />
-		<enemy0 dead="false" x="5319" y="825" />
-		<destructibleWall0 broke="false" />
-		<destructibleWall1 broke="false" />
+	<lvl4 played="false">
+		<player x="6456" y="1823" />
+		<enemy0 dead="true" x="3959" y="771" />
+		<destructibleWall0 broke="true" />
+		<destructibleWall1 broke="true" />
 	</lvl4>
 	<lvl2 played="false" />
 	<lvl5 played="false">
