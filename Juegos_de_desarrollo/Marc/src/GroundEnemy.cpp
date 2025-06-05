@@ -64,6 +64,9 @@ bool GroundEnemy::Start() {
 	routeDestinationIndex = 0;
 	destinationPoint = route[routeDestinationIndex];
 
+	position.setX(destinationPoint.getX());
+	position.setY(destinationPoint.getY());
+
 	//INIT PHYSICS
 	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(),  30, bodyType::DYNAMIC);
 	pbody->ctype = ColliderType::ENEMY;

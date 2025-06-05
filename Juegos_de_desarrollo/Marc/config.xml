@@ -606,7 +606,7 @@
 				<instances>
 					<lvl1>
 						<instance enemyType="skeleton" entityType="5">
-							<point x="4575" y=" 1320" />
+							<point x="4650" y=" 1320" />
 							<point x="4800" y=" 1320" />
 						</instance>
 						<instance enemyType="skeleton" entityType="5">
