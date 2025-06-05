@@ -525,7 +525,7 @@
 					</animations>
 				</child>
 				<jumper x="250" y="350" w="128" h="128" texture="Assets/Textures/Enemies/Jumper/saltador.png">
-					<properties speed="4" chaseArea="600" deathTime="1.0f" lives="40" pushForce="1" pushFriction="5" lootAmount="5" canPush="false" />
+					<properties speed="4" chaseArea="600" deathTime="1.0f" lives="10" pushForce="1" pushFriction="5" lootAmount="5" canPush="false" />
 					<animations>
 						<idle loop="true" speed="0.1f">
 							<frame x="0" y="0" w="128" h="128" offsetX="0" offsetY="15" />
@@ -559,7 +559,7 @@
 						</death>
 					</animations>
 				</jumper>				
-				<runner x="3390" y="830" w="64" h="64" texture="Assets/Textures/Enemies/Runner/cabra.png">
+				<runner x="3590" y="730" w="64" h="64" texture="Assets/Textures/Enemies/Runner/cabra.png">
 					<properties speed="9" chaseArea="700" deathTime="1.0f" lives="10" pushForce="1" pushFriction="5" lootAmount="5" canPush="false" />
 					<animations>
 						<idle loop="true" speed="0.1f">
@@ -823,8 +823,8 @@
 					</lvl3>
 					<lvl4>
 						<instance enemyType="runner" entityType="11">
-							<point x="3390" y="830" />
-							<point x="3390" y="830" />
+							<point x="3590" y="730" />
+							<point x="3590" y="730" />
 						</instance>
 					</lvl4>
 					<lvl5>

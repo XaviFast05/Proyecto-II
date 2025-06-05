@@ -28,7 +28,7 @@ bool JumpingEnemy::Start() {
     drawOffsetX = 0;
     drawOffsetY = 0;
 
-    lives = 10;
+    
 
     idle.LoadAnimations(parameters.child("animations").child("idle"));
     walk.LoadAnimations(parameters.child("animations").child("walk"));
@@ -80,13 +80,51 @@ bool JumpingEnemy::Start() {
     swordSlashSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("swordSFX").attribute("path").as_string());
     skeletonDeathSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("skeletonDeathSFX").attribute("path").as_string());
 
+    lives = 1;
+
     return true;
 }
 
 bool JumpingEnemy::Update(float dt) {
     ZoneScoped;
-    if (dead) return true;
+    if (state == DEAD) {
+        // Arrancar animación de muerte
+        currentAnimation = &death;
+        currentAnimation->Update();
 
+        // Soltar loot una sola vez
+        if (!droppedLoot) {
+            DropLoot();
+            pbody->ctype = ColliderType::DEADENEMY;
+            droppedLoot = true;
+        }
+
+        // Tras transcurrir deathTime, desactivar el cuerpo
+        if (deathTimer.ReadSec() > deathTime) {
+            pbody->body->SetEnabled(false);
+            dead = true;
+        }
+
+        // Actualizar posición y renderizar la última fase de la animación
+        b2Transform xf = pbody->body->GetTransform();
+        position.setX(METERS_TO_PIXELS(xf.p.x) - texW / 2 + drawOffsetX);
+        position.setY(METERS_TO_PIXELS(xf.p.y) - texH / 1.5 + drawOffsetY);
+
+        if (pbody->body->IsEnabled() &&
+            Engine::GetInstance().render->InCameraView(position.getX(), position.getY(), texW, texH)) {
+            if (dir == LEFT) {
+                Engine::GetInstance().render->DrawTextureBuffer(texture,
+                    (int)position.getX(), (int)position.getY() + 10, false, ENTITIES,
+                    &currentAnimation->GetCurrentFrame());
+            }
+            else {
+                Engine::GetInstance().render->DrawTextureBuffer(texture,
+                    (int)position.getX(), (int)position.getY() + 10, true, ENTITIES,
+                    &currentAnimation->GetCurrentFrame());
+            }
+        }
+        return true;
+    }
     // Si disparo pendiente (al aterrizar), lo lanzo aquí
     if (shouldShoot) {
         projectileManager->ThrowJumpProjectiles(pbody->GetPhysBodyWorldPosition());
