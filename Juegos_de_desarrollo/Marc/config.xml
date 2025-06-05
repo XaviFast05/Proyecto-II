@@ -1077,17 +1077,17 @@
 			</buttons>
 		</winMenu>
 		<dialogues>
-			<dialoguePanel path="Assets/Textures/Menus/Dialogues/Recuadro.png" w="833" h="202" x="224" y="450">
+			<dialoguePanel path="Assets/Textures/Menus/Dialogues/Recuadro.png" w="834" h="201" x="224" y="450">
 				<name maxW="620" maxH="167" offsetX="197" offsetY="10" font="Assets/Fonts/ttf_pixolde_bold.ttf" pointSize="50" />
 				<text maxW="620" maxH="167" offsetX="197" offsetY="58" font="Assets/Fonts/ttf_pixolde_bold.ttf" pointSize="30" />
-				<images w="160" h="160" offsetX="23" offsetY="21">
-					<image name="Kim" fotoPath="Assets/Textures/Menus/Dialogues/KIM.png" recuadroPath="Assets/Textures/Menus/Dialogues/RecuadroKim.png"/>
-					<image name="Flo"  recuadroPath="Assets/Textures/Menus/Dialogues/Recuadro.png"/>
-					<image name="Mike"  recuadroPath="Assets/Textures/Menus/Dialogues/Recuadro.png"/>
-					<image name="Fiona"  recuadroPath="Assets/Textures/Menus/Dialogues/Recuadro.png"/>
-					<image name="Jack"  recuadroPath="Assets/Textures/Menus/Dialogues/Recuadro.png"/>
-					<image name="Margaret" recuadroPath="Assets/Textures/Menus/Dialogues/RecuadroMargaret.png"/>
-					<image name="Merc" fotoPath="Assets/Textures/Menus/Dialogues/FLO.png" recuadroPath="Assets/Textures/Menus/Dialogues/Recuadro.png"/>
+				<images w="170" h="171" offsetX="21" offsetY="15">
+					<image name="Kim" fotoPath="Assets/Textures/Menus/Dialogues/foto kim.png" recuadroPath="Assets/Textures/Menus/Dialogues/Marco Kim.png"/>
+					<image name="Flo"  recuadroPath="Assets/Textures/Menus/Dialogues/Marco abuela.png"/>
+					<image name="Mike"  recuadroPath="Assets/Textures/Menus/Dialogues/Marco abuela.png"/>
+					<image name="Fiona"  recuadroPath="Assets/Textures/Menus/Dialogues/Marco abuela.png"/>
+					<image name="Jack"  fotoPath="Assets/Textures/Menus/Dialogues/Foto luciernaga cascos.png" recuadroPath="Assets/Textures/Menus/Dialogues/Marco luciernaga cascos.png"/>
+					<image name="Margaret" fotoPath="Assets/Textures/Menus/Dialogues/Foto abuela.png" recuadroPath="Assets/Textures/Menus/Dialogues/Marco abuela.png"/>
+					<image name="Merc" fotoPath="Assets/Textures/Menus/Dialogues/Foto mercader.png" recuadroPath="Assets/Textures/Menus/Dialogues/Marco mercader.png"/>
 				</images>
 			</dialoguePanel>
 			<DIALOG01>
