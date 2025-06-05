@@ -296,6 +296,39 @@ bool Map::Load(std::string path, std::string fileName)
                 }
             }
 
+            if (objectGroup->name == "TutJump")
+            {
+                for (Object* object : objectGroup->object)
+                {
+                    PhysBody* c = Engine::GetInstance().physics.get()->CreateRectangleSensor(object->x + object->width / 2, object->y + object->height / 2, object->width, object->height, STATIC);
+                    c->ctype = ColliderType::TUTJUMP;
+                }
+            }
+            if (objectGroup->name == "TutThrow")
+            {
+                for (Object* object : objectGroup->object)
+                {
+                    PhysBody* c = Engine::GetInstance().physics.get()->CreateRectangleSensor(object->x + object->width / 2, object->y + object->height / 2, object->width, object->height, STATIC);
+                    c->ctype = ColliderType::TUTTHROW;
+                }
+            }
+            if (objectGroup->name == "TutMap")
+            {
+                for (Object* object : objectGroup->object)
+                {
+                    PhysBody* c = Engine::GetInstance().physics.get()->CreateRectangleSensor(object->x + object->width / 2, object->y + object->height / 2, object->width, object->height, STATIC);
+                    c->ctype = ColliderType::TUTMAP;
+                }
+            }
+            if (objectGroup->name == "TutAttack")
+            {
+                for (Object* object : objectGroup->object)
+                {
+                    PhysBody* c = Engine::GetInstance().physics.get()->CreateRectangleSensor(object->x + object->width / 2, object->y + object->height / 2, object->width, object->height, STATIC);
+                    c->ctype = ColliderType::TUTATTACK;
+                }
+            }
+
             if (objectGroup->name == "Unlock")
             {
                 for (Object* object : objectGroup->object)

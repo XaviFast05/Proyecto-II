@@ -127,6 +127,9 @@ public:
 
 	void StartNewGame();
 
+	void DrawTutorial();
+	void SetTutorial(int num);
+
 public:
 
 	Levels level;
@@ -185,6 +188,17 @@ private:
 	std::vector<Particle*> particles;
 	pugi::xml_node musicNode;
 
+	int tutorialTextureWidth;
+	SDL_Texture* tutorialJump_esp, * tutorialThrow_esp, * tutorialAttack_esp, * tutorialMap_esp;
+	SDL_Texture* tutorialJump_cat, * tutorialThrow_cat, * tutorialAttack_cat, * tutorialMap_cat;
+	SDL_Texture* tutorialJump_eng, * tutorialThrow_eng, * tutorialAttack_eng, * tutorialMap_eng;
+	std::string tutorialJumpText, tutorialThrowText, tutorialAttackText, tutorialMapText;
+	int tutorialJumpX, tutorialJumpY, tutorialJumpW, tutorialJumpH, tutorialJumpHorizontal;
+	int tutorialThrowX, tutorialThrowY, tutorialThrowW, tutorialThrowH, tutorialThrowHorizontal;
+	int tutorialAttackX, tutorialAttackY, tutorialAttackW, tutorialAttackH, tutorialAttackHorizontal;
+	int tutorialMapX, tutorialMapY, tutorialMapW, tutorialMapH, tutorialMapHorizontal;
+	TTF_Font* tutorialFont;
+
 	std::map<std::string, GuiControlButton*> pauseButtons;
 	
 	bool loadScene = false;
@@ -210,4 +224,8 @@ private:
 	int signTextY;
 	Timer timerShowSignText;
 	int timeShowingSignText;
+
+	int numTutorial;
+	Timer tutorialTimer;
+	int tutorialTime;
 };

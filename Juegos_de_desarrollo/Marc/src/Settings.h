@@ -66,6 +66,7 @@ public:
 	int controlsKeyboard2PanelX, controlsKeyboard2PanelY, controlsKeyboard2PanelW, controlsKeyboard2PanelH;
 	int controlsKeyboard3PanelX, controlsKeyboard3PanelY, controlsKeyboard3PanelW, controlsKeyboard3PanelH;
 	int controlsControllerPanelX, controlsControllerPanelY, controlsControllerPanelW, controlsControllerPanelH;
+
 	float _dt;
 
 	bool controlsOpen = false;
@@ -75,6 +76,7 @@ public:
 	GuiControlCheckBox* fullScreenBox;
 	GuiControlButton* backBt;
 	GuiControlButton* controlsBt;
+
 	GuiControlButton* espBt;
 	GuiControlButton* changeControlBt;
 

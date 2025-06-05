@@ -161,12 +161,53 @@ bool Scene::Start()
 		bt->active = false;
 	}
 
+	tutorialTime = configParameters.child("tutorials").attribute("tutorialTime").as_int();
+	tutorialTextureWidth = configParameters.child("tutorials").attribute("textureW").as_int();
+	tutorialJump_esp = Engine::GetInstance().textures.get()->Load(configParameters.child("tutorials").child("tutorialJump").attribute("texture1").as_string());
+	tutorialJump_cat = Engine::GetInstance().textures.get()->Load(configParameters.child("tutorials").child("tutorialJump").attribute("texture2").as_string());
+	tutorialJump_eng = Engine::GetInstance().textures.get()->Load(configParameters.child("tutorials").child("tutorialJump").attribute("texture3").as_string());
+	tutorialJumpX = configParameters.child("tutorials").child("tutorialJump").attribute("x").as_int();
+	tutorialJumpY = configParameters.child("tutorials").child("tutorialJump").attribute("y").as_int();
+	tutorialJumpW = configParameters.child("tutorials").child("tutorialJump").attribute("w").as_int();
+	tutorialJumpH = configParameters.child("tutorials").child("tutorialJump").attribute("h").as_int();
+	tutorialFont = TTF_OpenFont(configParameters.child("tutorials").attribute("font").as_string(), configParameters.child("tutorials").attribute("fontSize").as_int());
+	tutorialJumpText = Engine::GetInstance().textManager.get()->GetText(configParameters.child("tutorials").child("tutorialJump").attribute("text").as_string());
+	tutorialJumpHorizontal = configParameters.child("tutorials").child("tutorialJump").attribute("textVerticalDisplacement").as_int();
+
+	tutorialThrow_esp = Engine::GetInstance().textures.get()->Load(configParameters.child("tutorials").child("tutorialThrow").attribute("texture1").as_string());
+	tutorialThrow_cat = Engine::GetInstance().textures.get()->Load(configParameters.child("tutorials").child("tutorialThrow").attribute("texture2").as_string());
+	tutorialThrow_eng = Engine::GetInstance().textures.get()->Load(configParameters.child("tutorials").child("tutorialThrow").attribute("texture3").as_string());
+	tutorialThrowX = configParameters.child("tutorials").child("tutorialThrow").attribute("x").as_int();
+	tutorialThrowY = configParameters.child("tutorials").child("tutorialThrow").attribute("y").as_int();
+	tutorialThrowW = configParameters.child("tutorials").child("tutorialThrow").attribute("w").as_int();
+	tutorialThrowH = configParameters.child("tutorials").child("tutorialThrow").attribute("h").as_int();
+	tutorialThrowText = configParameters.child("tutorials").child("tutorialThrow").attribute("text").as_string();
+	tutorialThrowHorizontal = configParameters.child("tutorials").child("tutorialThrow").attribute("textVerticalDisplacement").as_int();
+
+	tutorialAttack_esp = Engine::GetInstance().textures.get()->Load(configParameters.child("tutorials").child("tutorialAttack").attribute("texture1").as_string());
+	tutorialAttack_cat = Engine::GetInstance().textures.get()->Load(configParameters.child("tutorials").child("tutorialAttack").attribute("texture2").as_string());
+	tutorialAttack_eng = Engine::GetInstance().textures.get()->Load(configParameters.child("tutorials").child("tutorialAttack").attribute("texture3").as_string());
+	tutorialAttackX = configParameters.child("tutorials").child("tutorialAttack").attribute("x").as_int();
+	tutorialAttackY = configParameters.child("tutorials").child("tutorialAttack").attribute("y").as_int();
+	tutorialAttackW = configParameters.child("tutorials").child("tutorialAttack").attribute("w").as_int();
+	tutorialAttackH = configParameters.child("tutorials").child("tutorialAttack").attribute("h").as_int();
+	tutorialAttackText = configParameters.child("tutorials").child("tutorialAttack").attribute("text").as_string();
+	tutorialAttackHorizontal = configParameters.child("tutorials").child("tutorialAttack").attribute("textVerticalDisplacement").as_int();
+
+	tutorialMap_esp = Engine::GetInstance().textures.get()->Load(configParameters.child("tutorials").child("tutorialMap").attribute("texture1").as_string());
+	tutorialMap_cat = Engine::GetInstance().textures.get()->Load(configParameters.child("tutorials").child("tutorialMap").attribute("texture2").as_string());
+	tutorialMap_eng = Engine::GetInstance().textures.get()->Load(configParameters.child("tutorials").child("tutorialMap").attribute("texture3").as_string());
+	tutorialMapX = configParameters.child("tutorials").child("tutorialMap").attribute("x").as_int();
+	tutorialMapY = configParameters.child("tutorials").child("tutorialMap").attribute("y").as_int();
+	tutorialMapW = configParameters.child("tutorials").child("tutorialMap").attribute("w").as_int();
+	tutorialMapH = configParameters.child("tutorials").child("tutorialMap").attribute("h").as_int();
+	tutorialMapText = configParameters.child("tutorials").child("tutorialMap").attribute("text").as_string();
+	tutorialMapHorizontal = configParameters.child("tutorials").child("tutorialMap").attribute("textVerticalDisplacement").as_int();
+
 	stoppedTimer = false;
 	finalCandyNum = 0;
 	currentTime = 0;
-
 	transitionDisplace = 0;
-
 
 	pugi::xml_document saveFile;
 	pugi::xml_parse_result result = saveFile.load_file("savedData.xml");
@@ -202,9 +243,6 @@ bool Scene::Start()
 	{
 		LoadTimeLivesCandies();
 	}
-	
-	
-
 
 	musicNode = Engine::GetInstance().GetConfig().child("audio").child("music");
 	if (level == LVL1)Engine::GetInstance().audio.get()->PlayMusic(musicNode.child("lvl1Mus").attribute("path").as_string());
@@ -224,7 +262,6 @@ bool Scene::Start()
 	startBossFight = false;
 	bossMusPlaying = false;
 	bossKilled = false;
-
 
 	//UI
 	heartsTexture = Engine::GetInstance().textures.get()->Load(configParameters.child("ui").child("heartContainers").attribute("path").as_string());
@@ -494,6 +531,8 @@ bool Scene::Update(float dt)
 		//Engine::GetInstance().render.get()->DrawText(timeTilPickaxeText.c_str(), 800, 70, 400, 18);
 	}
 
+	DrawTutorial();
+
 	//livesText = "hits left: " + std::to_string((int)player->hits);
 	//Engine::GetInstance().render.get()->DrawText(livesText.c_str(), 800, 90, 200, 18);
 
@@ -546,7 +585,6 @@ bool Scene::PostUpdate()
 			DrawPickaxesUI();
 
 			DrawCurrencyUI();
-
 		}
 
 
@@ -1035,6 +1073,9 @@ void Scene::DrawMap()
 {
 	float posX = player->pbody->body->GetPosition().x;
 	float posY = player->pbody->body->GetPosition().y;
+
+	LOG("%f %f", posX, posY);
+
 	int centerX = -Engine::GetInstance().render.get()->camera.x / Engine::GetInstance().window.get()->scale + (Engine::GetInstance().window.get()->width / 2) - 360;
 	int centerY = -Engine::GetInstance().render.get()->camera.y / Engine::GetInstance().window.get()->scale + (Engine::GetInstance().window.get()->height / 2) - 180;
 	switch (level) {
@@ -1080,4 +1121,44 @@ void Scene::StartNewGame()
 	}
 
 	saveFile.save_file("savedData.xml");
+}
+
+void Scene::SetTutorial(int num)
+{
+	numTutorial = num;
+	tutorialTimer.Start();
+}
+
+
+void Scene::DrawTutorial() 
+{
+	if (tutorialTimer.ReadSec() > tutorialTime && numTutorial != 0) numTutorial = 0;
+
+	SDL_Rect camera = Engine::GetInstance().render.get()->camera;
+	int windowScale = Engine::GetInstance().window.get()->GetScale();
+	int screenWith = Engine::GetInstance().render.get()->camera.w;
+	switch (numTutorial) {
+	case 1:
+		if (Engine::GetInstance().textManager.get()->GetLanguage()==0) Engine::GetInstance().render.get()->DrawTextureBuffer(tutorialJump_esp, -camera.x / windowScale + screenWith / 2 - tutorialTextureWidth / 2, -camera.y / windowScale + tutorialJumpY, false, HUD);
+		if (Engine::GetInstance().textManager.get()->GetLanguage()==1) Engine::GetInstance().render.get()->DrawTextureBuffer(tutorialJump_cat, -camera.x / windowScale + screenWith / 2 - tutorialTextureWidth / 2, -camera.y / windowScale + tutorialJumpY, false, HUD);
+		if (Engine::GetInstance().textManager.get()->GetLanguage()==2) Engine::GetInstance().render.get()->DrawTextureBuffer(tutorialJump_eng, -camera.x / windowScale + screenWith / 2 - tutorialTextureWidth / 2, -camera.y / windowScale + tutorialJumpY, false, HUD);
+		break;
+	case 2:
+		if (Engine::GetInstance().textManager.get()->GetLanguage() == 0) Engine::GetInstance().render.get()->DrawTextureBuffer(tutorialThrow_esp, -camera.x / windowScale + screenWith / 2 - tutorialTextureWidth / 2, -camera.y / windowScale + tutorialJumpY, false, HUD);
+		if (Engine::GetInstance().textManager.get()->GetLanguage() == 1) Engine::GetInstance().render.get()->DrawTextureBuffer(tutorialThrow_cat, -camera.x / windowScale + screenWith / 2 - tutorialTextureWidth / 2, -camera.y / windowScale + tutorialJumpY, false, HUD);
+		if (Engine::GetInstance().textManager.get()->GetLanguage() == 2) Engine::GetInstance().render.get()->DrawTextureBuffer(tutorialThrow_eng, -camera.x / windowScale + screenWith / 2 - tutorialTextureWidth / 2, -camera.y / windowScale + tutorialJumpY, false, HUD);
+		break;
+	case 4:
+		if (Engine::GetInstance().textManager.get()->GetLanguage() == 0) Engine::GetInstance().render.get()->DrawTextureBuffer(tutorialAttack_esp, -camera.x / windowScale + screenWith / 2 - tutorialTextureWidth / 2, -camera.y / windowScale + tutorialJumpY, false, HUD);
+		if (Engine::GetInstance().textManager.get()->GetLanguage() == 1) Engine::GetInstance().render.get()->DrawTextureBuffer(tutorialAttack_cat, -camera.x / windowScale + screenWith / 2 - tutorialTextureWidth / 2, -camera.y / windowScale + tutorialJumpY, false, HUD);
+		if (Engine::GetInstance().textManager.get()->GetLanguage() == 2) Engine::GetInstance().render.get()->DrawTextureBuffer(tutorialAttack_eng, -camera.x / windowScale + screenWith / 2 - tutorialTextureWidth / 2, -camera.y / windowScale + tutorialJumpY, false, HUD);
+		break;
+	case 3:
+		if (Engine::GetInstance().textManager.get()->GetLanguage() == 0) Engine::GetInstance().render.get()->DrawTextureBuffer(tutorialMap_esp, -camera.x / windowScale + screenWith / 2 - tutorialTextureWidth / 2, -camera.y / windowScale + tutorialJumpY, false, HUD);
+		if (Engine::GetInstance().textManager.get()->GetLanguage() == 1) Engine::GetInstance().render.get()->DrawTextureBuffer(tutorialMap_cat, -camera.x / windowScale + screenWith / 2 - tutorialTextureWidth / 2, -camera.y / windowScale + tutorialJumpY, false, HUD);
+		if (Engine::GetInstance().textManager.get()->GetLanguage() == 2) Engine::GetInstance().render.get()->DrawTextureBuffer(tutorialMap_eng, -camera.x / windowScale + screenWith / 2 - tutorialTextureWidth / 2, -camera.y / windowScale + tutorialJumpY, false, HUD);
+		break;
+	default:
+		break;
+	}
 }

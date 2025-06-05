@@ -22024,6 +22024,9 @@
   <object id="41" x="1856" y="1600" width="64" height="128"/>
   <object id="44" x="1600" y="1344" width="64" height="512"/>
  </objectgroup>
+ <objectgroup id="8" name="Unlock">
+  <object id="56" x="4032" y="1408" width="448" height="448"/>
+ </objectgroup>
  <objectgroup id="2" name="Collisions">
   <object id="1" x="1664" y="1856" width="5184" height="64"/>
   <object id="2" x="3648" y="1600" width="64" height="64"/>

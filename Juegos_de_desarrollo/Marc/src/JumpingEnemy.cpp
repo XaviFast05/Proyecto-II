@@ -20,73 +20,111 @@ JumpingEnemy::~JumpingEnemy() {
 
 bool JumpingEnemy::Start() {
 
-	texture = Engine::GetInstance().textures.get()->Load(parameters.attribute("texture").as_string());
-	position.setX(parameters.attribute("x").as_float());
-	position.setY(parameters.attribute("y").as_float());
-	texW = parameters.attribute("w").as_float();
-	texH = parameters.attribute("h").as_float();
-	drawOffsetX = 0;
-	drawOffsetY = 0;
+    texture = Engine::GetInstance().textures.get()->Load(parameters.attribute("texture").as_string());
+    position.setX(parameters.attribute("x").as_float());
+    position.setY(parameters.attribute("y").as_float());
+    texW = parameters.attribute("w").as_float();
+    texH = parameters.attribute("h").as_float();
+    drawOffsetX = 0;
+    drawOffsetY = 0;
 
-	lives = 20;
+    
 
-	idle.LoadAnimations(parameters.child("animations").child("idle"));
-	walk.LoadAnimations(parameters.child("animations").child("walk"));
-	jump.LoadAnimations(parameters.child("animations").child("jump")); 
-	attack.LoadAnimations(parameters.child("animations").child("attack"));
-	death.LoadAnimations(parameters.child("animations").child("death"));
+    idle.LoadAnimations(parameters.child("animations").child("idle"));
+    walk.LoadAnimations(parameters.child("animations").child("walk"));
+    jump.LoadAnimations(parameters.child("animations").child("jump"));
+    land.LoadAnimations(parameters.child("animations").child("land"));
+    death.LoadAnimations(parameters.child("animations").child("death"));
 
-	currentAnimation = &idle;
-	attacked = false;
+    currentAnimation = &idle;
+    attacked = false;
 
-	//INIT ROUTE
-	for (int i = 0; i < route.size(); i++)
-	{
-		route[i] = Engine::GetInstance().map.get()->WorldToWorldCenteredOnTile(route[i].getX(), route[i].getY());
-	}
-
-
-	//INIT PHYSICS
-	pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), 60, bodyType::DYNAMIC);
-	pbody->ctype = ColliderType::ENEMY;
-	pbody->body->SetGravityScale(1.2f);
-	pbody->body->SetFixedRotation(true);
-	pbody->listener = this;
-	pbody->body->SetTransform({ PIXEL_TO_METERS(destinationPoint.getX()), PIXEL_TO_METERS(destinationPoint.getY()) }, 0);
-
-	//INIT PATH
-	pathfinding = new Pathfinding();
-	ResetPath();
+    //INIT ROUTE
+    for (int i = 0; i < route.size(); i++)
+    {
+        route[i] = Engine::GetInstance().map.get()->WorldToWorldCenteredOnTile(route[i].getX(), route[i].getY());
+    }
 
 
-	//INIT VARIABLES
-	state = PATROL;
-	speed = parameters.child("properties").attribute("speed").as_float();
-	chaseArea = parameters.child("properties").attribute("chaseArea").as_float();
-	attackArea = parameters.child("properties").attribute("attackArea").as_float();
-	deathTime = parameters.child("properties").attribute("deathTime").as_float();
+    //INIT PHYSICS
+    pbody = Engine::GetInstance().physics.get()->CreateCircle((int)position.getX(), (int)position.getY(), 60, bodyType::DYNAMIC);
+    pbody->ctype = ColliderType::ENEMY;
+    pbody->body->SetGravityScale(1.2f);
+    pbody->body->SetFixedRotation(true);
+    pbody->listener = this;
+    pbody->body->SetTransform({ PIXEL_TO_METERS(destinationPoint.getX()), PIXEL_TO_METERS(destinationPoint.getY()) }, 0);
 
-	pushForce = parameters.child("properties").attribute("pushForce").as_float();
-	pushFriction = parameters.child("properties").attribute("pushFriction").as_float();
-	lootAmount = parameters.child("properties").attribute("lootAmount").as_float();
-	droppedLoot = parameters.child("properties").attribute("droppedLoot").as_bool();
-	dir = LEFT;
+    //INIT PATH
+    pathfinding = new Pathfinding();
+    ResetPath();
 
-	//LOAD SFX
-	pugi::xml_document audioFile;
-	pugi::xml_parse_result result = audioFile.load_file("config.xml");
-	audioNode = audioFile.child("config").child("audio").child("fx");
 
-	swordSlashSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("swordSFX").attribute("path").as_string());
-	skeletonDeathSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("skeletonDeathSFX").attribute("path").as_string());
+    //INIT VARIABLES
+    state = PATROL;
+    speed = parameters.child("properties").attribute("speed").as_float();
+    chaseArea = parameters.child("properties").attribute("chaseArea").as_float();
+    attackArea = parameters.child("properties").attribute("attackArea").as_float();
+    deathTime = parameters.child("properties").attribute("deathTime").as_float();
 
-	return true;
+    pushForce = parameters.child("properties").attribute("pushForce").as_float();
+    pushFriction = parameters.child("properties").attribute("pushFriction").as_float();
+    lootAmount = parameters.child("properties").attribute("lootAmount").as_float();
+    droppedLoot = parameters.child("properties").attribute("droppedLoot").as_bool();
+    dir = LEFT;
+
+    //LOAD SFX
+    pugi::xml_document audioFile;
+    pugi::xml_parse_result result = audioFile.load_file("config.xml");
+    audioNode = audioFile.child("config").child("audio").child("fx");
+
+    swordSlashSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("swordSFX").attribute("path").as_string());
+    skeletonDeathSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("skeletonDeathSFX").attribute("path").as_string());
+
+    lives = 1;
+
+    return true;
 }
 
 bool JumpingEnemy::Update(float dt) {
     ZoneScoped;
-    if (dead) return true;
+    if (state == DEAD) {
+        // Arrancar animación de muerte
+        currentAnimation = &death;
+        currentAnimation->Update();
 
+        // Soltar loot una sola vez
+        if (!droppedLoot) {
+            DropLoot();
+            pbody->ctype = ColliderType::DEADENEMY;
+            droppedLoot = true;
+        }
+
+        // Tras transcurrir deathTime, desactivar el cuerpo
+        if (deathTimer.ReadSec() > deathTime) {
+            pbody->body->SetEnabled(false);
+            dead = true;
+        }
+
+        // Actualizar posición y renderizar la última fase de la animación
+        b2Transform xf = pbody->body->GetTransform();
+        position.setX(METERS_TO_PIXELS(xf.p.x) - texW / 2 + drawOffsetX);
+        position.setY(METERS_TO_PIXELS(xf.p.y) - texH / 1.5 + drawOffsetY);
+
+        if (pbody->body->IsEnabled() &&
+            Engine::GetInstance().render->InCameraView(position.getX(), position.getY(), texW, texH)) {
+            if (dir == LEFT) {
+                Engine::GetInstance().render->DrawTextureBuffer(texture,
+                    (int)position.getX(), (int)position.getY() + 10, false, ENTITIES,
+                    &currentAnimation->GetCurrentFrame());
+            }
+            else {
+                Engine::GetInstance().render->DrawTextureBuffer(texture,
+                    (int)position.getX(), (int)position.getY() + 10, true, ENTITIES,
+                    &currentAnimation->GetCurrentFrame());
+            }
+        }
+        return true;
+    }
     // Si disparo pendiente (al aterrizar), lo lanzo aquí
     if (shouldShoot) {
         projectileManager->ThrowJumpProjectiles(pbody->GetPhysBodyWorldPosition());
@@ -99,13 +137,13 @@ bool JumpingEnemy::Update(float dt) {
     }
 
     // Actualiza animación
-    currentAnimation = isBossJumping ? &jump : &walk;
+    currentAnimation = isBossJumping ? &jump : &idle;
     currentAnimation->Update();
 
     // Actualiza posición del sprite según Box2D
     b2Transform xf = pbody->body->GetTransform();
     position.setX(METERS_TO_PIXELS(xf.p.x) - texW / 2 + drawOffsetX);
-    position.setY(METERS_TO_PIXELS(xf.p.y) - texH / 1.5 + drawOffsetY);
+    position.setY(METERS_TO_PIXELS(xf.p.y) - texH / 1.5 + 10);
 
     // Dibuja
     if (pbody->body->IsEnabled() &&

@@ -4,7 +4,7 @@
 	<playerPrefs>
 		<fullscreen toggle="0" />
 		<musicVolume value="0" />
-		<sfxVolume value="48" />
+		<sfxVolume value="74" />
 	</playerPrefs>
 	<player soulPoints="74" hits="3" />
 	<lvl1 played="true">
@@ -73,8 +73,8 @@
 		<destructibleWall1 broke="true" />
 	</lvl4>
 	<lvl2 played="false" />
-	<lvl5 played="false">
-		<player x="1210" y="1588" />
-		<enemy0 dead="false" x="10336" y="3523" />
+	<lvl5 played="true">
+		<player x="2240" y="1600" />
+		<enemy0 dead="false" x="10336" y="3552" />
 	</lvl5>
 </savedData>

@@ -50,7 +50,6 @@ bool CheckPoint::Start() {
 	unlit.LoadAnimations(parameters.child("animations").child("unlit"));
 	lit.LoadAnimations(parameters.child("animations").child("lit"));
 
-
 	pbody = Engine::GetInstance().physics.get()->CreateRectangleSensor((int)position.getX() + texW / 2, (int)position.getY() + texH / 2, texW, texH, bodyType::STATIC);
 	pbody->listener = this;
 	currentAnim = &unlit;

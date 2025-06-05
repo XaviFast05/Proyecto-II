@@ -42,6 +42,7 @@
 		<fullScreenBox id="9" x="605" y="470" w="140" h="70" texture="Assets/Textures/Menus/Options/checkBox_sheet.png" text="FULL_SCREEN" fontSize="65" font="Assets/Fonts/PIXELADE.ttf" textVerticalDisplacement="-65"/>
 		<backBt id="6" x="288" y="47" w="80" h="80" texture="Assets/Textures/Menus/Options/Button_exit_solo.png" />
 		<controlsBt id="32" x="348" y="564" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Credits Button Sheet Background.png" text="CONTROLS" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
+		
 		<changeControlBt id="33" x="448" y="584" w="384" h="64" texture="Assets/Textures/Menus/Title Screen/Credits Button Sheet Background.png" text="CHANGE_CONTROLS" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
 		<espBt id="34" x="748" y="564" w="224" h="64" texture="Assets/Textures/Menus/Options/language.png" text="LANGUAGE" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" />
 	</settings>
@@ -72,6 +73,12 @@
 		<backBt id="6" x="237" y="80" w="80" h="80" texture="Assets/Textures/Menus/MenuMerchant/TIENDA 02/PNGS/Button_exit_solo.png" />
 	</merchantMenu>
 	<scene>
+		<tutorials font="Assets/Fonts/PIXELADE.ttf" fontSize="65" textureW = "232" tutorialTime ="5">
+			<tutorialJump id="35" x="14" y="650" w="81" h="28" texture1="Assets/Textures/UI/tut_saltar_esp_cat.png" texture2="Assets/Textures/UI/tut_saltar_esp_cat.png" texture3 ="Assets/Textures/UI/tut_saltar_eng.png" text="CONTROLS_JUMP"  textVerticalDisplacement="-65"/>
+			<tutorialThrow id="36" x="45" y="71" w="82" h="28" texture1="Assets/Textures/UI/tut_lanzar_esp.png" texture2="Assets/Textures/UI/tut_lanzar_cat.png" texture3 ="Assets/Textures/UI/tut_lanzar_eng.png" text="CONTROLS_PICK"  textVerticalDisplacement="-65"/>
+			<tutorialAttack id="37" x="97" y="53" w="81" h="28" texture1="Assets/Textures/UI/tut_atacar_cat_esp.png" texture2="Assets/Textures/UI/tut_atacar_cat_esp.png" texture3 ="Assets/Textures/UI/tut_atacar_eng.png" text="CONTROLS_ATTACK" textVerticalDisplacement="-65"/>
+			<tutorialMap id="38" x="73" y="57" w="91" h="28" texture1="Assets/Textures/UI/tut_map_esp_cat.png" texture2="Assets/Textures/UI/tut_map_esp_cat.png" texture3 ="Assets/Textures/UI/tut_map_eng.png" text="CONTROLS_MAP" textVerticalDisplacement="-65"/>
+		</tutorials>
 		<ui>
 			<heartContainers path="Assets/Textures/UI/lifeSimp.png" />
 			<piquetaNormal path="Assets/Textures/UI/piqueta_normal.png" />
@@ -524,32 +531,38 @@
 						</death>
 					</animations>
 				</child>
-				<jumper x="250" y="350" w="64" h="64" texture="Assets/Textures/Enemies/Jumper/saltador.png">
-					<properties speed="4" chaseArea="600" deathTime="1.0f" lives="40" pushForce="1" pushFriction="5" lootAmount="5" canPush="false" />
+				<jumper x="250" y="350" w="128" h="128" texture="Assets/Textures/Enemies/Jumper/saltador.png">
+					<properties speed="4" chaseArea="600" deathTime="1.0f" lives="10" pushForce="1" pushFriction="5" lootAmount="5" canPush="false" />
 					<animations>
 						<idle loop="true" speed="0.1f">
-							<frame x="0" y="0" w="64" h="64" />
-							<frame x="64" y="0" w="64" h="64" />
-							<frame x="128" y="0" w="64" h="64" />
-							<frame x="192" y="0" w="64" h="64" />
+							<frame x="0" y="0" w="128" h="128" offsetX="0" offsetY="15" />
+							<frame x="128" y="0" w="128" h="128" offsetX="0" offsetY="15" />
+							<frame x="256" y="0" w="128" h="128" offsetX="0" offsetY="15" />
+							<frame x="384" y="0" w="128" h="128" offsetX="0" offsetY="15" />
 						</idle>
-						<walk loop="true" speed="0.1f">
-							<frame x="0" y="0" w="64" h="64" />
-							<frame x="64" y="0" w="64" h="64" />
-							<frame x="128" y="0" w="64" h="64" />
-							<frame x="192" y="0" w="64" h="64" />
-						</walk>
-						<jump loop="false" speed="0.2f">
-							<frame x="0" y="128" w="64" h="64" />
+						<jump loop="true" speed="0.1f">
+							<frame x="0" y="128" w="128" h="128" offsetX="0" offsetY="15" />
 						</jump>
+						<land loop="false" speed="0.2f">
+							<frame x="0" y="256" w="128" h="128" offsetX="0" offsetY="15" />
+							<frame x="128" y="256" w="128" h="128" offsetX="0" offsetY="15" />
+							<frame x="256" y="256" w="128" h="128" offsetX="0" offsetY="15" />
+						</land>
 						<attack loop="true" speed="0.2f">
-							<frame x="0" y="64" w="64" h="64" />
+							<frame x="0" y="128" w="64" h="64" offsetX="0" offsetY="15" />
 						</attack>
 						<hurt loop=" false" speed="0.2f">
-							<frame x="0" y="64" w="64" h="64" />
+							<frame x="0" y="128" w="128" h="128" offsetX="0" offsetY="15" />
 						</hurt>
 						<death loop=" false" speed="0.1f">
-							<frame x="64" y="64" w="64" h="64" />
+							<frame x="0" y="384" w="128" h="128" offsetX="0" offsetY="15" />
+							<frame x="128" y="384" w="128" h="128" offsetX="0" offsetY="15" />
+							<frame x="256" y="384" w="128" h="128" offsetX="0" offsetY="15" />
+							<frame x="384" y="384" w="128" h="128" offsetX="0" offsetY="15" />
+							<frame x="512" y="384" w="128" h="128" offsetX="0" offsetY="15"/>
+							<frame x="640" y="384" w="128" h="128" offsetX="0" offsetY="15" />
+							<frame x="768" y="384" w="128" h="128" offsetX="0" offsetY="15" />
+							<frame x="896" y="384" w="128" h="128" offsetX="0" offsetY="15" />
 						</death>
 					</animations>
 				</jumper>
@@ -557,49 +570,148 @@
 					<properties speed="9" chaseArea="700" deathTime="1.0f" lives="10" pushForce="1" pushFriction="5" lootAmount="5" canPush="false" />
 					<animations>
 						<idle loop="true" speed="0.1f">
-							<frame x="0" y="0" w="64" h="64" />
-							<frame x="64" y="0" w="64" h="64" />
+							<frame x="0" y="0" w="128" h="128" />
+							<frame x="128" y="0" w="128" h="128" />
+							<frame x="256" y="0" w="128" h="128" />
 						</idle>
-						<run loop="true" speed="0.1f">
-							<frame x="0" y="64" w="64" h="64" />
-							<frame x="64" y="64" w="64" h="64" />
+						<run loop="true" speed="0.2f">
+							<frame x="0" y="128" w="160" h="128" />
+							<frame x="160" y="128" w="160" h="128" />
+							<frame x="320" y="128" w="160" h="128" />
+							<frame x="480" y="128" w="160" h="128" />
+							<frame x="640" y="128" w="160" h="128" />
 						</run>
 						<tired loop="true" speed="0.2f">
-							<frame x="0" y="128" w="64" h="64" />
-							<frame x="64" y="128" w="64" h="64" />
+							<frame x="0" y="352" w="128" h="128" />
+							<frame x="128" y="352" w="128" h="128" />
+							<frame x="256" y="352" w="128" h="128" />
+							<frame x="384" y="352" w="128" h="128" />
+							<frame x="512" y="352" w="128" h="128" />
+							<frame x="640" y="352" w="128" h="128" />
+							<frame x="768" y="352" w="128" h="128" />
+							<frame x="896" y="352" w="128" h="128" />
+							<frame x="1024" y="352" w="128" h="128" />
+							<frame x="1152" y="352" w="128" h="128" />
+							<frame x="1280" y="352" w="128" h="128" />
 						</tired>
 						<hurt loop=" false" speed="0.2f">
 							<frame x="0" y="64" w="64" h="64" />
 						</hurt>
 						<death loop=" false" speed="0.1f">
-							<frame x="0" y="192" w="64" h="64" />
+							<frame x="0" y="240" w="128" h="128" />
+							<frame x="128" y="240" w="128" h="128" />
+							<frame x="256" y="240" w="128" h="128" />
+							<frame x="384" y="240" w="128" h="128" />
+							<frame x="512" y="240" w="128" h="128" />
+							<frame x="640" y="240" w="128" h="128" />
+							<frame x="768" y="240" w="128" h="128" />
+							<frame x="896" y="240" w="128" h="128" />
+							<frame x="1024" y="240" w="128" h="128" />
+							<frame x="1152" y="240" w="128" h="128" />
+							<frame x="1280" y="240" w="128" h="128" />
+							<frame x="1408" y="240" w="128" h="128" />
+							<frame x="1536" y="240" w="128" h="128" />
+							<frame x="1664" y="240" w="128" h="128" />
+							<frame x="1792" y="240" w="128" h="128" />
 						</death>
 					</animations>
 				</runner>
-				<finalboss x="3265" y="2110" w="64" h="64" texture="Assets/Textures/Enemies/BossFinal/final.png">
+				<finalboss x="3265" y="2110" w="128" h="128" texture="Assets/Textures/Enemies/BossFinal/Boss.png">
 					<properties speed="8" chaseArea="700" deathTime="1.0f" lives="10" pushForce="1" pushFriction="5" lootAmount="5" canPush="false" />
 					<animations>
 						<idle loop="true" speed="0.1f">
 							<frame x="0" y="0" w="64" h="64" />
 							<frame x="64" y="0" w="64" h="64" />
 						</idle>
-						<run loop="true" speed="0.1f">
-							<frame x="0" y="64" w="64" h="64" />
-							<frame x="64" y="64" w="64" h="64" />
+						<run loop="true" speed="0.4f">
+							<frame x="0" y="128" w="128" h="128" />
+							<frame x="128" y="128" w="128" h="128" />
+							<frame x="256" y="128" w="128" h="128" />
+							<frame x="384" y="128" w="128" h="128" />
+							<frame x="512" y="128" w="128" h="128" />
+							<frame x="640" y="128" w="128" h="128" />
+							<frame x="768" y="128" w="128" h="128" />
+							<frame x="896" y="128" w="128" h="128" />
+							<frame x="1024" y="128" w="128" h="128" />
+							<frame x="1152" y="128" w="128" h="128" />
+							<frame x="1280" y="128" w="128" h="128" />
 						</run>
 						<jump loop="false" speed="0.2f">
-							<frame x="0" y="128" w="64" h="64" />
-							<frame x="64" y="128" w="64" h="64" />
+							<frame x="0" y="512" w="128" h="128" />
+							<frame x="128" y="512" w="128" h="128" />
+							<frame x="256" y="512" w="128" h="128" />
+							<frame x="384" y="512" w="128" h="128" />
+							<frame x="512" y="512" w="128" h="128" />
+							<frame x="640" y="512" w="128" h="128" />
+							<frame x="768" y="512" w="128" h="128" />
+							<frame x="896" y="512" w="128" h="128" />
 						</jump>
 						<tired loop="true" speed="0.2f">
-							<frame x="0" y="196" w="64" h="64" />
-							<frame x="64" y="196" w="64" h="64" />
+							<frame x="0" y="256" w="128" h="128" />
+							<frame x="128" y="256" w="128" h="128" />
+							<frame x="256" y="256" w="128" h="128" />
+							<frame x="384" y="256" w="128" h="128" />
+							<frame x="512" y="256" w="128" h="128" />
+							<frame x="640" y="256" w="128" h="128" />
+							<frame x="768" y="256" w="128" h="128" />
+							<frame x="896" y="256" w="128" h="128" />
+							<frame x="1024" y="256" w="128" h="128" />
+							<frame x="1152" y="256" w="128" h="128" />
+							<frame x="1280" y="256" w="128" h="128" />
+							<frame x="1408" y="256" w="128" h="128" />
 						</tired>
 						<hurt loop=" false" speed="0.2f">
-							<frame x="0" y="64" w="64" h="64" />
+							<frame x="0" y="384" w="128" h="128" />
+							<frame x="128" y="384" w="128" h="128" />
+							<frame x="256" y="384" w="128" h="128" />
+							<frame x="384" y="384" w="128" h="128" />
+							<frame x="512" y="384" w="128" h="128" />
 						</hurt>
 						<death loop=" false" speed="0.1f">
-							<frame x="0" y="192" w="64" h="64" />
+							<frame x="0" y="640" w="128" h="128" />
+							<frame x="128" y="640" w="128" h="128" />
+							<frame x="256" y="640" w="128" h="128" />
+							<frame x="384" y="640" w="128" h="128" />
+							<frame x="512" y="640" w="128" h="128" />
+							<frame x="640" y="640" w="128" h="128" />
+							<frame x="768" y="640" w="128" h="128" />
+							<frame x="896" y="640" w="128" h="128" />
+							<frame x="1024" y="640" w="128" h="128" />
+							<frame x="1152" y="640" w="128" h="128" />
+							<frame x="1280" y="640" w="128" h="128" />
+							<frame x="1408" y="640" w="128" h="128" />
+							<frame x="1536" y="640" w="128" h="128" />
+							<frame x="1664" y="640" w="128" h="128" />
+							<frame x="1792" y="640" w="128" h="128" />
+							<frame x="1920" y="640" w="128" h="128" />
+							<frame x="2048" y="640" w="128" h="128" />
+							<frame x="2176" y="640" w="128" h="128" />
+							<frame x="2304" y="640" w="128" h="128" />
+							<frame x="2432" y="640" w="128" h="128" />
+							<frame x="2560" y="640" w="128" h="128" />
+							<frame x="2688" y="640" w="128" h="128" />
+							<frame x="2816" y="640" w="128" h="128" />
+							<frame x="2944" y="640" w="128" h="128" />
+							<frame x="3072" y="640" w="128" h="128" />
+							<frame x="3200" y="640" w="128" h="128" />
+							<frame x="3328" y="640" w="128" h="128" />
+							<frame x="3456" y="640" w="128" h="128" />
+							<frame x="3584" y="640" w="128" h="128" />
+							<frame x="3712" y="640" w="128" h="128" />
+							<frame x="3840" y="640" w="128" h="128" />
+							<frame x="3968" y="640" w="128" h="128" />
+							<frame x="4096" y="640" w="128" h="128" />
+							<frame x="4224" y="640" w="128" h="128" />
+							<frame x="4352" y="640" w="128" h="128" />
+							<frame x="4480" y="640" w="128" h="128" />
+							<frame x="4608" y="640" w="128" h="128" />
+							<frame x="4736" y="640" w="128" h="128" />
+							<frame x="4864" y="640" w="128" h="128" />
+							<frame x="4992" y="640" w="128" h="128" />
+							<frame x="5120" y="640" w="128" h="128" />
+							<frame x="5248" y="640" w="128" h="128" />
+							<frame x="5376" y="640" w="128" h="128" />
+							<frame x="5504" y="640" w="128" h="128" />
 						</death>
 					</animations>
 				</finalboss>
@@ -1113,17 +1225,17 @@
 			</buttons>
 		</winMenu>
 		<dialogues>
-			<dialoguePanel path="Assets/Textures/Menus/Dialogues/Recuadro.png" w="833" h="202" x="224" y="450">
+			<dialoguePanel path="Assets/Textures/Menus/Dialogues/Recuadro.png" w="834" h="201" x="224" y="450">
 				<name maxW="620" maxH="167" offsetX="197" offsetY="10" font="Assets/Fonts/ttf_pixolde_bold.ttf" pointSize="50" />
 				<text maxW="620" maxH="167" offsetX="197" offsetY="58" font="Assets/Fonts/ttf_pixolde_bold.ttf" pointSize="30" />
-				<images w="160" h="160" offsetX="23" offsetY="21">
-					<image name="Kim" fotoPath="Assets/Textures/Menus/Dialogues/KIM.png" recuadroPath="Assets/Textures/Menus/Dialogues/RecuadroKim.png"/>
-					<image name="Flo"  recuadroPath="Assets/Textures/Menus/Dialogues/Recuadro.png"/>
-					<image name="Mike"  recuadroPath="Assets/Textures/Menus/Dialogues/Recuadro.png"/>
-					<image name="Fiona"  recuadroPath="Assets/Textures/Menus/Dialogues/Recuadro.png"/>
-					<image name="Jack"  recuadroPath="Assets/Textures/Menus/Dialogues/Recuadro.png"/>
-					<image name="Margaret" recuadroPath="Assets/Textures/Menus/Dialogues/RecuadroMargaret.png"/>
-					<image name="Merc" fotoPath="Assets/Textures/Menus/Dialogues/FLO.png" recuadroPath="Assets/Textures/Menus/Dialogues/Recuadro.png"/>
+				<images w="170" h="171" offsetX="21" offsetY="15">
+					<image name="Kim" fotoPath="Assets/Textures/Menus/Dialogues/foto kim.png" recuadroPath="Assets/Textures/Menus/Dialogues/Marco Kim.png"/>
+					<image name="Flo"  recuadroPath="Assets/Textures/Menus/Dialogues/Marco abuela.png"/>
+					<image name="Mike"  recuadroPath="Assets/Textures/Menus/Dialogues/Marco abuela.png"/>
+					<image name="Fiona"  recuadroPath="Assets/Textures/Menus/Dialogues/Marco abuela.png"/>
+					<image name="Jack"  fotoPath="Assets/Textures/Menus/Dialogues/Foto luciernaga cascos.png" recuadroPath="Assets/Textures/Menus/Dialogues/Marco luciernaga cascos.png"/>
+					<image name="Margaret" fotoPath="Assets/Textures/Menus/Dialogues/Foto abuela.png" recuadroPath="Assets/Textures/Menus/Dialogues/Marco abuela.png"/>
+					<image name="Merc" fotoPath="Assets/Textures/Menus/Dialogues/Foto mercader.png" recuadroPath="Assets/Textures/Menus/Dialogues/Marco mercader.png"/>
 				</images>
 			</dialoguePanel>
 			<DIALOG01>
@@ -1219,7 +1331,12 @@
 			<atk1SFX path="Assets/Audio/Fx/King/Land/king_splat.wav" />
 			<atk2SFX path="Assets/Audio/Fx/King/Land/king_bump.wav" />
 			<throwSFX path="Assets/Audio/Fx/King/Ice/king_jump.wav" />
-			<hurtSFX path="Assets/Audio/Fx/SquidHit.ogg" />
+			<hurtSFX path="Assets/Audio/Fx/hurt_kim.wav" />
+			<dashSFX path="Assets/Audio/Fx/dash.wav" />
+			<chargedSFX path="Assets/Audio/Fx/charged.wav" />
+			<dieSFX path="Assets/Audio/Fx/death.wav" />
+			<pointSFX path="Assets/Audio/Fx/point.wav" />
+			<checkpointSFX path="Assets/Audio/Fx/checkpoint.wav" />
 			<gDeathSFX path="Assets/Audio/Fx/SinkOMO.ogg" />
 			<pickCandy path="Assets/Audio/Fx/OMO_pickedItem.ogg" />
 			<pourCandy path="Assets/Audio/Fx/candyPour.ogg" />
@@ -1228,7 +1345,7 @@
 			<loadGame path="Assets/Audio/Fx/LoadGame.ogg" />
 			<godModeSFX path="Assets/Audio/Fx/i-am-a-god.ogg" />
 			<batWingsSFX path="Assets/Audio/Fx/BatWings.ogg" />
-			<farBatWings path="Assets/Audio/Fx/FarBatWings.ogg" />
+			<farBatWings path="Assets/Audio/Fx/Firefly_Son_Flying.wav" />
 			<batDeathSFX path="Assets/Audio/Fx/BatDeath.ogg" />
 			<swordSFX path="Assets/Audio/Fx/SwordSlash.ogg" />
 			<skeletonDeathSFX path="Assets/Audio/Fx/SkeletonDeath.ogg" />

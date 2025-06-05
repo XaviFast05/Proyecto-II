@@ -63,7 +63,6 @@ bool RunningEnemy::Start() {
 
 bool RunningEnemy::Update(float dt) {
     ZoneScoped;
-
     // --- 1) Si ha muerto, mostrar animación de muerte y soltar loot ---
     if (state == DEAD) {
         // Arrancar animación de muerte
