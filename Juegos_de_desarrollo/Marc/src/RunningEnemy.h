@@ -27,8 +27,8 @@ private:
 	// Movimiento
 	float speed = 0.0f;
 	bool goingRight = true;
-	int leftTargetX = 2750;
-	int rightTargetX = 3840;
+	int leftTargetX = 3965;
+	int rightTargetX = 5120;
 	bool playerInRange = false;
 
 
