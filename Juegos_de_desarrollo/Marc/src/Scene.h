@@ -127,7 +127,8 @@ public:
 
 	void StartNewGame();
 
-	void DrawTutorial(int num);
+	void DrawTutorial();
+	void SetTutorial(int num);
 
 public:
 
@@ -187,7 +188,10 @@ private:
 	std::vector<Particle*> particles;
 	pugi::xml_node musicNode;
 
-	SDL_Texture* tutorialJump, * tutorialThrow, * tutorialAttack, * tutorialMap;
+	int tutorialTextureWidth;
+	SDL_Texture* tutorialJump_esp, * tutorialThrow_esp, * tutorialAttack_esp, * tutorialMap_esp;
+	SDL_Texture* tutorialJump_cat, * tutorialThrow_cat, * tutorialAttack_cat, * tutorialMap_cat;
+	SDL_Texture* tutorialJump_eng, * tutorialThrow_eng, * tutorialAttack_eng, * tutorialMap_eng;
 	std::string tutorialJumpText, tutorialThrowText, tutorialAttackText, tutorialMapText;
 	int tutorialJumpX, tutorialJumpY, tutorialJumpW, tutorialJumpH, tutorialJumpHorizontal;
 	int tutorialThrowX, tutorialThrowY, tutorialThrowW, tutorialThrowH, tutorialThrowHorizontal;
@@ -220,4 +224,8 @@ private:
 	int signTextY;
 	Timer timerShowSignText;
 	int timeShowingSignText;
+
+	int numTutorial;
+	Timer tutorialTimer;
+	int tutorialTime;
 };

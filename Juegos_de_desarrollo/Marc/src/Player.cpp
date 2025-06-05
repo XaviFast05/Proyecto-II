@@ -145,8 +145,8 @@ bool Player::Start() {
 	if (fixture) {
 		b2Filter filter = fixture->GetFilterData();
 		filter.categoryBits = CATEGORY_PLAYER;
-		//filter.maskBits = 0xFFFF & ~CATEGORY_PICKAXE;
-		filter.maskBits = CATEGORY_PLAYER;
+		filter.maskBits = 0xFFFF & ~CATEGORY_PICKAXE;
+		//filter.maskBits = CATEGORY_PLAYER;
 		fixture->SetFilterData(filter);
 	}
 
@@ -857,16 +857,16 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		}
 		break;
 	case ColliderType::TUTJUMP:
-		Engine::GetInstance().scene.get()->DrawTutorial(1);
+		Engine::GetInstance().scene.get()->SetTutorial(1);
 		break;
 	case ColliderType::TUTTHROW:
-		Engine::GetInstance().scene.get()->DrawTutorial(2);
+		Engine::GetInstance().scene.get()->SetTutorial(2);
 		break;
 	case ColliderType::TUTMAP:
-		Engine::GetInstance().scene.get()->DrawTutorial(3);
+		Engine::GetInstance().scene.get()->SetTutorial(3);
 		break;
 	case ColliderType::TUTATTACK:
-		Engine::GetInstance().scene.get()->DrawTutorial(4);
+		Engine::GetInstance().scene.get()->SetTutorial(4);
 		break;
 	case ColliderType::UNKNOWN:
 		LOG("Collision UNKNOWN");

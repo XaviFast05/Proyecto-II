@@ -3,7 +3,7 @@
 	<playerPrefs>
 		<fullscreen toggle="0" />
 		<musicVolume value="0" />
-		<sfxVolume value="48" />
+		<sfxVolume value="53" />
 	</playerPrefs>
 	<player soulPoints="0" hits="3" />
 	<lvl1 played="true">

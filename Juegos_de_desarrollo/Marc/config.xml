@@ -73,11 +73,11 @@
 		<backBt id="6" x="237" y="80" w="80" h="80" texture="Assets/Textures/Menus/MenuMerchant/TIENDA 02/PNGS/Button_exit_solo.png" />
 	</merchantMenu>
 	<scene>
-		<tutorials>
-			<tutorialJump id="35" x="14" y="72" w="81" h="28" texture="Assets/Textures/UI/tut_saltar.png" text="CONTROLS_JUMP" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" textVerticalDisplacement="-65"/>
-			<tutorialThrow id="36" x="45" y="71" w="82" h="28" texture="Assets/Textures/UI/tut_lanzar.png" text="CONTROLS_PICK" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" textVerticalDisplacement="-65"/>
-			<tutorialAttack id="37" x="97" y="53" w="81" h="28" texture="Assets/Textures/UI/tut_atacar.png" text="CONTROLS_ATTACK" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" textVerticalDisplacement="-65"/>
-			<tutorialMap id="38" x="73" y="57" w="91" h="28" texture="Assets/Textures/UI/tut_map.png" text="CONTROLS_MAP" font="Assets/Fonts/PIXELADE.ttf" fontSize="65" textVerticalDisplacement="-65"/>
+		<tutorials font="Assets/Fonts/PIXELADE.ttf" fontSize="65" textureW = "232" tutorialTime ="5">
+			<tutorialJump id="35" x="14" y="650" w="81" h="28" texture1="Assets/Textures/UI/tut_saltar_esp_cat.png" texture2="Assets/Textures/UI/tut_saltar_esp_cat.png" texture3 ="Assets/Textures/UI/tut_saltar_eng.png" text="CONTROLS_JUMP"  textVerticalDisplacement="-65"/>
+			<tutorialThrow id="36" x="45" y="71" w="82" h="28" texture1="Assets/Textures/UI/tut_lanzar_esp.png" texture2="Assets/Textures/UI/tut_lanzar_cat.png" texture3 ="Assets/Textures/UI/tut_lanzar_eng.png" text="CONTROLS_PICK"  textVerticalDisplacement="-65"/>
+			<tutorialAttack id="37" x="97" y="53" w="81" h="28" texture1="Assets/Textures/UI/tut_atacar_cat_esp.png" texture2="Assets/Textures/UI/tut_atacar_cat_esp.png" texture3 ="Assets/Textures/UI/tut_atacar_eng.png" text="CONTROLS_ATTACK" textVerticalDisplacement="-65"/>
+			<tutorialMap id="38" x="73" y="57" w="91" h="28" texture1="Assets/Textures/UI/tut_map_esp_cat.png" texture2="Assets/Textures/UI/tut_map_esp_cat.png" texture3 ="Assets/Textures/UI/tut_map_eng.png" text="CONTROLS_MAP" textVerticalDisplacement="-65"/>
 		</tutorials>
 		<ui>
 			<heartContainers path="Assets/Textures/UI/lifeSimp.png" />
