@@ -103,6 +103,13 @@ bool Player::Start() {
 	playerAttack1SFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("atk1SFX").attribute("path").as_string());
 	playerAttack2SFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("atk2SFX").attribute("path").as_string());
 	playerThrowSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("throwSFX").attribute("path").as_string());
+	playerHurtSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("hurtSFX").attribute("path").as_string());
+	playerHurtSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("hurtSFX").attribute("path").as_string());
+	checkpointSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("checkpointSFX").attribute("path").as_string());
+	dashSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("dashSFX").attribute("path").as_string());
+	chargedSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("chargedSFX").attribute("path").as_string());
+	dieSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("dieSFX").attribute("path").as_string());
+	pointSFX = Engine::GetInstance().audio.get()->LoadFx(audioNode.child("pointSFX").attribute("path").as_string());
 
 	currentAnim = &idle;
 
@@ -389,6 +396,7 @@ bool Player::Update(float dt)
 			}
 			if (playerState == CHARGED && (meleeTimerOn == false && (Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_UP || Engine::GetInstance().input.get()->GetGamepadButton(SDL_CONTROLLER_BUTTON_X) == KEY_UP) || chargeAttackTimer.ReadSec() > chargeAttackTimerMax)) {
 				meleeTimer.Start();
+
 				meleeTimerOn = true;
 			}
 
@@ -503,6 +511,7 @@ bool Player::Update(float dt)
 				{
 					if (charging == true && chargedCooldown == false && unlockedCharged == true) {
 						playerState = CHARGED;
+						Engine::GetInstance().audio.get()->PlayFx(chargedSFX);
 						chargeAttackTimer.Start();
 						break;
 					}
@@ -528,6 +537,10 @@ bool Player::Update(float dt)
 				break;
 			case DEAD:
 			{
+				if (playSound == true) {
+					Engine::GetInstance().audio.get()->PlayFx(dieSFX);
+					playSound = false;
+				}
 				pbody->body->SetLinearVelocity(b2Vec2(0, 0));
 				if (respawnTimer.ReadSec() >= respawnTime) {
 					Engine::GetInstance().scene.get()->SetLoadState(true);
@@ -537,6 +550,7 @@ bool Player::Update(float dt)
 			}
 			case CHARGED:
 				if (chargeAttackTimer.ReadSec() > chargeAttackTimerMax || Engine::GetInstance().input.get()->GetKey(SDL_SCANCODE_E) == KEY_UP) {
+
 					chargedCooldownTimer.Start();
 					chargedCooldown = true;
 					playerState = IDLE;
@@ -552,7 +566,14 @@ bool Player::Update(float dt)
 				break;
 			}
 
-			if (playerState == DASH) velocity = { pbody->body->GetLinearVelocity().x, 0 };
+			if (playerState == DASH) {
+				if (playSound == true) {
+					Engine::GetInstance().audio.get()->PlayFx(dashSFX);
+					playSound = false;
+				}
+				velocity = { pbody->body->GetLinearVelocity().x, 0 };
+			}
+
 			else velocity = { velocity.x, pbody->body->GetLinearVelocity().y };
 			pbody->body->SetLinearVelocity(velocity);
 
@@ -640,6 +661,10 @@ bool Player::Update(float dt)
 		}
 		break;
 	case HURT:
+		if (playSound == true) {
+			Engine::GetInstance().audio.get()->PlayFx(playerHurtSFX);
+			playSound = false;
+		}
 		currentAnim = &hurt;
 		if (resetAnimation == true) {
 			currentAnim->Reset();
@@ -704,11 +729,11 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 	//Colision de los sensores
 	if (physA == leftSensor || physA == rightSensor)
 	{
-		if (physA == leftSensor && physB->ctype == ColliderType::PLATFORM || physA == leftSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == leftSensor && physB->ctype == ColliderType::PICKAXE)
+		if (physA == leftSensor && physB->ctype == ColliderType::PLATFORM || physA == leftSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == leftSensor && physB->ctype == ColliderType::PICKAXE || physA == leftSensor && physB->ctype == ColliderType::DESTRUCTIBLE_WALL)
 		{
 			leftBlocked = true;
 		}
-		else if (physA == rightSensor && physB->ctype == ColliderType::PLATFORM || physA == rightSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == rightSensor && physB->ctype == ColliderType::PICKAXE)
+		else if (physA == rightSensor && physB->ctype == ColliderType::PLATFORM || physA == rightSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == rightSensor && physB->ctype == ColliderType::PICKAXE || physA == leftSensor && physB->ctype == ColliderType::DESTRUCTIBLE_WALL)
 		{
 			rightBlocked = true;
 		}
@@ -813,6 +838,10 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		LOG("Collision LADDER");
 		break;
 	case ColliderType::CHECKPOINT:
+		if (playSound == true) {
+			Engine::GetInstance().audio.get()->PlayFx(checkpointSFX);
+			playSound = false;
+		}
 		reachedCheckPoint = true;
 		hits = 3;
 		Engine::GetInstance().scene.get()->SaveState();
@@ -842,6 +871,7 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 		break;
 	
 	case ColliderType::ORB:
+		Engine::GetInstance().audio.get()->PlayFx(pointSFX);
 		if (physB->width == 4) soulAmount = rand() % 4 + 1;
 		else if (physB->width == 7) soulAmount = rand() % 4 + 5;
 		else if (physB->width == 10) soulAmount = rand() % 5 + 10;
@@ -880,12 +910,12 @@ void Player::OnCollision(PhysBody* physA, PhysBody* physB) {
 void Player::OnCollisionEnd(PhysBody* physA, PhysBody* physB)
 {
 	//Colision de los sensores
-	if (physA == leftSensor && physB->ctype == ColliderType::PLATFORM || physA == leftSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == leftSensor && physB->ctype == ColliderType::PICKAXE)
+	if (physA == leftSensor && physB->ctype == ColliderType::PLATFORM || physA == leftSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == leftSensor && physB->ctype == ColliderType::PICKAXE || physA == leftSensor && physB->ctype == ColliderType::DESTRUCTIBLE_WALL)
 	{
 		leftBlocked = false;
 	}
 
-	if (physA == rightSensor && physB->ctype == ColliderType::PLATFORM || physA == rightSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == rightSensor && physB->ctype == ColliderType::PICKAXE)
+	if (physA == rightSensor && physB->ctype == ColliderType::PLATFORM || physA == rightSensor && physB->ctype == ColliderType::CLIMBINGWALL || physA == rightSensor && physB->ctype == ColliderType::PICKAXE || physA == leftSensor && physB->ctype == ColliderType::DESTRUCTIBLE_WALL)
 	{
 		rightBlocked = false;
 	}

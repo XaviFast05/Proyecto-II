@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
-<savedData saved="true" level="1" time="0">
+<savedData saved="true" level="5" time="0">
 	<playerPrefs>
 		<fullscreen toggle="0" />
 		<musicVolume value="0" />
-		<sfxVolume value="53" />
+		<sfxVolume value="74" />
 	</playerPrefs>
 	<player soulPoints="0" hits="3" />
 	<lvl1 played="true">
@@ -22,35 +22,40 @@
 		<destructibleWall0 broke="true" />
 	</lvl1>
 	<upgrades dash="false" charged="false" up0="false" up1="false" up2="false" up3="false" up4="false" up5="false" up6="false" up7="false" />
-	<lvl3 played="false">
-		<enemy0 dead="false" x="9760" y="8534" />
-		<enemy1 dead="false" x="9780" y="8574" />
-		<enemy2 dead="false" x="8150" y="7969" />
-		<enemy3 dead="false" x="8417" y="7969" />
+	<lvl3 played="true">
+		<enemy0 dead="false" x="9805" y="8546" />
+		<enemy1 dead="false" x="9407" y="8543" />
+		<enemy2 dead="false" x="7647" y="7969" />
+		<enemy3 dead="false" x="8032" y="7969" />
 		<enemy4 dead="false" x="8416" y="6433" />
 		<enemy5 dead="false" x="14623" y="3809" />
 		<enemy6 dead="false" x="14944" y="3809" />
-		<enemy7 dead="false" x="11743" y="7393" />
+		<enemy7 dead="false" x="12577" y="7489" />
 		<enemy8 dead="false" x="12256" y="8097" />
-		<enemy9 dead="false" x="14880" y="7329" />
+		<enemy9 dead="false" x="15201" y="7329" />
 		<enemy10 dead="false" x="16159" y="6561" />
 		<enemy11 dead="false" x="14367" y="3809" />
 		<enemy12 dead="false" x="15008" y="3809" />
-		<enemy13 dead="false" x="8440" y="7891" />
-		<enemy14 dead="false" x="8358" y="7969" />
-		<enemy15 dead="false" x="7652" y="7969" />
-		<enemy16 dead="false" x="7600" y="7936" />
-		<enemy17 dead="false" x="7652" y="7906" />
-		<player x="5382" y="6431" />
+		<enemy13 dead="false" x="7647" y="7969" />
+		<enemy14 dead="false" x="7647" y="7969" />
+		<enemy15 dead="false" x="7647" y="7969" />
+		<enemy16 dead="false" x="7647" y="7969" />
+		<enemy17 dead="false" x="7647" y="7969" />
+		<player x="17526" y="5727" />
+		<checkPoint0 alight="true" />
+		<checkPoint1 alight="true" />
 	</lvl3>
-	<lvl6 played="false" />
+	<lvl6 played="false">
+		<player x="5308" y="2079" />
+		<enemy0 dead="false" x="3647" y="2051" />
+	</lvl6>
 	<lvl4 played="false">
 		<player x="4032" y="1792" />
-		<enemy0 dead="false" x="3389" y="830" />
+		<enemy0 dead="false" x="3589" y="730" />
 	</lvl4>
 	<lvl2 played="false" />
-	<lvl5 played="false">
-		<player x="1210" y="1588" />
-		<enemy0 dead="false" x="10336" y="3523" />
+	<lvl5 played="true">
+		<player x="2240" y="1600" />
+		<enemy0 dead="false" x="10336" y="3552" />
 	</lvl5>
 </savedData>

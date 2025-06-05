@@ -232,6 +232,12 @@ public:
 	int playerAttack1SFX;
 	int playerAttack2SFX;
 	int playerThrowSFX;
+	int playerHurtSFX;
+	int checkpointSFX;
+	int dashSFX;
+	int chargedSFX;
+	int dieSFX;
+	int pointSFX;
 
 	bool playSound = true;
 

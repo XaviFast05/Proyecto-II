@@ -30,6 +30,7 @@ bool FinalBoss::Start() {
     run.LoadAnimations(parameters.child("animations").child("run"));
 	jump.LoadAnimations(parameters.child("animations").child("jump"));
     tired.LoadAnimations(parameters.child("animations").child("tired"));
+	hurt.LoadAnimations(parameters.child("animations").child("hurt"));
     death.LoadAnimations(parameters.child("animations").child("death"));
     currentAnimation = &idle;
 
@@ -200,11 +201,11 @@ bool FinalBoss::Update(float dt) {
 
     b2Transform xf = pbody->body->GetTransform();
     position.setX(METERS_TO_PIXELS(xf.p.x) - texW / 2 + drawOffsetX);
-    position.setY(METERS_TO_PIXELS(xf.p.y) - texH / 1.5 + drawOffsetY);
+    position.setY(METERS_TO_PIXELS(xf.p.y) - texH / 1.5 + 10);
 
     if (pbody->body->IsEnabled() &&
         Engine::GetInstance().render->InCameraView(position.getX(), position.getY(), texW, texH)) {
-        if (dir == LEFT) {
+        if (dir == RIGHT) {
             Engine::GetInstance().render->DrawTextureBuffer(texture,
                 (int)position.getX(), (int)position.getY() + 10, false, ENTITIES,
                 &currentAnimation->GetCurrentFrame());
@@ -232,6 +233,7 @@ void FinalBoss::OnCollision(PhysBody* physA, PhysBody* physB) {
     case ColliderType::MELEE_AREA_CHARGED:
         if (state != DEAD) {
             if (canPush) push = true;
+			currentAnimation = &hurt;
             DMGEnemyMelee();
         }
         break;
