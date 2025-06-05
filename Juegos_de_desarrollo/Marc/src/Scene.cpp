@@ -43,6 +43,8 @@
 #include "TextManager.h"
 #include "DestructibleWall.h"
 #include "VideoPlayer.h"
+#include "Villager.h"
+
 
 
 #include "Intro.h"
@@ -129,10 +131,9 @@ bool Scene::Start()
 		LoadSoulRock(soulRock, soulRockNode);
 	}
 
-	for (pugi::xml_node alliesNode : configParameters.child("entities").child("allies").child("merchant").child("instances").child(GetCurrentLevelString().c_str()).children())
+	for (pugi::xml_node alliesNode : configParameters.child("entities").child("allies").child("instances").child(GetCurrentLevelString().c_str()).children())
 	{
-
-		Merchant* ally = (Merchant*)Engine::GetInstance().entityManager->CreateEntity((EntityType)alliesNode.attribute("entityType").as_int());;
+		Ally* ally = (Ally*)Engine::GetInstance().entityManager->CreateEntity((EntityType)alliesNode.attribute("entityType").as_int());;
 		LoadAlly(ally, alliesNode);
 	}
 
@@ -283,12 +284,12 @@ void Scene::LoadItem(DestructibleWall* destructibleWall, pugi::xml_node instance
 	destructibleWalls.push_back(destructibleWall);
 }
 
-void Scene::LoadAlly(Merchant* merchant, pugi::xml_node instanceNode) {
+void Scene::LoadAlly(Ally* ally, pugi::xml_node instanceNode) {
 
-	merchant->SetPlayer(player);
-	merchant->SetParameters(configParameters.child("entities").child("allies").child("merchant"));
-	merchant->SetInstanceParameters(instanceNode);
-	allies.push_back(merchant);
+	ally->SetPlayer(player);
+	ally->SetParameters(configParameters.child("entities").child("allies").child(instanceNode.attribute("allyType").as_string()));
+	ally->SetInstanceParameters(instanceNode);
+	allies.push_back(ally);
 
 }
 

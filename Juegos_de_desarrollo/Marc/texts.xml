@@ -105,6 +105,166 @@
 		<CA>No tens prou diners, torna quan en tinguis.</CA>
 		<EN>You don’t have enough money, come back when you do.</EN>
 	</Text>
+	<Text id="DIALOG06_01">
+		<ES>Así que este es el asentamiento del que hablaba Flo… Parece interesante.</ES>
+		<CA>Així que aquest és l’assentament del qual parlava la Flo… Sembla interessant.</CA>
+		<EN>So this is the settlement Flo was talking about… Looks interesting.</EN>
+	</Text>
+	<Text id="DIALOG07_01">
+		<ES>Hola, humana. Flo nos ha contado que has caído desde lo más alto del inframundo. Dime, ¿es verdad que vienes de la tierra de los vivos?</ES>
+		<CA>Hola, humana. La Flo ens ha dit que has caigut des del més alt de l’inframón. Digues, és veritat que véns de la terra dels vius?</CA>
+		<EN>Hello, human. Flo told us you fell from the highest point of the underworld. Tell me, is it true you come from the land of the living?</EN>
+	</Text>
+	<Text id="DIALOG07_02">
+		<ES>Sí, aunque ahora que lo dices, no tiene mucho sentido que siga viva… ¿Realmente lo estoy?</ES>
+		<CA>Sí, encara que ara que ho dius, no té gaire sentit que continuï viva… Realment ho estic?</CA>
+		<EN>Yes, although now that you mention it, it doesn’t really make sense that I’m still alive… Am I, really?</EN>
+	</Text>
+	<Text id="DIALOG08_01">
+		<ES>Uh… No sé si acercarme más… No puedo soportar la tentación de los sueños que hay más adelante…</ES>
+		<CA>Uh… No sé si acostar-m’hi més… No puc suportar la temptació dels somnis que hi ha més enllà…</CA>
+		<EN>Uh… I’m not sure if I should go any closer… I can’t resist the temptation of the dreams that lie ahead…</EN>
+	</Text>
+	<Text id="DIALOG08_02">
+		<ES>¿Qué? ¿De qué hablas?</ES>
+		<CA>Què? De què parles?</CA>
+		<EN>What? What are you talking about?</EN>
+	</Text>
+	<Text id="DIALOG08_03">
+		<ES>¿No conoces las zonas oníricas? Ah, claro. Tú debes de ser la que ha caído del mundo de los vivos. Verás…</ES>
+		<CA>No coneixes les zones oníriques? Ah, clar. Tu deus ser la que ha caigut del món dels vius. Veuràs…</CA>
+		<EN>You don’t know about the dream zones? Ah, of course. You must be the one who fell from the world of the living. You see…</EN>
+	</Text>
+	<Text id="DIALOG08_04">
+		<ES>Las zonas oníricas son pequeñas áreas donde los sueños de los seres del inframundo se manifiestan y distorsionan la realidad.</ES>
+		<CA>Les zones oníriques són petites àrees on els somnis dels éssers de l’inframón es manifesten i distorsionen la realitat.</CA>
+		<EN>Dream zones are small areas where the dreams of underworld beings manifest and distort reality.</EN>
+	</Text>
+	<Text id="DIALOG08_05">
+		<ES>Son muy apetecibles, pero dicen que si te acercas, te enfrentas contra tus propios miedos, que se relacionan con el sueño que ha creado esa zona.</ES>
+		<CA>Són molt temptadores, però diuen que si t’hi acostes, t’enfrontes als teus propis temors, relacionats amb el somni que ha creat aquella zona.</CA>
+		<EN>They’re very tempting, but they say that if you get too close, you’ll face your own fears—fears tied to the dream that created that zone.</EN>
+	</Text>
+	<Text id="DIALOG08_06">
+		<ES>O sea, que estas zonas son manifestaciones de los deseos de volver a la vida de las criaturas como tú… Me pregunto qué soñarán los seres del inframundo.</ES>
+		<CA>O sigui, que aquestes zones són manifestacions dels desitjos de tornar a la vida de criatures com tu… Em pregunto què somien els éssers de l’inframón.</CA>
+		<EN>So these zones are manifestations of the desire to return to life from creatures like you… I wonder what beings from the underworld dream about.</EN>
+	</Text>
+	<Text id="DIALOG08_07">
+		<ES>¡¡No te atrevas a acercarte!! Solo los más valientes y fuertes podrán superarla…</ES>
+		<CA>No t’atreveixis a acostar-t’hi!! Només els més valents i forts podran superar-la…</CA>
+		<EN>Don’t you dare get close!! Only the bravest and strongest can overcome it…</EN>
+	</Text>
+	<Text id="DIALOG08_08">
+		<ES>Aunque, ahora que lo pienso, si has sido capaz de caer desde tan alto, no creo que te cueste mucho descubrir el sueño que hay más adelante.</ES>
+		<CA>Encara que, ara que hi penso, si has estat capaç de caure des de tan amunt, no crec que et costi gaire descobrir el somni que hi ha més enllà.</CA>
+		<EN>Although, now that I think about it, if you were able to fall from such a great height, I doubt it’ll be hard for you to uncover the dream ahead.</EN>
+	</Text>
+	<Text id="DIALOG08_09">
+		<ES>Aunque dude de mí misma, voy a acercarme más, a ver si logro ver cómo son por dentro.</ES>
+		<CA>Encara que dubti de mi mateixa, m’hi acostaré més, a veure si aconsegueixo veure com són per dins.</CA>
+		<EN>Even if I doubt myself, I’m going to get closer and see if I can find out what they’re like inside.</EN>
+	</Text>
+	<Text id="DIALOG09_01">
+		<ES>Hola, ¿qué tal? Estoy un poco nervioso, nunca pensé que podría hablar con alguien humano…</ES>
+		<CA>Hola, què tal? Estic una mica nerviós, mai hauria pensat que podria parlar amb algú humà…</CA>
+		<EN>Hi, how are you? I’m a bit nervous, I never thought I’d be able to talk to a human…</EN>
+	</Text>
+	<Text id="DIALOG09_02">
+		<ES>Para serte sincera, no creo siquiera que siga siendo humana, pero… Bien, supongo. ¿Qué haces aquí con todas esas bolsas llenas de chapas?</ES>
+		<CA>Per ser-te sincera, no crec ni tan sols que continuï sent humana, però… Bé, suposo. Què fas aquí amb totes aquestes bosses plenes de xapes?</CA>
+		<EN>To be honest, I don’t even think I’m still human, but… I guess I’m fine. What are you doing here with all those bags full of bottle caps?</EN>
+	</Text>
+	<Text id="DIALOG09_03">
+		<ES>Verás, yo me dedico a vender chapas. Aunque no parezca mucha cosa, muchos luciérnagos como yo somos coleccionistas.</ES>
+		<CA>Veuràs, jo em dedico a vendre xapes. Encara que no ho sembli, molts luciérnagues com jo som col·leccionistes.</CA>
+		<EN>You see, I sell bottle caps. It might not seem like much, but many fireflies like me are collectors.</EN>
+	</Text>
+	<Text id="DIALOG09_04">
+		<ES>Algunos humanos lanzan objetos de vez en cuando y caen justo donde tú lo hiciste, así que de vez en cuando paso por ahí y veo qué hay.</ES>
+		<CA>Alguns humans llancen objectes de tant en tant i cauen just on vas caure tu, així que de tant en tant hi passo i miro què hi ha.</CA>
+		<EN>Some humans throw objects every now and then, and they land right where you fell, so I come by from time to time to see what’s there.</EN>
+	</Text>
+	<Text id="DIALOG09_05">
+		<ES>Curioso… A mí también me gusta coleccionar cosas. Y dime, ¿cómo podría pagarte?</ES>
+		<CA>Curiós… A mi també m’agrada col·leccionar coses. I digues, com et podria pagar?</CA>
+		<EN>Interesting… I like collecting things too. Tell me, how could I pay you?</EN>
+	</Text>
+	<Text id="DIALOG09_06">
+		<ES>Las criaturas del infierno somos un poco avariciosas, así que te voy a pedir que me des puntos de alma para comprar chapas.</ES>
+		<CA>Les criatures de l’infern som una mica avaricioses, així que et demanaré punts d’ànima per comprar xapes.</CA>
+		<EN>We creatures from the underworld are a bit greedy, so I’ll ask you for soul points in exchange for bottle caps.</EN>
+	</Text>
+	<Text id="DIALOG09_07">
+		<ES>Los puntos de alma los puedes conseguir derrotando enemigos que aún conserven el deseo de volver a la vida, es decir, todos aquellos que quieran atacarte.</ES>
+		<CA>Pots aconseguir punts d’ànima derrotant enemics que encara conservin el desig de tornar a la vida, és a dir, tots aquells que et vulguin atacar.</CA>
+		<EN>You can earn soul points by defeating enemies who still hold the desire to return to life—in other words, those who want to attack you.</EN>
+	</Text>
+	<Text id="DIALOG09_08">
+		<ES>¡De acuerdo, cuando tenga unos cuantos puntos vendré aquí a por una ficha!</ES>
+		<CA>D’acord! Quan tingui uns quants punts, vindré aquí a buscar una xapa!</CA>
+		<EN>Alright! Once I have a few points, I’ll come back here for a cap!</EN>
+	</Text>
+	<Text id="DIALOG09_09">
+		<ES>Seguro que me dan algún tipo de mejora, como en aquellos videojuegos que jugaba con papá…</ES>
+		<CA>Segur que em donen algun tipus de millora, com en aquells videojocs als quals jugava amb el pare…</CA>
+		<EN>I’m sure they’ll give me some kind of upgrade, like in those video games I used to play with Dad…</EN>
+	</Text>
+	<Text id="DIALOG10_01">
+		<ES>Siento una zona onírica delante.</ES>
+		<CA>Sento una zona onírica al davant.</CA>
+		<EN>I sense a dream zone ahead.</EN>
+	</Text>
+	<Text id="DIALOG10_02">
+		<ES>Si realmente quieres adentrarte en ella, debo avisarte de algo.</ES>
+		<CA>Si realment hi vols entrar, t’he d’avisar d’una cosa.</CA>
+		<EN>If you truly want to go in, I must warn you about something.</EN>
+	</Text>
+	<Text id="DIALOG10_03">
+		<ES>Por lo que puedo percibir, la criatura que ha causado la zona onírica se ha apoderado de un poder de salto enorme.</ES>
+		<CA>Pel que puc percebre, la criatura que ha causat la zona onírica s’ha apoderat d’un poder de salt enorme.</CA>
+		<EN>From what I can tell, the creature that created the dream zone has gained an enormous jumping ability.</EN>
+	</Text>
+	<Text id="DIALOG10_04">
+		<ES>Así que ve con mucho cuidado y que no te caiga encima.</ES>
+		<CA>Així que ves amb molt de compte i procura que no et caigui a sobre.</CA>
+		<EN>So be very careful, and don’t let it fall on you.</EN>
+	</Text>
+	<Text id="DIALOG10_05">
+		<ES>Atácale desde la distancia y esquiva sus saltos como puedas si quieres vencer.</ES>
+		<CA>Ataca’l des de la distància i esquiva els seus salts com puguis si el vols vèncer.</CA>
+		<EN>Attack it from a distance and dodge its jumps as best you can if you want to defeat it.</EN>
+	</Text>
+	<Text id="DIALOG11_01">
+		<ES>Siento una zona onírica delante.</ES>
+		<CA>Sento una zona onírica al davant.</CA>
+		<EN>I sense a dream zone ahead.</EN>
+	</Text>
+	<Text id="DIALOG11_02">
+		<ES>Si realmente quieres adentrarte en ella, debo avisarte de algo.</ES>
+		<CA>Si realment hi vols entrar, t’he d’avisar d’una cosa.</CA>
+		<EN>If you truly want to go in, I must warn you about something.</EN>
+	</Text>
+	<Text id="DIALOG11_03">
+		<ES>Por lo que puedo percibir, la criatura que ha causado la zona onírica se ha apoderado de un poder de velocidad enorme.</ES>
+		<CA>Pel que puc percebre, la criatura que ha causat la zona onírica s’ha apoderat d’un poder de velocitat enorme.</CA>
+		<EN>From what I can tell, the creature that created the dream zone has gained an enormous speed ability.</EN>
+	</Text>
+	<Text id="DIALOG11_04">
+		<ES>Así que ve con mucho cuidado y que no te atropelle.</ES>
+		<CA>Així que ves amb molt de compte i procura que no t’atropelli.</CA>
+		<EN>So be very careful, and don’t let it run you over.</EN>
+	</Text>
+	<Text id="DIALOG11_05">
+		<ES>Esquiva sus carreras hacia delante y hacia atrás.</ES>
+		<CA>Esquiva les seves corredisses cap endavant i cap enrere.</CA>
+		<EN>Dodge its dashes back and forth.</EN>
+	</Text>
+	<Text id="DIALOG11_06">
+		<ES>Y espera el momento oportuno para cargar tu piqueta y asestarle un golpe muy poderoso.</ES>
+		<CA>I espera el moment oportú per carregar el teu pic i clavar-li un cop molt poderós.</CA>
+		<EN>And wait for the right moment to charge your pick and strike it with a powerful blow.</EN>
+	</Text>
 	<Text id="TUTORIAL">
 		<ES>TUTORIAL</ES>
 		<CA>TUTORIAL</CA>

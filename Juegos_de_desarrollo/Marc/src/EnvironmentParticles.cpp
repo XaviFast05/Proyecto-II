@@ -138,7 +138,7 @@ bool EnvironmentParticles::Update(float dt)
 		}
 		
 	}
-	else {
+	else if (Engine::GetInstance().scene.get()->GetLevel() == 3) {
 
 		//Update each particle
 		for (auto& p : particles)
